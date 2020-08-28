@@ -33,7 +33,7 @@ $WelcomeSubmitButton.add_Click($WelcomeSubmitButton_Click)
 #
 #MainUserInput
 #
-$MainUserInput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]16,[System.Int32]55))
+$MainUserInput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]16,[System.Int32]57))
 $MainUserInput.Name = [System.String]'MainUserInput'
 $MainUserInput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]20))
 $MainUserInput.TabIndex = [System.Int32]2

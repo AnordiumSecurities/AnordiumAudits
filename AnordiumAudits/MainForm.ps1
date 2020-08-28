@@ -1,1 +1,1 @@
-﻿
+﻿$MainForm.ShowDialog()

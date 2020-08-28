@@ -11,6 +11,10 @@
     <DotNetVersion>net462</DotNetVersion>
     <PackageType>Console</PackageType>
     <PowerShellVersion>Windows PowerShell</PowerShellVersion>
+    <Bundle>True</Bundle>
+    <RequireElevation>True</RequireElevation>
+    <PackageModules>True</PackageModules>
+    <PackageAsExecutable>False</PackageAsExecutable>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -62,13 +66,6 @@
     <Content Include="Resources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnordiumAudits.designer.ps1">
-      <SubType>Code</SubType>
-      <DependentUpon>AnordiumAudits.ps1</DependentUpon>
-    </Compile>
-    <Compile Include="AnordiumAudits.ps1">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="AuxiliaryForm.designer.ps1">
       <SubType>Code</SubType>
       <DependentUpon>AuxiliaryForm.ps1</DependentUpon>
@@ -83,6 +80,7 @@
     <Compile Include="MainForm.ps1">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="AnordiumAudits.ps1" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="AuxiliaryForm.resx">

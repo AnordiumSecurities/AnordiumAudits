@@ -38,42 +38,56 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$Req10Refresh = $null
 [System.Windows.Forms.ListBox]$Req10ScriptList = $null
 [System.Windows.Forms.RichTextBox]$Req10Output = $null
+[System.Windows.Forms.Button]$AllBack = $null
+[System.Windows.Forms.Button]$Req2Back = $null
+[System.Windows.Forms.Button]$Req4Back = $null
+[System.Windows.Forms.Button]$Req5Back = $null
+[System.Windows.Forms.Button]$Req7Back = $null
+[System.Windows.Forms.Button]$Req8Back = $null
+[System.Windows.Forms.Button]$Req10Back = $null
 [System.Windows.Forms.Button]$button1 = $null
 function InitializeComponent
 {
 $MainTabControl = (New-Object -TypeName System.Windows.Forms.TabControl)
 $AllTab = (New-Object -TypeName System.Windows.Forms.TabPage)
+$AllBack = (New-Object -TypeName System.Windows.Forms.Button)
 $AllExport = (New-Object -TypeName System.Windows.Forms.Button)
 $AllRefresh = (New-Object -TypeName System.Windows.Forms.Button)
 $AllScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $AllOutput = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab2 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req2Back = (New-Object -TypeName System.Windows.Forms.Button)
 $checkedListBox1 = (New-Object -TypeName System.Windows.Forms.CheckedListBox)
 $Req2ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req2Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req2Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req2Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab4 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req4Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req4Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req4Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req4ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req4Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab5 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req5Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req5Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req5Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req5ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req5Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab7 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req7Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req7Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req7Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req7ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req7Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab8 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req8Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req8Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req8Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req8ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req8Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab10 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req10Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
@@ -105,6 +119,7 @@ $MainTabControl.TabIndex = [System.Int32]0
 #
 #AllTab
 #
+$AllTab.Controls.Add($AllBack)
 $AllTab.Controls.Add($AllExport)
 $AllTab.Controls.Add($AllRefresh)
 $AllTab.Controls.Add($AllScriptList)
@@ -116,6 +131,16 @@ $AllTab.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System
 $AllTab.TabIndex = [System.Int32]0
 $AllTab.Text = [System.String]'All'
 $AllTab.UseVisualStyleBackColor = $true
+#
+#AllBack
+#
+$AllBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$AllBack.Name = [System.String]'AllBack'
+$AllBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$AllBack.TabIndex = [System.Int32]7
+$AllBack.Text = [System.String]'Change Network Variables'
+$AllBack.UseVisualStyleBackColor = $true
+$AllBack.add_Click($AuxiliaryBack_Click)
 #
 #AllExport
 #
@@ -153,6 +178,7 @@ $AllOutput.Text = [System.String]''
 #
 #ReqTab2
 #
+$ReqTab2.Controls.Add($Req2Back)
 $ReqTab2.Controls.Add($checkedListBox1)
 $ReqTab2.Controls.Add($Req2ScriptList)
 $ReqTab2.Controls.Add($Req2Refresh)
@@ -166,6 +192,16 @@ $ReqTab2.TabIndex = [System.Int32]1
 $ReqTab2.Text = [System.String]'Requirement 2'
 $ReqTab2.UseVisualStyleBackColor = $true
 #
+#Req2Back
+#
+$Req2Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req2Back.Name = [System.String]'Req2Back'
+$Req2Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req2Back.TabIndex = [System.Int32]5
+$Req2Back.Text = [System.String]'Change Network Variables'
+$Req2Back.UseVisualStyleBackColor = $true
+$Req2Back.add_Click($AuxiliaryBack_Click)
+#
 #checkedListBox1
 #
 $checkedListBox1.FormattingEnabled = $true
@@ -177,14 +213,14 @@ $checkedListBox1.TabIndex = [System.Int32]4
 #Req2ScriptList
 #
 $Req2ScriptList.FormattingEnabled = $true
-$Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]24,[System.Int32]40))
+$Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
 $Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req2ScriptList.TabIndex = [System.Int32]3
 #
 #Req2Refresh
 #
-$Req2Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]350,[System.Int32]787))
+$Req2Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
 $Req2Refresh.Name = [System.String]'Req2Refresh'
 $Req2Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req2Refresh.TabIndex = [System.Int32]2
@@ -202,7 +238,7 @@ $Req2Export.UseVisualStyleBackColor = $true
 #
 #Req2Output
 #
-$Req2Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]350,[System.Int32]40))
+$Req2Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req2Output.Name = [System.String]'Req2Output'
 $Req2Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req2Output.TabIndex = [System.Int32]0
@@ -210,6 +246,7 @@ $Req2Output.Text = [System.String]''
 #
 #ReqTab4
 #
+$ReqTab4.Controls.Add($Req4Back)
 $ReqTab4.Controls.Add($Req4Export)
 $ReqTab4.Controls.Add($Req4Refresh)
 $ReqTab4.Controls.Add($Req4ScriptList)
@@ -220,6 +257,16 @@ $ReqTab4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Syste
 $ReqTab4.TabIndex = [System.Int32]2
 $ReqTab4.Text = [System.String]'Requirement 4'
 $ReqTab4.UseVisualStyleBackColor = $true
+#
+#Req4Back
+#
+$Req4Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req4Back.Name = [System.String]'Req4Back'
+$Req4Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req4Back.TabIndex = [System.Int32]7
+$Req4Back.Text = [System.String]'Change Network Variables'
+$Req4Back.UseVisualStyleBackColor = $true
+$Req4Back.add_Click($AuxiliaryBack_Click)
 #
 #Req4Export
 #
@@ -257,6 +304,7 @@ $Req4Output.Text = [System.String]''
 #
 #ReqTab5
 #
+$ReqTab5.Controls.Add($Req5Back)
 $ReqTab5.Controls.Add($Req5Export)
 $ReqTab5.Controls.Add($Req5Refresh)
 $ReqTab5.Controls.Add($Req5ScriptList)
@@ -267,6 +315,16 @@ $ReqTab5.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Syste
 $ReqTab5.TabIndex = [System.Int32]3
 $ReqTab5.Text = [System.String]'Requirement 5'
 $ReqTab5.UseVisualStyleBackColor = $true
+#
+#Req5Back
+#
+$Req5Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req5Back.Name = [System.String]'Req5Back'
+$Req5Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req5Back.TabIndex = [System.Int32]9
+$Req5Back.Text = [System.String]'Change Network Variables'
+$Req5Back.UseVisualStyleBackColor = $true
+$Req5Back.add_Click($AuxiliaryBack_Click)
 #
 #Req5Export
 #
@@ -304,6 +362,7 @@ $Req5Output.Text = [System.String]''
 #
 #ReqTab7
 #
+$ReqTab7.Controls.Add($Req7Back)
 $ReqTab7.Controls.Add($Req7Export)
 $ReqTab7.Controls.Add($Req7Refresh)
 $ReqTab7.Controls.Add($Req7ScriptList)
@@ -314,6 +373,16 @@ $ReqTab7.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Syste
 $ReqTab7.TabIndex = [System.Int32]4
 $ReqTab7.Text = [System.String]'Requirement 7'
 $ReqTab7.UseVisualStyleBackColor = $true
+#
+#Req7Back
+#
+$Req7Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req7Back.Name = [System.String]'Req7Back'
+$Req7Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req7Back.TabIndex = [System.Int32]11
+$Req7Back.Text = [System.String]'Change Network Variables'
+$Req7Back.UseVisualStyleBackColor = $true
+$Req7Back.add_Click($AuxiliaryBack_Click)
 #
 #Req7Export
 #
@@ -336,7 +405,7 @@ $Req7Refresh.UseVisualStyleBackColor = $true
 #Req7ScriptList
 #
 $Req7ScriptList.FormattingEnabled = $true
-$Req7ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]30,[System.Int32]40))
+$Req7ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req7ScriptList.Name = [System.String]'Req7ScriptList'
 $Req7ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req7ScriptList.TabIndex = [System.Int32]6
@@ -351,6 +420,7 @@ $Req7Output.Text = [System.String]''
 #
 #ReqTab8
 #
+$ReqTab8.Controls.Add($Req8Back)
 $ReqTab8.Controls.Add($Req8Export)
 $ReqTab8.Controls.Add($Req8Refresh)
 $ReqTab8.Controls.Add($Req8ScriptList)
@@ -361,6 +431,16 @@ $ReqTab8.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Syste
 $ReqTab8.TabIndex = [System.Int32]5
 $ReqTab8.Text = [System.String]'Requirement 8'
 $ReqTab8.UseVisualStyleBackColor = $true
+#
+#Req8Back
+#
+$Req8Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req8Back.Name = [System.String]'Req8Back'
+$Req8Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req8Back.TabIndex = [System.Int32]13
+$Req8Back.Text = [System.String]'Change Network Variables'
+$Req8Back.UseVisualStyleBackColor = $true
+$Req8Back.add_Click($AuxiliaryBack_Click)
 #
 #Req8Export
 #
@@ -398,6 +478,7 @@ $Req8Output.Text = [System.String]''
 #
 #ReqTab10
 #
+$ReqTab10.Controls.Add($Req10Back)
 $ReqTab10.Controls.Add($Req10Export)
 $ReqTab10.Controls.Add($Req10Refresh)
 $ReqTab10.Controls.Add($Req10ScriptList)
@@ -408,6 +489,16 @@ $ReqTab10.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Syst
 $ReqTab10.TabIndex = [System.Int32]6
 $ReqTab10.Text = [System.String]'Requirement 10'
 $ReqTab10.UseVisualStyleBackColor = $true
+#
+#Req10Back
+#
+$Req10Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req10Back.Name = [System.String]'Req10Back'
+$Req10Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req10Back.TabIndex = [System.Int32]15
+$Req10Back.Text = [System.String]'Change Network Variables'
+$Req10Back.UseVisualStyleBackColor = $true
+$Req10Back.add_Click($AuxiliaryBack_Click)
 #
 #Req10Export
 #
@@ -496,6 +587,13 @@ Add-Member -InputObject $AuxiliaryForm -Name Req10Export -Value $Req10Export -Me
 Add-Member -InputObject $AuxiliaryForm -Name Req10Refresh -Value $Req10Refresh -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req10ScriptList -Value $Req10ScriptList -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req10Output -Value $Req10Output -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name AllBack -Value $AllBack -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req2Back -Value $Req2Back -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req4Back -Value $Req4Back -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req5Back -Value $Req5Back -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req7Back -Value $Req7Back -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req8Back -Value $Req8Back -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req10Back -Value $Req10Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name button1 -Value $button1 -MemberType NoteProperty
 }
 . InitializeComponent
