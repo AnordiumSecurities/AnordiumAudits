@@ -7,6 +7,10 @@
     <RootNamespace>MyApplication</RootNamespace>
     <AssemblyName>MyApplication</AssemblyName>
     <Name>AnordiumAudits</Name>
+    <PackageEntryPoint>AnordiumAudits.ps1</PackageEntryPoint>
+    <DotNetVersion>net462</DotNetVersion>
+    <PackageType>Console</PackageType>
+    <PowerShellVersion>Windows PowerShell</PowerShellVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

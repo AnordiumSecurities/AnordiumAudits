@@ -3,11 +3,13 @@
 $MainForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Label]$WelcomeLabel1 = $null
 [System.Windows.Forms.Button]$WelcomeSubmitButton = $null
+[System.Windows.Forms.TextBox]$MainUserInput = $null
 [System.Windows.Forms.Button]$button1 = $null
 function InitializeComponent
 {
 $WelcomeLabel1 = (New-Object -TypeName System.Windows.Forms.Label)
 $WelcomeSubmitButton = (New-Object -TypeName System.Windows.Forms.Button)
+$MainUserInput = (New-Object -TypeName System.Windows.Forms.TextBox)
 $MainForm.SuspendLayout()
 #
 #WelcomeLabel1
@@ -27,10 +29,19 @@ $WelcomeSubmitButton.Size = (New-Object -TypeName System.Drawing.Size -ArgumentL
 $WelcomeSubmitButton.TabIndex = [System.Int32]1
 $WelcomeSubmitButton.Text = [System.String]'Submit'
 $WelcomeSubmitButton.UseVisualStyleBackColor = $true
+$WelcomeSubmitButton.add_Click($WelcomeSubmitButton_Click)
+#
+#MainUserInput
+#
+$MainUserInput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]16,[System.Int32]55))
+$MainUserInput.Name = [System.String]'MainUserInput'
+$MainUserInput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]20))
+$MainUserInput.TabIndex = [System.Int32]2
 #
 #MainForm
 #
 $MainForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1584,[System.Int32]861))
+$MainForm.Controls.Add($MainUserInput)
 $MainForm.Controls.Add($WelcomeSubmitButton)
 $MainForm.Controls.Add($WelcomeLabel1)
 $MainForm.Name = [System.String]'MainForm'
@@ -40,6 +51,7 @@ $MainForm.PerformLayout()
 Add-Member -InputObject $MainForm -Name base -Value $base -MemberType NoteProperty
 Add-Member -InputObject $MainForm -Name WelcomeLabel1 -Value $WelcomeLabel1 -MemberType NoteProperty
 Add-Member -InputObject $MainForm -Name WelcomeSubmitButton -Value $WelcomeSubmitButton -MemberType NoteProperty
+Add-Member -InputObject $MainForm -Name MainUserInput -Value $MainUserInput -MemberType NoteProperty
 Add-Member -InputObject $MainForm -Name button1 -Value $button1 -MemberType NoteProperty
 }
 . InitializeComponent
