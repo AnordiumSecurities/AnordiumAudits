@@ -163,10 +163,12 @@ $AllRefresh.UseVisualStyleBackColor = $true
 #AllScriptList
 #
 $AllScriptList.FormattingEnabled = $true
+$AllScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything'))
 $AllScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $AllScriptList.Name = [System.String]'AllScriptList'
 $AllScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $AllScriptList.TabIndex = [System.Int32]4
+$AllScriptList.add_Click($AllScriptList_ListUpdate)
 #
 #AllOutput
 #
@@ -218,6 +220,7 @@ $Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentL
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
 $Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req2ScriptList.TabIndex = [System.Int32]3
+$Req2ScriptList.add_SelectedIndexChanged($Req2ScriptList_ListUpdate)
 #
 #Req2Refresh
 #
@@ -290,10 +293,12 @@ $Req4Refresh.UseVisualStyleBackColor = $true
 #Req4ScriptList
 #
 $Req4ScriptList.FormattingEnabled = $true
+$Req4ScriptList.Items.AddRange([System.Object[]]@([System.String]'Analyse Wi-Fi Environment',[System.String]'Analyse Keys and Certificates'))
 $Req4ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req4ScriptList.Name = [System.String]'Req4ScriptList'
 $Req4ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req4ScriptList.TabIndex = [System.Int32]4
+$Req4ScriptList.add_SelectedIndexChanged($Req4ScriptList_ListUpdate)
 #
 #Req4Output
 #
@@ -348,10 +353,12 @@ $Req5Refresh.UseVisualStyleBackColor = $true
 #Req5ScriptList
 #
 $Req5ScriptList.FormattingEnabled = $true
+$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Grab Windows Defender Settings from GPO',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
 $Req5ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req5ScriptList.Name = [System.String]'Req5ScriptList'
 $Req5ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req5ScriptList.TabIndex = [System.Int32]5
+$Req5ScriptList.add_SelectedIndexChanged($Req5ScriptList_ListUpdate)
 #
 #Req5Output
 #
@@ -406,10 +413,12 @@ $Req7Refresh.UseVisualStyleBackColor = $true
 #Req7ScriptList
 #
 $Req7ScriptList.FormattingEnabled = $true
+$Req7ScriptList.Items.AddRange([System.Object[]]@([System.String]'Grab folder permissions that hold sensitive data',[System.String]'Analyse folder permissions',[System.String]'Check for deny all permissions',[System.String]'Grab User Privileges'))
 $Req7ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req7ScriptList.Name = [System.String]'Req7ScriptList'
 $Req7ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req7ScriptList.TabIndex = [System.Int32]6
+$Req7ScriptList.add_SelectedIndexChanged($Req7ScriptList_ListUpdate)
 #
 #Req7Output
 #
@@ -464,10 +473,12 @@ $Req8Refresh.UseVisualStyleBackColor = $true
 #Req8ScriptList
 #
 $Req8ScriptList.FormattingEnabled = $true
+$Req8ScriptList.Items.AddRange([System.Object[]]@([System.String]'Grab Domain Password Policy Settings',[System.String]'Grab Local Password Policy Settings',[System.String]'Dump of Active Active Directory Users',[System.String]'Dump of Disabled Active Directory Users',[System.String]'Dump of Inactive Active Directory Users',[System.String]'Grab Current User',[System.String]'Grab Local Administrator Accounts',[System.String]'Grab Domain Administrator Accounts',[System.String]'Dump of Users whose Password Never Expire',[System.String]'Dump of Users and Their Last Password Change',[System.String]'Grab the Screensaver Settings',[System.String]'Grab RDP Encryption and Idle Settings',[System.String]'Check for MFA'))
 $Req8ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req8ScriptList.Name = [System.String]'Req8ScriptList'
 $Req8ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req8ScriptList.TabIndex = [System.Int32]7
+$Req8ScriptList.add_SelectedIndexChanged($Req8ScriptList_ListUpdate)
 #
 #Req8Output
 #
@@ -522,10 +533,12 @@ $Req10Refresh.UseVisualStyleBackColor = $true
 #Req10ScriptList
 #
 $Req10ScriptList.FormattingEnabled = $true
+$Req10ScriptList.Items.AddRange([System.Object[]]@([System.String]'Dump of Audit Category Settings from GPO',[System.String]'Grab NTP Settings',[System.String]'Check NTP Settings on Multiple Devices',[System.String]'Check Audit Log Permissions',[System.String]'Grab Previous Audit Logs'))
 $Req10ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req10ScriptList.Name = [System.String]'Req10ScriptList'
 $Req10ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
 $Req10ScriptList.TabIndex = [System.Int32]8
+$Req10ScriptList.add_SelectedIndexChanged($Req10ScriptList_ListUpdate)
 #
 #Req10Output
 #
