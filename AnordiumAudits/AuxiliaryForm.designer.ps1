@@ -213,6 +213,7 @@ $checkedListBox1.TabIndex = [System.Int32]4
 #Req2ScriptList
 #
 $Req2ScriptList.FormattingEnabled = $true
+$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Sample Running Services',[System.String]'Grab Running Services',[System.String]'Grab Listening Services',[System.String]'Grab Installed Software'))
 $Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
 $Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
@@ -538,7 +539,10 @@ $Req10Output.Text = [System.String]''
 #
 $AuxiliaryForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1584,[System.Int32]861))
 $AuxiliaryForm.Controls.Add($MainTabControl)
+$AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
+$AuxiliaryForm.MaximizeBox = $false
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
+$AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $AuxiliaryForm.Text = [System.String]'Anordium Audits'
 $MainTabControl.ResumeLayout($false)
 $AllTab.ResumeLayout($false)

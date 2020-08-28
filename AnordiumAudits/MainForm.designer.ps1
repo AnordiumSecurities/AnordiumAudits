@@ -44,7 +44,10 @@ $MainForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @
 $MainForm.Controls.Add($MainUserInput)
 $MainForm.Controls.Add($WelcomeSubmitButton)
 $MainForm.Controls.Add($WelcomeLabel1)
+$MainForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
+$MainForm.MaximizeBox = $false
 $MainForm.Name = [System.String]'MainForm'
+$MainForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $MainForm.Text = [System.String]'Anordium Audits'
 $MainForm.ResumeLayout($false)
 $MainForm.PerformLayout()

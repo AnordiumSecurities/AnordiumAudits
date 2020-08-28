@@ -3,11 +3,15 @@ Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawi
 
 $WelcomeSubmitButton_Click = {
 	$MainForm.Hide()
+	$MainFormXYLoc = $MainForm.Location
+	$AuxiliaryForm.Location = $MainFormXYLoc
 	$AuxiliaryForm.ShowDialog()
 }
 
 $AuxiliaryBack_Click = {
 	$AuxiliaryForm.Hide()
+	$AuxiliaryFormXYLoc = $AuxiliaryForm.Location
+	$MainForm.Location = $AuxiliaryFormXYLoc
 	$MainForm.Show()
 }
 
