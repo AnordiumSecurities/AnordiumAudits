@@ -18,11 +18,11 @@ $AuxiliaryBack_Click = {
 # Everything Tab
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
-		$AllScriptList.Clear()
-		$AllScriptList.AppendText("A")
+		$AllOutput.Clear()
+		$AllOutput.AppendText("A")
 	}else{
-		$AllScriptList.Clear()
-		$AllScriptList.AppendText("F")
+		$AllOutput.Clear()
+		$AllOutput.AppendText("F")
 	}
 }
 
@@ -40,6 +40,9 @@ $Req2ScriptList_ListUpdate = {
 	}elseif($Req2ScriptList.SelectedItem -eq "Grab Installed Software"){
 		$Req2Output.Clear()
 		$Req2Output.AppendText("D")
+	}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
+		$Req2Output.Clear()
+		$Req2Output.AppendText("Everything in Requirement Two")
 	}else{
 		$Req2Output.Clear()
 		$Req2Output.AppendText("F")
@@ -54,6 +57,9 @@ $Req4ScriptList_ListUpdate = {
 	}elseif($Req4ScriptList.SelectedItem -eq "Analyse Keys and Certificates"){
 		$Req4Output.Clear()
 		$Req4Output.AppendText("B")
+	}elseif($Req4ScriptList.SelectedItem -eq "Everything in Requirement Four"){
+		$Req4Output.Clear()
+		$Req4Output.AppendText("Everything in Requirement Four")
 	}else{
 		$Req4Output.Clear()
 		$Req4Output.AppendText("F")
@@ -71,6 +77,9 @@ $Req5ScriptList_ListUpdate = {
 	}elseif($Req5ScriptList.SelectedItem -eq "Check end user permissions to modify antivirus software"){
 		$Req5Output.Clear()
 		$Req5Output.AppendText("C")
+	}elseif($Req5ScriptList.SelectedItem -eq "Everything in Requirement Five"){
+		$Req5Output.Clear()
+		$Req5Output.AppendText("Everything in Requirement Five")
 	}else{
 		$Req5Output.Clear()
 		$Req5Output.AppendText("F")
@@ -91,6 +100,9 @@ $Req7ScriptList_ListUpdate = {
 	}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
 		$Req7Output.Clear()
 		$Req7Output.AppendText("D")
+	}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
+		$Req7Output.Clear()
+		$Req7Output.AppendText("Everything in Requirement Seven")
 	}else{
 		$Req7Output.Clear()
 		$Req7Output.AppendText("F")
@@ -138,6 +150,9 @@ $Req8ScriptList_ListUpdate = {
 	}elseif($Req8ScriptList.SelectedItem -eq "Check for MFA"){
 		$Req8Output.Clear()
 		$Req8Output.AppendText("13")
+	}elseif($Req8ScriptList.SelectedItem -eq "Everything in Requirement Eight"){
+		$Req8Output.Clear()
+		$Req8Output.AppendText("Everything in Requirement Eight")
 	}else{
 		$Req8Output.Clear()
 		$Req8Output.AppendText("F")
@@ -161,6 +176,9 @@ $Req10ScriptList_ListUpdate = {
 	}elseif($Req10ScriptList.SelectedItem -eq "Grab Previous Audit Logs"){
 		$Req10Output.Clear()
 		$Req10Output.AppendText("E")
+	}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
+		$Req10Output.Clear()
+		$Req10Output.AppendText("Everything in Requirement Ten")
 	}else{
 		$Req10Output.Clear()
 		$Req10Output.AppendText("F")
