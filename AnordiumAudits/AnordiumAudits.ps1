@@ -31,36 +31,59 @@ $AllScriptList_ListUpdate = {
 }
 
 # Requirement Two Tab
+	#Sample Services for Default Vendor Passwords
 	Function A{
 		$Req2Output.AppendText("A`n")
 	}
-	Function B{
-		$Req2Output.AppendText("B`n")
+
+	#List of Running Services
+	Function Req2RunningServices{
+		$Req2Output.AppendText("List of Running Services:`n")
+		$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name | Format-Table -Autosize | Out-String -Width 1200
+		$Req2Output.AppendText($Req2SvcListRunning)
 	}
 
-$Req2ScriptList_ListUpdate = {
-	if($Req2ScriptList.SelectedItem -eq "Sample Running Services"){
-		$Req2Output.Clear()
-		A
-	}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Services"){
-		$Req2Output.Clear()
-		B
-	}elseif($Req2ScriptList.SelectedItem -eq "Grab Listening Services"){
-		$Req2Output.Clear()
-		$Req2Output.AppendText("C")
-	}elseif($Req2ScriptList.SelectedItem -eq "Grab Installed Software"){
-		$Req2Output.Clear()
-		$Req2Output.AppendText("D")
-	}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
-		$Req2Output.Clear()
-		$Req2Output.AppendText("Everything in Requirement Two`n")
-		A
-		B
-	}else{
-		$Req2Output.Clear()
-		$Req2Output.AppendText("F")
+	#Grab Listening Services
+	Function Req2ListeningServices{
+		$Req2Output.AppendText("List of Listening Services:`n")
+		$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress | Format-Table -Autosize | Out-String -Width 1200
+		$Req2Output.AppendText($Req2SvcListListening)
 	}
-}
+
+	#Grab Installed Software
+	Function Req2GrabInstalledSoftware{
+		$Req2Output.AppendText("List of Installed Software:`n")
+		$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName | Format-Table -Autosize | Out-String -Width 1200
+		$Req2Output.AppendText($Req2SoftwareList)
+	}
+
+	#onClick Event Handler
+	$Req2ScriptList_ListUpdate = {
+		if($Req2ScriptList.SelectedItem -eq "Sample Services for Default Vendor Passwords"){
+			$Req2Output.Clear()
+			A
+		}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Services"){
+			$Req2Output.Clear()
+			Req2RunningServices
+		}elseif($Req2ScriptList.SelectedItem -eq "Grab Listening Services"){
+			$Req2Output.Clear()
+			Req2ListeningServices
+		}elseif($Req2ScriptList.SelectedItem -eq "Grab Installed Software"){
+			$Req2Output.Clear()
+			Req2GrabInstalledSoftware
+		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
+			$Req2Output.Clear()
+			$Req2Output.AppendText("Everything in Requirement Two `n")
+			Req2RunningServices
+			$Req2Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req2ListeningServices
+			$Req2Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req2GrabInstalledSoftware
+		}else{
+			$Req2Output.Clear()
+			$Req2Output.AppendText("F")
+		}
+	}
 
 # Requirement Four Tab
 $Req4ScriptList_ListUpdate = {
