@@ -1,4 +1,1 @@
-﻿$AllScriptList_ListUpdate = {
-
-}
-
+﻿

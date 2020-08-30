@@ -159,6 +159,7 @@ $AllRefresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sy
 $AllRefresh.TabIndex = [System.Int32]5
 $AllRefresh.Text = [System.String]'Refresh'
 $AllRefresh.UseVisualStyleBackColor = $true
+$AllRefresh.add_Click($AllScriptList_ListUpdate)
 #
 #AllScriptList
 #
@@ -230,6 +231,7 @@ $Req2Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req2Refresh.TabIndex = [System.Int32]2
 $Req2Refresh.Text = [System.String]'Refresh'
 $Req2Refresh.UseVisualStyleBackColor = $true
+$Req2Refresh.add_Click($Req2ScriptList_ListUpdate)
 #
 #Req2Export
 #
@@ -289,6 +291,7 @@ $Req4Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req4Refresh.TabIndex = [System.Int32]5
 $Req4Refresh.Text = [System.String]'Refresh'
 $Req4Refresh.UseVisualStyleBackColor = $true
+$Req4Refresh.add_Click($Req4ScriptList_ListUpdate)
 #
 #Req4ScriptList
 #
@@ -349,6 +352,7 @@ $Req5Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req5Refresh.TabIndex = [System.Int32]7
 $Req5Refresh.Text = [System.String]'Refresh'
 $Req5Refresh.UseVisualStyleBackColor = $true
+$Req5Refresh.add_Click($Req5ScriptList_ListUpdate)
 #
 #Req5ScriptList
 #
@@ -409,6 +413,7 @@ $Req7Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req7Refresh.TabIndex = [System.Int32]9
 $Req7Refresh.Text = [System.String]'Refresh'
 $Req7Refresh.UseVisualStyleBackColor = $true
+$Req7Refresh.add_Click($Req7ScriptList_ListUpdate)
 #
 #Req7ScriptList
 #
@@ -469,6 +474,7 @@ $Req8Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req8Refresh.TabIndex = [System.Int32]11
 $Req8Refresh.Text = [System.String]'Refresh'
 $Req8Refresh.UseVisualStyleBackColor = $true
+$Req8Refresh.add_Click($Req8ScriptList_ListUpdate)
 #
 #Req8ScriptList
 #
@@ -529,6 +535,7 @@ $Req10Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([
 $Req10Refresh.TabIndex = [System.Int32]13
 $Req10Refresh.Text = [System.String]'Refresh'
 $Req10Refresh.UseVisualStyleBackColor = $true
+$Req10Refresh.add_Click($Req10ScriptList_ListUpdate)
 #
 #Req10ScriptList
 #
