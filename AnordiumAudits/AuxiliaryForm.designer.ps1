@@ -11,7 +11,6 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.TabPage]$ReqTab7 = $null
 [System.Windows.Forms.TabPage]$ReqTab8 = $null
 [System.Windows.Forms.TabPage]$ReqTab10 = $null
-[System.Windows.Forms.CheckedListBox]$checkedListBox1 = $null
 [System.Windows.Forms.ListBox]$Req2ScriptList = $null
 [System.Windows.Forms.TabControl]$MainTabControl = $null
 [System.Windows.Forms.Button]$AllExport = $null
@@ -57,7 +56,6 @@ $AllScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $AllOutput = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab2 = (New-Object -TypeName System.Windows.Forms.TabPage)
 $Req2Back = (New-Object -TypeName System.Windows.Forms.Button)
-$checkedListBox1 = (New-Object -TypeName System.Windows.Forms.CheckedListBox)
 $Req2ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req2Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req2Export = (New-Object -TypeName System.Windows.Forms.Button)
@@ -182,7 +180,6 @@ $AllOutput.Text = [System.String]''
 #ReqTab2
 #
 $ReqTab2.Controls.Add($Req2Back)
-$ReqTab2.Controls.Add($checkedListBox1)
 $ReqTab2.Controls.Add($Req2ScriptList)
 $ReqTab2.Controls.Add($Req2Refresh)
 $ReqTab2.Controls.Add($Req2Export)
@@ -204,14 +201,6 @@ $Req2Back.TabIndex = [System.Int32]5
 $Req2Back.Text = [System.String]'Change Network Variables'
 $Req2Back.UseVisualStyleBackColor = $true
 $Req2Back.add_Click($AuxiliaryBack_Click)
-#
-#checkedListBox1
-#
-$checkedListBox1.FormattingEnabled = $true
-$checkedListBox1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]189,[System.Int32]133))
-$checkedListBox1.Name = [System.String]'checkedListBox1'
-$checkedListBox1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]0,[System.Int32]4))
-$checkedListBox1.TabIndex = [System.Int32]4
 #
 #Req2ScriptList
 #
@@ -584,7 +573,6 @@ Add-Member -InputObject $AuxiliaryForm -Name ReqTab5 -Value $ReqTab5 -MemberType
 Add-Member -InputObject $AuxiliaryForm -Name ReqTab7 -Value $ReqTab7 -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name ReqTab8 -Value $ReqTab8 -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name ReqTab10 -Value $ReqTab10 -MemberType NoteProperty
-Add-Member -InputObject $AuxiliaryForm -Name checkedListBox1 -Value $checkedListBox1 -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req2ScriptList -Value $Req2ScriptList -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name MainTabControl -Value $MainTabControl -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name AllExport -Value $AllExport -MemberType NoteProperty
