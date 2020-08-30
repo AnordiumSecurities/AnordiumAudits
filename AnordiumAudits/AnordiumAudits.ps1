@@ -75,9 +75,9 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
 			Req2RunningServices
-			$Req2Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req2ListeningServices
-			$Req2Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req2GrabInstalledSoftware
 		}else{
 			$Req2Output.Clear()
@@ -93,7 +93,7 @@ $AllScriptList_ListUpdate = {
 			$Req4CurrentUserCerts = Get-ChildItem -Recurse -path cert:\CurrentUser | Format-List | Out-String
 			$Req4Output.AppendText("List of Keys and Certificates:`nLocal Machine Certificates:`n")
 			$Req4Output.AppendText($Req4LocalMachineCerts)
-			$Req4Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req4Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			$Req4Output.AppendText("Current User Certificates:`n")
 			$Req4Output.AppendText($Req4CurrentUserCerts)
 		}catch{
@@ -174,11 +174,13 @@ $Req7ScriptList_ListUpdate = {
 			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
 		}
 	}
+
 	#Grab Local Password Policy Settings
 	Function Req8LocalPasswordPolicy{
-		$Req8Output.AppendText("Grab Local Password Policy Settings:")
+		$Req8Output.AppendText("Grab Local Password Policy Settings:`nPlaceholder")
 		
 	}
+
 	#Dump of Active Directory Users
 	Function Req8DumpActiveADUsers{
 		$Req8Output.AppendText("Dump of All AD Users:")
@@ -186,9 +188,10 @@ $Req7ScriptList_ListUpdate = {
 			$ADUserListAll = Get-ADUser -Filter * | Select-Object GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName |Sort-Object GivenName,Surname | Format-Table -Autosize | Out-String -Width 1200
 			$Req8Output.AppendText($ADUserListAll)
 		}catch{
-			$Req8Output.AppendText("Error, Ensure Script is run on a Domain Controller.")
+			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
 		}
 	}
+
 	#Dump of Disabled AD Users
 	Function Req8DumpDisabledADUsers{
 		$Req8Output.AppendText("Dump of All Disabled AD Users:")
@@ -196,9 +199,10 @@ $Req7ScriptList_ListUpdate = {
 			$ADUserListDisabled = Get-ADUser -Filter * | Where-Object Enabled -eq "False" | Select-Object GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName |Sort-Object GivenName,Surname | Format-Table -Autosize | Out-String -Width 1200
 			$Req8Output.AppendText($ADUserListDisabled)
 		}catch{
-			$Req8Output.AppendText("Error, Ensure Script is run on a Domain Controller.")
+			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
 		}
 	}
+
 	#Dump of Inactive AD Users
 	Function Req8DumpInactiveADUsers{
 		$Req8Output.AppendText("Dump of All Inactive AD Users:")
@@ -206,36 +210,87 @@ $Req7ScriptList_ListUpdate = {
 			$ADUserListInactiveADUsers = Search-ADAccount -UsersOnly -AccountInactive -TimeSpan 90 | ?{$_.enabled -eq $True} | Select-Object Name,SamAccountName,UserPrincipalName,DistinguishedName,LastLogonDate |Sort-Object Name | Format-Table -Autosize | Out-String -Width 1200
 			$Req8Output.AppendText($ADUserListInactiveADUsers)
 		}catch{
-			$Req8Output.AppendText("Error, Ensure Script is run on a Domain Controller.")
+			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
 		}
 	}
+
 	#Grab Current User
 	Function Req8GrabCurrentUser{
-
+		$Req8Output.AppendText("Current Logged-In User:`n")
+		$Req8Output.AppendText("Username: " + $env:UserName + "`nDomain:" + $env:UserDomain + "`nComputer: " + $env:ComputerName)
 	}
+
 	#Grab Local Administrator Accounts
 	Function Req8GrabLocalAdmins{
-
+		$Req8Output.AppendText("Grab Local Administrators:`n")
+		try{
+			$LocalAdminList = Get-LocalGroupMember -Group "Administrators" -ErrorAction Stop | Format-Table -Autosize | Out-String -Width 1200
+			$Req8Output.AppendText($LocalAdminList)
+		}catch [Microsoft.PowerShell.Commands.GroupNotFoundException]{
+			$Req8Output.AppendText("`nError, Something went wrong. There are no Local Administrator Accounts.")
+		}catch{
+			$Req8Output.AppendText("`nError, Something Unexpected went wrong.")
+		}
 	}
+
 	#Grab Domain Administrator Accounts
 	Function Req8GrabDomainAdmins{
-
+		$Req8Output.AppendText("Grab Domain & Enterprise Administrators:`n")
+		try{
+			$ADDomainAdminList = Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
+			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
+			$Req8Output.AppendText("Domain Admins:`n" + $ADDomainAdminList)
+			$Req8Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+		}catch{
+			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
+		}
 	}
+
 	#Dump of Users whose Password Never Expire
 	Function Req8DumpADUsersPasswordExpiry{
-
+		$Req8Output.AppendText("Dump of Users whose Password Never Expires:`n")
+		try{
+			$ADUserPasswordExpiryList = Search-ADAccount -PasswordNeverExpires -UsersOnly | Select-Object Name, SamAccountName, DistinguishedName, PasswordNeverExpires | Format-Table -AutoSize | Out-String -Width 1200
+			$Req8Output.AppendText($ADUserPasswordExpiryList)
+		}catch{
+			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
+		}
 	}
+
+	#Dump of Users and Their Last Password Change
+	Function Req8DumpADUserLastPassChange{
+		$Req8Output.AppendText("Dump of All AD Users and Their Last Password Change:`n")
+		try{
+			$ADUserPasswordLastChangeList = Get-aduser -filter * -properties PasswordLastSet, PasswordNeverExpires | Select-Object Name, SamAccountName, DistinguishedName, PasswordLastSet, PasswordNeverExpires | Sort-Object PasswordLastSet,PasswordNeverExpires | Format-Table -Autosize | Out-String -Width 1200
+			$Req8Output.AppendText($ADUserPasswordLastChangeList)
+		}catch{
+			$Req8Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
+		}
+	}
+
 	#Grab the Screensaver Settings
 	Function Req8GrabScreensaverSettings{
-
+		$Req8Output.AppendText("Grab of Screensaver Settings:`n")
+		try{
+			$ScreensaverSettings = Get-Wmiobject win32_desktop | Where-Object Name -match $env:USERNAME | Format-Table -Autosize | Out-String -Width 1200
+			$Req8Output.AppendText($ScreensaverSettings)
+		}catch{
+			$Req8Output.AppendText("`nError, Screensaver Settings not found.")
+		}	
 	}
+
 	#Grab RDP Encryption and Idle Settings
 	Function Req8GrabRDPSettings{
+		$Req8Output.AppendText("Grab RDP Encryption and Idle Settings:`nPlaceholder")
+		try{
 
+		}catch{
+
+		}
 	}
 	#Check for MFA
 	Function Req8CheckForMFA{
-
+		$Req8Output.AppendText("Checking Domain for MFA Configs:`nPlaceholder")
 	}
 
 #onClick Event Handler
@@ -245,7 +300,7 @@ $Req7ScriptList_ListUpdate = {
 			Req8DomainPasswordPolicy
 		}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Password Policy Settings"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("2")
+			Req8LocalPasswordPolicy
 		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Active Active Directory Users"){
 			$Req8Output.Clear()
 			Req8DumpActiveADUsers
@@ -257,39 +312,57 @@ $Req7ScriptList_ListUpdate = {
 			Req8DumpInactiveADUsers
 		}elseif($Req8ScriptList.SelectedItem -eq "Grab Current User"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("6")
+			Req8GrabCurrentUser
 		}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Administrator Accounts"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("7")
+			Req8GrabLocalAdmins
 		}elseif($Req8ScriptList.SelectedItem -eq "Grab Domain Administrator Accounts"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("8")
+			Req8GrabDomainAdmins
 		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users whose Password Never Expire"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("9")
+			Req8DumpADUsersPasswordExpiry
 		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users and Their Last Password Change"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("10")
+			Req8DumpADUserLastPassChange
 		}elseif($Req8ScriptList.SelectedItem -eq "Grab the Screensaver Settings"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("11")
+			Req8GrabScreensaverSettings
 		}elseif($Req8ScriptList.SelectedItem -eq "Grab RDP Encryption and Idle Settings"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("12")
+			Req8GrabRDPSettings
 		}elseif($Req8ScriptList.SelectedItem -eq "Check for MFA"){
 			$Req8Output.Clear()
-			$Req8Output.AppendText("13")
+			Req8CheckForMFA
 		}elseif($Req8ScriptList.SelectedItem -eq "Everything in Requirement Eight"){
 			$Req8Output.Clear()
+			$Req8Output.AppendText("Everything in Requirement Eight`n")
 			Req8DomainPasswordPolicy
-			$Req8Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			#LocalPassword
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8LocalPasswordPolicy
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req8DumpActiveADUsers
-			$Req8Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req8DumpDisabledADUsers
-			$Req8Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req8DumpInactiveADUsers
-			$Req8Output.AppendText("-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8GrabCurrentUser
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8GrabLocalAdmins
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8GrabDomainAdmins
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8DumpADUsersPasswordExpiry
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8DumpADUserLastPassChange
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8GrabScreensaverSettings
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8GrabRDPSettings
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req8CheckForMFA
+			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 		}else{
 			$Req8Output.Clear()
 			$Req8Output.AppendText("Error")
