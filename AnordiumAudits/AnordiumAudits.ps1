@@ -19,7 +19,11 @@ $AuxiliaryBack_Click = {
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
 		$AllOutput.Clear()
-		$AllOutput.AppendText("A")
+		$AllOutput.AppendText("A`n")
+		$abc = Get-Service | Sort-Object Status,Name | Format-Table -Autosize | Out-String -Width 1200
+
+		$AllOutput.AppendText($abc)
+
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("F")
@@ -27,13 +31,20 @@ $AllScriptList_ListUpdate = {
 }
 
 # Requirement Two Tab
+	Function A{
+		$Req2Output.AppendText("A`n")
+	}
+	Function B{
+		$Req2Output.AppendText("B`n")
+	}
+
 $Req2ScriptList_ListUpdate = {
 	if($Req2ScriptList.SelectedItem -eq "Sample Running Services"){
 		$Req2Output.Clear()
-		$Req2Output.AppendText("A")
+		A
 	}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Services"){
 		$Req2Output.Clear()
-		$Req2Output.AppendText("B")
+		B
 	}elseif($Req2ScriptList.SelectedItem -eq "Grab Listening Services"){
 		$Req2Output.Clear()
 		$Req2Output.AppendText("C")
@@ -42,7 +53,9 @@ $Req2ScriptList_ListUpdate = {
 		$Req2Output.AppendText("D")
 	}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 		$Req2Output.Clear()
-		$Req2Output.AppendText("Everything in Requirement Two")
+		$Req2Output.AppendText("Everything in Requirement Two`n")
+		A
+		B
 	}else{
 		$Req2Output.Clear()
 		$Req2Output.AppendText("F")
