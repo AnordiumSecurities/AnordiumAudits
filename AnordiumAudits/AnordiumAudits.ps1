@@ -1,10 +1,20 @@
 #Anordium Audits#
 Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing
+#Global GPO Result Function
+Function GPResults{
+	try{
+		$global:GPODump = gpresult.exe /SCOPE COMPUTER /Z | Format-Table -Autosize | Out-String -Width 1200
+	}catch{
+		$global:GPODump = "Error"
+	}
+}
+
 # Menu Nav
 $WelcomeSubmitButton_Click = {
 	$MainForm.Hide()
 	$MainFormXYLoc = $MainForm.Location
 	$AuxiliaryForm.Location = $MainFormXYLoc
+	GPResults
 	$AuxiliaryForm.ShowDialog()
 }
 
@@ -26,7 +36,7 @@ $AllScriptList_ListUpdate = {
 
 	}else{
 		$AllOutput.Clear()
-		$AllOutput.AppendText("F")
+		$AllOutput.AppendText("You must select an object from the script list.")
 	}
 }
 
@@ -81,7 +91,7 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 		}else{
 			$Req2Output.Clear()
-			$Req2Output.AppendText("F")
+			$Req2Output.AppendText("You must select an object from the script list.")
 		}
 	}
 
@@ -116,7 +126,7 @@ $AllScriptList_ListUpdate = {
 			Req4GetKeysAndCerts
 		}else{
 			$Req4Output.Clear()
-			$Req4Output.AppendText("F")
+			$Req4Output.AppendText("You must select an object from the script list.")
 		}
 	}
 
@@ -124,7 +134,8 @@ $AllScriptList_ListUpdate = {
 $Req5ScriptList_ListUpdate = {
 	if($Req5ScriptList.SelectedItem -eq "Grab Windows Defender Settings from GPO"){
 		$Req5Output.Clear()
-		$Req5Output.AppendText("A")
+		$Req5Output.AppendText("A`n")
+		$Req5Output.AppendText($global:GPODump)
 	}elseif($Req5ScriptList.SelectedItem -eq "Grab Software Deployment Settings in Organization"){
 		$Req5Output.Clear()
 		$Req5Output.AppendText("B")
@@ -136,7 +147,7 @@ $Req5ScriptList_ListUpdate = {
 		$Req5Output.AppendText("Everything in Requirement Five")
 	}else{
 		$Req5Output.Clear()
-		$Req5Output.AppendText("F")
+		$Req5Output.AppendText("You must select an object from the script list.")
 	}
 }
 
@@ -159,7 +170,7 @@ $Req7ScriptList_ListUpdate = {
 		$Req7Output.AppendText("Everything in Requirement Seven")
 	}else{
 		$Req7Output.Clear()
-		$Req7Output.AppendText("F")
+		$Req7Output.AppendText("You must select an object from the script list.")
 	}
 }
 
@@ -217,7 +228,7 @@ $Req7ScriptList_ListUpdate = {
 	#Grab Current User
 	Function Req8GrabCurrentUser{
 		$Req8Output.AppendText("Current Logged-In User:`n")
-		$Req8Output.AppendText("Username: " + $env:UserName + "`nDomain:" + $env:UserDomain + "`nComputer: " + $env:ComputerName)
+		$Req8Output.AppendText("Username: " + $env:UserName + "`nDomain: " + $env:UserDomain + "`nComputer: " + $env:ComputerName)
 	}
 
 	#Grab Local Administrator Accounts
@@ -281,11 +292,19 @@ $Req7ScriptList_ListUpdate = {
 
 	#Grab RDP Encryption and Idle Settings
 	Function Req8GrabRDPSettings{
-		$Req8Output.AppendText("Grab RDP Encryption and Idle Settings:`nPlaceholder")
+		$Req8Output.AppendText("Grab RDP Encryption and Idle Settings:")
 		try{
-
+			$RDPSettings = Get-WmiObject -Class 'Win32_TSGeneralSetting' -Namespace 'root/CIMV2/TerminalServices' | Select-Object PSComputerName,TerminalName,TerminalProtocol,Certifcates,CertificateName,MinEncryptionLevel,PolicySourceMinEncryptionLevel,PolicySourceSecurityLayer,SecurityLayer | Format-List | Out-String
+			$Req8Output.AppendText($RDPSettings)	
 		}catch{
-
+			$Req8Output.AppendText("Error - No RDP Settings Found")
+		}
+		try{
+			$Req8Output.AppendText("Power Plans:`n")
+			$PowerPlanSettings = Get-WmiObject -Namespace root\cimv2\power -Class win32_PowerPlan -ErrorAction Stop | Select-Object -Property ElementName, IsActive | Format-Table -Autosize | Out-String -Width 1200 
+			$Req8Output.AppendText($PowerPlanSettings)
+		}catch{
+			$Req8Output.AppendText("Error - Unable to find Power Plans, Ensure script is run in Administrator Mode.")
 		}
 	}
 	#Check for MFA
@@ -365,7 +384,7 @@ $Req7ScriptList_ListUpdate = {
 			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 		}else{
 			$Req8Output.Clear()
-			$Req8Output.AppendText("Error")
+			$Req8Output.AppendText("You must select an object from the script list.")
 		}
 	}
 
@@ -391,7 +410,7 @@ $Req10ScriptList_ListUpdate = {
 		$Req10Output.AppendText("Everything in Requirement Ten")
 	}else{
 		$Req10Output.Clear()
-		$Req10Output.AppendText("F")
+		$Req10Output.AppendText("You must select an object from the script list.")
 	}
 }
 
