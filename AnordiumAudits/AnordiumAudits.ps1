@@ -222,27 +222,29 @@ $Req5ScriptList_ListUpdate = {
 }
 
 # Requirement Seven Tab
-$Req7ScriptList_ListUpdate = {
-	if($Req7ScriptList.SelectedItem -eq "Grab folder permissions that hold sensitive data"){
-		$Req7Output.Clear()
-		$Req7Output.AppendText("A")
-	}elseif($Req7ScriptList.SelectedItem -eq "Analyse folder permissions"){
-		$Req7Output.Clear()
-		$Req7Output.AppendText("B")
-	}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
-		$Req7Output.Clear()
-		$Req7Output.AppendText("C")
-	}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
-		$Req7Output.Clear()
-		$Req7Output.AppendText("D")
-	}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
-		$Req7Output.Clear()
-		$Req7Output.AppendText("Everything in Requirement Seven")
-	}else{
-		$Req7Output.Clear()
-		$Req7Output.AppendText("You must select an object from the script list.")
+
+	#onClick event handler
+	$Req7ScriptList_ListUpdate = {
+		if($Req7ScriptList.SelectedItem -eq "Grab folder permissions that hold sensitive data"){
+			$Req7Output.Clear()
+			$Req7Output.AppendText("A")
+		}elseif($Req7ScriptList.SelectedItem -eq "Analyse folder permissions"){
+			$Req7Output.Clear()
+			$Req7Output.AppendText("B")
+		}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
+			$Req7Output.Clear()
+			$Req7Output.AppendText("C")
+		}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
+			$Req7Output.Clear()
+			$Req7Output.AppendText("D")
+		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
+			$Req7Output.Clear()
+			$Req7Output.AppendText("Everything in Requirement Seven")
+		}else{
+			$Req7Output.Clear()
+			$Req7Output.AppendText("You must select an object from the script list.")
+		}
 	}
-}
 
 # Requirement Eight Tab
 	#Grab Domain Password Policy Settings
@@ -382,107 +384,166 @@ $Req7ScriptList_ListUpdate = {
 		$Req8Output.AppendText("Checking Domain for MFA Configs:`nPlaceholder")
 	}
 
-#onClick Event Handler
-	$Req8ScriptList_ListUpdate = {
-		if($Req8ScriptList.SelectedItem -eq "Grab Domain Password Policy Settings"){
-			$Req8Output.Clear()
-			Req8DomainPasswordPolicy
-		}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Password Policy Settings"){
-			$Req8Output.Clear()
-			Req8LocalPasswordPolicy
-		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Active Active Directory Users"){
-			$Req8Output.Clear()
-			Req8DumpActiveADUsers
-		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Disabled Active Directory Users"){
-			$Req8Output.Clear()
-			Req8DumpDisabledADUsers
-		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Inactive Active Directory Users"){
-			$Req8Output.Clear()
-			Req8DumpInactiveADUsers
-		}elseif($Req8ScriptList.SelectedItem -eq "Grab Current User"){
-			$Req8Output.Clear()
-			Req8GrabCurrentUser
-		}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Administrator Accounts"){
-			$Req8Output.Clear()
-			Req8GrabLocalAdmins
-		}elseif($Req8ScriptList.SelectedItem -eq "Grab Domain Administrator Accounts"){
-			$Req8Output.Clear()
-			Req8GrabDomainAdmins
-		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users whose Password Never Expire"){
-			$Req8Output.Clear()
-			Req8DumpADUsersPasswordExpiry
-		}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users and Their Last Password Change"){
-			$Req8Output.Clear()
-			Req8DumpADUserLastPassChange
-		}elseif($Req8ScriptList.SelectedItem -eq "Grab the Screensaver Settings"){
-			$Req8Output.Clear()
-			Req8GrabScreensaverSettings
-		}elseif($Req8ScriptList.SelectedItem -eq "Grab RDP Encryption and Idle Settings"){
-			$Req8Output.Clear()
-			Req8GrabRDPSettings
-		}elseif($Req8ScriptList.SelectedItem -eq "Check for MFA"){
-			$Req8Output.Clear()
-			Req8CheckForMFA
-		}elseif($Req8ScriptList.SelectedItem -eq "Everything in Requirement Eight"){
-			$Req8Output.Clear()
-			$Req8Output.AppendText("Everything in Requirement Eight`n")
-			Req8DomainPasswordPolicy
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8LocalPasswordPolicy
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8DumpActiveADUsers
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8DumpDisabledADUsers
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8DumpInactiveADUsers
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8GrabCurrentUser
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8GrabLocalAdmins
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8GrabDomainAdmins
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8DumpADUsersPasswordExpiry
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8DumpADUserLastPassChange
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8GrabScreensaverSettings
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8GrabRDPSettings
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			Req8CheckForMFA
-			$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-		}else{
-			$Req8Output.Clear()
-			$Req8Output.AppendText("You must select an object from the script list.")
+	#onClick Event Handler
+		$Req8ScriptList_ListUpdate = {
+			if($Req8ScriptList.SelectedItem -eq "Grab Domain Password Policy Settings"){
+				$Req8Output.Clear()
+				Req8DomainPasswordPolicy
+			}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Password Policy Settings"){
+				$Req8Output.Clear()
+				Req8LocalPasswordPolicy
+			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Active Active Directory Users"){
+				$Req8Output.Clear()
+				Req8DumpActiveADUsers
+			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Disabled Active Directory Users"){
+				$Req8Output.Clear()
+				Req8DumpDisabledADUsers
+			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Inactive Active Directory Users"){
+				$Req8Output.Clear()
+				Req8DumpInactiveADUsers
+			}elseif($Req8ScriptList.SelectedItem -eq "Grab Current User"){
+				$Req8Output.Clear()
+				Req8GrabCurrentUser
+			}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Administrator Accounts"){
+				$Req8Output.Clear()
+				Req8GrabLocalAdmins
+			}elseif($Req8ScriptList.SelectedItem -eq "Grab Domain Administrator Accounts"){
+				$Req8Output.Clear()
+				Req8GrabDomainAdmins
+			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users whose Password Never Expire"){
+				$Req8Output.Clear()
+				Req8DumpADUsersPasswordExpiry
+			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users and Their Last Password Change"){
+				$Req8Output.Clear()
+				Req8DumpADUserLastPassChange
+			}elseif($Req8ScriptList.SelectedItem -eq "Grab the Screensaver Settings"){
+				$Req8Output.Clear()
+				Req8GrabScreensaverSettings
+			}elseif($Req8ScriptList.SelectedItem -eq "Grab RDP Encryption and Idle Settings"){
+				$Req8Output.Clear()
+				Req8GrabRDPSettings
+			}elseif($Req8ScriptList.SelectedItem -eq "Check for MFA"){
+				$Req8Output.Clear()
+				Req8CheckForMFA
+			}elseif($Req8ScriptList.SelectedItem -eq "Everything in Requirement Eight"){
+				$Req8Output.Clear()
+				$Req8Output.AppendText("Everything in Requirement Eight`n")
+				Req8DomainPasswordPolicy
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8LocalPasswordPolicy
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8DumpActiveADUsers
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8DumpDisabledADUsers
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8DumpInactiveADUsers
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8GrabCurrentUser
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8GrabLocalAdmins
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8GrabDomainAdmins
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8DumpADUsersPasswordExpiry
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8DumpADUserLastPassChange
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8GrabScreensaverSettings
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8GrabRDPSettings
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8CheckForMFA
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			}else{
+				$Req8Output.Clear()
+				$Req8Output.AppendText("You must select an object from the script list.")
+			}
+		}
+
+# Requirement Ten Tab
+	# Dump of Audit Category Settings
+	Function Req10AuditSettings {
+		$Req10Output.AppendText("Dump of Audit Category Settings`n")
+		try{
+			$Req10AuditList = auditpol.exe /get /category:* | Format-Table -Autosize | Out-String -Width 1200
+			$Req10Output.AppendText($Req10AuditList)
+		}catch{
+			$Req10Output.AppendText("Unable to find Audit settings.")
 		}
 	}
 
-# Requirement Ten Tab
-$Req10ScriptList_ListUpdate = {
-	if($Req10ScriptList.SelectedItem -eq "Dump of Audit Category Settings from GPO"){
-		$Req10Output.Clear()
-		$Req10Output.AppendText("A")
-	}elseif($Req10ScriptList.SelectedItem -eq "Grab NTP Settings"){
-		$Req10Output.Clear()
-		$Req10Output.AppendText("B")
-	}elseif($Req10ScriptList.SelectedItem -eq "Check NTP Settings on Multiple Devices"){
-		$Req10Output.Clear()
-		$Req10Output.AppendText("C")
-	}elseif($Req10ScriptList.SelectedItem -eq "Check Audit Log Permissions"){
-		$Req10Output.Clear()
-		$Req10Output.AppendText("D")
-	}elseif($Req10ScriptList.SelectedItem -eq "Grab Previous Audit Logs"){
-		$Req10Output.Clear()
-		$Req10Output.AppendText("E")
-	}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
-		$Req10Output.Clear()
-		$Req10Output.AppendText("Everything in Requirement Ten")
-	}else{
-		$Req10Output.Clear()
-		$Req10Output.AppendText("You must select an object from the script list.")
+	# Grab NTP Settings
+	Function Req10NTPSettings {
+		$Req10Output.AppendText("Grab NTP Settings for Current Device`n")
+		try{
+			$Req10NTPSettings = w32tm /query /status | Format-Table -Autosize | Out-String -Width 1200
+			$Req10Output.AppendText($Req10NTPSettings)
+		}catch{
+			$Req10Output.AppendText("Unable to find NTP settings.")
+		}
 	}
-}
+
+	# Grab NTP Settings on Multiple Devices
+	Function Req10NTPSettingsMultipleDevices {
+		$Req10Output.AppendText("Check NTP Settings on Multiple Devices`nThis may take awhile.`n")
+		try{
+			$ComputerList = Get-ADComputer -Filter * | Select-Object Name
+			$ComputerArray = New-Object System.Collections.ArrayList
+			foreach($Computer in $ComputerList){
+				$ComputerArray.Add($Computer.Name)
+			}
+			$ShuffledComputerArray = $ComputerArray | Sort-Object {Get-Random}
+			$Req10Counter = 0
+			foreach($RandomComputer in $ShuffledComputerArray){
+				$Req10Counter++
+				if($Req10Counter -eq 5){
+					break
+				}else{
+					try{
+						$Req10NTPSettingsTesting = w32tm /query /status /computer:$RandomComputer | Format-Table -Autosize | Out-String -Width 1200
+						$Req10Output.AppendText("`nNTP Settings for: " + $RandomComputer + "`n" + $Req10NTPSettingsTesting)
+					}catch{
+						$Req10Output.AppendText("Unable to find NTP settings.")
+					}
+				}
+			}
+		}catch{
+			$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+		}
+	}
+
+
+	#onClick event handler
+	$Req10ScriptList_ListUpdate = {
+		if($Req10ScriptList.SelectedItem -eq "Dump of Audit Category Settings"){
+			$Req10Output.Clear()
+			Req10AuditSettings
+		}elseif($Req10ScriptList.SelectedItem -eq "Grab NTP Settings"){
+			$Req10Output.Clear()
+			Req10NTPSettings
+		}elseif($Req10ScriptList.SelectedItem -eq "Check NTP Settings on Multiple Devices"){
+			$Req10Output.Clear()
+			Req10NTPSettingsMultipleDevices
+		}elseif($Req10ScriptList.SelectedItem -eq "Check Audit Log Permissions"){
+			$Req10Output.Clear()
+			$Req10Output.AppendText("D")
+		}elseif($Req10ScriptList.SelectedItem -eq "Grab Previous Audit Logs"){
+			$Req10Output.Clear()
+			$Req10Output.AppendText("E")
+		}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
+			$Req10Output.Clear()
+			$Req10Output.AppendText("Everything in Requirement Ten`n")
+			Req10AuditSettings
+			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req10NTPSettings
+			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req10NTPSettingsMultipleDevices
+			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		}else{
+			$Req10Output.Clear()
+			$Req10Output.AppendText("You must select an object from the script list.")
+		}
+	}
 
 #Join Path for Designers
 . (Join-Path $PSScriptRoot 'MainForm.designer.ps1')
