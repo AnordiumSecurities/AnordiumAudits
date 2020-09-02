@@ -2,9 +2,8 @@
 Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing
 #Global GPO Result Function
 Function GPResults{
-	try{
-		$global:GPODump = gpresult.exe /SCOPE COMPUTER /Z | Format-Table -Autosize | Out-String -Width 1200
-	}catch{
+	$global:GPODump = gpresult.exe /SCOPE COMPUTER /Z | Format-Table -Autosize | Out-String -Width 1200
+	if([string]::IsNullOrEmpty($global:GPODump)){
 		$global:GPODump = "Error"
 	}
 }
@@ -132,9 +131,19 @@ $AllScriptList_ListUpdate = {
 
 # Requirement Five Tab
 $Req5ScriptList_ListUpdate = {
-	if($Req5ScriptList.SelectedItem -eq "Grab Windows Defender Settings from GPO"){
+	if($Req5ScriptList.SelectedItem -eq "Antivirus Program and GPO Analysis"){
 		$Req5Output.Clear()
-		$Req5Output.AppendText("A`n")
+		$Req5Output.AppendText("List of AV Programs Detected. (This may take a while):`n")
+		$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
+		if([string]::IsNullOrEmpty($AVProgramQuery)){
+			$Req5Output.AppendText("No AV detected, Here is the list of all programs detected and a GPO Dump for futher analysis. (This may take a while):`n")
+			$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
+			$Req5Output.AppendText($AVProgramQuery)
+		}else{
+			$Req5Output.AppendText($AVProgramQuery)
+		}
+		$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the group policy is not there then this requirement has failed.`n")
 		$Req5Output.AppendText($global:GPODump)
 	}elseif($Req5ScriptList.SelectedItem -eq "Grab Software Deployment Settings in Organization"){
 		$Req5Output.Clear()
