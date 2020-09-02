@@ -206,7 +206,7 @@ $Req2Back.add_Click($AuxiliaryBack_Click)
 #Req2ScriptList
 #
 $Req2ScriptList.FormattingEnabled = $true
-$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'Sample Services for Default Vendor Passwords',[System.String]'Grab Running Services',[System.String]'Grab Listening Services',[System.String]'Grab Installed Software'))
+$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'Sample Services for Default Vendor Passwords',[System.String]'Grab Running Services',[System.String]'Grab Listening Services',[System.String]'Grab Installed Software',[System.String]'Grab Installed Windows Features'))
 $Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
 $Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
@@ -349,7 +349,7 @@ $Req5Refresh.add_Click($Req5ScriptList_ListUpdate)
 #Req5ScriptList
 #
 $Req5ScriptList.FormattingEnabled = $true
-$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'Antivirus Program and GPO Analysis',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
+$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'Grab Windows Defender Settings from GPO',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
 $Req5ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req5ScriptList.Name = [System.String]'Req5ScriptList'
 $Req5ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))

@@ -66,6 +66,13 @@ $AllScriptList_ListUpdate = {
 		$Req2Output.AppendText($Req2SoftwareList)
 	}
 
+	#Grab Installed Features
+	Function Req2GrabInstalledFeatures{
+		$Req2Output.AppendText("List of Installed Windows Features:`n")
+		$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
+		$Req2Output.AppendText($Req2FeatureList)
+	}
+
 	#onClick Event Handler
 	$Req2ScriptList_ListUpdate = {
 		if($Req2ScriptList.SelectedItem -eq "Sample Services for Default Vendor Passwords"){
@@ -80,6 +87,9 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "Grab Installed Software"){
 			$Req2Output.Clear()
 			Req2GrabInstalledSoftware
+		}elseif($Req2ScriptList.SelectedItem -eq "Grab Installed Windows Features"){
+			$Req2Output.Clear()
+			Req2GrabInstalledFeatures
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
@@ -88,6 +98,8 @@ $AllScriptList_ListUpdate = {
 			Req2ListeningServices
 			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req2GrabInstalledSoftware
+			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req2GrabInstalledFeatures
 		}else{
 			$Req2Output.Clear()
 			$Req2Output.AppendText("You must select an object from the script list.")
@@ -95,6 +107,17 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Four Tab
+	# Analyse Wi-Fi Envrioment
+	Function Req4WifiScan {
+		$Req4Output.AppendText("List of Wi-Fi Networks:`n")
+		try{
+			$Req4WifiList = netsh wlan show networks mode=Bssid | Format-Table -Autosize | Out-String -Width 1200
+			$Req4Output.AppendText($Req4WifiList)
+		}catch{
+			$Req4Output.AppendText("Unable to find Wi-Fi Networks")
+		}
+	}
+
 	# Analyse Keys and Certificates
 	Function Req4GetKeysAndCerts{
 		try{
@@ -115,13 +138,15 @@ $AllScriptList_ListUpdate = {
 	$Req4ScriptList_ListUpdate = {
 		if($Req4ScriptList.SelectedItem -eq "Analyse Wi-Fi Environment"){
 			$Req4Output.Clear()
-			$Req4Output.AppendText("A")
+			Req4WifiScan
 		}elseif($Req4ScriptList.SelectedItem -eq "Analyse Keys and Certificates"){
 			$Req4Output.Clear()
 			Req4GetKeysAndCerts
 		}elseif($Req4ScriptList.SelectedItem -eq "Everything in Requirement Four"){
 			$Req4Output.Clear()
 			$Req4Output.AppendText("Everything in Requirement Four`n")
+			Req4WifiScan
+			$Req4Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req4GetKeysAndCerts
 		}else{
 			$Req4Output.Clear()
@@ -130,30 +155,66 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Five Tab
+	$Global:Req5Switch = $false 
+	# Antivirus Program and GPO Analysis
+	Function Req5AVSettingsAndGPO {
+		$Req5Output.AppendText("List of AV Programs Detected. (This may take a while):`n")
+		$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
+			if([string]::IsNullOrEmpty($AVProgramQuery)){
+				$Req5Output.AppendText("No AV detected, Here is the list of all programs detected and a GPO Dump for futher analysis. (This may take a while):`n")
+				$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version,InstallDate | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
+				$Req5Output.AppendText($AVProgramQuery)
+			}else{
+				$Req5Output.AppendText($AVProgramQuery)
+			}
+		$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
+		
+		if($global:Req5Switch -eq $true){
+			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
+			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText("Check end user permissions to modify antivirus software")
+			$global:Req5Switch = $false
+			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText("GPO Dump")
+			$Req5Output.AppendText($global:GPODump)
+		}else{
+			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText("GPO Dump")
+			$Req5Output.AppendText($global:GPODump)
+		}
+	}
+	
+	# Grab Software Deployment Settings in Organization
+	Function Req5SoftwareDeployment {
+		$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization`n")
+		$Req5Output.AppendText($global:GPODump)
+	}
+
+	# Check end user permissions to modify antivirus software
+	Function Req5AVPermissions {
+		$Req5Output.AppendText("Check end user permissions to modify antivirus software`n")
+		$Req5Output.AppendText($global:GPODump)
+	}
+
+# onClick Event Handler
 $Req5ScriptList_ListUpdate = {
 	if($Req5ScriptList.SelectedItem -eq "Antivirus Program and GPO Analysis"){
 		$Req5Output.Clear()
-		$Req5Output.AppendText("List of AV Programs Detected. (This may take a while):`n")
-		$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
-		if([string]::IsNullOrEmpty($AVProgramQuery)){
-			$Req5Output.AppendText("No AV detected, Here is the list of all programs detected and a GPO Dump for futher analysis. (This may take a while):`n")
-			$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
-			$Req5Output.AppendText($AVProgramQuery)
-		}else{
-			$Req5Output.AppendText($AVProgramQuery)
-		}
-		$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-		$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the group policy is not there then this requirement has failed.`n")
-		$Req5Output.AppendText($global:GPODump)
+		Req5AVSettingsAndGPO
 	}elseif($Req5ScriptList.SelectedItem -eq "Grab Software Deployment Settings in Organization"){
 		$Req5Output.Clear()
-		$Req5Output.AppendText("B")
+		Req5SoftwareDeployment
 	}elseif($Req5ScriptList.SelectedItem -eq "Check end user permissions to modify antivirus software"){
 		$Req5Output.Clear()
-		$Req5Output.AppendText("C")
+		$Req5Output.AppendText("Check end user permissions to modify antivirus software")
+		Req5AVPermissions
 	}elseif($Req5ScriptList.SelectedItem -eq "Everything in Requirement Five"){
 		$Req5Output.Clear()
-		$Req5Output.AppendText("Everything in Requirement Five")
+		$Req5Output.AppendText("Everything in Requirement Five`n")
+		$Global:Req5Switch = $true
+		Req5AVSettingsAndGPO
 	}else{
 		$Req5Output.Clear()
 		$Req5Output.AppendText("You must select an object from the script list.")
