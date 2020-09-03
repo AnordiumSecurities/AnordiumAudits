@@ -1,5 +1,13 @@
 #Anordium Audits#
 Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing
+
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
+{
+  # Relaunch as an elevated process:
+  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+  exit
+}
+
 #Global GPO Result Function
 Function GPResults{
 	$global:GPODump = gpresult.exe /SCOPE COMPUTER /Z | Format-Table -Autosize | Out-String -Width 1200
@@ -485,7 +493,7 @@ $Req5ScriptList_ListUpdate = {
 
 	# Grab NTP Settings on Multiple Devices
 	Function Req10NTPSettingsMultipleDevices {
-		$Req10Output.AppendText("Check NTP Settings on Multiple Devices`nThis may take awhile.`n")
+		$Req10Output.AppendText("Check NTP Settings on Multiple Devices`nThis may take a while.`n")
 		try{
 			$ComputerList = Get-ADComputer -Filter * | Select-Object Name
 			$ComputerArray = New-Object System.Collections.ArrayList
