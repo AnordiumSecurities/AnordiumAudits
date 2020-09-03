@@ -520,6 +520,36 @@ $Req5ScriptList_ListUpdate = {
 		}
 	}
 
+	# Check Audit Log Permissions
+	Function Req10AuditLogPrems {
+		$Req10Output.AppendText("Check Audit Log Permissions`n")
+		$Req10Output.AppendText("Listed below are the Domain & Enterprise Administrators:`n")
+		try{
+			$ADDomainAdminList = Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
+			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
+			$Req10Output.AppendText("Domain Admins:`n" + $ADDomainAdminList)
+			$Req10Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+		}catch{
+			$Req10Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
+		}
+		$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		$Req10Output.AppendText("GPO Dump")
+		$Req10Output.AppendText($global:GPODump)
+	}
+
+	# Grab Previous Audit Logs
+	Function Req10PastAuditLogs {
+		$Req10Output.AppendText("Grabbing Previous Audit Logs for the past three months`nThis may take a while`n")
+		$AuditLogsBegin = (Get-Date).AddDays(-90)
+		$AuditLogsEnd = Get-Date
+		Start-Sleep -Seconds 0.5
+		try{
+			$AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd | Select-Object Index,Time,EntryType,InstanceID,Message | Format-Table -AutoSize | Out-String # -Width 10000
+			$Req10Output.AppendText($AuditLogs)
+		}catch{
+			$Req10Output.AppendText("No Audit Logs Found.")
+		}
+	}
 
 	#onClick event handler
 	$Req10ScriptList_ListUpdate = {
@@ -534,10 +564,10 @@ $Req5ScriptList_ListUpdate = {
 			Req10NTPSettingsMultipleDevices
 		}elseif($Req10ScriptList.SelectedItem -eq "Check Audit Log Permissions"){
 			$Req10Output.Clear()
-			$Req10Output.AppendText("D")
+			Req10AuditLogPrems
 		}elseif($Req10ScriptList.SelectedItem -eq "Grab Previous Audit Logs"){
 			$Req10Output.Clear()
-			$Req10Output.AppendText("E")
+			Req10PastAuditLogs
 		}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
 			$Req10Output.Clear()
 			$Req10Output.AppendText("Everything in Requirement Ten`n")
@@ -546,6 +576,10 @@ $Req5ScriptList_ListUpdate = {
 			Req10NTPSettings
 			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req10NTPSettingsMultipleDevices
+			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req10AuditLogPrems
+			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req10PastAuditLogs
 			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 		}else{
 			$Req10Output.Clear()
