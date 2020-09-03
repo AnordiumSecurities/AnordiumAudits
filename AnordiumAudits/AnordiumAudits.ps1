@@ -230,24 +230,42 @@ $Req5ScriptList_ListUpdate = {
 }
 
 # Requirement Seven Tab
+	
+	Function Req7FolderPrems {
+		$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data")
+
+	}
+
+	Function Req7DenyAll {
+		$Req7Output.AppendText("Check for deny all permissions")
+	}
+
+	Function Req7UserPriviledges {
+		$Req7Output.AppendText("Grab User Privileges")
+	}
 
 	#onClick event handler
 	$Req7ScriptList_ListUpdate = {
-		if($Req7ScriptList.SelectedItem -eq "Grab folder permissions that hold sensitive data"){
+		if($Req7ScriptList.SelectedItem -eq "Grab and analyse folder permissions that hold sensitive data"){
 			$Req7Output.Clear()
-			$Req7Output.AppendText("A")
-		}elseif($Req7ScriptList.SelectedItem -eq "Analyse folder permissions"){
-			$Req7Output.Clear()
-			$Req7Output.AppendText("B")
+			Req7FolderPrems
 		}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
 			$Req7Output.Clear()
-			$Req7Output.AppendText("C")
+			Req7DenyAll
 		}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
 			$Req7Output.Clear()
-			$Req7Output.AppendText("D")
+			Req7UserPriviledges
 		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
-			$Req7Output.AppendText("Everything in Requirement Seven")
+			$Req7Output.AppendText("Everything in Requirement Seven`n")
+				Req7FolderPrems
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req8LocalPasswordPolicy
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req7DenyAll
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				Req7UserPriviledges
+				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 		}else{
 			$Req7Output.Clear()
 			$Req7Output.AppendText("You must select an object from the script list.")
@@ -390,6 +408,7 @@ $Req5ScriptList_ListUpdate = {
 	#Check for MFA
 	Function Req8CheckForMFA{
 		$Req8Output.AppendText("Checking Domain for MFA Configs:`nPlaceholder")
+
 	}
 
 	#onClick Event Handler
