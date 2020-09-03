@@ -230,27 +230,31 @@ $Req5ScriptList_ListUpdate = {
 }
 
 # Requirement Seven Tab
-	#Grab and analyse folder permissions that hold sensitive data
-	Function Req7FolderPrems {
-		$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+	#Folder Input
+	Function Req7FolderInput {
 		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
 			if($FilePopupTmp -eq "OK"){    
 				$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
-				$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
-				try{
-					$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
-					$Req7Output.AppendText($LocalFolderPrems)
-				}catch{
-					$Req7Output.AppendText("Error")
-				}
 			}else{
 				$Req7Output.AppendText("`nInvalid Folder Selected`n")
+			}
+		}
+
+	#Grab and analyse folder permissions that hold sensitive data
+	Function Req7FolderPrems {
+		$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+		$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
+			try{
+				$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
+				$Req7Output.AppendText($LocalFolderPrems)
+			}catch{
+					$Req7Output.AppendText("Error")
 			}
 
 		$Req7Output.AppendText("`nNetwork folder permissions...`n")
 		$SharesArray = New-Object System.Collections.ArrayList
 		$SambaShare = (Get-SmbShare).Path
-		#$Path = "C:\Windows"
+
 		$SambaSwitch = $false
 
 			foreach($SambaPath in $SambaShare){
@@ -268,24 +272,51 @@ $Req5ScriptList_ListUpdate = {
 				$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
 			}
 		}
-
+	
+	# Check for deny all permissions
 	Function Req7DenyAll {
-		$Req7Output.AppendText("Check for deny all permissions")
-
+		$Req7Output.AppendText("Check for deny all permissions`n")
+		try{
+			$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl | Format-List | Out-String
+			if([string]::IsNullOrEmpty($Req7FolderPerms)){
+				$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+			}else{
+				$Req7Output.AppendText($Req7FolderPerms)
+			}
+		}catch{
+			$Req7Output.AppendText("`nSomething went wrong...`n")
+		}
 	}
 
+	# Grab User Privileges
 	Function Req7UserPriviledges {
-		$Req7Output.AppendText("Grab User Privileges")
-
+		$Req7Output.AppendText("Grab User Privileges`nThis may take a while`n")
+		Start-Sleep -Seconds 0.5
+		try{
+			$ActiveDirectoryGroups = (Get-ADGroup -Filter *).Name
+			foreach ($Group in $ActiveDirectoryGroups){
+				$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass | Format-Table | Out-String
+				if([string]::IsNullOrEmpty($GroupMembership)){
+					$Req7Output.AppendText("`nNo Users in " + $Group + "`n")
+				}else{
+					$Req7Output.AppendText("`nHere are the Users in " + $Group)
+					$Req7Output.AppendText($GroupMembership)
+				}
+			}
+		}catch{
+			$Req7Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+		}
 	}
 
 	#onClick event handler
 	$Req7ScriptList_ListUpdate = {
 		if($Req7ScriptList.SelectedItem -eq "Grab and analyse folder permissions that hold sensitive data"){
 			$Req7Output.Clear()
+			Req7FolderInput
 			Req7FolderPrems
 		}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
 			$Req7Output.Clear()
+			Req7FolderInput
 			Req7DenyAll
 		}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
 			$Req7Output.Clear()
@@ -293,14 +324,13 @@ $Req5ScriptList_ListUpdate = {
 		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
+				Req7FolderInput
 				Req7FolderPrems
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-				Req8LocalPasswordPolicy
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req7Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 				Req7DenyAll
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req7Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 				Req7UserPriviledges
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req7Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 		}else{
 			$Req7Output.Clear()
 			$Req7Output.AppendText("You must select an object from the script list.")
