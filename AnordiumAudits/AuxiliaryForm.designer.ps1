@@ -44,6 +44,7 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$Req7Back = $null
 [System.Windows.Forms.Button]$Req8Back = $null
 [System.Windows.Forms.Button]$Req10Back = $null
+[System.Windows.Forms.FolderBrowserDialog]$Req7FolderBrowserDialog = $null
 [System.Windows.Forms.Button]$button1 = $null
 function InitializeComponent
 {
@@ -90,6 +91,7 @@ $Req10Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req10Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
+$Req7FolderBrowserDialog = (New-Object -TypeName System.Windows.Forms.FolderBrowserDialog)
 $MainTabControl.SuspendLayout()
 $AllTab.SuspendLayout()
 $ReqTab2.SuspendLayout()
@@ -349,7 +351,7 @@ $Req5Refresh.add_Click($Req5ScriptList_ListUpdate)
 #Req5ScriptList
 #
 $Req5ScriptList.FormattingEnabled = $true
-$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'Antivirus Program and GPO Analysis',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
+$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'Grab Windows Defender Settings from GPO',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
 $Req5ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req5ScriptList.Name = [System.String]'Req5ScriptList'
 $Req5ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
@@ -411,7 +413,7 @@ $Req7Refresh.add_Click($Req7ScriptList_ListUpdate)
 #Req7ScriptList
 #
 $Req7ScriptList.FormattingEnabled = $true
-$Req7ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Seven',[System.String]'Grab and analyse folder permissions that hold sensitive data',[System.String]'Analyse folder permissions',[System.String]'Check for deny all permissions',[System.String]'Grab User Privileges'))
+$Req7ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Seven',[System.String]'Grab and analyse folder permissions that hold sensitive data',[System.String]'Check for deny all permissions',[System.String]'Grab User Privileges'))
 $Req7ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req7ScriptList.Name = [System.String]'Req7ScriptList'
 $Req7ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
@@ -613,6 +615,7 @@ Add-Member -InputObject $AuxiliaryForm -Name Req5Back -Value $Req5Back -MemberTy
 Add-Member -InputObject $AuxiliaryForm -Name Req7Back -Value $Req7Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req8Back -Value $Req8Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req10Back -Value $Req10Back -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req7FolderBrowserDialog -Value $Req7FolderBrowserDialog -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name button1 -Value $button1 -MemberType NoteProperty
 }
 . InitializeComponent

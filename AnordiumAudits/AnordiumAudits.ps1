@@ -230,18 +230,53 @@ $Req5ScriptList_ListUpdate = {
 }
 
 # Requirement Seven Tab
-	
+	#Grab and analyse folder permissions that hold sensitive data
 	Function Req7FolderPrems {
-		$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data")
+		$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
+			if($FilePopupTmp -eq "OK"){    
+				$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
+				$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
+				try{
+					$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
+					$Req7Output.AppendText($LocalFolderPrems)
+				}catch{
+					$Req7Output.AppendText("Error")
+				}
+			}else{
+				$Req7Output.AppendText("`nInvalid Folder Selected`n")
+			}
 
-	}
+		$Req7Output.AppendText("`nNetwork folder permissions...`n")
+		$SharesArray = New-Object System.Collections.ArrayList
+		$SambaShare = (Get-SmbShare).Path
+		#$Path = "C:\Windows"
+		$SambaSwitch = $false
+
+			foreach($SambaPath in $SambaShare){
+				$SharesArray.Add($SambaPath.Name)
+				if($SambaPath -eq $Global:FilePathFilePopupTmp){
+					$SambaSwitch = $true
+				}
+			}
+			if($SambaSwitch -eq $true){
+				$SambaShareName = (Get-SMBShare | Where-Object -Property Path -eq $Global:FilePathFilePopupTmp).Name
+				$SambaShareStatus = Get-SmbShareAccess $SambaShareName | Out-String
+				$Req7Output.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
+				$Req7Output.AppendText($SambaShareStatus)
+			}else{
+				$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
+			}
+		}
 
 	Function Req7DenyAll {
 		$Req7Output.AppendText("Check for deny all permissions")
+
 	}
 
 	Function Req7UserPriviledges {
 		$Req7Output.AppendText("Grab User Privileges")
+
 	}
 
 	#onClick event handler
