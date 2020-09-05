@@ -706,16 +706,61 @@ $Req5ScriptList_ListUpdate = {
 		}
 	}
 
-# Extras Tab
-	#System Infomation
+# Diagnostics Tab
+	#Grab System Information
+	Function DiagSysInfo{
+		$DiagOutput.AppendText("Grab System Information`n")
 
-	#Installed Updates
+	}
 
-	#IP Config
+	#Grab Installed Software Patches
+	Function DiagInstalledUpdates {
+		$DiagOutput.AppendText("Grab Installed Software Patches`n")
 
-	#TCP Connectivity
+	}
+
+	#Grab IP Config
+	Function DiagIPConfig {
+		$DiagOutput.AppendText("Grab IP Config`n")
+
+	}
+
+	#Check TCP Connectivity
+	Function DiagTCPConnectivity {
+		$DiagOutput.AppendText("Check TCP Connectivity`n")
+
+	}
 
 	#onClick Event Handler
+	$DiagScriptList_ListUpdate = {
+		if($DiagScriptList.SelectedItem -eq "Grab System Information"){
+			$DiagOutput.Clear()
+			DiagSysInfo
+		}elseif($DiagScriptList.SelectedItem -eq "Grab Installed Software Patches"){
+			$DiagOutput.Clear()
+			DiagInstalledUpdates
+		}elseif($DiagScriptList.SelectedItem -eq "Grab IP Config"){
+			$DiagOutput.Clear()
+			DiagIPConfig
+		}elseif($DiagScriptList.SelectedItem -eq "Check TCP Connectivity"){
+			$DiagOutput.Clear()
+			DiagTCPConnectivity
+		}elseif($DiagScriptList.SelectedItem -eq "Everything in Diagnostics"){
+			$DiagOutput.Clear()
+			$DiagOutput.AppendText("Everything in Diagnostics`n")
+			DiagSysInfo
+			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			DiagInstalledUpdates
+			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			DiagIPConfig
+			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			DiagTCPConnectivity
+			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		}else{
+			$DiagOutput.Clear()
+			$DiagOutput.AppendText("You must select an object from the script list.")
+		}
+	}
 
 #Join Path for Designers
 . (Join-Path $PSScriptRoot 'MainForm.designer.ps1')

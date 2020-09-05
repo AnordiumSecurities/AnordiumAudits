@@ -45,6 +45,12 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$Req8Back = $null
 [System.Windows.Forms.Button]$Req10Back = $null
 [System.Windows.Forms.FolderBrowserDialog]$Req7FolderBrowserDialog = $null
+[System.Windows.Forms.TabPage]$tabPage1 = $null
+[System.Windows.Forms.Button]$DiagBack = $null
+[System.Windows.Forms.Button]$DiagExport = $null
+[System.Windows.Forms.Button]$DiagRefresh = $null
+[System.Windows.Forms.ListBox]$DiagScriptList = $null
+[System.Windows.Forms.RichTextBox]$DiagOutput = $null
 [System.Windows.Forms.Button]$button1 = $null
 function InitializeComponent
 {
@@ -91,6 +97,12 @@ $Req10Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req10Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
+$tabPage1 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$DiagBack = (New-Object -TypeName System.Windows.Forms.Button)
+$DiagExport = (New-Object -TypeName System.Windows.Forms.Button)
+$DiagRefresh = (New-Object -TypeName System.Windows.Forms.Button)
+$DiagScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
+$DiagOutput = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $Req7FolderBrowserDialog = (New-Object -TypeName System.Windows.Forms.FolderBrowserDialog)
 $MainTabControl.SuspendLayout()
 $AllTab.SuspendLayout()
@@ -100,6 +112,7 @@ $ReqTab5.SuspendLayout()
 $ReqTab7.SuspendLayout()
 $ReqTab8.SuspendLayout()
 $ReqTab10.SuspendLayout()
+$tabPage1.SuspendLayout()
 $AuxiliaryForm.SuspendLayout()
 #
 #MainTabControl
@@ -111,6 +124,7 @@ $MainTabControl.Controls.Add($ReqTab5)
 $MainTabControl.Controls.Add($ReqTab7)
 $MainTabControl.Controls.Add($ReqTab8)
 $MainTabControl.Controls.Add($ReqTab10)
+$MainTabControl.Controls.Add($tabPage1)
 $MainTabControl.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]0))
 $MainTabControl.Name = [System.String]'MainTabControl'
 $MainTabControl.SelectedIndex = [System.Int32]0
@@ -553,6 +567,68 @@ $Req10Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req10Output.TabIndex = [System.Int32]5
 $Req10Output.Text = [System.String]''
 #
+#tabPage1
+#
+$tabPage1.Controls.Add($DiagBack)
+$tabPage1.Controls.Add($DiagExport)
+$tabPage1.Controls.Add($DiagRefresh)
+$tabPage1.Controls.Add($DiagScriptList)
+$tabPage1.Controls.Add($DiagOutput)
+$tabPage1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
+$tabPage1.Name = [System.String]'tabPage1'
+$tabPage1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$tabPage1.TabIndex = [System.Int32]7
+$tabPage1.Text = [System.String]'Diagnostics'
+$tabPage1.UseVisualStyleBackColor = $true
+#
+#DiagBack
+#
+$DiagBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$DiagBack.Name = [System.String]'DiagBack'
+$DiagBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$DiagBack.TabIndex = [System.Int32]20
+$DiagBack.Text = [System.String]'Change Network Variables'
+$DiagBack.UseVisualStyleBackColor = $true
+$DiagBack.add_Click($AuxiliaryBack_Click)
+#
+#DiagExport
+#
+$DiagExport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$DiagExport.Name = [System.String]'DiagExport'
+$DiagExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$DiagExport.TabIndex = [System.Int32]19
+$DiagExport.Text = [System.String]'Export'
+$DiagExport.UseVisualStyleBackColor = $true
+#
+#DiagRefresh
+#
+$DiagRefresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$DiagRefresh.Name = [System.String]'DiagRefresh'
+$DiagRefresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$DiagRefresh.TabIndex = [System.Int32]18
+$DiagRefresh.Text = [System.String]'Refresh'
+$DiagRefresh.UseVisualStyleBackColor = $true
+$DiagRefresh.add_Click($DiagScriptList_ListUpdate)
+#
+#DiagScriptList
+#
+$DiagScriptList.FormattingEnabled = $true
+$DiagScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Diagnostics',[System.String]'Grab System Information',[System.String]'Grab Installed Software Patches',[System.String]'Grab IP Config',[System.String]'Check TCP Connectivity'))
+$DiagScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
+$DiagScriptList.Name = [System.String]'DiagScriptList'
+$DiagScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$DiagScriptList.TabIndex = [System.Int32]17
+$DiagScriptList.add_SelectedIndexChanged($DiagScriptList_ListUpdate)
+#
+#DiagOutput
+#
+$DiagOutput.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Lucida Console',[System.Single]9.75,[System.Drawing.FontStyle]::Regular,[System.Drawing.GraphicsUnit]::Point,([System.Byte][System.Byte]0)))
+$DiagOutput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
+$DiagOutput.Name = [System.String]'DiagOutput'
+$DiagOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$DiagOutput.TabIndex = [System.Int32]16
+$DiagOutput.Text = [System.String]''
+#
 #AuxiliaryForm
 #
 $AuxiliaryForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1584,[System.Int32]861))
@@ -570,6 +646,7 @@ $ReqTab5.ResumeLayout($false)
 $ReqTab7.ResumeLayout($false)
 $ReqTab8.ResumeLayout($false)
 $ReqTab10.ResumeLayout($false)
+$tabPage1.ResumeLayout($false)
 $AuxiliaryForm.ResumeLayout($false)
 Add-Member -InputObject $AuxiliaryForm -Name base -Value $base -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name AllTab -Value $AllTab -MemberType NoteProperty
@@ -616,6 +693,12 @@ Add-Member -InputObject $AuxiliaryForm -Name Req7Back -Value $Req7Back -MemberTy
 Add-Member -InputObject $AuxiliaryForm -Name Req8Back -Value $Req8Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req10Back -Value $Req10Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req7FolderBrowserDialog -Value $Req7FolderBrowserDialog -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name tabPage1 -Value $tabPage1 -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagBack -Value $DiagBack -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagExport -Value $DiagExport -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagRefresh -Value $DiagRefresh -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagScriptList -Value $DiagScriptList -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagOutput -Value $DiagOutput -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name button1 -Value $button1 -MemberType NoteProperty
 }
 . InitializeComponent
