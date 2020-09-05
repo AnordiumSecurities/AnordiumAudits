@@ -710,25 +710,46 @@ $Req5ScriptList_ListUpdate = {
 	#Grab System Information
 	Function DiagSysInfo{
 		$DiagOutput.AppendText("Grab System Information`n")
-
+		try{
+			$SystemInfoData = systeminfo | Out-String
+			$DiagOutput.AppendText($SystemInfoData)
+		}catch{
+			$DiagOutput.AppendText("Unable to Grab System Infomation`n")
+		}
 	}
 
 	#Grab Installed Software Patches
 	Function DiagInstalledUpdates {
 		$DiagOutput.AppendText("Grab Installed Software Patches`n")
-
+		try{
+			$UpdateData = Get-HotFix | Out-String
+			$DiagOutput.AppendText($UpdateData)
+		}catch{
+			$DiagOutput.AppendText("Unable to Grab Installed Software Patches`n")
+		}
 	}
 
 	#Grab IP Config
 	Function DiagIPConfig {
 		$DiagOutput.AppendText("Grab IP Config`n")
-
+		try{
+			$IPConfigData = ipconfig /all | Out-String 
+			$DiagOutput.AppendText($IPConfigData)
+		}catch{
+			$DiagOutput.AppendText("Unable to Grab IP Config`n")
+		}
 	}
 
 	#Check TCP Connectivity
 	Function DiagTCPConnectivity {
-		$DiagOutput.AppendText("Check TCP Connectivity`n")
-
+		$DiagOutput.AppendText("Check TCP Connectivity`nThis may take awhile.`n`n")
+		try{
+			$PingTest = ping "www.google.com" | Out-String
+			$TraceRouteTest = tracert "www.google.com" | Out-String
+			$DiagOutput.AppendText("Ping & Trace Route to www.google.com `n" + $PingTest + "`n" + $TraceRouteTest)
+		}catch{
+			$DiagOutput.AppendText("Unable to Check TCP Connectivity`n")
+		}
 	}
 
 	#onClick Event Handler
