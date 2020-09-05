@@ -208,7 +208,7 @@ $Req2Back.add_Click($AuxiliaryBack_Click)
 #Req2ScriptList
 #
 $Req2ScriptList.FormattingEnabled = $true
-$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'Sample Services for Default Vendor Passwords',[System.String]'Grab Running Services',[System.String]'Grab Listening Services',[System.String]'Grab Installed Software',[System.String]'Grab Installed Windows Features'))
+$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'Sample Services for Default Vendor Passwords',[System.String]'Grab Running Processes',[System.String]'Grab Running Services',[System.String]'Grab Listening Services',[System.String]'Grab Installed Software',[System.String]'Grab Installed Windows Features'))
 $Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
 $Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))

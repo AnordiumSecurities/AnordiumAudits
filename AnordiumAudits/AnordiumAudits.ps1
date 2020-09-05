@@ -49,43 +49,74 @@ $AllScriptList_ListUpdate = {
 
 # Requirement Two Tab
 	#Sample Services for Default Vendor Passwords
-	Function A{
-		$Req2Output.AppendText("A`n")
+	Function Req2SampleDefaultPasswords{
+		$Req2Output.AppendText("Sample Services for Default Vendor Passwords:`n")
+
+	}
+
+	#List of Runnning Processes
+	Function Req2RunningProcesses{
+		$Req2Output.AppendText("List of Running Processes:`n")
+		try{
+			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name | Format-Table -Autosize | Out-String -Width 1200
+			$Req2Output.AppendText($Req2ProcessList)
+		}catch{
+			$Req2Output.AppendText("Unable to List Running Processes.")
+		}
 	}
 
 	#List of Running Services
 	Function Req2RunningServices{
 		$Req2Output.AppendText("List of Running Services:`n")
-		$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name | Format-Table -Autosize | Out-String -Width 1200
-		$Req2Output.AppendText($Req2SvcListRunning)
+		try{
+			$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name | Format-Table -Autosize | Out-String -Width 1200
+			$Req2Output.AppendText($Req2SvcListRunning)
+		}catch{
+			$Req2Output.AppendText("Unable to List Running Serivces.")
+		}
 	}
 
 	#Grab Listening Services
 	Function Req2ListeningServices{
 		$Req2Output.AppendText("List of Listening Services:`n")
-		$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress | Format-Table -Autosize | Out-String -Width 1200
-		$Req2Output.AppendText($Req2SvcListListening)
+		try{
+			$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress | Format-Table -Autosize | Out-String -Width 1200
+			$Req2Output.AppendText($Req2SvcListListening)
+		}catch{
+			$Req2Output.AppendText("Unable to Grab Listening Services.")
+		}
 	}
 
 	#Grab Installed Software
 	Function Req2GrabInstalledSoftware{
 		$Req2Output.AppendText("List of Installed Software:`n")
-		$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName | Format-Table -Autosize | Out-String -Width 1200
-		$Req2Output.AppendText($Req2SoftwareList)
+		try{
+			$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName | Format-Table -Autosize | Out-String -Width 1200
+			$Req2Output.AppendText($Req2SoftwareList)
+		}catch{
+			$Req2Output.AppendText("Unable to Grab Installed Software.")
+		}
 	}
 
 	#Grab Installed Features
 	Function Req2GrabInstalledFeatures{
 		$Req2Output.AppendText("List of Installed Windows Features:`n")
-		$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
-		$Req2Output.AppendText($Req2FeatureList)
+		try{
+			$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
+			$Req2Output.AppendText($Req2FeatureList)
+		}catch{
+			$Req2Output.AppendText("Unable to Grab Installed Features.")
+		}
 	}
 
 	#onClick Event Handler
 	$Req2ScriptList_ListUpdate = {
 		if($Req2ScriptList.SelectedItem -eq "Sample Services for Default Vendor Passwords"){
 			$Req2Output.Clear()
-			A
+			Req2SampleDefaultPasswords
+		}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Processes"){
+			$Req2Output.Clear()
+			Req2RunningProcesses
 		}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Services"){
 			$Req2Output.Clear()
 			Req2RunningServices
@@ -101,6 +132,10 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
+			Req2SampleDefaultPasswords
+			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			Req2RunningProcesses
+			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req2RunningServices
 			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
 			Req2ListeningServices
@@ -670,6 +705,17 @@ $Req5ScriptList_ListUpdate = {
 			$Req10Output.AppendText("You must select an object from the script list.")
 		}
 	}
+
+# Extras Tab
+	#System Infomation
+
+	#Installed Updates
+
+	#IP Config
+
+	#TCP Connectivity
+
+	#onClick Event Handler
 
 #Join Path for Designers
 . (Join-Path $PSScriptRoot 'MainForm.designer.ps1')
