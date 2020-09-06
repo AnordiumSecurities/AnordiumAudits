@@ -51,7 +51,6 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$DiagRefresh = $null
 [System.Windows.Forms.ListBox]$DiagScriptList = $null
 [System.Windows.Forms.RichTextBox]$DiagOutput = $null
-[System.Windows.Forms.Button]$button1 = $null
 function InitializeComponent
 {
 $MainTabControl = (New-Object -TypeName System.Windows.Forms.TabControl)
@@ -247,6 +246,7 @@ $Req2Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sy
 $Req2Export.TabIndex = [System.Int32]1
 $Req2Export.Text = [System.String]'Export'
 $Req2Export.UseVisualStyleBackColor = $true
+$Req2Export.add_Click($Req2ExportReport)
 #
 #Req2Output
 #
@@ -699,6 +699,7 @@ Add-Member -InputObject $AuxiliaryForm -Name DiagExport -Value $DiagExport -Memb
 Add-Member -InputObject $AuxiliaryForm -Name DiagRefresh -Value $DiagRefresh -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagScriptList -Value $DiagScriptList -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagOutput -Value $DiagOutput -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req2ExportReport -Value $Req2ExportReport -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name button1 -Value $button1 -MemberType NoteProperty
 }
 . InitializeComponent
