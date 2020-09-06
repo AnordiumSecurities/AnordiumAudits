@@ -67,126 +67,105 @@ $AllScriptList_ListUpdate = {
 		}else{
 			$AllOutput.AppendText("Sample Services for Default Vendor Passwords:`n")
 		}
-
 	}
 
 	#List of Runnning Processes
 	Function Req2RunningProcesses{
+		try{
+			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
+			$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>"
+		}catch{
+			$Req2ProcessList = "Unable to List Running Processes."
+			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Processes</h2>"
+		}
+
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Running Processes:`n")
-			try{
-				$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
-				$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
-				$Req2Output.AppendText($Req2ProcessListRTB)
-
-				$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>"
-			}catch{
-				$Req2Output.AppendText("Unable to List Running Processes.")
-			}
+			$Req2Output.AppendText($Req2ProcessListRTB)
 		}else{
 			$AllOutput.AppendText("List of Running Processes:`n")
-			try{
-				$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name | Format-Table -Autosize | Out-String -Width 1200
-				$AllOutput.AppendText($Req2ProcessList)
-			}catch{
-				$AllOutput.AppendText("Unable to List Running Processes.")
-			}
+			$AllOutput.AppendText($Req2ProcessListRTB)
 		}
 	}
 
 	#List of Running Services
 	Function Req2RunningServices{
+		try{
+			$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name 
+			$Req2SvcListRunningRTB = $Req2SvcListRunning | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As Table -Property Status,Name,DisplayName -Fragment -PreContent "<h2>List of Running Services</h2>"
+				
+		}catch{
+			$Req2SvcListRunning = "Unable to List Running Serivces."
+			$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Services</h2>"
+		}
+
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Running Services:`n")
-			try{
-				$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name 
-				$Req2SvcListRunningRTB = $Req2SvcListRunning | Format-Table -Autosize | Out-String -Width 1200
-				$Req2Output.AppendText($Req2SvcListRunningRTB)
-
-				$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As Table -Property Status,Name,DisplayName -Fragment -PreContent "<h2>List of Running Services</h2>"
-				
-			}catch{
-				$Req2Output.AppendText("Unable to List Running Serivces.")
-			}
+			$Req2Output.AppendText($Req2SvcListRunningRTB)
 		}else{
 			$AllOutput.AppendText("List of Running Services:`n")
-			try{
-				$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name | Format-Table -Autosize | Out-String -Width 1200
-				$AllOutput.AppendText($Req2SvcListRunning)
-			}catch{
-				$AllOutput.AppendText("Unable to List Running Serivces.")
-			}
+			$AllOutput.AppendText($Req2SvcListRunningRTB)
 		}
 	}
 
 	#Grab Listening Services
 	Function Req2ListeningServices{
+		try{
+			$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress 
+			$Req2SvcListListeningRTB = $Req2SvcListListening | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As Table -Property LocalAddress,LocalPort,RemoteAddress,RemotePort,State,AppliedSetting,OwningProcess -Fragment -PreContent "<h2>Grab Listening Services</h2>"
+		}catch{
+			$Req2SvcListListening = "Unable to Grab Listening Services."
+			$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Listening Services</h2>"
+		}
+
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Listening Services:`n")
-			try{
-				$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress 
-				$Req2SvcListListeningRTB = $Req2SvcListListening | Format-Table -Autosize | Out-String -Width 1200
-				$Req2Output.AppendText($Req2SvcListListeningRTB)
-
-				$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As Table -Property LocalAddress,LocalPort,RemoteAddress,RemotePort,State,AppliedSetting,OwningProcess -Fragment -PreContent "<h2>Grab Listening Services</h2>"
-			}catch{
-				$Req2Output.AppendText("Unable to Grab Listening Services.")
-			}
+			$Req2Output.AppendText($Req2SvcListListeningRTB)
 		}else{
 			$AllOutput.AppendText("List of Listening Services:`n")
-			try{
-				$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress | Format-Table -Autosize | Out-String -Width 1200
-				$AllOutput.AppendText($Req2SvcListListening)
-			}catch{
-				$AllOutput.AppendText("Unable to Grab Listening Services.")
-			}
+			$AllOutput.AppendText($Req2SvcListListeningRTB)
 		}
 	}
 
 	#Grab Installed Software
 	Function Req2GrabInstalledSoftware{
+		try{
+			$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
+			$Req2SoftwareListRTB = $Req2SoftwareList | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Grab Installed Software</h2>"
+		}catch{
+			$Req2SoftwareList = "Unable to Grab Installed Software."
+			$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Installed Software</h2>"
+		}
+
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Installed Software:`n")
-			try{
-				$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
-				$Req2SoftwareListRTB = $Req2SoftwareList | Format-Table -Autosize | Out-String -Width 1200
-				$Req2Output.AppendText($Req2SoftwareListRTB)
-
-				$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Grab Installed Software</h2>"
-			}catch{
-				$Req2Output.AppendText("Unable to Grab Installed Software.")
-			}
+			$Req2Output.AppendText($Req2SoftwareListRTB)
 		}else{
 			$AllOutput.AppendText("List of Installed Software:`n")
-			try{
-				$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName | Format-Table -Autosize | Out-String -Width 1200
-				$AllOutput.AppendText($Req2SoftwareList)
-			}catch{
-				$AllOutput.AppendText("Unable to Grab Installed Software.")
-			}
+			$AllOutput.AppendText($Req2SoftwareListRTB)
 		}
 	}
 
 	#Grab Installed Features
 	Function Req2GrabInstalledFeatures{
+		try{
+			$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2FeatureListHTML = Get-WindowsFeature | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>List of Installed Windows Features</h2>"
+		}catch{
+			$Req2FeatureList = "Unable to Grab Installed Features."
+			$Global:Req2FeatureListHTML = $Req2FeatureList | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Installed Windows Features</h2>"
+		}
+
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Installed Windows Features:`n")
-			try{
-				$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
-				$Req2Output.AppendText($Req2FeatureList)
-
-				$Global:Req2FeatureListRTB = Get-WindowsFeature | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>List of Installed Windows Features</h2>"
-			}catch{
-				$Req2Output.AppendText("Unable to Grab Installed Features.")
-			}
+			$Req2Output.AppendText($Req2FeatureList)
 		}else{
 			$AllOutput.AppendText("List of Installed Windows Features:`n")
-			try{
-				$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
-				$AllOutput.AppendText($Req2FeatureList)
-			}catch{
-				$AllOutput.AppendText("Unable to Grab Installed Features.")
-			}
+			$AllOutput.AppendText($Req2FeatureList)
 		}
 	}
 
@@ -233,20 +212,20 @@ $AllScriptList_ListUpdate = {
 	#Requirement Two Report Export
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListRTB" -Title "PCI DSS Requirement Two Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Title "PCI DSS Requirement Two Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
 		$Requirement2Report | Out-File C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\PCI-DSS-Requirement-Two-Report.html
 		$Req2Output.AppendText("Requirement Two Report Exported")
 	}
 	$Req2ExportReport = {
 			$Req2Output.Clear()
-			$Req2Output.AppendText("Writing Report for the Following:`n")
+			$Req2Output.AppendText("Writing Report for the Following`n")
 			Req2RunningProcesses
 			Req2RunningServices
 			Req2ListeningServices
 			Req2GrabInstalledSoftware
 			Req2GrabInstalledFeatures
 			Req2ExportReportFunction
-		}
+	}
 
 # Requirement Four Tab
 	# Analyse Wi-Fi Envrioment
@@ -273,7 +252,6 @@ $AllScriptList_ListUpdate = {
 		}catch{
 			$Req4Output.AppendText("Something went wrong, Could not get keys or certs.")
 		}
-
 	}
 
 	#onClick Event Handler
@@ -367,12 +345,12 @@ $Req5ScriptList_ListUpdate = {
 	#Folder Input
 	Function Req7FolderInput {
 		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
-			if($FilePopupTmp -eq "OK"){    
-				$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
-			}else{
-				$Req7Output.AppendText("`nInvalid Folder Selected`n")
-			}
+		if($FilePopupTmp -eq "OK"){    
+			$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
+		}else{
+			$Req7Output.AppendText("`nInvalid Folder Selected`n")
 		}
+	}
 
 	#Grab and analyse folder permissions that hold sensitive data
 	Function Req7FolderPrems {

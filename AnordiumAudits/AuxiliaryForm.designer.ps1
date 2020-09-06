@@ -45,11 +45,11 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$Req8Back = $null
 [System.Windows.Forms.Button]$Req10Back = $null
 [System.Windows.Forms.FolderBrowserDialog]$Req7FolderBrowserDialog = $null
-[System.Windows.Forms.TabPage]$tabPage1 = $null
 [System.Windows.Forms.Button]$DiagBack = $null
 [System.Windows.Forms.Button]$DiagExport = $null
 [System.Windows.Forms.Button]$DiagRefresh = $null
 [System.Windows.Forms.ListBox]$DiagScriptList = $null
+[System.Windows.Forms.TabPage]$DiagTab = $null
 [System.Windows.Forms.RichTextBox]$DiagOutput = $null
 function InitializeComponent
 {
@@ -96,7 +96,7 @@ $Req10Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req10Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
-$tabPage1 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$DiagTab = (New-Object -TypeName System.Windows.Forms.TabPage)
 $DiagBack = (New-Object -TypeName System.Windows.Forms.Button)
 $DiagExport = (New-Object -TypeName System.Windows.Forms.Button)
 $DiagRefresh = (New-Object -TypeName System.Windows.Forms.Button)
@@ -111,7 +111,7 @@ $ReqTab5.SuspendLayout()
 $ReqTab7.SuspendLayout()
 $ReqTab8.SuspendLayout()
 $ReqTab10.SuspendLayout()
-$tabPage1.SuspendLayout()
+$DiagTab.SuspendLayout()
 $AuxiliaryForm.SuspendLayout()
 #
 #MainTabControl
@@ -123,12 +123,13 @@ $MainTabControl.Controls.Add($ReqTab5)
 $MainTabControl.Controls.Add($ReqTab7)
 $MainTabControl.Controls.Add($ReqTab8)
 $MainTabControl.Controls.Add($ReqTab10)
-$MainTabControl.Controls.Add($tabPage1)
+$MainTabControl.Controls.Add($DiagTab)
 $MainTabControl.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]0))
 $MainTabControl.Name = [System.String]'MainTabControl'
 $MainTabControl.SelectedIndex = [System.Int32]0
 $MainTabControl.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1580,[System.Int32]860))
 $MainTabControl.TabIndex = [System.Int32]0
+$MainTabControl.add_Selected($MainTabControl_IndexChanged)
 #
 #AllTab
 #
@@ -567,19 +568,19 @@ $Req10Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req10Output.TabIndex = [System.Int32]5
 $Req10Output.Text = [System.String]''
 #
-#tabPage1
+#DiagTab
 #
-$tabPage1.Controls.Add($DiagBack)
-$tabPage1.Controls.Add($DiagExport)
-$tabPage1.Controls.Add($DiagRefresh)
-$tabPage1.Controls.Add($DiagScriptList)
-$tabPage1.Controls.Add($DiagOutput)
-$tabPage1.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
-$tabPage1.Name = [System.String]'tabPage1'
-$tabPage1.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
-$tabPage1.TabIndex = [System.Int32]7
-$tabPage1.Text = [System.String]'Diagnostics'
-$tabPage1.UseVisualStyleBackColor = $true
+$DiagTab.Controls.Add($DiagBack)
+$DiagTab.Controls.Add($DiagExport)
+$DiagTab.Controls.Add($DiagRefresh)
+$DiagTab.Controls.Add($DiagScriptList)
+$DiagTab.Controls.Add($DiagOutput)
+$DiagTab.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
+$DiagTab.Name = [System.String]'DiagTab'
+$DiagTab.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$DiagTab.TabIndex = [System.Int32]7
+$DiagTab.Text = [System.String]'Diagnostics'
+$DiagTab.UseVisualStyleBackColor = $true
 #
 #DiagBack
 #
@@ -646,7 +647,7 @@ $ReqTab5.ResumeLayout($false)
 $ReqTab7.ResumeLayout($false)
 $ReqTab8.ResumeLayout($false)
 $ReqTab10.ResumeLayout($false)
-$tabPage1.ResumeLayout($false)
+$DiagTab.ResumeLayout($false)
 $AuxiliaryForm.ResumeLayout($false)
 Add-Member -InputObject $AuxiliaryForm -Name base -Value $base -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name AllTab -Value $AllTab -MemberType NoteProperty
@@ -693,13 +694,11 @@ Add-Member -InputObject $AuxiliaryForm -Name Req7Back -Value $Req7Back -MemberTy
 Add-Member -InputObject $AuxiliaryForm -Name Req8Back -Value $Req8Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req10Back -Value $Req10Back -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name Req7FolderBrowserDialog -Value $Req7FolderBrowserDialog -MemberType NoteProperty
-Add-Member -InputObject $AuxiliaryForm -Name tabPage1 -Value $tabPage1 -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagBack -Value $DiagBack -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagExport -Value $DiagExport -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagRefresh -Value $DiagRefresh -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagScriptList -Value $DiagScriptList -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagTab -Value $DiagTab -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagOutput -Value $DiagOutput -MemberType NoteProperty
-Add-Member -InputObject $AuxiliaryForm -Name Req2ExportReport -Value $Req2ExportReport -MemberType NoteProperty
-Add-Member -InputObject $AuxiliaryForm -Name button1 -Value $button1 -MemberType NoteProperty
 }
 . InitializeComponent
