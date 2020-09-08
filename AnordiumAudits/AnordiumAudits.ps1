@@ -34,6 +34,7 @@ $AuxiliaryBack_Click = {
 
 # Everything Tab
 $EverythingToggle = $false
+$Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -42,15 +43,15 @@ $AllScriptList_ListUpdate = {
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			Req2SampleDefaultPasswords
-			$AllOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
-			$AllOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningServices
-			$AllOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2ListeningServices
-			$AllOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledSoftware
-			$AllOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 
 	}else{
@@ -76,8 +77,8 @@ $AllScriptList_ListUpdate = {
 			$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>"
 		}catch{
-			$Req2ProcessList = "Unable to List Running Processes."
-			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Processes</h2>"
+			$Req2ProcessListRTB = "Unable to List Running Processes."
+			$Global:Req2ProcessListHTML = $Req2ProcessListRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Processes</h2>"
 		}
 
 		if($EverythingToggle -eq $false){
@@ -97,8 +98,8 @@ $AllScriptList_ListUpdate = {
 			$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As Table -Property Status,Name,DisplayName -Fragment -PreContent "<h2>List of Running Services</h2>"
 				
 		}catch{
-			$Req2SvcListRunning = "Unable to List Running Serivces."
-			$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Services</h2>"
+			$Req2SvcListRunningRTB = "Unable to List Running Serivces."
+			$Global:Req2SvcListRunningHTML = $Req2SvcListRunningRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Services</h2>"
 		}
 
 		if($EverythingToggle -eq $false){
@@ -117,8 +118,8 @@ $AllScriptList_ListUpdate = {
 			$Req2SvcListListeningRTB = $Req2SvcListListening | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As Table -Property LocalAddress,LocalPort,RemoteAddress,RemotePort,State,AppliedSetting,OwningProcess -Fragment -PreContent "<h2>Grab Listening Services</h2>"
 		}catch{
-			$Req2SvcListListening = "Unable to Grab Listening Services."
-			$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Listening Services</h2>"
+			$Req2SvcListListeningRTB = "Unable to Grab Listening Services."
+			$Global:Req2SvcListListeningHTML = $Req2SvcListListeningRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Listening Services</h2>"
 		}
 
 		if($EverythingToggle -eq $false){
@@ -137,8 +138,8 @@ $AllScriptList_ListUpdate = {
 			$Req2SoftwareListRTB = $Req2SoftwareList | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Grab Installed Software</h2>"
 		}catch{
-			$Req2SoftwareList = "Unable to Grab Installed Software."
-			$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Installed Software</h2>"
+			$Req2SoftwareListRTB = "Unable to Grab Installed Software."
+			$Global:Req2SoftwareListHTML = $Req2SoftwareListRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Installed Software</h2>"
 		}
 
 		if($EverythingToggle -eq $false){
@@ -193,15 +194,15 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
 			Req2SampleDefaultPasswords
-			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
-			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2RunningServices
-			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2ListeningServices
-			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledSoftware
-			$Req2Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 		}else{
 			$Req2Output.Clear()
@@ -218,11 +219,15 @@ $AllScriptList_ListUpdate = {
 	}
 	$Req2ExportReport = {
 			$Req2Output.Clear()
-			$Req2Output.AppendText("Writing Report for the Following`n")
+			$Req2Output.AppendText("Writing Report for the Following`n`n")
 			Req2RunningProcesses
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2RunningServices
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2ListeningServices
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledSoftware
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			Req2ExportReportFunction
 	}
@@ -230,27 +235,51 @@ $AllScriptList_ListUpdate = {
 # Requirement Four Tab
 	# Analyse Wi-Fi Envrioment
 	Function Req4WifiScan {
-		$Req4Output.AppendText("List of Wi-Fi Networks:`n")
 		try{
 			$Req4WifiList = netsh wlan show networks mode=Bssid | Format-Table -Autosize | Out-String -Width 1200
-			$Req4Output.AppendText($Req4WifiList)
+			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
 		}catch{
-			$Req4Output.AppendText("Unable to find Wi-Fi Networks")
+			$Req4WifiList = "Unable to find Wi-Fi Networks"
+			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As List -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
+		}
+
+		if($EverythingToggle -eq $false){
+			$Req4Output.AppendText("List of Wi-Fi Networks:`n")
+			$Req4Output.AppendText($Req4WifiList)
+		}else{
+			$AllOutput.AppendText("List of Wi-Fi Networks:`n")
+			$AllOutput.AppendText($Req4WifiList)
 		}
 	}
 
 	# Analyse Keys and Certificates
 	Function Req4GetKeysAndCerts{
 		try{
-			$Req4LocalMachineCerts = Get-ChildItem -Recurse -path cert:\LocalMachine | Format-List | Out-String
-			$Req4CurrentUserCerts = Get-ChildItem -Recurse -path cert:\CurrentUser | Format-List | Out-String
-			$Req4Output.AppendText("List of Keys and Certificates:`nLocal Machine Certificates:`n")
-			$Req4Output.AppendText($Req4LocalMachineCerts)
-			$Req4Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
-			$Req4Output.AppendText("Current User Certificates:`n")
-			$Req4Output.AppendText($Req4CurrentUserCerts)
+			$Req4LocalMachineCerts = Get-ChildItem -Recurse -path cert:\LocalMachine
+			$Req4CurrentUserCerts = Get-ChildItem -Recurse -path cert:\CurrentUser
+			$Req4LocalMachineCertsRTB = $Req4LocalMachineCerts | Format-List | Out-String
+			$Req4CurrentUserCertsRTB = $Req4CurrentUserCerts | Format-List | Out-String
+			$Global:Req4LocalMachineCertsHTML = $Req4LocalMachineCerts | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3>"
+			$Global:Req4CurrentUserCertsHTML = $Req4CurrentUserCerts | ConvertTo-Html -As List -Fragment -PreContent "<h2>Current User Certificates</h2>"
 		}catch{
-			$Req4Output.AppendText("Something went wrong, Could not get keys or certs.")
+			$Req4LocalMachineCertsRTB = "Something went wrong, Could not get keys or certs."
+			$Req4CurrentUserCertsRTB = "Something went wrong, Could not get keys or certs."
+			$Global:Req4LocalMachineCertsHTML = $Req4LocalMachineCertsRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3>"
+			$Global:Req4CurrentUserCertsHTML = $Req4CurrentUserCertsRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>Current User Certificates</h2>"
+		}
+
+		if($EverythingToggle -eq $false){
+			$Req4Output.AppendText("`nList of Keys and Certificates:`nLocal Machine Certificates:`n")
+			$Req4Output.AppendText($Req4LocalMachineCertsRTB)
+			$Req4Output.AppendText($Global:SectionHeader)
+			$Req4Output.AppendText("Current User Certificates:`n")
+			$Req4Output.AppendText($Req4CurrentUserCertsRTB)
+		}else{
+			$AllOutput.AppendText("List of Keys and Certificates:`nLocal Machine Certificates:`n")
+			$AllOutput.AppendText($Req4LocalMachineCertsRTB)
+			$AllOutput.AppendText($Global:SectionHeader)
+			$AllOutput.AppendText("Current User Certificates:`n")
+			$AllOutput.AppendText($Req4CurrentUserCertsRTB)
 		}
 	}
 
@@ -266,12 +295,28 @@ $AllScriptList_ListUpdate = {
 			$Req4Output.Clear()
 			$Req4Output.AppendText("Everything in Requirement Four`n")
 			Req4WifiScan
-			$Req4Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req4Output.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
 		}else{
 			$Req4Output.Clear()
 			$Req4Output.AppendText("You must select an object from the script list.")
 		}
+	}
+
+	#Requirement Four Report Export
+	Function Req4ExportReportFunction {
+		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
+		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Title "PCI DSS Requirement Four Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
+		$Requirement4Report | Out-File C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\PCI-DSS-Requirement-Four-Report.html
+		$Req4Output.AppendText("Requirement Four Report Exported")
+	}
+	$Req4ExportReport = {
+			$Req4Output.Clear()
+			$Req4Output.AppendText("Writing Report for the Following`n`n")
+			Req4WifiScan
+			$Req4Output.AppendText($Global:SectionHeader)
+			Req4GetKeysAndCerts
+			Req4ExportReportFunction
 	}
 
 # Requirement Five Tab
@@ -287,20 +332,20 @@ $AllScriptList_ListUpdate = {
 			}else{
 				$Req5Output.AppendText($AVProgramQuery)
 			}
-		$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		$Req5Output.AppendText($Global:SectionHeader)
 		$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
 		
 		if($global:Req5Switch -eq $true){
-			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
-			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("Check end user permissions to modify antivirus software")
 			$global:Req5Switch = $false
-			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
 			$Req5Output.AppendText($global:GPODump)
 		}else{
-			$Req5Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
 			$Req5Output.AppendText($global:GPODump)
 		}
@@ -438,11 +483,11 @@ $Req5ScriptList_ListUpdate = {
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
 				Req7FolderInput
 				Req7FolderPrems
-				$Req7Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req7Output.AppendText($Global:SectionHeader)
 				Req7DenyAll
-				$Req7Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req7Output.AppendText($Global:SectionHeader)
 				Req7UserPriviledges
-				$Req7Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req7Output.AppendText($Global:SectionHeader)
 		}else{
 			$Req7Output.Clear()
 			$Req7Output.AppendText("You must select an object from the script list.")
@@ -633,31 +678,31 @@ $Req5ScriptList_ListUpdate = {
 				$Req8Output.Clear()
 				$Req8Output.AppendText("Everything in Requirement Eight`n")
 				Req8DomainPasswordPolicy
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8LocalPasswordPolicy
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpActiveADUsers
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpDisabledADUsers
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpInactiveADUsers
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8GrabCurrentUser
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8GrabLocalAdmins
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8GrabDomainAdmins
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpADUsersPasswordExpiry
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpADUserLastPassChange
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8GrabScreensaverSettings
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8GrabRDPSettings
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 				Req8CheckForMFA
-				$Req8Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+				$Req8Output.AppendText($Global:SectionHeader)
 			}else{
 				$Req8Output.Clear()
 				$Req8Output.AppendText("You must select an object from the script list.")
@@ -728,7 +773,7 @@ $Req5ScriptList_ListUpdate = {
 		}catch{
 			$Req10Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
 		}
-		$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+		$Req10Output.AppendText($Global:SectionHeader)
 		$Req10Output.AppendText("GPO Dump")
 		$Req10Output.AppendText($global:GPODump)
 	}
@@ -768,15 +813,15 @@ $Req5ScriptList_ListUpdate = {
 			$Req10Output.Clear()
 			$Req10Output.AppendText("Everything in Requirement Ten`n")
 			Req10AuditSettings
-			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req10Output.AppendText($Global:SectionHeader)
 			Req10NTPSettings
-			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req10Output.AppendText($Global:SectionHeader)
 			Req10NTPSettingsMultipleDevices
-			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req10Output.AppendText($Global:SectionHeader)
 			Req10AuditLogPrems
-			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req10Output.AppendText($Global:SectionHeader)
 			Req10PastAuditLogs
-			$Req10Output.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$Req10Output.AppendText($Global:SectionHeader)
 		}else{
 			$Req10Output.Clear()
 			$Req10Output.AppendText("You must select an object from the script list.")
@@ -847,13 +892,13 @@ $Req5ScriptList_ListUpdate = {
 			$DiagOutput.Clear()
 			$DiagOutput.AppendText("Everything in Diagnostics`n")
 			DiagSysInfo
-			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$DiagOutput.AppendText($Global:SectionHeader)
 			DiagInstalledUpdates
-			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$DiagOutput.AppendText($Global:SectionHeader)
 			DiagIPConfig
-			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$DiagOutput.AppendText($Global:SectionHeader)
 			DiagTCPConnectivity
-			$DiagOutput.AppendText("`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n")
+			$DiagOutput.AppendText($Global:SectionHeader)
 		}else{
 			$DiagOutput.Clear()
 			$DiagOutput.AppendText("You must select an object from the script list.")
