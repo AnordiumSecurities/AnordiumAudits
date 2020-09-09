@@ -35,12 +35,14 @@ $AuxiliaryBack_Click = {
 # Everything Tab
 $EverythingToggle = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
+$Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
 		$AllOutput.Clear()
 		$EverythingToggle = $true
 		#Call Requirement Two Functions
+			$AllOutput.AppendText("Gathering Infomation for Everything.`nBe patient and do not tab away. This may take awhile. `n")
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			Req2SampleDefaultPasswords
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -53,7 +55,12 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
-
+			$AllOutput.AppendText($Global:SectionBreak)
+			$AllOutput.AppendText("Everything in Requirement Four `n")
+			Req4WifiScan
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req4GetKeysAndCerts
+			$AllOutput.AppendText($Global:SectionBreak)
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("You must select an object from the script list.")
@@ -240,7 +247,7 @@ $AllScriptList_ListUpdate = {
 			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
 		}catch{
 			$Req4WifiList = "Unable to find Wi-Fi Networks"
-			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As List -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
+			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Property @{ l='Name'; e={ $_ } } -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
 		}
 
 		if($EverythingToggle -eq $false){
@@ -339,7 +346,7 @@ $AllScriptList_ListUpdate = {
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5Output.AppendText("Check end user permissions to modify antivirus software")
+			$Req5Output.AppendText("Check end user permissions to modify antivirus software in GPO")
 			$global:Req5Switch = $false
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
@@ -359,7 +366,7 @@ $AllScriptList_ListUpdate = {
 
 	# Check end user permissions to modify antivirus software
 	Function Req5AVPermissions {
-		$Req5Output.AppendText("Check end user permissions to modify antivirus software`n")
+		$Req5Output.AppendText("Check end user permissions to modify antivirus software in GPO Dump`n")
 		$Req5Output.AppendText($global:GPODump)
 	}
 
