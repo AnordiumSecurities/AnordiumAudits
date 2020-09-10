@@ -417,7 +417,7 @@ $AllScriptList_ListUpdate = {
 		$Req5Output.AppendText($global:GPODump)
 	}
 
-	# onClick Event Handler
+	# onClick Event Han
 	$Req5ScriptList_ListUpdate = {
 		if($Req5ScriptList.SelectedItem -eq "Antivirus Program and GPO Analysis"){
 			$Req5Output.Clear()
@@ -465,56 +465,64 @@ $AllScriptList_ListUpdate = {
 		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
 		if($FilePopupTmp -eq "OK"){    
 			$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
-		}else{
-			$Req7Output.AppendText("`nInvalid Folder Selected`n")
 		}
 	}
 
 	#Grab and analyse folder permissions that hold sensitive data
 	Function Req7FolderPrems {
-		$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
-		$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
-			try{
-				$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
-				$Req7Output.AppendText($LocalFolderPrems)
-			}catch{
-					$Req7Output.AppendText("Error")
-			}
-
-		$Req7Output.AppendText("`nNetwork folder permissions...`n")
-		$SharesArray = New-Object System.Collections.ArrayList
-		$SambaShare = (Get-SmbShare).Path
-
-		$SambaSwitch = $false
-
-			foreach($SambaPath in $SambaShare){
-				$SharesArray.Add($SambaPath.Name)
-				if($SambaPath -eq $Global:FilePathFilePopupTmp){
-					$SambaSwitch = $true
+		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
+			$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+			$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
+				try{
+					$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
+					$Req7Output.AppendText($LocalFolderPrems)
+				}catch{
+						$Req7Output.AppendText("Error")
 				}
-			}
-			if($SambaSwitch -eq $true){
-				$SambaShareName = (Get-SMBShare | Where-Object -Property Path -eq $Global:FilePathFilePopupTmp).Name
-				$SambaShareStatus = Get-SmbShareAccess $SambaShareName | Out-String
-				$Req7Output.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
-				$Req7Output.AppendText($SambaShareStatus)
-			}else{
-				$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
-			}
+
+			$Req7Output.AppendText("`nNetwork folder permissions...`n")
+			$SharesArray = New-Object System.Collections.ArrayList
+			$SambaShare = (Get-SmbShare).Path
+
+			$SambaSwitch = $false
+
+				foreach($SambaPath in $SambaShare){
+					$SharesArray.Add($SambaPath.Name)
+					if($SambaPath -eq $Global:FilePathFilePopupTmp){
+						$SambaSwitch = $true
+					}
+				}
+				if($SambaSwitch -eq $true){
+					$SambaShareName = (Get-SMBShare | Where-Object -Property Path -eq $Global:FilePathFilePopupTmp).Name
+					$SambaShareStatus = Get-SmbShareAccess $SambaShareName | Out-String
+					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
+					$Req7Output.AppendText($SambaShareStatus)
+				}else{
+					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
+				}
+		}else{
+			$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+			$Req7Output.AppendText("`nInvalid Folder Selected`n")
 		}
+	}
 	
 	# Check for deny all permissions
 	Function Req7DenyAll {
+		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
 		$Req7Output.AppendText("Check for deny all permissions`n")
-		try{
-			$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl | Format-List | Out-String
-			if([string]::IsNullOrEmpty($Req7FolderPerms)){
-				$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
-			}else{
-				$Req7Output.AppendText($Req7FolderPerms)
+			try{
+				$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl | Format-List | Out-String
+				if([string]::IsNullOrEmpty($Req7FolderPerms)){
+					$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+				}else{
+					$Req7Output.AppendText($Req7FolderPerms)
+				}
+			}catch{
+				$Req7Output.AppendText("`nSomething went wrong...`n")
 			}
-		}catch{
-			$Req7Output.AppendText("`nSomething went wrong...`n")
+		}else{
+			$Req7Output.AppendText("Check for deny all permissions`n")
+			$Req7Output.AppendText("`nInvalid Folder Selected`n")
 		}
 	}
 
@@ -551,7 +559,7 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
 			$Req7Output.Clear()
 			Req7UserPriviledges
-		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
+		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven`n"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
 				Req7FolderInput
