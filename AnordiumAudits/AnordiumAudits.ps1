@@ -10,9 +10,13 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 #Global GPO Result Function
 Function GPResults{
-	$global:GPODump = gpresult.exe /SCOPE COMPUTER /Z | Format-Table -Autosize | Out-String -Width 1200
+	$Global:GPODumpExe = gpresult.exe /SCOPE COMPUTER /Z
+	$Global:GPODump = $Global:GPODumpExe | Format-Table -Autosize | Out-String -Width 1200
+	$Global:GPODumpHTML = $Global:GPODumpExe | ConvertTo-Html -As List -Fragment -PreContent "<h2>GPO Dump</h2>"
+
 	if([string]::IsNullOrEmpty($global:GPODump)){
-		$global:GPODump = "Error"
+		$Global:GPODump = "Error"
+		$Global:GPODumpHTML = $Global:GPODump | ConvertTo-Html -As Table -Fragment -PreContent "<h2>GPO Dump</h2>"
 	}
 }
 
@@ -327,30 +331,63 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Five Tab
-	$Global:Req5Switch = $false 
+	$Global:Req5AllSwitch = $false 
 	# Antivirus Program and GPO Analysis
 	Function Req5AVSettingsAndGPO {
-		$Req5Output.AppendText("List of AV Programs Detected. (This may take a while):`n")
-		$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
+		if($EverythingToggle -eq $false){
+			$Req5Output.AppendText("List of Anti-Virus Programs Detected. This may take a while.`n")
+		}else{
+			$AllOutput.AppendText("List of Anti-Virus Programs Detected. This may take a while.`n")
+		}
+
+		try{
+			$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name
+			$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Antivirus Program and GPO Analysis</h2><h3>List of Anti-Virus Programs Detected</h3>"
+
 			if([string]::IsNullOrEmpty($AVProgramQuery)){
-				$Req5Output.AppendText("No AV detected, Here is the list of all programs detected and a GPO Dump for futher analysis. (This may take a while):`n")
-				$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version,InstallDate | Sort-Object Vendor,Name | Format-Table -Autosize | Out-String -Width 1200
-				$Req5Output.AppendText($AVProgramQuery)
+				$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version,InstallDate | Sort-Object Vendor,Name
+				$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
+				$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Antivirus Program and GPO Analysis</h2><h3>No Anti-Virus detected, Here is the list of all programs detected</h3>"
+
+				if($EverythingToggle -eq $false){
+					$Req5Output.AppendText("No Anti-Virus detected, Here is the list of all programs detected and a GPO Dump for futher analysis:`n")
+					$Req5Output.AppendText($AVProgramQueryRTB)
+					$Req5Output.AppendText($Global:SectionHeader)
+					$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
+				}else{
+					$AllOutput.AppendText("No AntiVirus detected, Here is the list of all programs detected and check the GPO Dump section for futher analysis.`n")
+					$AllOutput.AppendText($AVProgramQueryRTB)
+				}
 			}else{
-				$Req5Output.AppendText($AVProgramQuery)
+				if($EverythingToggle -eq $false){
+					$Req5Output.AppendText($AVProgramQueryRTB)
+				}else{
+					$AllOutput.AppendText($AVProgramQueryRTB)
+				}
 			}
-		$Req5Output.AppendText($Global:SectionHeader)
-		$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
-		
-		if($global:Req5Switch -eq $true){
+		}catch{
+			if($EverythingToggle -eq $false){
+				$Req5Output.AppendText("List of Anti-Virus Programs Failed. Something went wrong.`n")
+			}else{
+				$AllOutput.AppendText("List of Anti-Virus Programs Failed. Something went wrong.`n")
+			}
+		}
+
+		# Req 5 Everything Switch
+		if($global:Req5AllSwitch -eq $true){
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
+			$Req5SoftwareDeploymentString = "Check GPO Dump for Software Deployment Settings in Organization"
+			$Req5Output.AppendText($Req5SoftwareDeploymentString)
+			$Global:Req5SoftwareDeploymentHTML = $Req5SoftwareDeploymentString | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Grab Software Deployment Settings in Organization</h2>"
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5Output.AppendText("Check end user permissions to modify antivirus software in GPO")
-			$global:Req5Switch = $false
+			$Req5AVPermsString = "Check end user permissions to modify antivirus software in GPO"
+			$Req5Output.AppendText($Req5AVPermsString)
+			$Global:Req5AVPermsHTML = $Req5AVPermsString | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Check end user permissions to modify antivirus software</h2>"
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
-			$Req5Output.AppendText($global:GPODump)
+			$Req5Output.AppendText($Global:GPODump)
+			$Global:Req5AllSwitch = $false
 		}else{
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
@@ -370,28 +407,47 @@ $AllScriptList_ListUpdate = {
 		$Req5Output.AppendText($global:GPODump)
 	}
 
-# onClick Event Handler
-$Req5ScriptList_ListUpdate = {
-	if($Req5ScriptList.SelectedItem -eq "Antivirus Program and GPO Analysis"){
-		$Req5Output.Clear()
-		Req5AVSettingsAndGPO
-	}elseif($Req5ScriptList.SelectedItem -eq "Grab Software Deployment Settings in Organization"){
-		$Req5Output.Clear()
-		Req5SoftwareDeployment
-	}elseif($Req5ScriptList.SelectedItem -eq "Check end user permissions to modify antivirus software"){
-		$Req5Output.Clear()
-		$Req5Output.AppendText("Check end user permissions to modify antivirus software")
-		Req5AVPermissions
-	}elseif($Req5ScriptList.SelectedItem -eq "Everything in Requirement Five"){
-		$Req5Output.Clear()
-		$Req5Output.AppendText("Everything in Requirement Five`n")
-		$Global:Req5Switch = $true
-		Req5AVSettingsAndGPO
-	}else{
-		$Req5Output.Clear()
-		$Req5Output.AppendText("You must select an object from the script list.")
+	# onClick Event Handler
+	$Req5ScriptList_ListUpdate = {
+		if($Req5ScriptList.SelectedItem -eq "Antivirus Program and GPO Analysis"){
+			$Req5Output.Clear()
+			Req5AVSettingsAndGPO
+		}elseif($Req5ScriptList.SelectedItem -eq "Grab Software Deployment Settings in Organization"){
+			$Req5Output.Clear()
+			Req5SoftwareDeployment
+		}elseif($Req5ScriptList.SelectedItem -eq "Check end user permissions to modify antivirus software"){
+			$Req5Output.Clear()
+			$Req5Output.AppendText("Check end user permissions to modify antivirus software")
+			Req5AVPermissions
+		}elseif($Req5ScriptList.SelectedItem -eq "Everything in Requirement Five"){
+			$Req5Output.Clear()
+			$Req5Output.AppendText("Everything in Requirement Five`n")
+			$Global:Req5AllSwitch = $true
+			Req5AVSettingsAndGPO
+		}else{
+			$Req5Output.Clear()
+			$Req5Output.AppendText("You must select an object from the script list.")
+		}
 	}
-}
+
+	#Requirement Five Report Export
+	Function Req5ExportReportFunction {
+		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
+		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Five Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
+		$Requirement5Report | Out-File C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\PCI-DSS-Requirement-Five-Report.html
+		$Req5Output.AppendText("`nRequirement Five Report Exported")
+	}
+	$Req5ExportReport = {
+			$Req5Output.Clear()
+			$Req5Output.AppendText("Writing Report for the Following`n`n")
+			$Global:Req5AllSwitch = $true
+			Req5AVSettingsAndGPO
+			$Req5Output.AppendText($Global:SectionHeader)
+			Req5SoftwareDeployment
+			$Req5Output.AppendText($Global:SectionHeader)
+			Req5AVPermissions
+			Req5ExportReportFunction
+	}
 
 # Requirement Seven Tab
 	#Folder Input

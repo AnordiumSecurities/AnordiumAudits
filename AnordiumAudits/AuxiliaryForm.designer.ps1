@@ -353,6 +353,7 @@ $Req5Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sy
 $Req5Export.TabIndex = [System.Int32]8
 $Req5Export.Text = [System.String]'Export'
 $Req5Export.UseVisualStyleBackColor = $true
+$Req5Export.add_Click($Req5ExportReport)
 #
 #Req5Refresh
 #
@@ -367,7 +368,7 @@ $Req5Refresh.add_Click($Req5ScriptList_ListUpdate)
 #Req5ScriptList
 #
 $Req5ScriptList.FormattingEnabled = $true
-$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'Grab Windows Defender Settings from GPO',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
+$Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'Antivirus Program and GPO Analysis',[System.String]'Grab Software Deployment Settings in Organization',[System.String]'Check end user permissions to modify antivirus software'))
 $Req5ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req5ScriptList.Name = [System.String]'Req5ScriptList'
 $Req5ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
