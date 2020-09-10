@@ -45,9 +45,10 @@ $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
 		$AllOutput.Clear()
 		$EverythingToggle = $true
-		#Call Requirement Two Functions
+		# Getting Ready
 			$AllOutput.AppendText("Gathering Infomation for Everything.`nBe patient and do not tab away. This may take awhile. `n")
 			$AllOutput.AppendText($Global:SectionBreak)
+		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			Req2SampleDefaultPasswords
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -61,14 +62,26 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
 			Req4WifiScan
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
 			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Five Functions
 			$AllOutput.AppendText("Everything in Requirement Five `n")
 			$Global:Req5AllSwitch = $true
 			Req5AVSettingsAndGPO
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Seven Functions
+			$AllOutput.AppendText("Everything in Requirement Seven `n")
+			Req7FolderInput
+			Req7FolderPrems
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req7DenyAll
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req7UserPriviledges
+			$AllOutput.AppendText($Global:SectionHeader)
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("You must select an object from the script list.")
@@ -471,78 +484,163 @@ $AllScriptList_ListUpdate = {
 	#Grab and analyse folder permissions that hold sensitive data
 	Function Req7FolderPrems {
 		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
-			$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
-			$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
-				try{
-					$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
-					$Req7Output.AppendText($LocalFolderPrems)
-				}catch{
-						$Req7Output.AppendText("Error")
+			# Write Header Text
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
+			}else{
+				$AllOutput.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$AllOutput.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
+			}
+			# Take user input/file path and get permissions
+			try{
+				$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
+			}catch{
+				if($EverythingToggle -eq $false){
+					$Req7Output.AppendText("Error")
+				}else{
+					$AllOutput.AppendText("Error")
 				}
-
-			$Req7Output.AppendText("`nNetwork folder permissions...`n")
+			}
+			# Append outputs
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText($LocalFolderPrems)
+			}else{
+				$AllOutput.AppendText($LocalFolderPrems)
+			}
+			# Find network folder premissions/samba share on selected folder
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("`nNetwork folder permissions...`n")
+			}else{
+				$AllOutput.AppendText("`nNetwork folder permissions...`n")
+			}
+			# Create Data Array with Samba Shares
 			$SharesArray = New-Object System.Collections.ArrayList
 			$SambaShare = (Get-SmbShare).Path
-
 			$SambaSwitch = $false
-
-				foreach($SambaPath in $SambaShare){
-					$SharesArray.Add($SambaPath.Name)
-					if($SambaPath -eq $Global:FilePathFilePopupTmp){
-						$SambaSwitch = $true
-					}
+			# Loop and check if any Samba share paths are the same as the user selection
+			foreach($SambaPath in $SambaShare){
+				$SharesArray.Add($SambaPath.Name)
+				if($SambaPath -eq $Global:FilePathFilePopupTmp){
+					$SambaSwitch = $true
 				}
-				if($SambaSwitch -eq $true){
-					$SambaShareName = (Get-SMBShare | Where-Object -Property Path -eq $Global:FilePathFilePopupTmp).Name
-					$SambaShareStatus = Get-SmbShareAccess $SambaShareName | Out-String
+			}
+			# Found Samba Share residing on the same user selection 
+			if($SambaSwitch -eq $true){
+				$SambaShareName = (Get-SMBShare | Where-Object -Property Path -eq $Global:FilePathFilePopupTmp).Name
+				$SambaShareStatus = Get-SmbShareAccess $SambaShareName | Out-String
+				# Output to user selected tab
+				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
 					$Req7Output.AppendText($SambaShareStatus)
 				}else{
-					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
+					$AllOutput.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
+					$AllOutput.AppendText($SambaShareStatus)
 				}
+			# No Samba Share Found
+			}else{
+				# Output to user selected tab
+				if($EverythingToggle -eq $false){
+					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
+				}else{
+					$AllOutput.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
+				}
+			}
+		# Find Edge-Case if user input is empty
 		}else{
-			$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
-			$Req7Output.AppendText("`nInvalid Folder Selected`n")
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$Req7Output.AppendText("`nInvalid Folder Selected`n")
+			}else{
+				$AllOutput.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$AllOutput.AppendText("`nInvalid Folder Selected`n")
+			}
 		}
 	}
 	
 	# Check for deny all permissions
 	Function Req7DenyAll {
 		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
-		$Req7Output.AppendText("Check for deny all permissions`n")
+			# Write Header
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("Check for deny all permissions`n")
+			}else{
+				$AllOutput.AppendText("Check for deny all permissions`n")
+			}
+			# Find premissions for user selected path
 			try{
 				$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl | Format-List | Out-String
+				# Edge case for child objects
 				if([string]::IsNullOrEmpty($Req7FolderPerms)){
-					$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+					if($EverythingToggle -eq $false){
+						$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+					}else{
+						$AllOutput.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+					}
 				}else{
-					$Req7Output.AppendText($Req7FolderPerms)
+					# Output Data
+					if($EverythingToggle -eq $false){
+						$Req7Output.AppendText($Req7FolderPerms)
+					}else{
+						$AllOutput.AppendText($Req7FolderPerms)
+					}
 				}
 			}catch{
-				$Req7Output.AppendText("`nSomething went wrong...`n")
+				if($EverythingToggle -eq $false){
+					$Req7Output.AppendText("`nSomething went wrong...`n")
+				}else{
+					$AllOutput.AppendText("`nSomething went wrong...`n")
+				}
 			}
+		# Find Edge-Case if user input is empty
 		}else{
-			$Req7Output.AppendText("Check for deny all permissions`n")
-			$Req7Output.AppendText("`nInvalid Folder Selected`n")
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("Check for deny all permissions`n")
+				$Req7Output.AppendText("`nInvalid Folder Selected`n")
+			}else{
+				$AllOutput.AppendText("Check for deny all permissions`n")
+				$AllOutput.AppendText("`nInvalid Folder Selected`n")
+			}
 		}
 	}
 
 	# Grab User Privileges
 	Function Req7UserPriviledges {
-		$Req7Output.AppendText("Grab User Privileges`nThis may take a while`n")
-		Start-Sleep -Seconds 0.5
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req7Output.AppendText("Grab User Privileges`nThis may take a while`n")
+			Start-Sleep -Seconds 0.5
+		}else{
+			$AllOutput.AppendText("Grab User Privileges`nThis may take a while`n")
+			Start-Sleep -Seconds 0.5
+		}
+		# Query AD
 		try{
 			$ActiveDirectoryGroups = (Get-ADGroup -Filter *).Name
 			foreach ($Group in $ActiveDirectoryGroups){
-				$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass | Format-Table | Out-String
-				if([string]::IsNullOrEmpty($GroupMembership)){
+			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass | Format-Table | Out-String
+			if([string]::IsNullOrEmpty($GroupMembership)){
+				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`nNo Users in " + $Group + "`n")
 				}else{
+					$AllOutput.AppendText("`nNo Users in " + $Group + "`n")
+				}
+			}else{
+				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`nHere are the Users in " + $Group)
 					$Req7Output.AppendText($GroupMembership)
+				}else{
+					$AllOutput.AppendText("`nHere are the Users in " + $Group)
+					$AllOutput.AppendText($GroupMembership)
+					}
 				}
 			}
 		}catch{
-			$Req7Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			}else{
+				$AllOutput.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			}
 		}
 	}
 
@@ -559,7 +657,7 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
 			$Req7Output.Clear()
 			Req7UserPriviledges
-		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven`n"){
+		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
 				Req7FolderInput
@@ -955,6 +1053,12 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
+	#Dedicated GPO Dump
+	Function DiagGPODump {
+		$DiagOutput.AppendText("GPO Dump")
+		$DiagOutput.AppendText($global:GPODump)
+	}
+
 	#onClick Event Handler
 	$DiagScriptList_ListUpdate = {
 		if($DiagScriptList.SelectedItem -eq "Grab System Information"){
@@ -969,6 +1073,9 @@ $AllScriptList_ListUpdate = {
 		}elseif($DiagScriptList.SelectedItem -eq "Check TCP Connectivity"){
 			$DiagOutput.Clear()
 			DiagTCPConnectivity
+		}elseif($DiagScriptList.SelectedItem -eq "GPO Dump"){
+			$DiagOutput.Clear()
+			DiagGPODump
 		}elseif($DiagScriptList.SelectedItem -eq "Everything in Diagnostics"){
 			$DiagOutput.Clear()
 			$DiagOutput.AppendText("Everything in Diagnostics`n")
@@ -979,6 +1086,8 @@ $AllScriptList_ListUpdate = {
 			DiagIPConfig
 			$DiagOutput.AppendText($Global:SectionHeader)
 			DiagTCPConnectivity
+			$DiagOutput.AppendText($Global:SectionHeader)
+			DiagGPODump
 			$DiagOutput.AppendText($Global:SectionHeader)
 		}else{
 			$DiagOutput.Clear()

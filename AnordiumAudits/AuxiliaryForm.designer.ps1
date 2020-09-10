@@ -616,7 +616,7 @@ $DiagRefresh.add_Click($DiagScriptList_ListUpdate)
 #DiagScriptList
 #
 $DiagScriptList.FormattingEnabled = $true
-$DiagScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Diagnostics',[System.String]'Grab System Information',[System.String]'Grab Installed Software Patches',[System.String]'Grab IP Config',[System.String]'Check TCP Connectivity'))
+$DiagScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Diagnostics',[System.String]'Grab System Information',[System.String]'Grab Installed Software Patches',[System.String]'Grab IP Config',[System.String]'Check TCP Connectivity',[System.String]'GPO Dump'))
 $DiagScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $DiagScriptList.Name = [System.String]'DiagScriptList'
 $DiagScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
