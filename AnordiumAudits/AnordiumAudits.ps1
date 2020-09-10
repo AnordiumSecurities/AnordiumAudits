@@ -47,6 +47,7 @@ $AllScriptList_ListUpdate = {
 		$EverythingToggle = $true
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Gathering Infomation for Everything.`nBe patient and do not tab away. This may take awhile. `n")
+			$AllOutput.AppendText($Global:SectionBreak)
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			Req2SampleDefaultPasswords
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -65,6 +66,9 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
 			$AllOutput.AppendText($Global:SectionBreak)
+			$AllOutput.AppendText("Everything in Requirement Five `n")
+			$Global:Req5AllSwitch = $true
+			Req5AVSettingsAndGPO
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("You must select an object from the script list.")
@@ -375,7 +379,7 @@ $AllScriptList_ListUpdate = {
 		}
 
 		# Req 5 Everything Switch
-		if($global:Req5AllSwitch -eq $true){
+		if(($EverythingToggle -ne $true) -and ($Global:Req5AllSwitch -eq $true)){
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5SoftwareDeploymentString = "Check GPO Dump for Software Deployment Settings in Organization"
 			$Req5Output.AppendText($Req5SoftwareDeploymentString)
@@ -388,6 +392,12 @@ $AllScriptList_ListUpdate = {
 			$Req5Output.AppendText("GPO Dump")
 			$Req5Output.AppendText($Global:GPODump)
 			$Global:Req5AllSwitch = $false
+		}elseif(($EverythingToggle -ne $false) -and ($Global:Req5AllSwitch -eq $true)){
+			$AllOutput.AppendText($Global:SectionHeader)
+			$AllOutput.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
+			$AllOutput.AppendText($Global:SectionHeader)
+			$AllOutput.AppendText("Check end user permissions to modify antivirus software in GPO")
+			$AllOutput.AppendText($Global:SectionHeader)
 		}else{
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
