@@ -75,6 +75,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Seven Functions
 			$AllOutput.AppendText("Everything in Requirement Seven `n")
+			# Alert User for Input
+			$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 			Req7FolderInput
 			Req7FolderPrems
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -83,6 +85,7 @@ $AllScriptList_ListUpdate = {
 			Req7UserPriviledges
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
+			$AllOutput.AppendText("Everything in Requirement Eight `n")
 			Req8DomainPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8LocalPasswordPolicy
@@ -108,7 +111,34 @@ $AllScriptList_ListUpdate = {
 			Req8GrabRDPSettings
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Ten Functions
-
+			$AllOutput.AppendText("Everything in Requirement Ten `n")
+			Req10AuditSettings
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10NTPSettings
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10NTPSettingsMultipleDevices
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10AuditLogPrems
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10PastAuditLogs
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Diagnosis Functions
+			$AllOutput.AppendText("Everything in Diagnostics`n")
+			DiagSysInfo
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagInstalledUpdates
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagIPConfig
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagTCPConnectivity
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagGPODump
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Print End of Script Stuff
+			$AllOutput.AppendText("Script Completed Successfully.`n")
+			# Message Box Popup
+			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Completed Successfully","Script Completed Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+			
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("You must select an object from the script list.")
@@ -675,6 +705,8 @@ $AllScriptList_ListUpdate = {
 	$Req7ScriptList_ListUpdate = {
 		if($Req7ScriptList.SelectedItem -eq "Grab and analyse folder permissions that hold sensitive data"){
 			$Req7Output.Clear()
+			# Alert User for Input
+			$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 			Req7FolderInput
 			Req7FolderPrems
 		}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
@@ -687,6 +719,7 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
+				$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 				Req7FolderInput
 				Req7FolderPrems
 				$Req7Output.AppendText($Global:SectionHeader)
@@ -732,10 +765,10 @@ $AllScriptList_ListUpdate = {
 	Function Req8LocalPasswordPolicy{
 		# Data Output
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.")
+			$Req8Output.AppendText("Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
 			$Req8Output.AppendText($global:GPODump)
 		}else{
-			$AllOutput.AppendText("Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.")
+			$AllOutput.AppendText("Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
 			# Don't Dump GPO in all output but instead have a dedicated function for that later on.
 			# $AllOutput.AppendText($global:GPODump)
 		}
@@ -972,7 +1005,7 @@ $AllScriptList_ListUpdate = {
 		# Edge Case
 		}catch{
 			if($EverythingToggle -eq $false){
-			 $Req8Output.AppendText("`nError, Screensaver Settings not found.")
+				 $Req8Output.AppendText("`nError, Screensaver Settings not found.")
 			}else{
 				$AllOutput.AppendText("`nError, Screensaver Settings not found.")
 			}
@@ -1018,7 +1051,11 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Req8Output.AppendText("Error - Unable to find Power Plans, Ensure script is run in Administrator Mode.")
+			if($EverythingToggle -eq $false){
+				$Req8Output.AppendText("Error - Unable to find Power Plans, Ensure script is run in Administrator Mode.")
+			}else{
+				$AllOutput.AppendText("Error - Unable to find Power Plans, Ensure script is run in Administrator Mode.")
+			}
 		}
 	}
 
@@ -1107,83 +1144,180 @@ $AllScriptList_ListUpdate = {
 # Requirement Ten Tab
 	# Dump of Audit Category Settings
 	Function Req10AuditSettings {
-		$Req10Output.AppendText("Dump of Audit Category Settings`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText("Dump of Audit Category Settings`n")
+		}else{
+			$AllOutput.AppendText("Dump of Audit Category Settings`n")
+		}
+		# Data Gathering
 		try{
 			$Req10AuditList = auditpol.exe /get /category:* | Format-Table -Autosize | Out-String -Width 1200
-			$Req10Output.AppendText($Req10AuditList)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText($Req10AuditList)
+			}else{
+				$AllOutput.AppendText($Req10AuditList)
+			}
+		#Edge Case
 		}catch{
-			$Req10Output.AppendText("Unable to find Audit settings.")
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText("Unable to find Audit settings.")
+			}else{
+				$AllOutput.AppendText("Unable to find Audit settings.")
+			}
 		}
 	}
 
 	# Grab NTP Settings
 	Function Req10NTPSettings {
-		$Req10Output.AppendText("Grab NTP Settings for Current Device`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText("Grab NTP Settings for Current Device`n")
+		}else{
+			$AllOutput.AppendText("Grab NTP Settings for Current Device`n")
+		}
+		# Data Gathering
 		try{
 			$Req10NTPSettings = w32tm /query /status | Format-Table -Autosize | Out-String -Width 1200
-			$Req10Output.AppendText($Req10NTPSettings)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText($Req10NTPSettings)
+			}else{
+				$AllOutput.AppendText($Req10NTPSettings)
+			}
+		#Edge Case
 		}catch{
-			$Req10Output.AppendText("Unable to find NTP settings.")
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText("Unable to find NTP settings.")
+			}else{
+				$AllOutput.AppendText("Unable to find NTP settings.")
+			}
 		}
 	}
 
 	# Grab NTP Settings on Multiple Devices
 	Function Req10NTPSettingsMultipleDevices {
-		$Req10Output.AppendText("Check NTP Settings on Multiple Devices`nThis may take a while.`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText("Check NTP Settings on Multiple Devices`nThis may take a while.`n")
+		}else{
+			$AllOutput.AppendText("Check NTP Settings on Multiple Devices`nThis may take a while.`n")
+		}
+		# Data Gathering
 		try{
+			# Create Data Array
 			$ComputerList = Get-ADComputer -Filter * | Select-Object Name
 			$ComputerArray = New-Object System.Collections.ArrayList
 			foreach($Computer in $ComputerList){
 				$ComputerArray.Add($Computer.Name)
 			}
 			$ShuffledComputerArray = $ComputerArray | Sort-Object {Get-Random}
+			# Implement Counter and Test Four Random Computers in AD
 			$Req10Counter = 0
 			foreach($RandomComputer in $ShuffledComputerArray){
 				$Req10Counter++
 				if($Req10Counter -eq 5){
 					break
+				# If counter is not reached do query below in else statement
 				}else{
 					try{
 						$Req10NTPSettingsTesting = w32tm /query /status /computer:$RandomComputer | Format-Table -Autosize | Out-String -Width 1200
-						$Req10Output.AppendText("`nNTP Settings for: " + $RandomComputer + "`n" + $Req10NTPSettingsTesting)
+						# Data Output
+						if($EverythingToggle -eq $false){
+							$Req10Output.AppendText("`nNTP Settings for: " + $RandomComputer + "`n" + $Req10NTPSettingsTesting)
+						}else{
+							$AllOutput.AppendText("`nNTP Settings for: " + $RandomComputer + "`n" + $Req10NTPSettingsTesting)
+						}
+					# Edge Case
 					}catch{
-						$Req10Output.AppendText("Unable to find NTP settings.")
+						if($EverythingToggle -eq $false){
+							$Req10Output.AppendText("Unable to find NTP settings.")
+						}else{
+							$AllOutput.AppendText("Unable to find NTP settings.")
+						}
 					}
 				}
 			}
+		# Edge Case (Non-DC)
 		}catch{
-			$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			}else{
+				$AllOutput.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			}
 		}
 	}
 
 	# Check Audit Log Permissions
 	Function Req10AuditLogPrems {
-		$Req10Output.AppendText("Check Audit Log Permissions`n")
-		$Req10Output.AppendText("Listed below are the Domain & Enterprise Administrators:`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText("Check Audit Log Permissions`nListed below are the Domain & Enterprise Administrators:`n")
+		}else{
+			$AllOutput.AppendText("Check Audit Log Permissions`nListed below are the Domain & Enterprise Administrators:`n")
+		}
+		# Data Gathering
 		try{
 			$ADDomainAdminList = Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
 			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
 			$Req10Output.AppendText("Domain Admins:`n" + $ADDomainAdminList)
 			$Req10Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText("Domain Admins:`n" + $ADDomainAdminList)
+				$Req10Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+			}else{
+				$AllOutput.AppendText("Domain Admins:`n" + $ADDomainAdminList)
+				$AllOutput.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+			}
+
+		# Edge Case (Non-DC)
 		}catch{
-			$Req10Output.AppendText("`nError, Ensure Script is run on a Domain Controller.")
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			}else{
+				$AllOutput.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+			}
 		}
-		$Req10Output.AppendText($Global:SectionHeader)
-		$Req10Output.AppendText("GPO Dump")
-		$Req10Output.AppendText($global:GPODump)
+		# GPO Dump Output, Only for Requirement 10, Extra for Audit Log Premissions. GPO dump in everything/all tab is included later on.
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText($Global:SectionHeader)
+			$Req10Output.AppendText("GPO Dump for further analysis.")
+			$Req10Output.AppendText($global:GPODump)
+		}else{
+			$AllOutput.AppendText($Global:SectionHeader)
+			$AllOutput.AppendText("Check GPO Dump for further analysis.")
+		}
 	}
 
 	# Grab Previous Audit Logs
 	Function Req10PastAuditLogs {
-		$Req10Output.AppendText("Grabbing Previous Audit Logs for the past three months`nThis may take a while`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText("Grabbing Previous Audit Logs for the past three months`nThis may take a while`n")
+		}else{
+			$AllOutput.AppendText("Grabbing Previous Audit Logs for the past three months`nThis may take a while`n")
+		}
+		# Data Gathering, Wait so Header is written.
 		$AuditLogsBegin = (Get-Date).AddDays(-90)
 		$AuditLogsEnd = Get-Date
 		Start-Sleep -Seconds 0.5
 		try{
 			$AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd | Select-Object Index,Time,EntryType,InstanceID,Message | Format-Table -AutoSize | Out-String # -Width 10000
-			$Req10Output.AppendText($AuditLogs)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText($AuditLogs)
+			}else{
+				$AllOutput.AppendText($AuditLogs)
+			}
+		# Edge Case
 		}catch{
-			$Req10Output.AppendText("No Audit Logs Found.")
+			if($EverythingToggle -eq $false){
+				$Req10Output.AppendText("No Audit Logs Found.")
+			}else{
+				$AllOutput.AppendText("No Audit Logs Found.")
+			}
 		}
 	}
 
@@ -1226,53 +1360,122 @@ $AllScriptList_ListUpdate = {
 # Diagnostics Tab
 	#Grab System Information
 	Function DiagSysInfo{
-		$DiagOutput.AppendText("Grab System Information`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$DiagOutput.AppendText("Grab System Information`n")
+		}else{
+			$AllOutput.AppendText("Grab System Information`n")
+		}
+		# Data Gathering
 		try{
 			$SystemInfoData = systeminfo | Out-String
-			$DiagOutput.AppendText($SystemInfoData)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText($SystemInfoData)
+			}else{
+				$AllOutput.AppendText($SystemInfoData)
+			}
+		# Edge Case
 		}catch{
-			$DiagOutput.AppendText("Unable to Grab System Infomation`n")
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText("Unable to Grab System Infomation`n")
+			}else{
+				$AllOutput.AppendText("Unable to Grab System Infomation`n")
+			}
 		}
 	}
 
 	#Grab Installed Software Patches
 	Function DiagInstalledUpdates {
-		$DiagOutput.AppendText("Grab Installed Software Patches`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$DiagOutput.AppendText("Grab Installed Software Patches`n")
+		}else{
+			$AllOutput.AppendText("Grab Installed Software Patches`n")
+		}
+		# Data Gathering
 		try{
 			$UpdateData = Get-HotFix | Out-String
-			$DiagOutput.AppendText($UpdateData)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText($UpdateData)
+			}else{
+				$AllOutput.AppendText($UpdateData)
+			}
+		# Edge Case
 		}catch{
-			$DiagOutput.AppendText("Unable to Grab Installed Software Patches`n")
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText("Unable to Grab Installed Software Patches`n")
+			}else{
+				$AllOutput.AppendText("Unable to Grab Installed Software Patches`n")
+			}
 		}
 	}
 
 	#Grab IP Config
 	Function DiagIPConfig {
-		$DiagOutput.AppendText("Grab IP Config`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$DiagOutput.AppendText("Grab IP Config`n")
+		}else{
+			$AllOutput.AppendText("Grab IP Config`n")
+		}
+		# Data Gathering
 		try{
-			$IPConfigData = ipconfig /all | Out-String 
-			$DiagOutput.AppendText($IPConfigData)
+			$IPConfigData = ipconfig /all | Out-String
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText($IPConfigData)
+			}else{
+				$AllOutput.AppendText($IPConfigData)
+			}
+		# Edge Case
 		}catch{
-			$DiagOutput.AppendText("Unable to Grab IP Config`n")
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText("Unable to Grab IP Config`n")
+			}else{
+				$AllOutput.AppendText("Unable to Grab IP Config`n")
+			}
 		}
 	}
 
 	#Check TCP Connectivity
 	Function DiagTCPConnectivity {
-		$DiagOutput.AppendText("Check TCP Connectivity`nThis may take awhile.`n`n")
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$DiagOutput.AppendText("Check TCP Connectivity`nThis may take awhile.`n`n")
+		}else{
+			$AllOutput.AppendText("Check TCP Connectivity`nThis may take awhile.`n`n")
+		}
+		# Data Gathering
 		try{
 			$PingTest = ping "www.google.com" | Out-String
 			$TraceRouteTest = tracert "www.google.com" | Out-String
-			$DiagOutput.AppendText("Ping & Trace Route to www.google.com `n" + $PingTest + "`n" + $TraceRouteTest)
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText("Ping & Trace Route to www.google.com `n" + $PingTest + "`n" + $TraceRouteTest)
+			}else{
+				$AllOutput.AppendText("Ping & Trace Route to www.google.com `n" + $PingTest + "`n" + $TraceRouteTest)
+			}
+		# Edge Case
 		}catch{
-			$DiagOutput.AppendText("Unable to Check TCP Connectivity`n")
+			if($EverythingToggle -eq $false){
+				$DiagOutput.AppendText("Unable to Check TCP Connectivity`n")
+			}else{
+				$AllOutput.AppendText("Unable to Check TCP Connectivity`n")
+			}
 		}
 	}
 
 	#Dedicated GPO Dump
 	Function DiagGPODump {
-		$DiagOutput.AppendText("GPO Dump")
-		$DiagOutput.AppendText($global:GPODump)
+		if($EverythingToggle -eq $false){
+			$DiagOutput.AppendText("GPO Dump")
+			$DiagOutput.AppendText($global:GPODump)
+		}else{
+			$AllOutput.AppendText("GPO Dump")
+			$AllOutput.AppendText($global:GPODump)
+		}
 	}
 
 	#onClick Event Handler
