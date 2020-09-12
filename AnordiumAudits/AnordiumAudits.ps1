@@ -1,22 +1,34 @@
-#Anordium Audits#
+# Anordium Audits #
 Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing
 
-If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator))
-{
+# Check Script Rights & Ensure is in Administrator Mode
+If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
   # Relaunch as an elevated process:
   Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
   exit
 }
 
-#Global GPO Result Function
+# Export Location
+	#Function ExportLocation{
+	$Global:ExportPathLocation = "C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\"
+
+# Global GPO Result Function. Gather GPO Data
 Function GPResults{
 	$Global:GPODumpExe = gpresult.exe /SCOPE COMPUTER /Z
 	$Global:GPODump = $Global:GPODumpExe | Format-Table -Autosize | Out-String -Width 1200
-	$Global:GPODumpHTML = $Global:GPODumpExe | ConvertTo-Html -As List -Fragment -PreContent "<h2>GPO Dump</h2>"
-
+	$Global:GPODumpHTML = "<h2>GPO Dump</h2><pre>"+$Global:GPODump+"</pre>"
+	# Edge Case
 	if([string]::IsNullOrEmpty($global:GPODump)){
-		$Global:GPODump = "Error"
-		$Global:GPODumpHTML = $Global:GPODump | ConvertTo-Html -As Table -Fragment -PreContent "<h2>GPO Dump</h2>"
+		$Global:GPODump = "`nAn error occurred.`nUnable to query GPO."
+		$Global:GPODumpHTML = "<h2>GPO Dump</h2><p>An error occurred.<br>Unable to query GPO.</p>"
+	}
+	# Dedicated HTML GPO Report Export
+	try{
+		$Global:GPOExportPathLocation =  $Global:ExportPathLocation + "GPO-Report.html"
+		gpresult.exe /SCOPE COMPUTER /f /h $Global:GPOExportPathLocation
+		$Global:GPOExportReportStatus = $true
+	}catch{
+		$Global:GPOExportReportStatus = $false
 	}
 }
 
@@ -37,6 +49,7 @@ $AuxiliaryBack_Click = {
 }
 
 # Everything Tab
+# Initialize Switch & Headers
 $EverythingToggle = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
@@ -145,8 +158,8 @@ $AllScriptList_ListUpdate = {
 	}
 }
 
-# Requirement Two Tab
-	#Sample Services for Default Vendor Passwords
+# Requirement Two Tab #
+	# Sample Services for Default Vendor Passwords
 	Function Req2SampleDefaultPasswords{
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("Sample Services for Default Vendor Passwords:`n")
@@ -155,17 +168,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#List of Runnning Processes
+	# List of Runnning Processes
 	Function Req2RunningProcesses{
+		# Data Gathering
 		try{
 			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
 			$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>"
+		# Edge Case
 		}catch{
 			$Req2ProcessListRTB = "Unable to List Running Processes."
-			$Global:Req2ProcessListHTML = $Req2ProcessListRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Processes</h2>"
+			$Global:Req2ProcessListHTML = "<h2>List of Running Processes</h2><p>Unable to List Running Processes.<p>"
 		}
-
+		# Data Output
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Running Processes:`n")
 			$Req2Output.AppendText($Req2ProcessListRTB)
@@ -175,18 +190,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#List of Running Services
+	# List of Running Services
 	Function Req2RunningServices{
+		# Data Gathering
 		try{
 			$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name 
 			$Req2SvcListRunningRTB = $Req2SvcListRunning | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As Table -Property Status,Name,DisplayName -Fragment -PreContent "<h2>List of Running Services</h2>"
-				
+		# Edge Case
 		}catch{
 			$Req2SvcListRunningRTB = "Unable to List Running Serivces."
-			$Global:Req2SvcListRunningHTML = $Req2SvcListRunningRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Running Services</h2>"
+			$Global:Req2SvcListRunningHTML = "<h2>List of Running Services</h2><p>Unable to List Running Serivces.</p>"
 		}
-
+		# Data Output
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Running Services:`n")
 			$Req2Output.AppendText($Req2SvcListRunningRTB)
@@ -196,17 +212,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab Listening Services
+	# Grab Listening Services
 	Function Req2ListeningServices{
+		# Data Gathering
 		try{
 			$Req2SvcListListening = Get-NetTCPConnection | Sort-Object LocalPort,LocalAddress 
 			$Req2SvcListListeningRTB = $Req2SvcListListening | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As Table -Property LocalAddress,LocalPort,RemoteAddress,RemotePort,State,AppliedSetting,OwningProcess -Fragment -PreContent "<h2>Grab Listening Services</h2>"
+		# Edge Case
 		}catch{
 			$Req2SvcListListeningRTB = "Unable to Grab Listening Services."
-			$Global:Req2SvcListListeningHTML = $Req2SvcListListeningRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Listening Services</h2>"
+			$Global:Req2SvcListListeningHTML = "<h2>Grab Listening Services</h2><p>Unable to Grab Listening Services.</p>"
 		}
-
+		# Data Output
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Listening Services:`n")
 			$Req2Output.AppendText($Req2SvcListListeningRTB)
@@ -216,17 +234,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab Installed Software
+	# Grab Installed Software
 	Function Req2GrabInstalledSoftware{
+		# Data Gathering
 		try{
 			$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
 			$Req2SoftwareListRTB = $Req2SoftwareList | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Grab Installed Software</h2>"
+		# Edge Case
 		}catch{
 			$Req2SoftwareListRTB = "Unable to Grab Installed Software."
-			$Global:Req2SoftwareListHTML = $Req2SoftwareListRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab Installed Software</h2>"
+			$Global:Req2SoftwareListHTML = "<h2>Grab Installed Software</h2><p>Unable to Grab Installed Software.</p>"
 		}
-
+		# Data Output
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Installed Software:`n")
 			$Req2Output.AppendText($Req2SoftwareListRTB)
@@ -236,16 +256,18 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab Installed Features
+	# Grab Installed Features
 	Function Req2GrabInstalledFeatures{
+		# Data Gathering
 		try{
 			$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2FeatureListHTML = Get-WindowsFeature | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>List of Installed Windows Features</h2>"
+		# Edge Case
 		}catch{
 			$Req2FeatureList = "Unable to Grab Installed Features."
-			$Global:Req2FeatureListHTML = $Req2FeatureList | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Installed Windows Features</h2>"
+			$Global:Req2FeatureListHTML = "<h2>List of Installed Windows Features</h2><p>Unable to Grab Installed Features.</p>"
 		}
-
+		# Data Output
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("List of Installed Windows Features:`n")
 			$Req2Output.AppendText($Req2FeatureList)
@@ -255,7 +277,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#onClick Event Handler
+	# onClick Event Handler - Requirement Two
 	$Req2ScriptList_ListUpdate = {
 		if($Req2ScriptList.SelectedItem -eq "Sample Services for Default Vendor Passwords"){
 			$Req2Output.Clear()
@@ -295,13 +317,16 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Requirement Two Report Export
+	# Requirement Two Report Export
+	# Build Report Function 
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Title "PCI DSS Requirement Two Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
-		$Requirement2Report | Out-File C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\PCI-DSS-Requirement-Two-Report.html
+		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Title "PCI DSS Requirement Two Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement2ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Two-Report.html"
+		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported")
 	}
+	# onClick Event Handler to Gather Data for Report
 	$Req2ExportReport = {
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Writing Report for the Following`n`n")
@@ -317,17 +342,19 @@ $AllScriptList_ListUpdate = {
 			Req2ExportReportFunction
 	}
 
-# Requirement Four Tab
+# Requirement Four Tab # 
 	# Analyse Wi-Fi Envrioment
 	Function Req4WifiScan {
+		# Data Gathering
 		try{
 			$Req4WifiList = netsh wlan show networks mode=Bssid | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
+			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
+		# Edge Case
 		}catch{
 			$Req4WifiList = "Unable to find Wi-Fi Networks"
-			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Property @{ l='Name'; e={ $_ } } -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
+			$Global:Req4WifiListHTML = "<h2>Analyse Wi-Fi Envrioment</h2><p>Unable to find Wi-Fi Networks</p>"
 		}
-
+		# Data Ouput
 		if($EverythingToggle -eq $false){
 			$Req4Output.AppendText("List of Wi-Fi Networks:`n")
 			$Req4Output.AppendText($Req4WifiList)
@@ -339,20 +366,22 @@ $AllScriptList_ListUpdate = {
 
 	# Analyse Keys and Certificates
 	Function Req4GetKeysAndCerts{
+		# Data Gathering
 		try{
 			$Req4LocalMachineCerts = Get-ChildItem -Recurse -path cert:\LocalMachine
 			$Req4CurrentUserCerts = Get-ChildItem -Recurse -path cert:\CurrentUser
 			$Req4LocalMachineCertsRTB = $Req4LocalMachineCerts | Format-List | Out-String
 			$Req4CurrentUserCertsRTB = $Req4CurrentUserCerts | Format-List | Out-String
 			$Global:Req4LocalMachineCertsHTML = $Req4LocalMachineCerts | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3>"
-			$Global:Req4CurrentUserCertsHTML = $Req4CurrentUserCerts | ConvertTo-Html -As List -Fragment -PreContent "<h2>Current User Certificates</h2>"
+			$Global:Req4CurrentUserCertsHTML = $Req4CurrentUserCerts | ConvertTo-Html -As List -Fragment -PreContent "<h3>Current User Certificates</h3>"
+		# Edge Case
 		}catch{
 			$Req4LocalMachineCertsRTB = "Something went wrong, Could not get keys or certs."
 			$Req4CurrentUserCertsRTB = "Something went wrong, Could not get keys or certs."
-			$Global:Req4LocalMachineCertsHTML = $Req4LocalMachineCertsRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3>"
-			$Global:Req4CurrentUserCertsHTML = $Req4CurrentUserCertsRTB | ConvertTo-Html -As List -Fragment -PreContent "<h2>Current User Certificates</h2>"
+			$Global:Req4LocalMachineCertsHTML = "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><p>Something went wrong, Could not get keys or certs.</p>"
+			$Global:Req4CurrentUserCertsHTML = "<h3>Current User Certificates</h3><p>Something went wrong, Could not get keys or certs.</p>"
 		}
-
+		# Data Output
 		if($EverythingToggle -eq $false){
 			$Req4Output.AppendText("`nList of Keys and Certificates:`nLocal Machine Certificates:`n")
 			$Req4Output.AppendText($Req4LocalMachineCertsRTB)
@@ -368,7 +397,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#onClick Event Handler
+	# onClick Event Handler for Requirement Four
 	$Req4ScriptList_ListUpdate = {
 		if($Req4ScriptList.SelectedItem -eq "Analyse Wi-Fi Environment"){
 			$Req4Output.Clear()
@@ -388,13 +417,16 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Requirement Four Report Export
+	# Requirement Four Report Export
+	# Build Report Function
 	Function Req4ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Title "PCI DSS Requirement Four Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
-		$Requirement4Report | Out-File C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\PCI-DSS-Requirement-Four-Report.html
+		$Requirement4ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Four-Report.html"
+		$Requirement4Report | Out-File $Requirement4ReportPath
 		$Req4Output.AppendText("Requirement Four Report Exported")
 	}
+	# onClick Event Handler to Gather Data for Report
 	$Req4ExportReport = {
 			$Req4Output.Clear()
 			$Req4Output.AppendText("Writing Report for the Following`n`n")
@@ -404,35 +436,39 @@ $AllScriptList_ListUpdate = {
 			Req4ExportReportFunction
 	}
 
-# Requirement Five Tab
-	$Global:Req5AllSwitch = $false 
+# Requirement Five Tab #
+	# Initialize Switch
+	$Global:Req5AllSwitch = $false
+
 	# Antivirus Program and GPO Analysis
 	Function Req5AVSettingsAndGPO {
+		# Write Header
 		if($EverythingToggle -eq $false){
 			$Req5Output.AppendText("List of Anti-Virus Programs Detected. This may take a while.`n")
 		}else{
 			$AllOutput.AppendText("List of Anti-Virus Programs Detected. This may take a while.`n")
 		}
-
+		# Data Gathering
 		try{
 			$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name
 			$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Antivirus Program and GPO Analysis</h2><h3>List of Anti-Virus Programs Detected</h3>"
-
+			# Edge Case incase No Anti-Virus Programs are Found
 			if([string]::IsNullOrEmpty($AVProgramQuery)){
 				$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version,InstallDate | Sort-Object Vendor,Name
 				$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
 				$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Antivirus Program and GPO Analysis</h2><h3>No Anti-Virus detected, Here is the list of all programs detected</h3>"
-
+				# Data Output for when there is No Anti-Virus Programs
 				if($EverythingToggle -eq $false){
 					$Req5Output.AppendText("No Anti-Virus detected, Here is the list of all programs detected and a GPO Dump for futher analysis:`n")
 					$Req5Output.AppendText($AVProgramQueryRTB)
-					$Req5Output.AppendText($Global:SectionHeader)
-					$Req5Output.AppendText("Check GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
+					$Req5Output.AppendText("`nCheck GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
 				}else{
 					$AllOutput.AppendText("No AntiVirus detected, Here is the list of all programs detected and check the GPO Dump section for futher analysis.`n")
 					$AllOutput.AppendText($AVProgramQueryRTB)
+					$AllOutput.AppendText("`nCheck GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
 				}
+			# Data Output for when there is an anti-virus program detected
 			}else{
 				if($EverythingToggle -eq $false){
 					$Req5Output.AppendText($AVProgramQueryRTB)
@@ -440,34 +476,44 @@ $AllScriptList_ListUpdate = {
 					$AllOutput.AppendText($AVProgramQueryRTB)
 				}
 			}
+		# Edge Case for when something goes wrong. Should never happen but you never know.
 		}catch{
 			if($EverythingToggle -eq $false){
-				$Req5Output.AppendText("List of Anti-Virus Programs Failed. Something went wrong.`n")
+				$Req5Output.AppendText("List of Anti-Virus Programs Failed. An unexpected error has occurred.`n")
 			}else{
-				$AllOutput.AppendText("List of Anti-Virus Programs Failed. Something went wrong.`n")
+				$AllOutput.AppendText("List of Anti-Virus Programs Failed. An unexpected error has occurred.`n")
 			}
+			$Global:Req5AVProgramQueryHTML = "<h2>Antivirus Program and GPO Analysis</h2><p>List of Anti-Virus Programs Failed. An unexpected error has occurred.</p>"
 		}
 
-		# Req 5 Everything Switch
+		# Requirement Five Everything Switch. This is because all of the remaining stuff in Requirement Five is telling the user to check GPO dump. This Function is called inplace of calling all the Requirement Five Functions.
+		# Data Output Inside Requirement Five Tab
 		if(($EverythingToggle -ne $true) -and ($Global:Req5AllSwitch -eq $true)){
+			# Data Output for Software Deployment Settings
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5SoftwareDeploymentString = "Check GPO Dump for Software Deployment Settings in Organization"
-			$Req5Output.AppendText($Req5SoftwareDeploymentString)
-			$Global:Req5SoftwareDeploymentHTML = $Req5SoftwareDeploymentString | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Grab Software Deployment Settings in Organization</h2>"
+			$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
+			$Global:Req5SoftwareDeploymentHTML = "<h2>Grab Software Deployment Settings in Organization</h2><p>Check GPO Dump for Software Deployment Settings in Organization</p>"
+			# Data Output for End User Permissions
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5AVPermsString = "Check end user permissions to modify antivirus software in GPO"
-			$Req5Output.AppendText($Req5AVPermsString)
-			$Global:Req5AVPermsHTML = $Req5AVPermsString | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Check end user permissions to modify antivirus software</h2>"
+			$Req5Output.AppendText("Check end user permissions to modify Anti-Virus software in GPO Dump")
+			$Global:Req5AVPermsHTML = "<h2>Check end user permissions to modify antivirus software</h2><p>Check end user permissions to modify Anti-Virus software in GPO Dump</p>"
+			# Data Output and Append GPO Dump for Requirement Five (Everything in Requirement Five Item in List)
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
 			$Req5Output.AppendText($Global:GPODump)
+			# Set Switch to False
 			$Global:Req5AllSwitch = $false
+		# Data Output In All Tab
 		}elseif(($EverythingToggle -ne $false) -and ($Global:Req5AllSwitch -eq $true)){
+			# Data Output for Software Deployment Settings
 			$AllOutput.AppendText($Global:SectionHeader)
 			$AllOutput.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
+			$Global:Req5SoftwareDeploymentHTML = "<h2>Grab Software Deployment Settings in Organization</h2><p>Check GPO Dump for Software Deployment Settings in Organization</p>"
+			# Data Output for End User Permissions
 			$AllOutput.AppendText($Global:SectionHeader)
-			$AllOutput.AppendText("Check end user permissions to modify antivirus software in GPO")
-			$AllOutput.AppendText($Global:SectionHeader)
+			$AllOutput.AppendText("Check end user permissions to modify Anti-Virus software in GPO Dump")
+			# No need to append GPO Dump here but instead append it in the dedicated function
+		# If the switch has not been switch then just output the GPO Dump for only after the Anti-Virus Programs/List of Programs.
 		}else{
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
@@ -497,7 +543,6 @@ $AllScriptList_ListUpdate = {
 			Req5SoftwareDeployment
 		}elseif($Req5ScriptList.SelectedItem -eq "Check end user permissions to modify antivirus software"){
 			$Req5Output.Clear()
-			$Req5Output.AppendText("Check end user permissions to modify antivirus software")
 			Req5AVPermissions
 		}elseif($Req5ScriptList.SelectedItem -eq "Everything in Requirement Five"){
 			$Req5Output.Clear()
@@ -514,7 +559,8 @@ $AllScriptList_ListUpdate = {
 	Function Req5ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Five Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
-		$Requirement5Report | Out-File C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\PCI-DSS-Requirement-Five-Report.html
+		$Requirement5ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Five-Report.html"
+		$Requirement5Report | Out-File $Requirement5ReportPath
 		$Req5Output.AppendText("`nRequirement Five Report Exported")
 	}
 	$Req5ExportReport = {
@@ -522,10 +568,6 @@ $AllScriptList_ListUpdate = {
 			$Req5Output.AppendText("Writing Report for the Following`n`n")
 			$Global:Req5AllSwitch = $true
 			Req5AVSettingsAndGPO
-			$Req5Output.AppendText($Global:SectionHeader)
-			Req5SoftwareDeployment
-			$Req5Output.AppendText($Global:SectionHeader)
-			Req5AVPermissions
 			Req5ExportReportFunction
 	}
 
@@ -1146,9 +1188,9 @@ $AllScriptList_ListUpdate = {
 	Function Req10AuditSettings {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Dump of Audit Category Settings`n")
+			$Req10Output.AppendText("Dump of Audit Category Settings`n`n")
 		}else{
-			$AllOutput.AppendText("Dump of Audit Category Settings`n")
+			$AllOutput.AppendText("Dump of Audit Category Settings`n`n")
 		}
 		# Data Gathering
 		try{
