@@ -91,7 +91,7 @@ $AllScriptList_ListUpdate = {
 			# Alert User for Input
 			$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 			Req7FolderInput
-			Req7FolderPrems
+			Req7FolderPerms
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req7DenyAll
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -372,8 +372,8 @@ $AllScriptList_ListUpdate = {
 			$Req4CurrentUserCerts = Get-ChildItem -Recurse -path cert:\CurrentUser
 			$Req4LocalMachineCertsRTB = $Req4LocalMachineCerts | Format-List | Out-String
 			$Req4CurrentUserCertsRTB = $Req4CurrentUserCerts | Format-List | Out-String
-			$Global:Req4LocalMachineCertsHTML = $Req4LocalMachineCerts | ConvertTo-Html -As List -Fragment -PreContent "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3>"
-			$Global:Req4CurrentUserCertsHTML = $Req4CurrentUserCerts | ConvertTo-Html -As List -Fragment -PreContent "<h3>Current User Certificates</h3>"
+			$Global:Req4LocalMachineCertsHTML = "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><pre>" + $Req4LocalMachineCertsRTB + "</pre>"
+			$Global:Req4CurrentUserCertsHTML =  "<h3>Current User Certificates</h3><pre>" + $Req4CurrentUserCertsRTB + "</pre>"
 		# Edge Case
 		}catch{
 			$Req4LocalMachineCertsRTB = "Something went wrong, Could not get keys or certs."
@@ -421,7 +421,7 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function
 	Function Req4ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Title "PCI DSS Requirement Four Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
+		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Title "PCI DSS Requirement Four Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
 		$Requirement4ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Four-Report.html"
 		$Requirement4Report | Out-File $Requirement4ReportPath
 		$Req4Output.AppendText("Requirement Four Report Exported")
@@ -512,6 +512,7 @@ $AllScriptList_ListUpdate = {
 			# Data Output for End User Permissions
 			$AllOutput.AppendText($Global:SectionHeader)
 			$AllOutput.AppendText("Check end user permissions to modify Anti-Virus software in GPO Dump")
+			$Global:Req5AVPermsHTML = "<h2>Check end user permissions to modify antivirus software</h2><p>Check end user permissions to modify Anti-Virus software in GPO Dump</p>"
 			# No need to append GPO Dump here but instead append it in the dedicated function
 		# If the switch has not been switch then just output the GPO Dump for only after the Anti-Virus Programs/List of Programs.
 		}else{
@@ -556,13 +557,15 @@ $AllScriptList_ListUpdate = {
 	}
 
 	#Requirement Five Report Export
+	# Build Report Function
 	Function Req5ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Five Report" -PostContent "<p>Creation Date: $(Get-Date)<p>"
+		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Five Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
 		$Requirement5ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Five-Report.html"
 		$Requirement5Report | Out-File $Requirement5ReportPath
 		$Req5Output.AppendText("`nRequirement Five Report Exported")
 	}
+	# onClick Event Handler to Gather Data for Report
 	$Req5ExportReport = {
 			$Req5Output.Clear()
 			$Req5Output.AppendText("Writing Report for the Following`n`n")
@@ -581,9 +584,10 @@ $AllScriptList_ListUpdate = {
 	}
 
 	#Grab and analyse folder permissions that hold sensitive data
-	Function Req7FolderPrems {
+	Function Req7FolderPerms {
+		# Data Gathering
 		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
-			# Write Header Text
+			# Write Header
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
 				$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
@@ -593,21 +597,26 @@ $AllScriptList_ListUpdate = {
 			}
 			# Take user input/file path and get permissions
 			try{
-				$LocalFolderPrems = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited| Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
-			}catch{
+				$LocalFolderPerms = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited
+				$LocalFolderPermsRTB = $LocalFolderPerms | Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
+				$Global:Req7LocalFolderPermsHTML = $LocalFolderPerms | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Folder Selected: $Global:FilePathFilePopupTmp</p>"
+				# Data Output
 				if($EverythingToggle -eq $false){
-					$Req7Output.AppendText("Error")
+					$Req7Output.AppendText($LocalFolderPermsRTB)
 				}else{
-					$AllOutput.AppendText("Error")
+					$AllOutput.AppendText($LocalFolderPermsRTB)
+				}
+			# Edge Case 
+			}catch{
+				$Global:Req7LocalFolderPermsHTML = "<h2>Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>An Unexpected Error Has Occurred<br>Folder Selected: $Global:FilePathFilePopupTmp</p>"
+				if($EverythingToggle -eq $false){
+					$Req7Output.AppendText("An Unexpected Error Has Occurred")
+				}else{
+					$AllOutput.AppendText("An Unexpected Error Has Occurred")
 				}
 			}
-			# Append outputs
-			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText($LocalFolderPrems)
-			}else{
-				$AllOutput.AppendText($LocalFolderPrems)
-			}
 			# Find network folder premissions/samba share on selected folder
+			# Write Header
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("`nNetwork folder permissions...`n")
 			}else{
@@ -627,18 +636,21 @@ $AllScriptList_ListUpdate = {
 			# Found Samba Share residing on the same user selection 
 			if($SambaSwitch -eq $true){
 				$SambaShareName = (Get-SMBShare | Where-Object -Property Path -eq $Global:FilePathFilePopupTmp).Name
-				$SambaShareStatus = Get-SmbShareAccess $SambaShareName | Out-String
+				$SambaShareStatus = Get-SmbShareAccess $SambaShareName 
+				$SambaShareStatusRTB = $SambaShareStatus | Out-String
+				$Global:Req7SambaShareStatusHTML = $SambaShareStatus | ConvertTo-Html -As Table -Fragment -PreContent "<h3>Network folder permissions</h3>"
 				# Output to user selected tab
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
-					$Req7Output.AppendText($SambaShareStatus)
+					$Req7Output.AppendText($SambaShareStatusRTB)
 				}else{
 					$AllOutput.AppendText($Global:FilePathFilePopupTmp + " exists as a Samba Share")
-					$AllOutput.AppendText($SambaShareStatus)
+					$AllOutput.AppendText($SambaShareStatusRTB)
 				}
 			# No Samba Share Found
 			}else{
 				# Output to user selected tab
+				$Global:Req7SambaShareStatusHTML = "<h3>Network folder permissions</h3><p>$Global:FilePathFilePopupTmp Does not exist as a Samba Share</p>"
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText($Global:FilePathFilePopupTmp + " Does not exist as a Samba Share")
 				}else{
@@ -647,6 +659,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Find Edge-Case if user input is empty
 		}else{
+			$Global:Req7LocalFolderPermsHTML = "<h2>Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Invalid Folder Selected</p>"
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
 				$Req7Output.AppendText("`nInvalid Folder Selected`n")
@@ -668,31 +681,37 @@ $AllScriptList_ListUpdate = {
 			}
 			# Find premissions for user selected path
 			try{
-				$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl | Format-List | Out-String
-				# Edge case for child objects
+				$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl
+				$Req7FolderPermsRTB = $Req7FolderPerms | Format-List | Out-String
+				# Edge Case for child objects
 				if([string]::IsNullOrEmpty($Req7FolderPerms)){
+					$Global:Req7FolderPermsHTML = "<h2>Check for deny all permissions</h2><p>No Child Objects Found, Select Root Object that contains a Child Object.<br>Path Selected: $Global:FilePathFilePopupTmp</p>"
 					if($EverythingToggle -eq $false){
-						$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+						$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object. Path Selected: " + $Global:FilePathFilePopupTmp)
 					}else{
-						$AllOutput.AppendText("No Child Objects Found, Select Root Object that contains a Child Object.")
+						$AllOutput.AppendText("No Child Objects Found, Select Root Object that contains a Child Object. Path Selected: " + $Global:FilePathFilePopupTmp)
 					}
 				}else{
+					$Global:Req7FolderPermsHTML = $Req7FolderPerms | ConvertTo-Html -As List -Fragment -PreContent "<h2>Check for deny all permissions</h2>"
 					# Output Data
 					if($EverythingToggle -eq $false){
-						$Req7Output.AppendText($Req7FolderPerms)
+						$Req7Output.AppendText($Req7FolderPermsRTB)
 					}else{
-						$AllOutput.AppendText($Req7FolderPerms)
+						$AllOutput.AppendText($Req7FolderPermsRTB)
 					}
 				}
+			# Edge Case
 			}catch{
+				$Global:Req7FolderPermsHTML = "<h2>Check for deny all permissions</h2><p>An Error Has Occurred...</p>"
 				if($EverythingToggle -eq $false){
-					$Req7Output.AppendText("`nSomething went wrong...`n")
+					$Req7Output.AppendText("`An Error Has Occurred...`n")
 				}else{
-					$AllOutput.AppendText("`nSomething went wrong...`n")
+					$AllOutput.AppendText("`An Error Has Occurred...`n")
 				}
 			}
 		# Find Edge-Case if user input is empty
 		}else{
+			$Global:Req7FolderPermsHTML = "<h2>Check for deny all permissions</h2><p>Invalid Folder Selected</p>"
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("Check for deny all permissions`n")
 				$Req7Output.AppendText("`nInvalid Folder Selected`n")
@@ -714,17 +733,27 @@ $AllScriptList_ListUpdate = {
 			Start-Sleep -Seconds 0.5
 		}
 		# Query AD
+		# Initialize Variable to Store Data for HTML Report
+		$Req7GroupMembershipList = $null
+		# Data Gathering
 		try{
 			$ActiveDirectoryGroups = (Get-ADGroup -Filter *).Name
+			# Loop
 			foreach ($Group in $ActiveDirectoryGroups){
 			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass | Format-Table | Out-String
 			if([string]::IsNullOrEmpty($GroupMembership)){
+				# Add to HTML List 
+				$Req7GroupMembershipList += "`nNo Users in " + $Group + "`n"
+				# Data Output
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`nNo Users in " + $Group + "`n")
 				}else{
 					$AllOutput.AppendText("`nNo Users in " + $Group + "`n")
 				}
 			}else{
+				# Add to HTML List 
+				$Req7GroupMembershipList += "`nHere are the Users in " + $Group + "`n" + $GroupMembership
+				# Data Output
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`nHere are the Users in " + $Group)
 					$Req7Output.AppendText($GroupMembership)
@@ -734,23 +763,27 @@ $AllScriptList_ListUpdate = {
 					}
 				}
 			}
+			# After Looping Print to HTML
+			$Global:GroupMembershipListHTML = "<h2>Grab User Privileges</h2><pre>" + $Req7GroupMembershipList + "</pre>"
+		# Edge Case
 		}catch{
+			$Global:GroupMembershipListHTML = "<h2>Grab User Privileges</h2><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+				$Req7Output.AppendText("`nUnable to contact Active Directory, Ensure the script is run on a DC.`n")
 			}else{
-				$AllOutput.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
+				$AllOutput.AppendText("`nUnable to contact Active Directory, Ensure the script is run on a DC.`n")
 			}
 		}
 	}
 
-	#onClick event handler
+	# onClick event handler
 	$Req7ScriptList_ListUpdate = {
 		if($Req7ScriptList.SelectedItem -eq "Grab and analyse folder permissions that hold sensitive data"){
 			$Req7Output.Clear()
 			# Alert User for Input
 			$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 			Req7FolderInput
-			Req7FolderPrems
+			Req7FolderPerms
 		}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
 			$Req7Output.Clear()
 			Req7FolderInput
@@ -763,7 +796,7 @@ $AllScriptList_ListUpdate = {
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
 				$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 				Req7FolderInput
-				Req7FolderPrems
+				Req7FolderPerms
 				$Req7Output.AppendText($Global:SectionHeader)
 				Req7DenyAll
 				$Req7Output.AppendText($Global:SectionHeader)
@@ -773,6 +806,28 @@ $AllScriptList_ListUpdate = {
 			$Req7Output.Clear()
 			$Req7Output.AppendText("You must select an object from the script list.")
 		}
+	}
+
+	# Requirement Seven Report Export
+	# Build Report Function
+	Function Req7ExportReportFunction {
+		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
+		$Requirement7Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:GroupMembershipListHTML" -Title "PCI DSS Requirement Seven Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement7ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Seven-Report.html"
+		$Requirement7Report | Out-File $Requirement7ReportPath
+		$Req7Output.AppendText("`nRequirement Seven Report Exported")
+	}
+	# onClick Event Handler to Gather Data for Report
+	$Req7ExportReport = {
+			$Req7Output.Clear()
+			$Req7Output.AppendText("Writing Report for the Following`n`n")
+			Req7FolderInput
+			Req7FolderPerms
+			$Req7Output.AppendText($Global:SectionHeader)
+			Req7DenyAll
+			$Req7Output.AppendText($Global:SectionHeader)
+			Req7UserPriviledges
+			Req7ExportReportFunction
 	}
 
 # Requirement Eight Tab
