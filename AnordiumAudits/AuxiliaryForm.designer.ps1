@@ -479,6 +479,7 @@ $Req8Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sy
 $Req8Export.TabIndex = [System.Int32]12
 $Req8Export.Text = [System.String]'Export'
 $Req8Export.UseVisualStyleBackColor = $true
+$Req8Export.add_Click($Req8ExportReport)
 #
 #Req8Refresh
 #
@@ -493,7 +494,7 @@ $Req8Refresh.add_Click($Req8ScriptList_ListUpdate)
 #Req8ScriptList
 #
 $Req8ScriptList.FormattingEnabled = $true
-$Req8ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Eight',[System.String]'Grab Domain Password Policy Settings',[System.String]'Grab Local Password Policy Settings',[System.String]'Dump of Active Active Directory Users',[System.String]'Dump of Disabled Active Directory Users',[System.String]'Dump of Inactive Active Directory Users',[System.String]'Grab Current User',[System.String]'Grab Local Administrator Accounts',[System.String]'Grab Domain Administrator Accounts',[System.String]'Dump of Users whose Password Never Expire',[System.String]'Dump of Users and Their Last Password Change',[System.String]'Grab the Screensaver Settings',[System.String]'Grab RDP Encryption and Idle Settings',[System.String]'Check for MFA'))
+$Req8ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Eight',[System.String]'Grab Domain Password Policy Settings',[System.String]'Grab Local Password Policy Settings',[System.String]'Dump of Active Active Directory Users',[System.String]'Dump of Disabled Active Directory Users',[System.String]'Dump of Inactive Active Directory Users',[System.String]'Grab Current User',[System.String]'Grab Local Administrator Accounts',[System.String]'Grab Domain Administrator Accounts',[System.String]'Dump of Users whose Password Never Expire',[System.String]'Dump of Users and Their Last Password Change',[System.String]'Grab the Screensaver Settings',[System.String]'Grab RDP Encryption and Idle Settings'))
 $Req8ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req8ScriptList.Name = [System.String]'Req8ScriptList'
 $Req8ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
