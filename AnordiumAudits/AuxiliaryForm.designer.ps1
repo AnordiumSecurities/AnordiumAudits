@@ -605,6 +605,7 @@ $DiagExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sy
 $DiagExport.TabIndex = [System.Int32]19
 $DiagExport.Text = [System.String]'Export'
 $DiagExport.UseVisualStyleBackColor = $true
+$DiagExport.add_Click($DiagExportReport)
 #
 #DiagRefresh
 #

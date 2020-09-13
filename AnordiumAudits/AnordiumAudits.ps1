@@ -1582,6 +1582,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$SystemInfoData = systeminfo | Out-String
+			$Global:DiagSystemInfoDataHTML = "<h2>Grab System Information</h2><pre>" + $SystemInfoData + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText($SystemInfoData)
@@ -1590,6 +1591,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
+			$Global:DiagSystemInfoDataHTML = "<h2>Grab System Information</h2><p>Unable to Grab System Infomation</p>"
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText("Unable to Grab System Infomation`n")
 			}else{
@@ -1608,7 +1610,8 @@ $AllScriptList_ListUpdate = {
 		}
 		# Data Gathering
 		try{
-			$UpdateData = Get-HotFix | Out-String
+			$UpdateData = Get-HotFix | Format-Table -AutoSize | Out-String
+			$Global:DiagInstalledUpdatesDataHTML = "<h2>Grab Installed Software Patches</h2><pre>" + $UpdateData + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText($UpdateData)
@@ -1617,6 +1620,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
+			$Global:DiagInstalledUpdatesDataHTML = "<h2>Grab Installed Software Patches</h2><p>Unable to Grab Installed Software Patches</p>"
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText("Unable to Grab Installed Software Patches`n")
 			}else{
@@ -1636,6 +1640,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$IPConfigData = ipconfig /all | Out-String
+			$Global:DiagIPConfigHTML = "<h2>Grab IP Config</h2><pre>" + $IPConfigData + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText($IPConfigData)
@@ -1644,6 +1649,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
+			$Global:DiagIPConfigHTML = "<h2>Grab IP Config</h2><p>Unable to Grab IP Config</p>"
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText("Unable to Grab IP Config`n")
 			}else{
@@ -1664,6 +1670,8 @@ $AllScriptList_ListUpdate = {
 		try{
 			$PingTest = ping "www.google.com" | Out-String
 			$TraceRouteTest = tracert "www.google.com" | Out-String
+			$Global:DiagPingTestHTML = "<h2>Check TCP Connectivity</h2><h3>Ping To www.google.com<pre>" + $PingTest + "</pre>"
+			$Global:DiagTraceRouteHTML = "<h3>Trace Route to www.google.com</g3><pre>" + $TraceRouteTest + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText("Ping & Trace Route to www.google.com `n" + $PingTest + "`n" + $TraceRouteTest)
@@ -1725,6 +1733,31 @@ $AllScriptList_ListUpdate = {
 			$DiagOutput.Clear()
 			$DiagOutput.AppendText("You must select an object from the script list.")
 		}
+	}
+
+# Diagnostics Report Export
+	# Build Report Function
+	Function DiagExportReportFunction {
+		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
+		$DiagReport = ConvertTo-HTML -Body "$ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Ten Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$DiagReportPath = $Global:ExportPathLocation + "PCI-DSS-Diagnostics-Report.html"
+		$DiagReport | Out-File $DiagReportPath
+		$DiagOutput.AppendText("`nDiagnostics Report Exported")
+	}
+	# onClick Event Handler to Gather Data for Report
+	$DiagExportReport = {
+			$DiagOutput.Clear()
+			$DiagOutput.AppendText("Writing Report for the Following`n`n")
+			DiagSysInfo
+			$DiagOutput.AppendText($Global:SectionHeader)
+			DiagInstalledUpdates
+			$DiagOutput.AppendText($Global:SectionHeader)
+			DiagIPConfig
+			$DiagOutput.AppendText($Global:SectionHeader)
+			DiagTCPConnectivity
+			$DiagOutput.AppendText($Global:SectionHeader)
+			DiagGPODump
+			DiagExportReportFunction
 	}
 
 #Join Path for Designers
