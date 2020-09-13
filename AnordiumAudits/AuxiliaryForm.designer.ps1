@@ -542,6 +542,7 @@ $Req10Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([S
 $Req10Export.TabIndex = [System.Int32]14
 $Req10Export.Text = [System.String]'Export'
 $Req10Export.UseVisualStyleBackColor = $true
+$Req10Export.add_Click($Req10ExportReport)
 #
 #Req10Refresh
 #

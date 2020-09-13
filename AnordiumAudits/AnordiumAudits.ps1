@@ -1325,6 +1325,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$Req10AuditList = auditpol.exe /get /category:* | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req10AuditListHTML = "<h2>Dump of Audit Category Settings</h2><pre>"+$Req10AuditList+"</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText($Req10AuditList)
@@ -1333,10 +1334,11 @@ $AllScriptList_ListUpdate = {
 			}
 		#Edge Case
 		}catch{
+			$Global:Req10AuditListHTML = "<h2>Dump of Audit Category Settings</h2><p>An Error Has Occurred, Unable to find Audit Category Settings</p>"
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText("Unable to find Audit settings.")
+				$Req10Output.AppendText("`nAn Error Has Occurred, Unable to find Audit Settings.")
 			}else{
-				$AllOutput.AppendText("Unable to find Audit settings.")
+				$AllOutput.AppendText("`nAn Error Has Occurred, Unable to find Audit Category Settings.")
 			}
 		}
 	}
@@ -1352,6 +1354,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$Req10NTPSettings = w32tm /query /status | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req10NTPSettings = "<h2>Grab NTP Settings for Current Device</h2><pre>"+$Req10NTPSettings+"</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText($Req10NTPSettings)
@@ -1360,10 +1363,11 @@ $AllScriptList_ListUpdate = {
 			}
 		#Edge Case
 		}catch{
+			$Global:Req10NTPSettings = "<h2>Grab NTP Settings for Current Device</h2><p>An Error Has Occurred, Unable to find NTP settings.</p>"
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText("Unable to find NTP settings.")
+				$Req10Output.AppendText("An Error Has Occurred, Unable to find NTP settings.")
 			}else{
-				$AllOutput.AppendText("Unable to find NTP settings.")
+				$AllOutput.AppendText("An Error Has Occurred, Unable to find NTP settings.")
 			}
 		}
 	}
@@ -1387,6 +1391,8 @@ $AllScriptList_ListUpdate = {
 			$ShuffledComputerArray = $ComputerArray | Sort-Object {Get-Random}
 			# Implement Counter and Test Four Random Computers in AD
 			$Req10Counter = 0
+			$Req10NTPSettingsAllStrings = $null
+			# Data Gathering
 			foreach($RandomComputer in $ShuffledComputerArray){
 				$Req10Counter++
 				if($Req10Counter -eq 5){
@@ -1396,6 +1402,7 @@ $AllScriptList_ListUpdate = {
 					try{
 						$Req10NTPSettingsTesting = w32tm /query /status /computer:$RandomComputer | Format-Table -Autosize | Out-String -Width 1200
 						# Data Output
+						$Req10NTPSettingsAllStrings += "<h3>NTP Settings for: " + $RandomComputer + "</h3><pre>" + $Req10NTPSettingsTesting + "</pre>"
 						if($EverythingToggle -eq $false){
 							$Req10Output.AppendText("`nNTP Settings for: " + $RandomComputer + "`n" + $Req10NTPSettingsTesting)
 						}else{
@@ -1403,6 +1410,7 @@ $AllScriptList_ListUpdate = {
 						}
 					# Edge Case
 					}catch{
+						$Req10NTPSettingsAllStrings += "<h3>NTP Settings for: " + $RandomComputer + "</h3><p>Unable to find NTP settings</p>"
 						if($EverythingToggle -eq $false){
 							$Req10Output.AppendText("Unable to find NTP settings.")
 						}else{
@@ -1411,8 +1419,11 @@ $AllScriptList_ListUpdate = {
 					}
 				}
 			}
+			# Output for HTML
+			$Global:Req10NTPSettingsAllDevices = "<h2>Check NTP Settings on Multiple Devices</h2>" + $Req10NTPSettingsAllStrings
 		# Edge Case (Non-DC)
 		}catch{
+			$Global:Req10NTPSettingsAllDevices = "<h2>Check NTP Settings on Multiple Devices</h2><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
 			}else{
@@ -1431,21 +1442,24 @@ $AllScriptList_ListUpdate = {
 		}
 		# Data Gathering
 		try{
-			$ADDomainAdminList = Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
-			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled | Format-Table -Autosize | Out-String -Width 1200
-			$Req10Output.AppendText("Domain Admins:`n" + $ADDomainAdminList)
-			$Req10Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+			$ADDomainAdminList = Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
+			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
+			$ADDomainAdminListRTB = $ADDomainAdminList | Format-Table -Autosize | Out-String -Width 1200
+			$ADEnterpriseAdminListRTB = $ADEnterpriseAdminList |  Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req10ADDomainAdminListHTML = $ADDomainAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h2>Check Audit Log Permissions</h2><p>Listed below are the Domain & Enterprise Administrators. Check GPO Dump for more infomation.</p><h3>Domain Administrators</h3>"
+			$Global:Req10ADEnterpriseAdminListHTML = $ADEnterpriseAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h3>Enterprise Administrators</h3>"
 			# Data Output
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText("Domain Admins:`n" + $ADDomainAdminList)
-				$Req10Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+				$Req10Output.AppendText("Domain Admins:`n" + $ADDomainAdminListRTB)
+				$Req10Output.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminListRTB)
 			}else{
-				$AllOutput.AppendText("Domain Admins:`n" + $ADDomainAdminList)
-				$AllOutput.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminList)
+				$AllOutput.AppendText("Domain Admins:`n" + $ADDomainAdminListRTB)
+				$AllOutput.AppendText("Enterprise Admins:`n" + $ADEnterpriseAdminListRTB)
 			}
-
 		# Edge Case (Non-DC)
 		}catch{
+			$Global:Req10ADDomainAdminListHTML =  "<h2>Check Audit Log Permissions</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
+			$Global:Req10ADEnterpriseAdminListHTML = "<h3>Enterprise Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
 			}else{
@@ -1467,16 +1481,17 @@ $AllScriptList_ListUpdate = {
 	Function Req10PastAuditLogs {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Grabbing Previous Audit Logs for the past three months`nThis may take a while`n")
+			$Req10Output.AppendText("Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
 		}else{
-			$AllOutput.AppendText("Grabbing Previous Audit Logs for the past three months`nThis may take a while`n")
+			$AllOutput.AppendText("Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
 		}
 		# Data Gathering, Wait so Header is written.
 		$AuditLogsBegin = (Get-Date).AddDays(-90)
 		$AuditLogsEnd = Get-Date
 		Start-Sleep -Seconds 0.5
 		try{
-			$AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd | Select-Object Index,Time,EntryType,InstanceID,Message | Format-Table -AutoSize | Out-String # -Width 10000
+			$AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd | Select-Object Index,Time,EntryType,InstanceID,Message | Format-List | Out-String
+			$Global:Req10AllAuditLogs = "<h2>Grabbing Previous Audit Logs for the Past Three Months</h2><pre>" + $AuditLogs + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText($AuditLogs)
@@ -1485,10 +1500,11 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
+			$Global:Req10AllAuditLogs = "<h2>Grabbing Previous Audit Logs for the Past Three Months</h2><p>" + $AuditLogs + "</p>"
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText("No Audit Logs Found.")
+				$Req10Output.AppendText("An Error Has Occurred, No Audit Logs Found.")
 			}else{
-				$AllOutput.AppendText("No Audit Logs Found.")
+				$AllOutput.AppendText("An Error Has Occurred, No Audit Logs Found.")
 			}
 		}
 	}
@@ -1527,6 +1543,31 @@ $AllScriptList_ListUpdate = {
 			$Req10Output.Clear()
 			$Req10Output.AppendText("You must select an object from the script list.")
 		}
+	}
+
+# Requirement Ten Report Export
+	# Build Report Function
+	Function Req10ExportReportFunction {
+		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
+		$Requirement10Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Title "PCI DSS Requirement Ten Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement10ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Ten-Report.html"
+		$Requirement10Report | Out-File $Requirement10ReportPath
+		$Req10Output.AppendText("`nRequirement Ten Report Exported")
+	}
+	# onClick Event Handler to Gather Data for Report
+	$Req10ExportReport = {
+			$Req10Output.Clear()
+			$Req10Output.AppendText("Writing Report for the Following`n`n")
+			Req10AuditSettings
+			$Req10Output.AppendText($Global:SectionHeader)
+			Req10NTPSettings
+			$Req10Output.AppendText($Global:SectionHeader)
+			Req10NTPSettingsMultipleDevices
+			$Req10Output.AppendText($Global:SectionHeader)
+			Req10AuditLogPrems
+			$Req10Output.AppendText($Global:SectionHeader)
+			Req10PastAuditLogs
+			Req10ExportReportFunction
 	}
 
 # Diagnostics Tab
