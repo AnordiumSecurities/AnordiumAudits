@@ -164,6 +164,7 @@ $AllExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([Sys
 $AllExport.TabIndex = [System.Int32]6
 $AllExport.Text = [System.String]'Export'
 $AllExport.UseVisualStyleBackColor = $true
+$AllExport.add_Click($AllExportReport)
 #
 #AllRefresh
 #

@@ -1,5 +1,7 @@
 # Anordium Audits #
 Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing
+#Join Path for CSS Code in the Report
+. (Join-Path $PSScriptRoot 'CSSReport.ps1')
 
 # Check Script Rights & Ensure is in Administrator Mode
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
@@ -10,7 +12,7 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 
 # Export Location
 	#Function ExportLocation{
-	$Global:ExportPathLocation = "C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release\"
+	$Global:ExportPathLocation = "Z:\Release\"
 
 # Global GPO Result Function. Gather GPO Data
 Function GPResults{
@@ -150,13 +152,120 @@ $AllScriptList_ListUpdate = {
 		# Print End of Script Stuff
 			$AllOutput.AppendText("Script Completed Successfully.`n")
 			# Message Box Popup
-			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Completed Successfully","Script Completed Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
-			
+			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Completed Successfully","Script Completed Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)	
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("You must select an object from the script list.")
 	}
 }
+
+	# All Requirements Report Export
+	# Build Report Function
+	Function AllExportReportFunction {
+		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
+		$RequirementAllReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-All-Report.html"
+		$RequirementAllReport | Out-File $RequirementAllReportPath
+		$AllOutput.AppendText("All PCI-DSS Requirements Exported into a Report.")
+	}
+	# onClick Event Handler to Gather Data for Report
+	$AllExportReport = {
+			$AllOutput.Clear()
+			$AllOutput.AppendText("Writing Report for the Following`n`nBe patient and do not tab away. This may take awhile.")
+			$EverythingToggle = $true
+			$AllOutput.AppendText($Global:SectionBreak)
+		#Call Requirement Two Functions
+			$AllOutput.AppendText("Everything in Requirement Two `n")
+			Req2SampleDefaultPasswords
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2RunningProcesses
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2RunningServices
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2ListeningServices
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2GrabInstalledSoftware
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2GrabInstalledFeatures
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Four Functions
+			$AllOutput.AppendText("Everything in Requirement Four `n")
+			Req4WifiScan
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req4GetKeysAndCerts
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Five Functions
+			$AllOutput.AppendText("Everything in Requirement Five `n")
+			$Global:Req5AllSwitch = $true
+			Req5AVSettingsAndGPO
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Seven Functions
+			$AllOutput.AppendText("Everything in Requirement Seven `n")
+			# Alert User for Input
+			$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+			Req7FolderInput
+			Req7FolderPerms
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req7DenyAll
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req7UserPriviledges
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Eight Functions
+			$AllOutput.AppendText("Everything in Requirement Eight `n")
+			Req8DomainPasswordPolicy
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8LocalPasswordPolicy
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8DumpActiveADUsers
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8DumpDisabledADUsers
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8DumpInactiveADUsers
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabCurrentUser
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabLocalAdmins
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabDomainAdmins
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8DumpADUsersPasswordExpiry
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8DumpADUserLastPassChange
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabScreensaverSettings
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabRDPSettings
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Ten Functions
+			$AllOutput.AppendText("Everything in Requirement Ten `n")
+			Req10AuditSettings
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10NTPSettings
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10NTPSettingsMultipleDevices
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10AuditLogPrems
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10PastAuditLogs
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Call Requirement Diagnosis Functions
+			$AllOutput.AppendText("Everything in Diagnostics`n")
+			DiagSysInfo
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagInstalledUpdates
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagIPConfig
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagTCPConnectivity
+			$AllOutput.AppendText($Global:SectionHeader)
+			DiagGPODump
+			$AllOutput.AppendText($Global:SectionBreak)
+		# Print End of Script Stuff
+			$AllOutput.AppendText("Script Completed Successfully.`n")
+			# Message Box Popup
+			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Exported Completed Successfully","Script Exported Completed Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)	
+			AllExportReportFunction
+	}
 
 # Requirement Two Tab #
 	# Sample Services for Default Vendor Passwords
@@ -174,7 +283,7 @@ $AllScriptList_ListUpdate = {
 		try{
 			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
 			$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>"
+			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>" 
 		# Edge Case
 		}catch{
 			$Req2ProcessListRTB = "Unable to List Running Processes."
@@ -321,7 +430,7 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function 
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Title "PCI DSS Requirement Two Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported")
@@ -348,7 +457,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$Req4WifiList = netsh wlan show networks mode=Bssid | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req4WifiListHTML = $Req4WifiList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Analyse Wi-Fi Envrioment</h2>"
+			$Global:Req4WifiListHTML = "<h2>Analyse Wi-Fi Envrioment</h2><pre>" + $Req4WifiList + "</pre>"
 		# Edge Case
 		}catch{
 			$Req4WifiList = "Unable to find Wi-Fi Networks"
@@ -421,7 +530,7 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function
 	Function Req4ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Title "PCI DSS Requirement Four Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Four Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement4ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Four-Report.html"
 		$Requirement4Report | Out-File $Requirement4ReportPath
 		$Req4Output.AppendText("Requirement Four Report Exported")
@@ -560,7 +669,7 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function
 	Function Req5ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Five Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Five Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement5ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Five-Report.html"
 		$Requirement5Report | Out-File $Requirement5ReportPath
 		$Req5Output.AppendText("`nRequirement Five Report Exported")
@@ -764,10 +873,10 @@ $AllScriptList_ListUpdate = {
 				}
 			}
 			# After Looping Print to HTML
-			$Global:GroupMembershipListHTML = "<h2>Grab User Privileges</h2><pre>" + $Req7GroupMembershipList + "</pre>"
+			$Global:Req7GroupMembershipListHTML = "<h2>Grab User Privileges</h2><pre>" + $Req7GroupMembershipList + "</pre>"
 		# Edge Case
 		}catch{
-			$Global:GroupMembershipListHTML = "<h2>Grab User Privileges</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req7GroupMembershipListHTML = "<h2>Grab User Privileges</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n")
 			}else{
@@ -812,7 +921,7 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function
 	Function Req7ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement7Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:GroupMembershipListHTML" -Title "PCI DSS Requirement Seven Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement7Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement7ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Seven-Report.html"
 		$Requirement7Report | Out-File $Requirement7ReportPath
 		$Req7Output.AppendText("`nRequirement Seven Report Exported")
@@ -1163,7 +1272,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering - RDP Settings
 		try{
 			$RDPSettings = Get-WmiObject -Class 'Win32_TSGeneralSetting' -Namespace 'root/CIMV2/TerminalServices' | Select-Object PSComputerName,TerminalName,TerminalProtocol,Certifcates,CertificateName,MinEncryptionLevel,PolicySourceMinEncryptionLevel,PolicySourceSecurityLayer,SecurityLayer | Format-List | Out-String
-			$Global:Req8RDPSettingsHTML = "<h2>Grab RDP Encryption and Idle Settings</h2><pre>" + $RDPSettings + "</pre>"
+			$Global:Req8RDPSettingsHTML = "<h2>Grab RDP Encryption and Idle Settings</h2><h3>RDP Encryption</h3><pre>" + $RDPSettings + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($RDPSettings)
@@ -1278,7 +1387,7 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function
 	Function Req8ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement8Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Eight Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement8Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement8ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
 		$Req8Output.AppendText("`nRequirement Eight Report Exported")
@@ -1545,11 +1654,11 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-# Requirement Ten Report Export
+	# Requirement Ten Report Export
 	# Build Report Function
 	Function Req10ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$Requirement10Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Title "PCI DSS Requirement Ten Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$Requirement10Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement10ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
 		$Req10Output.AppendText("`nRequirement Ten Report Exported")
@@ -1670,8 +1779,8 @@ $AllScriptList_ListUpdate = {
 		try{
 			$PingTest = ping "www.google.com" | Out-String
 			$TraceRouteTest = tracert "www.google.com" | Out-String
-			$Global:DiagPingTestHTML = "<h2>Check TCP Connectivity</h2><h3>Ping To www.google.com<pre>" + $PingTest + "</pre>"
-			$Global:DiagTraceRouteHTML = "<h3>Trace Route to www.google.com</g3><pre>" + $TraceRouteTest + "</pre>"
+			$Global:DiagPingTestHTML = "<h2>Check TCP Connectivity</h2><h3>Ping To www.google.com</h3><pre>" + $PingTest + "</pre>"
+			$Global:DiagTraceRouteHTML = "<h3>Trace Route to www.google.com</h3><pre>" + $TraceRouteTest + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$DiagOutput.AppendText("Ping & Trace Route to www.google.com `n" + $PingTest + "`n" + $TraceRouteTest)
@@ -1735,11 +1844,11 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-# Diagnostics Report Export
+	# Diagnostics Report Export
 	# Build Report Function
 	Function DiagExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$DiagReport = ConvertTo-HTML -Body "$ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Title "PCI DSS Requirement Ten Report" -PostContent "<p>Creation Date: $(Get-Date)</p>"
+		$DiagReport = ConvertTo-HTML -Body "$ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$DiagReportPath = $Global:ExportPathLocation + "PCI-DSS-Diagnostics-Report.html"
 		$DiagReport | Out-File $DiagReportPath
 		$DiagOutput.AppendText("`nDiagnostics Report Exported")

@@ -75,6 +75,7 @@
     <Compile Include="AuxiliaryForm.ps1">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="CSSReport.ps1" />
     <Compile Include="MainForm.designer.ps1">
       <SubType>Code</SubType>
       <DependentUpon>MainForm.ps1</DependentUpon>
