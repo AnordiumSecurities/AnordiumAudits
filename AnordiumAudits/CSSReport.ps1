@@ -54,12 +54,17 @@ $CSSHeader = @"
         font-size: 12px;
     }
 
-    .StopStatus {
-        color: #ff0000;
+    .AvailableStatus {
+        color: #2a9df4;
     }
   
-    .RunningStatus {
+    .InstalledStatus {
         color: #008000;
     }
+
+    .RemovedStatus {
+        color: #ff0000;
+    }
+
 </style>
 "@
