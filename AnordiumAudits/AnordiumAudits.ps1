@@ -43,14 +43,14 @@ $WelcomeSubmitButton_Click = {
 	try{
 		$UserInputTestingPath = Test-Path -Path $UserInputPath
 		if($UserInputTestingPath -eq $true){
-			$MainForm.MainFormOutput.AppendText("Vaild folder selected. Continuing...`n")
 			if([string]::IsNullOrEmpty($Global:FilePathExportPopup)){
 				$FinalExportPath = $UserInputPath.Trimend("\")
 			}else{
 				$FinalExportPath = $Global:FilePathExportPopup.Trimend("\")
 			}
+			$MainForm.MainFormOutput.AppendText("Vaild folder selected. Continuing...`n" + $FinalExportPath)
 			$Global:ExportPathLocation = $FinalExportPath
-			$MainForm.MainFormOutput.AppendText("`nGathering Information from GPO. Please Standby.")
+			$MainForm.MainFormOutput.AppendText("`n`nGathering Information from GPO. Please Standby.")
 			GPResults
 			$MainForm.Hide()
 			$AuxiliaryForm.ShowDialog()
@@ -68,9 +68,18 @@ $AuxiliaryBack_Click = {
 	$AuxiliaryForm.Hide()
 	$AuxiliaryFormXYLoc = $AuxiliaryForm.Location
 	$MainForm.Location = $AuxiliaryFormXYLoc
+	$Global:FilePathExportPopup = $null
 	$MainForm.MainUserInput.Clear()
 	$MainForm.MainFormOutput.Clear()
 	$AuxiliaryForm.AllOutput.Clear()
+	$AllOutput.Clear()
+	$Req2Output.Clear()
+	$Req4Output.Clear()
+	$Req5Output.Clear()
+	$Req7Output.Clear()
+	$Req8Output.Clear()
+	$Req10Output.Clear()
+	$DiagOutput.Clear()
 	$MainForm.Show()
 }
 # Credits Button on Main Form
@@ -211,7 +220,8 @@ $AllScriptList_ListUpdate = {
 		$RequirementAllReport = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
-		$AllOutput.AppendText("All PCI-DSS Requirements Exported into a Report.")
+		$AllOutput.AppendText("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
+		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html","All PCI-DSS Requirements Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$AllExportReport = {
@@ -304,11 +314,6 @@ $AllScriptList_ListUpdate = {
 			DiagTCPConnectivity
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagGPODump
-			$AllOutput.AppendText($Global:SectionBreak)
-		# Print End of Script Stuff
-			$AllOutput.AppendText("Script Completed Successfully.`n")
-			# Message Box Popup
-			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Exported Completed Successfully","Script Exported Completed Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)	
 			AllExportReportFunction
 	}
 
@@ -328,7 +333,7 @@ $AllScriptList_ListUpdate = {
 		try{
 			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
 			$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req2ProcessListHTML = $Req2ProcessList | ConvertTo-Html -As Table -Property name,Path -Fragment -PreContent "<h2>List of Running Processes</h2>" 
+			$Global:Req2ProcessListHTML = Get-Process | ConvertTo-Html -As Table -Property Name,ProductVersion,Company,StartTime,Path -Fragment -PreContent "<h2>List of Running Processes</h2>" 
 		# Edge Case
 		}catch{
 			$Req2ProcessListRTB = "Unable to List Running Processes."
@@ -478,7 +483,8 @@ $AllScriptList_ListUpdate = {
 		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
-		$Req2Output.AppendText("Requirement Two Report Exported")
+		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
+		$Req2EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html","Requirement Two Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)    
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req2ExportReport = {
@@ -578,7 +584,8 @@ $AllScriptList_ListUpdate = {
 		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Four Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement4ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html"
 		$Requirement4Report | Out-File $Requirement4ReportPath
-		$Req4Output.AppendText("Requirement Four Report Exported")
+		$Req4Output.AppendText("Requirement Four Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html")
+		$Req4EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Four Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html","Requirement Four Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req4ExportReport = {
@@ -717,7 +724,8 @@ $AllScriptList_ListUpdate = {
 		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Five Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement5ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html"
 		$Requirement5Report | Out-File $Requirement5ReportPath
-		$Req5Output.AppendText("`nRequirement Five Report Exported")
+		$Req5Output.AppendText("Requirement Five Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html")
+		$Req5EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Five Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html","Requirement Five Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req5ExportReport = {
@@ -969,7 +977,8 @@ $AllScriptList_ListUpdate = {
 		$Requirement7Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement7ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html"
 		$Requirement7Report | Out-File $Requirement7ReportPath
-		$Req7Output.AppendText("`nRequirement Seven Report Exported")
+		$Req7Output.AppendText("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html")
+		$Req7EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html","Requirement Seven Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req7ExportReport = {
@@ -1435,7 +1444,8 @@ $AllScriptList_ListUpdate = {
 		$Requirement8Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement8ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
-		$Req8Output.AppendText("`nRequirement Eight Report Exported")
+		$Req8Output.AppendText("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html")
+		$Req8EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html","Requirement Eight Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req8ExportReport = {
@@ -1706,7 +1716,8 @@ $AllScriptList_ListUpdate = {
 		$Requirement10Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$Requirement10ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
-		$Req10Output.AppendText("`nRequirement Ten Report Exported")
+		$Req10Output.AppendText("Requirement Ten Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html")
+		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Ten Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html","Requirement Ten Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req10ExportReport = {
@@ -1764,13 +1775,14 @@ $AllScriptList_ListUpdate = {
 		}
 		# Data Gathering
 		try{
-			$UpdateData = Get-HotFix | Format-Table -AutoSize | Out-String
-			$Global:DiagInstalledUpdatesDataHTML = "<h2>Grab Installed Software Patches</h2><pre>" + $UpdateData + "</pre>"
+			$UpdateData = Get-HotFix
+			$UpdateDataRTB = $UpdateData | Format-Table -AutoSize | Out-String
+			$Global:DiagInstalledUpdatesDataHTML = $UpdateData | ConvertTo-Html -As Table -Property Source,Description,HotFixID,InstalledBy,InstalledOn -Fragment -PreContent "<h2>Grab Installed Software Patches</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
-				$DiagOutput.AppendText($UpdateData)
+				$DiagOutput.AppendText($UpdateDataRTB)
 			}else{
-				$AllOutput.AppendText($UpdateData)
+				$AllOutput.AppendText($UpdateDataRTB)
 			}
 		# Edge Case
 		}catch{
@@ -1896,7 +1908,8 @@ $AllScriptList_ListUpdate = {
 		$DiagReport = ConvertTo-HTML -Body "$ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
 		$DiagReportPath = $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html"
 		$DiagReport | Out-File $DiagReportPath
-		$DiagOutput.AppendText("`nDiagnostics Report Exported")
+		$DiagOutput.AppendText("`nDiagnostics Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html")
+		$DiagEndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Diagnostics Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html","Diagnostics Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$DiagExportReport = {
