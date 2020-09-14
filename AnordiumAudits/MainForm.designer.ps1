@@ -55,10 +55,15 @@ $MainUserInput.Name = [System.String]'MainUserInput'
 $MainUserInput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]367,[System.Int32]30))
 $MainUserInput.TabIndex = [System.Int32]2
 #
+#MainExportFolderBrowse
+#
+$MainExportFolderBrowse.RootFolder = [System.Environment+SpecialFolder]::MyComputer
+#
 #MainFormOutput
 #
 $MainFormOutput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]16,[System.Int32]142))
 $MainFormOutput.Name = [System.String]'MainFormOutput'
+$MainFormOutput.ReadOnly = $true
 $MainFormOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]367,[System.Int32]200))
 $MainFormOutput.TabIndex = [System.Int32]3
 $MainFormOutput.Text = [System.String]''
@@ -71,7 +76,7 @@ $MainExportFolderBrowseButton.Size = (New-Object -TypeName System.Drawing.Size -
 $MainExportFolderBrowseButton.TabIndex = [System.Int32]4
 $MainExportFolderBrowseButton.Text = [System.String]'Browse'
 $MainExportFolderBrowseButton.UseVisualStyleBackColor = $true
-$MainExportFolderBrowseButton.add_Click($button2_Click)
+$MainExportFolderBrowseButton.add_Click($UserInputBrowse)
 #
 #WelcomeLabel2
 #
@@ -99,6 +104,7 @@ $MainFormCredits.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList 
 $MainFormCredits.TabIndex = [System.Int32]7
 $MainFormCredits.Text = [System.String]'Credits'
 $MainFormCredits.UseVisualStyleBackColor = $true
+$MainFormCredits.add_Click($CreditsButton)
 #
 #MainFormLogo
 #

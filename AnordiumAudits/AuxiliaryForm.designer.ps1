@@ -191,6 +191,7 @@ $AllScriptList.add_SelectedIndexChanged($AllScriptList_ListUpdate)
 $AllOutput.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Lucida Console',[System.Single]9.75,[System.Drawing.FontStyle]::Regular,[System.Drawing.GraphicsUnit]::Point,([System.Byte][System.Byte]0)))
 $AllOutput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $AllOutput.Name = [System.String]'AllOutput'
+$AllOutput.ReadOnly = $true
 $AllOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $AllOutput.TabIndex = [System.Int32]1
 $AllOutput.Text = [System.String]''
@@ -258,6 +259,7 @@ $Req2Output.Name = [System.String]'Req2Output'
 $Req2Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req2Output.TabIndex = [System.Int32]0
 $Req2Output.Text = [System.String]''
+$Req2Output.ReadOnly = $true
 #
 #ReqTab4
 #
@@ -321,6 +323,7 @@ $Req4Output.Name = [System.String]'Req4Output'
 $Req4Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req4Output.TabIndex = [System.Int32]1
 $Req4Output.Text = [System.String]''
+$Req4Output.ReadOnly = $true
 #
 #ReqTab5
 #
@@ -384,6 +387,7 @@ $Req5Output.Name = [System.String]'Req5Output'
 $Req5Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req5Output.TabIndex = [System.Int32]2
 $Req5Output.Text = [System.String]''
+$Req5Output.ReadOnly = $true
 #
 #ReqTab7
 #
@@ -447,6 +451,7 @@ $Req7Output.Name = [System.String]'Req7Output'
 $Req7Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req7Output.TabIndex = [System.Int32]3
 $Req7Output.Text = [System.String]''
+$Req7Output.ReadOnly = $true
 #
 #ReqTab8
 #
@@ -510,6 +515,7 @@ $Req8Output.Name = [System.String]'Req8Output'
 $Req8Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req8Output.TabIndex = [System.Int32]4
 $Req8Output.Text = [System.String]''
+$Req8Output.ReadOnly = $true
 #
 #ReqTab10
 #
@@ -573,6 +579,7 @@ $Req10Output.Name = [System.String]'Req10Output'
 $Req10Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req10Output.TabIndex = [System.Int32]5
 $Req10Output.Text = [System.String]''
+$Req10Output.ReadOnly = $true
 #
 #DiagTab
 #
@@ -636,6 +643,7 @@ $DiagOutput.Name = [System.String]'DiagOutput'
 $DiagOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $DiagOutput.TabIndex = [System.Int32]16
 $DiagOutput.Text = [System.String]''
+$DiagOutput.ReadOnly = $true
 #
 #AuxiliaryForm
 #

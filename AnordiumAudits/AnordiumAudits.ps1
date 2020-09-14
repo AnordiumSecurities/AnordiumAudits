@@ -10,14 +10,9 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   exit
 }
 
-# Export Location
-	#Function ExportLocation{
-	$Global:ExportPathLocation = "Z:\Release\"
-
 # Global GPO Result Function. Gather GPO Data
 Function GPResults{
-	$Global:GPODumpExe = gpresult.exe /SCOPE COMPUTER /Z
-	$Global:GPODump = $Global:GPODumpExe | Format-Table -Autosize | Out-String -Width 1200
+	$Global:GPODump = gpresult.exe /SCOPE COMPUTER /Z | Format-Table -Autosize | Out-String -Width 1200
 	$Global:GPODumpHTML = "<h2>GPO Dump</h2><pre>"+$Global:GPODump+"</pre>"
 	# Edge Case
 	if([string]::IsNullOrEmpty($global:GPODump)){
@@ -26,31 +21,81 @@ Function GPResults{
 	}
 	# Dedicated HTML GPO Report Export
 	try{
-		$Global:GPOExportPathLocation =  $Global:ExportPathLocation + "GPO-Report.html"
+		$Global:GPOExportPathLocation =  $Global:ExportPathLocation + "\GPO-Report.html"
 		gpresult.exe /SCOPE COMPUTER /f /h $Global:GPOExportPathLocation
+		$AllOutput.AppendText("GPO Report Exported to: " + $Global:ExportPathLocation + "\GPO-Report.html")
 		$Global:GPOExportReportStatus = $true
 	}catch{
 		$Global:GPOExportReportStatus = $false
 	}
 }
 
-# Menu Nav
+# Menu Navigation
+# Submit Button on Main Form
 $WelcomeSubmitButton_Click = {
-	$MainForm.Hide()
+	# Clear Output
+	$MainForm.MainFormOutput.Clear()
+	# Form Navigation
 	$MainFormXYLoc = $MainForm.Location
 	$AuxiliaryForm.Location = $MainFormXYLoc
-	GPResults
-	$AuxiliaryForm.ShowDialog()
+	# Check User Input
+	$UserInputPath = $MainForm.MainUserInput.Text
+	try{
+		$UserInputTestingPath = Test-Path -Path $UserInputPath
+		if($UserInputTestingPath -eq $true){
+			$MainForm.MainFormOutput.AppendText("Vaild folder selected. Continuing...`n")
+			if([string]::IsNullOrEmpty($Global:FilePathExportPopup)){
+				$FinalExportPath = $UserInputPath.Trimend("\")
+			}else{
+				$FinalExportPath = $Global:FilePathExportPopup.Trimend("\")
+			}
+			$Global:ExportPathLocation = $FinalExportPath
+			$MainForm.MainFormOutput.AppendText("`nGathering Information from GPO. Please Standby.")
+			GPResults
+			$MainForm.Hide()
+			$AuxiliaryForm.ShowDialog()
+		}else{
+			$MainForm.MainFormOutput.Clear()
+			$MainForm.MainFormOutput.AppendText("Invalid Folder Location.`n")
+		}
+	}catch{
+		$MainForm.MainFormOutput.Clear()
+		$MainForm.MainFormOutput.AppendText("Folder not selected. Invalid Location.`n")
+	}
 }
-
+# Back Button from Auxiliary Form
 $AuxiliaryBack_Click = {
 	$AuxiliaryForm.Hide()
 	$AuxiliaryFormXYLoc = $AuxiliaryForm.Location
 	$MainForm.Location = $AuxiliaryFormXYLoc
+	$MainForm.MainUserInput.Clear()
+	$MainForm.MainFormOutput.Clear()
+	$AuxiliaryForm.AllOutput.Clear()
 	$MainForm.Show()
 }
+# Credits Button on Main Form
+$CreditsButton = {
+	$MainFormOutput.Clear()
+	$MainFormOutput.AppendText("Placeholder Credits")
+}
+# Browse Button on Main Form
+$UserInputBrowse = {
+	$MainForm.MainUserInput.Clear()
+	$UserBrowsePopup = $MainForm.MainExportFolderBrowse.ShowDialog()
+	if($UserBrowsePopup -eq "OK"){    
+		$Global:FilePathExportPopup = $MainExportFolderBrowse.SelectedPath
+		$MainForm.MainUserInput.Clear()
+		$MainForm.MainFormOutput.Clear()
+		$MainForm.MainUserInput.AppendText($Global:FilePathExportPopup)
+		$MainForm.MainFormOutput.AppendText("Export Folder Path Selected: " + $Global:FilePathExportPopup)
+	}else{
+		$MainForm.MainUserInput.Clear()
+		$MainForm.MainFormOutput.Clear()
+		$MainForm.MainFormOutput.AppendText("Folder not selected. Invalid Location.")
+	}
+}
 
-# Everything Tab
+# Everything Tab # 
 # Initialize Switch & Headers
 $EverythingToggle = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
@@ -164,7 +209,7 @@ $AllScriptList_ListUpdate = {
 	Function AllExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$RequirementAllReport = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$RequirementAllReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-All-Report.html"
+		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("All PCI-DSS Requirements Exported into a Report.")
 	}
@@ -431,7 +476,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement2Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$Requirement2ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Two-Report.html"
+		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported")
 	}
@@ -531,7 +576,7 @@ $AllScriptList_ListUpdate = {
 	Function Req4ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement4Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Four Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$Requirement4ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Four-Report.html"
+		$Requirement4ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html"
 		$Requirement4Report | Out-File $Requirement4ReportPath
 		$Req4Output.AppendText("Requirement Four Report Exported")
 	}
@@ -670,7 +715,7 @@ $AllScriptList_ListUpdate = {
 	Function Req5ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement5Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Five Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$Requirement5ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Five-Report.html"
+		$Requirement5ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html"
 		$Requirement5Report | Out-File $Requirement5ReportPath
 		$Req5Output.AppendText("`nRequirement Five Report Exported")
 	}
@@ -922,7 +967,7 @@ $AllScriptList_ListUpdate = {
 	Function Req7ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement7Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$Requirement7ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Seven-Report.html"
+		$Requirement7ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html"
 		$Requirement7Report | Out-File $Requirement7ReportPath
 		$Req7Output.AppendText("`nRequirement Seven Report Exported")
 	}
@@ -1388,7 +1433,7 @@ $AllScriptList_ListUpdate = {
 	Function Req8ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement8Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$Requirement8ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Eight-Report.html"
+		$Requirement8ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
 		$Req8Output.AppendText("`nRequirement Eight Report Exported")
 	}
@@ -1659,7 +1704,7 @@ $AllScriptList_ListUpdate = {
 	Function Req10ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Requirement10Report = ConvertTo-HTML -Body "$ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$Requirement10ReportPath = $Global:ExportPathLocation + "PCI-DSS-Requirement-Ten-Report.html"
+		$Requirement10ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
 		$Req10Output.AppendText("`nRequirement Ten Report Exported")
 	}
@@ -1849,7 +1894,7 @@ $AllScriptList_ListUpdate = {
 	Function DiagExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$DiagReport = ConvertTo-HTML -Body "$ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p>"
-		$DiagReportPath = $Global:ExportPathLocation + "PCI-DSS-Diagnostics-Report.html"
+		$DiagReportPath = $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html"
 		$DiagReport | Out-File $DiagReportPath
 		$DiagOutput.AppendText("`nDiagnostics Report Exported")
 	}

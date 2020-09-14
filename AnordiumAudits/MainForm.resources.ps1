@@ -1,5 +1,5 @@
 @{
-'MainFormLogo.Image' = New-Object -TypeName System.Drawing.Icon -ArgumentList @(New-Object -TypeName  System.IO.MemoryStream -ArgumentList @(,[System.Convert]::FromBase64String('iVBORw0KGgoAAAANSUhEUgAAAP4AAAFOCAYAAACmK6CQAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
+'MainFormLogo.Image' = New-Object -TypeName System.Drawing.Bitmap -ArgumentList @(New-Object -TypeName  System.IO.MemoryStream -ArgumentList @(,[System.Convert]::FromBase64String('iVBORw0KGgoAAAANSUhEUgAAAP4AAAFOCAYAAACmK6CQAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1
         MAAA6mAAADqYAAAXcJy6UTwAAAF7aUNDUGljYwAAKM+VkTlIA0EYhT/jiSgWBgxisYUKgoKoiKVEUQQD
         IUbwKtzdmChkN2E3wcZSsBUsPBqvwsZaWwtbQRA8QKwsrRRtRNZ/NkKCEMGBYT7ezHvMvIHAQdq03Kpe
         sOycExsPazOzc1rtM3WEqKGLFt10s5GpsThlx8ctFWq96VFZ/G80JpZcEyo04WEz6+SEF4UHV3NZxTvC
