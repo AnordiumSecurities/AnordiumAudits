@@ -54,6 +54,12 @@ $CSSHeader = @"
         font-size: 12px;
     }
 
+    #RequirementHeader {
+        font-family: Arial, Helvetica, sans-serif;
+        color: #ff0000;
+        font-size: 32px;
+    }
+
     .AvailableStatus {
         color: #2a9df4;
     }
@@ -63,6 +69,14 @@ $CSSHeader = @"
     }
 
     .RemovedStatus {
+        color: #ff0000;
+    }
+
+    .EnabledStatus {
+        color: #008000;
+    }
+
+    .DisabledStatus {
         color: #ff0000;
     }
 
