@@ -65,7 +65,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources.resx" />
+    <Content Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuxiliaryForm.designer.ps1">
