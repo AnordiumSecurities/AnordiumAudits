@@ -80,5 +80,9 @@ $CSSHeader = @"
         color: #ff0000;
     }
 
+    .TopRequirementHeader {
+        color: #000000;
+    }
+
 </style>
 "@

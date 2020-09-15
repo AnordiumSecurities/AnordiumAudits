@@ -119,8 +119,6 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
-			Req2SampleDefaultPasswords
-			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningServices
@@ -130,6 +128,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2GrabADComputers
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
@@ -216,11 +216,19 @@ $AllScriptList_ListUpdate = {
 	# Build Report Function
 	Function AllExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
-		$ReportAllName = "<h1 id='RequirementHeader'>All PCI-DSS Requirements Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator.</p>"
+		$ReportAllName = "<h1 id='TopRequirementHeader'>All PCI-DSS Requirements Report</h1>"
+		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two</h1>"
+		$Global:ReportRequirementFourName = "<h1 id='RequirementHeader'>PCI DSS Requirement Four</h1>"
+		$Global:ReportRequirementFiveName = "<h1 id='RequirementHeader'>PCI DSS Requirement Five</h1>"
+		$Global:ReportRequirementSevenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Seven</h1>"
+		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
+		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
+		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML $Global:Req2ADComputerListAll $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
-		$AllOutput.AppendText("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
+		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
+		$AllOutput.AppendText("`nRequirement Ten Audit Logs Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt")
 		# Audit Logs Text File
 		$AllAuditLogs = "Grabbing Previous Audit Logs for the Past Three Months.`n" + $Global:AuditLogs 
 		$Requirement10ReportPathLogs = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt"
@@ -236,8 +244,6 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
-			Req2SampleDefaultPasswords
-			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningServices
@@ -247,6 +253,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2GrabADComputers
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
@@ -323,15 +331,6 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Two Tab #
-	# Sample Services for Default Vendor Passwords
-	Function Req2SampleDefaultPasswords{
-		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("Sample Services for Default Vendor Passwords:`n")
-		}else{
-			$AllOutput.AppendText("Sample Services for Default Vendor Passwords:`n")
-		}
-	}
-
 	# List of Runnning Processes
 	Function Req2RunningProcesses{
 		# Data Gathering
@@ -445,12 +444,41 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
+	# Grab All Computer Objects from Active Directory
+	Function Req2GrabADComputers{
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("Grab All Computer Objects from Active Directory:`n")
+		}else{
+			$AllOutput.AppendText("Grab All Computer Objects from Active Directory:`n")
+		}
+		# Data Gathering
+		try{
+			$ADComputerListAll = Get-ADComputer -Filter * | Select-Object Name, Enabled, DNSHostName, DistinguishedName |Sort-Object Name,Enabled
+			$ADComputerListAllRTB = $ADComputerListAll | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2ADComputerListAll = $ADComputerListAll | ConvertTo-Html -As Table -Property Name, Enabled, DNSHostName, DistinguishedName -Fragment -PreContent "<h2>Grab All Computer Objects from Active Directory</h2>"
+			$Global:Req2ADComputerListAll = $Global:Req2ADComputerListAll -replace '<td>True</td>','<td class="EnabledStatus">True</td>'
+			$Global:Req2ADComputerListAll = $Global:Req2ADComputerListAll -replace '<td>False</td>','<td class="DisabledStatus">False</td>'
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText($ADComputerListAllRTB)
+			}else{
+				$AllOutput.AppendText($ADComputerListAllRTB)
+			}
+		# Edge Case
+		}catch{
+			$Global:Req2ADComputerListAll = "<h2>Grab All Computer Objects from Active Directory</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n")
+			}else{
+				$AllOutput.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n")
+			}
+		}
+	}
+
 	# onClick Event Handler - Requirement Two
 	$Req2ScriptList_ListUpdate = {
-		if($Req2ScriptList.SelectedItem -eq "Sample Services for Default Vendor Passwords"){
-			$Req2Output.Clear()
-			Req2SampleDefaultPasswords
-		}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Processes"){
+		if($Req2ScriptList.SelectedItem -eq "Grab Running Processes"){
 			$Req2Output.Clear()
 			Req2RunningProcesses
 		}elseif($Req2ScriptList.SelectedItem -eq "Grab Running Services"){
@@ -465,11 +493,12 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "Grab Installed Windows Features"){
 			$Req2Output.Clear()
 			Req2GrabInstalledFeatures
+		}elseif($Req2ScriptList.SelectedItem -eq "Grab All Computer Objects from Active Directory"){
+			$Req2Output.Clear()
+			Req2GrabADComputers
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
-			Req2SampleDefaultPasswords
-			$Req2Output.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2RunningServices
@@ -479,6 +508,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
+			$Req2Output.AppendText($Global:SectionHeader)
+			Req2GrabADComputers
 		}else{
 			$Req2Output.Clear()
 			$Req2Output.AppendText("You must select an object from the script list.")
@@ -490,7 +521,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator.</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2SoftwareListHTML $Global:Req2FeatureListHTML $Global:Req2ADComputerListAll" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator.</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
@@ -509,6 +540,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
+			$Req2Output.AppendText($Global:SectionHeader)
+			Req2GrabADComputers
 			Req2ExportReportFunction
 	}
 
