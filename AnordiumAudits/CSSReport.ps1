@@ -80,8 +80,10 @@ $CSSHeader = @"
         color: #ff0000;
     }
 
-    .TopRequirementHeader {
+    h1.TopRequirementHeader {
+        font-family: Arial, Helvetica, sans-serif;
         color: #000000;
+        font-size: 32px;
     }
 
 </style>

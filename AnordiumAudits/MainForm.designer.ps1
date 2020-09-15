@@ -14,7 +14,7 @@ $MainForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$button1 = $null
 function InitializeComponent
 {
-$resources = . (Join-Path $PSScriptRoot 'MainForm.resources.ps1')
+#$resources = . (Join-Path $PSScriptRoot 'MainForm.resources.ps1')
 $WelcomeLabel1 = (New-Object -TypeName System.Windows.Forms.Label)
 $WelcomeSubmitButton = (New-Object -TypeName System.Windows.Forms.Button)
 $MainUserInput = (New-Object -TypeName System.Windows.Forms.TextBox)
@@ -128,6 +128,7 @@ $MainForm.Controls.Add($MainUserInput)
 $MainForm.Controls.Add($WelcomeSubmitButton)
 $MainForm.Controls.Add($WelcomeLabel1)
 $MainForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
+$MainForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $MainForm.MaximizeBox = $false
 $MainForm.Name = [System.String]'MainForm'
 $MainForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual

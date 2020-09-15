@@ -53,6 +53,7 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.RichTextBox]$DiagOutput = $null
 function InitializeComponent
 {
+#$resources = . (Join-Path $PSScriptRoot 'AuxiliaryForm.resources.ps1')
 $MainTabControl = (New-Object -TypeName System.Windows.Forms.TabControl)
 $AllTab = (New-Object -TypeName System.Windows.Forms.TabPage)
 $AllBack = (New-Object -TypeName System.Windows.Forms.Button)
@@ -650,6 +651,7 @@ $DiagOutput.Text = [System.String]''
 $AuxiliaryForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1584,[System.Int32]861))
 $AuxiliaryForm.Controls.Add($MainTabControl)
 $AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
+$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.MaximizeBox = $false
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
 $AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
