@@ -50,54 +50,85 @@ $AuxiliaryForm = New-Object -TypeName System.Windows.Forms.Form
 [System.Windows.Forms.Button]$DiagRefresh = $null
 [System.Windows.Forms.ListBox]$DiagScriptList = $null
 [System.Windows.Forms.TabPage]$DiagTab = $null
+[System.Windows.Forms.Label]$AllScriptOutputLabel = $null
+[System.Windows.Forms.Label]$AllScriptListLabel = $null
+[System.Windows.Forms.Label]$Req2OutputLabel = $null
+[System.Windows.Forms.Label]$Req2ListLabel = $null
+[System.Windows.Forms.Label]$Req4OutputLabel = $null
+[System.Windows.Forms.Label]$Req4ListLabel = $null
+[System.Windows.Forms.Label]$Req5OutputLabel = $null
+[System.Windows.Forms.Label]$Req5ListLabel = $null
+[System.Windows.Forms.Label]$Req7OutputLabel = $null
+[System.Windows.Forms.Label]$Req7ListLabel = $null
+[System.Windows.Forms.Label]$Req8ListLabel = $null
+[System.Windows.Forms.Label]$Req8OutputLabel = $null
+[System.Windows.Forms.Label]$Req10OutputLabel = $null
+[System.Windows.Forms.Label]$Req10ListLabel = $null
+[System.Windows.Forms.Label]$DiagOutputLabel = $null
+[System.Windows.Forms.Label]$DiagListLabel = $null
 [System.Windows.Forms.RichTextBox]$DiagOutput = $null
 function InitializeComponent
 {
-#$resources = . (Join-Path $PSScriptRoot 'AuxiliaryForm.resources.ps1')
 $MainTabControl = (New-Object -TypeName System.Windows.Forms.TabControl)
 $AllTab = (New-Object -TypeName System.Windows.Forms.TabPage)
+$AllScriptOutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$AllScriptListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $AllBack = (New-Object -TypeName System.Windows.Forms.Button)
 $AllExport = (New-Object -TypeName System.Windows.Forms.Button)
 $AllRefresh = (New-Object -TypeName System.Windows.Forms.Button)
 $AllScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $AllOutput = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab2 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req2OutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$Req2ListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $Req2Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req2ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req2Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req2Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req2Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab4 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req4OutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$Req4ListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $Req4Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req4Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req4Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req4ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req4Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab5 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req5OutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$Req5ListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $Req5Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req5Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req5Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req5ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req5Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab7 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req7OutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$Req7ListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $Req7Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req7Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req7Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req7ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req7Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab8 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req8OutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$Req8ListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $Req8Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req8Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req8Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req8ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req8Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $ReqTab10 = (New-Object -TypeName System.Windows.Forms.TabPage)
+$Req10OutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$Req10ListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $Req10Back = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Export = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10Refresh = (New-Object -TypeName System.Windows.Forms.Button)
 $Req10ScriptList = (New-Object -TypeName System.Windows.Forms.ListBox)
 $Req10Output = (New-Object -TypeName System.Windows.Forms.RichTextBox)
 $DiagTab = (New-Object -TypeName System.Windows.Forms.TabPage)
+$DiagOutputLabel = (New-Object -TypeName System.Windows.Forms.Label)
+$DiagListLabel = (New-Object -TypeName System.Windows.Forms.Label)
 $DiagBack = (New-Object -TypeName System.Windows.Forms.Button)
 $DiagExport = (New-Object -TypeName System.Windows.Forms.Button)
 $DiagRefresh = (New-Object -TypeName System.Windows.Forms.Button)
@@ -128,12 +159,14 @@ $MainTabControl.Controls.Add($DiagTab)
 $MainTabControl.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]0,[System.Int32]0))
 $MainTabControl.Name = [System.String]'MainTabControl'
 $MainTabControl.SelectedIndex = [System.Int32]0
-$MainTabControl.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1580,[System.Int32]860))
+$MainTabControl.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1585,[System.Int32]862))
 $MainTabControl.TabIndex = [System.Int32]0
 $MainTabControl.add_Selected($MainTabControl_IndexChanged)
 #
 #AllTab
 #
+$AllTab.Controls.Add($AllScriptOutputLabel)
+$AllTab.Controls.Add($AllScriptListLabel)
 $AllTab.Controls.Add($AllBack)
 $AllTab.Controls.Add($AllExport)
 $AllTab.Controls.Add($AllRefresh)
@@ -142,10 +175,30 @@ $AllTab.Controls.Add($AllOutput)
 $AllTab.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $AllTab.Name = [System.String]'AllTab'
 $AllTab.Padding = (New-Object -TypeName System.Windows.Forms.Padding -ArgumentList @([System.Int32]3))
-$AllTab.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$AllTab.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $AllTab.TabIndex = [System.Int32]0
 $AllTab.Text = [System.String]'All'
 $AllTab.UseVisualStyleBackColor = $true
+#
+#AllScriptOutputLabel
+#
+$AllScriptOutputLabel.AutoSize = $true
+$AllScriptOutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$AllScriptOutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$AllScriptOutputLabel.Name = [System.String]'AllScriptOutputLabel'
+$AllScriptOutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$AllScriptOutputLabel.TabIndex = [System.Int32]9
+$AllScriptOutputLabel.Text = [System.String]'Output:'
+#
+#AllScriptListLabel
+#
+$AllScriptListLabel.AutoSize = $true
+$AllScriptListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$AllScriptListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$AllScriptListLabel.Name = [System.String]'AllScriptListLabel'
+$AllScriptListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$AllScriptListLabel.TabIndex = [System.Int32]8
+$AllScriptListLabel.Text = [System.String]'List of Scripts:'
 #
 #AllBack
 #
@@ -199,6 +252,8 @@ $AllOutput.Text = [System.String]''
 #
 #ReqTab2
 #
+$ReqTab2.Controls.Add($Req2OutputLabel)
+$ReqTab2.Controls.Add($Req2ListLabel)
 $ReqTab2.Controls.Add($Req2Back)
 $ReqTab2.Controls.Add($Req2ScriptList)
 $ReqTab2.Controls.Add($Req2Refresh)
@@ -207,10 +262,30 @@ $ReqTab2.Controls.Add($Req2Output)
 $ReqTab2.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $ReqTab2.Name = [System.String]'ReqTab2'
 $ReqTab2.Padding = (New-Object -TypeName System.Windows.Forms.Padding -ArgumentList @([System.Int32]3))
-$ReqTab2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$ReqTab2.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $ReqTab2.TabIndex = [System.Int32]1
 $ReqTab2.Text = [System.String]'Requirement 2'
 $ReqTab2.UseVisualStyleBackColor = $true
+#
+#Req2OutputLabel
+#
+$Req2OutputLabel.AutoSize = $true
+$Req2OutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req2OutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$Req2OutputLabel.Name = [System.String]'Req2OutputLabel'
+$Req2OutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$Req2OutputLabel.TabIndex = [System.Int32]11
+$Req2OutputLabel.Text = [System.String]'Output:'
+#
+#Req2ListLabel
+#
+$Req2ListLabel.AutoSize = $true
+$Req2ListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req2ListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$Req2ListLabel.Name = [System.String]'Req2ListLabel'
+$Req2ListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$Req2ListLabel.TabIndex = [System.Int32]10
+$Req2ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req2Back
 #
@@ -244,7 +319,7 @@ $Req2Refresh.add_Click($Req2ScriptList_ListUpdate)
 #
 #Req2Export
 #
-$Req2Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1370,[System.Int32]787))
+$Req2Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
 $Req2Export.Name = [System.String]'Req2Export'
 $Req2Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req2Export.TabIndex = [System.Int32]1
@@ -264,6 +339,8 @@ $Req2Output.Text = [System.String]''
 #
 #ReqTab4
 #
+$ReqTab4.Controls.Add($Req4OutputLabel)
+$ReqTab4.Controls.Add($Req4ListLabel)
 $ReqTab4.Controls.Add($Req4Back)
 $ReqTab4.Controls.Add($Req4Export)
 $ReqTab4.Controls.Add($Req4Refresh)
@@ -271,10 +348,30 @@ $ReqTab4.Controls.Add($Req4ScriptList)
 $ReqTab4.Controls.Add($Req4Output)
 $ReqTab4.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $ReqTab4.Name = [System.String]'ReqTab4'
-$ReqTab4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$ReqTab4.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $ReqTab4.TabIndex = [System.Int32]2
 $ReqTab4.Text = [System.String]'Requirement 4'
 $ReqTab4.UseVisualStyleBackColor = $true
+#
+#Req4OutputLabel
+#
+$Req4OutputLabel.AutoSize = $true
+$Req4OutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req4OutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$Req4OutputLabel.Name = [System.String]'Req4OutputLabel'
+$Req4OutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$Req4OutputLabel.TabIndex = [System.Int32]11
+$Req4OutputLabel.Text = [System.String]'Output:'
+#
+#Req4ListLabel
+#
+$Req4ListLabel.AutoSize = $true
+$Req4ListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req4ListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$Req4ListLabel.Name = [System.String]'Req4ListLabel'
+$Req4ListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$Req4ListLabel.TabIndex = [System.Int32]10
+$Req4ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req4Back
 #
@@ -328,6 +425,8 @@ $Req4Output.Text = [System.String]''
 #
 #ReqTab5
 #
+$ReqTab5.Controls.Add($Req5OutputLabel)
+$ReqTab5.Controls.Add($Req5ListLabel)
 $ReqTab5.Controls.Add($Req5Back)
 $ReqTab5.Controls.Add($Req5Export)
 $ReqTab5.Controls.Add($Req5Refresh)
@@ -335,10 +434,30 @@ $ReqTab5.Controls.Add($Req5ScriptList)
 $ReqTab5.Controls.Add($Req5Output)
 $ReqTab5.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $ReqTab5.Name = [System.String]'ReqTab5'
-$ReqTab5.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$ReqTab5.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $ReqTab5.TabIndex = [System.Int32]3
 $ReqTab5.Text = [System.String]'Requirement 5'
 $ReqTab5.UseVisualStyleBackColor = $true
+#
+#Req5OutputLabel
+#
+$Req5OutputLabel.AutoSize = $true
+$Req5OutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req5OutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$Req5OutputLabel.Name = [System.String]'Req5OutputLabel'
+$Req5OutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$Req5OutputLabel.TabIndex = [System.Int32]11
+$Req5OutputLabel.Text = [System.String]'Output:'
+#
+#Req5ListLabel
+#
+$Req5ListLabel.AutoSize = $true
+$Req5ListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req5ListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$Req5ListLabel.Name = [System.String]'Req5ListLabel'
+$Req5ListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$Req5ListLabel.TabIndex = [System.Int32]10
+$Req5ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req5Back
 #
@@ -392,6 +511,8 @@ $Req5Output.Text = [System.String]''
 #
 #ReqTab7
 #
+$ReqTab7.Controls.Add($Req7OutputLabel)
+$ReqTab7.Controls.Add($Req7ListLabel)
 $ReqTab7.Controls.Add($Req7Back)
 $ReqTab7.Controls.Add($Req7Export)
 $ReqTab7.Controls.Add($Req7Refresh)
@@ -399,10 +520,30 @@ $ReqTab7.Controls.Add($Req7ScriptList)
 $ReqTab7.Controls.Add($Req7Output)
 $ReqTab7.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $ReqTab7.Name = [System.String]'ReqTab7'
-$ReqTab7.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$ReqTab7.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $ReqTab7.TabIndex = [System.Int32]4
 $ReqTab7.Text = [System.String]'Requirement 7'
 $ReqTab7.UseVisualStyleBackColor = $true
+#
+#Req7OutputLabel
+#
+$Req7OutputLabel.AutoSize = $true
+$Req7OutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req7OutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$Req7OutputLabel.Name = [System.String]'Req7OutputLabel'
+$Req7OutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$Req7OutputLabel.TabIndex = [System.Int32]13
+$Req7OutputLabel.Text = [System.String]'Output:'
+#
+#Req7ListLabel
+#
+$Req7ListLabel.AutoSize = $true
+$Req7ListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req7ListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$Req7ListLabel.Name = [System.String]'Req7ListLabel'
+$Req7ListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$Req7ListLabel.TabIndex = [System.Int32]12
+$Req7ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req7Back
 #
@@ -456,6 +597,8 @@ $Req7Output.Text = [System.String]''
 #
 #ReqTab8
 #
+$ReqTab8.Controls.Add($Req8OutputLabel)
+$ReqTab8.Controls.Add($Req8ListLabel)
 $ReqTab8.Controls.Add($Req8Back)
 $ReqTab8.Controls.Add($Req8Export)
 $ReqTab8.Controls.Add($Req8Refresh)
@@ -463,10 +606,30 @@ $ReqTab8.Controls.Add($Req8ScriptList)
 $ReqTab8.Controls.Add($Req8Output)
 $ReqTab8.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $ReqTab8.Name = [System.String]'ReqTab8'
-$ReqTab8.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$ReqTab8.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $ReqTab8.TabIndex = [System.Int32]5
 $ReqTab8.Text = [System.String]'Requirement 8'
 $ReqTab8.UseVisualStyleBackColor = $true
+#
+#Req8OutputLabel
+#
+$Req8OutputLabel.AutoSize = $true
+$Req8OutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req8OutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$Req8OutputLabel.Name = [System.String]'Req8OutputLabel'
+$Req8OutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$Req8OutputLabel.TabIndex = [System.Int32]15
+$Req8OutputLabel.Text = [System.String]'Output:'
+#
+#Req8ListLabel
+#
+$Req8ListLabel.AutoSize = $true
+$Req8ListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req8ListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$Req8ListLabel.Name = [System.String]'Req8ListLabel'
+$Req8ListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$Req8ListLabel.TabIndex = [System.Int32]14
+$Req8ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req8Back
 #
@@ -520,6 +683,8 @@ $Req8Output.Text = [System.String]''
 #
 #ReqTab10
 #
+$ReqTab10.Controls.Add($Req10OutputLabel)
+$ReqTab10.Controls.Add($Req10ListLabel)
 $ReqTab10.Controls.Add($Req10Back)
 $ReqTab10.Controls.Add($Req10Export)
 $ReqTab10.Controls.Add($Req10Refresh)
@@ -527,10 +692,30 @@ $ReqTab10.Controls.Add($Req10ScriptList)
 $ReqTab10.Controls.Add($Req10Output)
 $ReqTab10.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $ReqTab10.Name = [System.String]'ReqTab10'
-$ReqTab10.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$ReqTab10.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $ReqTab10.TabIndex = [System.Int32]6
 $ReqTab10.Text = [System.String]'Requirement 10'
 $ReqTab10.UseVisualStyleBackColor = $true
+#
+#Req10OutputLabel
+#
+$Req10OutputLabel.AutoSize = $true
+$Req10OutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req10OutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$Req10OutputLabel.Name = [System.String]'Req10OutputLabel'
+$Req10OutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$Req10OutputLabel.TabIndex = [System.Int32]17
+$Req10OutputLabel.Text = [System.String]'Output:'
+#
+#Req10ListLabel
+#
+$Req10ListLabel.AutoSize = $true
+$Req10ListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$Req10ListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$Req10ListLabel.Name = [System.String]'Req10ListLabel'
+$Req10ListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$Req10ListLabel.TabIndex = [System.Int32]16
+$Req10ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req10Back
 #
@@ -584,6 +769,8 @@ $Req10Output.Text = [System.String]''
 #
 #DiagTab
 #
+$DiagTab.Controls.Add($DiagOutputLabel)
+$DiagTab.Controls.Add($DiagListLabel)
 $DiagTab.Controls.Add($DiagBack)
 $DiagTab.Controls.Add($DiagExport)
 $DiagTab.Controls.Add($DiagRefresh)
@@ -591,10 +778,30 @@ $DiagTab.Controls.Add($DiagScriptList)
 $DiagTab.Controls.Add($DiagOutput)
 $DiagTab.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]4,[System.Int32]22))
 $DiagTab.Name = [System.String]'DiagTab'
-$DiagTab.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1572,[System.Int32]834))
+$DiagTab.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1577,[System.Int32]836))
 $DiagTab.TabIndex = [System.Int32]7
 $DiagTab.Text = [System.String]'Diagnostics'
 $DiagTab.UseVisualStyleBackColor = $true
+#
+#DiagOutputLabel
+#
+$DiagOutputLabel.AutoSize = $true
+$DiagOutputLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$DiagOutputLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]14))
+$DiagOutputLabel.Name = [System.String]'DiagOutputLabel'
+$DiagOutputLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]62,[System.Int32]17))
+$DiagOutputLabel.TabIndex = [System.Int32]22
+$DiagOutputLabel.Text = [System.String]'Output:'
+#
+#DiagListLabel
+#
+$DiagListLabel.AutoSize = $true
+$DiagListLabel.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([System.String]'Microsoft Sans Serif',[System.Single]10,[System.Drawing.FontStyle]::Bold))
+$DiagListLabel.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]14))
+$DiagListLabel.Name = [System.String]'DiagListLabel'
+$DiagListLabel.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]113,[System.Int32]17))
+$DiagListLabel.TabIndex = [System.Int32]21
+$DiagListLabel.Text = [System.String]'List of Scripts:'
 #
 #DiagBack
 #
@@ -651,20 +858,28 @@ $DiagOutput.Text = [System.String]''
 $AuxiliaryForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1584,[System.Int32]861))
 $AuxiliaryForm.Controls.Add($MainTabControl)
 $AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
-$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.MaximizeBox = $false
+$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
 $AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $AuxiliaryForm.Text = [System.String]'Anordium Audits'
 $MainTabControl.ResumeLayout($false)
 $AllTab.ResumeLayout($false)
+$AllTab.PerformLayout()
 $ReqTab2.ResumeLayout($false)
+$ReqTab2.PerformLayout()
 $ReqTab4.ResumeLayout($false)
+$ReqTab4.PerformLayout()
 $ReqTab5.ResumeLayout($false)
+$ReqTab5.PerformLayout()
 $ReqTab7.ResumeLayout($false)
+$ReqTab7.PerformLayout()
 $ReqTab8.ResumeLayout($false)
+$ReqTab8.PerformLayout()
 $ReqTab10.ResumeLayout($false)
+$ReqTab10.PerformLayout()
 $DiagTab.ResumeLayout($false)
+$DiagTab.PerformLayout()
 $AuxiliaryForm.ResumeLayout($false)
 Add-Member -InputObject $AuxiliaryForm -Name base -Value $base -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name AllTab -Value $AllTab -MemberType NoteProperty
@@ -716,6 +931,22 @@ Add-Member -InputObject $AuxiliaryForm -Name DiagExport -Value $DiagExport -Memb
 Add-Member -InputObject $AuxiliaryForm -Name DiagRefresh -Value $DiagRefresh -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagScriptList -Value $DiagScriptList -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagTab -Value $DiagTab -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name AllScriptOutputLabel -Value $AllScriptOutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name AllScriptListLabel -Value $AllScriptListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req2OutputLabel -Value $Req2OutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req2ListLabel -Value $Req2ListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req4OutputLabel -Value $Req4OutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req4ListLabel -Value $Req4ListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req5OutputLabel -Value $Req5OutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req5ListLabel -Value $Req5ListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req7OutputLabel -Value $Req7OutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req7ListLabel -Value $Req7ListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req8ListLabel -Value $Req8ListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req8OutputLabel -Value $Req8OutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req10OutputLabel -Value $Req10OutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name Req10ListLabel -Value $Req10ListLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagOutputLabel -Value $DiagOutputLabel -MemberType NoteProperty
+Add-Member -InputObject $AuxiliaryForm -Name DiagListLabel -Value $DiagListLabel -MemberType NoteProperty
 Add-Member -InputObject $AuxiliaryForm -Name DiagOutput -Value $DiagOutput -MemberType NoteProperty
 }
 . InitializeComponent
