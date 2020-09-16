@@ -1,4 +1,4 @@
-# Anrdoium Securities
+# Anordium Securities
 
 Manukau Institute of Technology, Auckland, New Zealand.
 
