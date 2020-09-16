@@ -87,8 +87,8 @@ $CreditsButton = {
 	$MainFormOutput.Clear()
 	$MainFormOutput.AppendText("BDT Industry Project Q3-Q4 2020`n")
 	$MainFormOutput.AppendText("This was made by Team Anordium Securities and is composed of;`n`n")
-	$MainFormOutput.AppendText("`nMatthew Westlake - west356@manukaumail.com`nMicheal Chen - Email: anordium@chencorp.co.nz`nRahnuma Khan`nRyan Alpay - Email: ryanmatthew.alpay@mail.com`nTim Sun`n")
-	$MainFormOutput.AppendText("`Anordium Securities Version 1.0.0 - 18th September 2020`n")
+	$MainFormOutput.AppendText("`nMatthew Westlake - west356@manukaumail.com`nMicheal Chen - Email: anordium@chencorp.co.nz`nRahnuma Khan`nRyan Alpay - Email: ryanmatthew.alpay@mail.com`nTim Sun - Email: timsun90@gmail.com`n")
+	$MainFormOutput.AppendText("`nAnordium Securities Version 1.0.0 - 18th September 2020`n")
 	$MainFormOutput.AppendText("`n`nSpecial Thanks to Dan from Adam the Automator for the CSS table design.")
 	$MainFormOutput.AppendText("`n`nhttps://adamtheautomator.com/powershell-convertto-html/")
 }

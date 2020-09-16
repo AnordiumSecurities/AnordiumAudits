@@ -153,7 +153,7 @@ $AllBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([
 $AllBack.Name = [System.String]'AllBack'
 $AllBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $AllBack.TabIndex = [System.Int32]7
-$AllBack.Text = [System.String]'Change Network Variables'
+$AllBack.Text = [System.String]'Back'
 $AllBack.UseVisualStyleBackColor = $true
 $AllBack.add_Click($AuxiliaryBack_Click)
 #
@@ -218,7 +218,7 @@ $Req2Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @(
 $Req2Back.Name = [System.String]'Req2Back'
 $Req2Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req2Back.TabIndex = [System.Int32]5
-$Req2Back.Text = [System.String]'Change Network Variables'
+$Req2Back.Text = [System.String]'Back'
 $Req2Back.UseVisualStyleBackColor = $true
 $Req2Back.add_Click($AuxiliaryBack_Click)
 #
@@ -282,7 +282,7 @@ $Req4Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @(
 $Req4Back.Name = [System.String]'Req4Back'
 $Req4Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req4Back.TabIndex = [System.Int32]7
-$Req4Back.Text = [System.String]'Change Network Variables'
+$Req4Back.Text = [System.String]'Back'
 $Req4Back.UseVisualStyleBackColor = $true
 $Req4Back.add_Click($AuxiliaryBack_Click)
 #
@@ -346,7 +346,7 @@ $Req5Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @(
 $Req5Back.Name = [System.String]'Req5Back'
 $Req5Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req5Back.TabIndex = [System.Int32]9
-$Req5Back.Text = [System.String]'Change Network Variables'
+$Req5Back.Text = [System.String]'Back'
 $Req5Back.UseVisualStyleBackColor = $true
 $Req5Back.add_Click($AuxiliaryBack_Click)
 #
@@ -410,7 +410,7 @@ $Req7Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @(
 $Req7Back.Name = [System.String]'Req7Back'
 $Req7Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req7Back.TabIndex = [System.Int32]11
-$Req7Back.Text = [System.String]'Change Network Variables'
+$Req7Back.Text = [System.String]'Back'
 $Req7Back.UseVisualStyleBackColor = $true
 $Req7Back.add_Click($AuxiliaryBack_Click)
 #
@@ -474,7 +474,7 @@ $Req8Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @(
 $Req8Back.Name = [System.String]'Req8Back'
 $Req8Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req8Back.TabIndex = [System.Int32]13
-$Req8Back.Text = [System.String]'Change Network Variables'
+$Req8Back.Text = [System.String]'Back'
 $Req8Back.UseVisualStyleBackColor = $true
 $Req8Back.add_Click($AuxiliaryBack_Click)
 #
@@ -538,7 +538,7 @@ $Req10Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @
 $Req10Back.Name = [System.String]'Req10Back'
 $Req10Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $Req10Back.TabIndex = [System.Int32]15
-$Req10Back.Text = [System.String]'Change Network Variables'
+$Req10Back.Text = [System.String]'Back'
 $Req10Back.UseVisualStyleBackColor = $true
 $Req10Back.add_Click($AuxiliaryBack_Click)
 #
@@ -602,7 +602,7 @@ $DiagBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @(
 $DiagBack.Name = [System.String]'DiagBack'
 $DiagBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
 $DiagBack.TabIndex = [System.Int32]20
-$DiagBack.Text = [System.String]'Change Network Variables'
+$DiagBack.Text = [System.String]'Back'
 $DiagBack.UseVisualStyleBackColor = $true
 $DiagBack.add_Click($AuxiliaryBack_Click)
 #
