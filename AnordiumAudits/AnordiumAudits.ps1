@@ -606,7 +606,7 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Four Tab # 
-	# Analyse Wi-Fi Envrioment
+	# 4.1 - Analyse Wi-Fi Envrioment
 	Function Req4WifiScan {
 		# Data Gathering
 		try{
@@ -627,7 +627,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Analyse Keys and Certificates
+	# 4.1 - Analyse Keys and Certificates
 	Function Req4GetKeysAndCerts{
 		# Data Gathering
 		try{
@@ -705,7 +705,7 @@ $AllScriptList_ListUpdate = {
 	# Initialize Switch
 	$Global:Req5AllSwitch = $false
 
-	# Antivirus Program and GPO Analysis
+	# 5.1 - Antivirus Program and GPO Analysis
 	Function Req5AVSettingsAndGPO {
 		# Write Header
 		if($EverythingToggle -eq $false){
@@ -842,7 +842,7 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Seven Tab
-	#Folder Input
+	# User Folder Input
 	Function Req7FolderInput {
 		$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
@@ -851,23 +851,23 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab and analyse folder permissions that hold sensitive data
+	# 7.1 - Grab and analyse folder permissions that hold sensitive data
 	Function Req7FolderPerms {
 		# Data Gathering
 		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
 			# Write Header
 			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$Req7Output.AppendText("7.1 - Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
 				$Req7Output.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
 			}else{
-				$AllOutput.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$AllOutput.AppendText("7.1 - Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
 				$AllOutput.AppendText("`nFolder Selected: " + $Global:FilePathFilePopupTmp)
 			}
 			# Take user input/file path and get permissions
 			try{
 				$LocalFolderPerms = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited
 				$LocalFolderPermsRTB = $LocalFolderPerms | Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
-				$Global:Req7LocalFolderPermsHTML = $LocalFolderPerms | ConvertTo-Html -As List -Fragment -PreContent "<h2>Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Folder Selected: $Global:FilePathFilePopupTmp</p>"
+				$Global:Req7LocalFolderPermsHTML = $LocalFolderPerms | ConvertTo-Html -As List -Fragment -PreContent "<h2>7.1 - Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Folder Selected: $Global:FilePathFilePopupTmp</p>"
 				# Data Output
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText($LocalFolderPermsRTB)
@@ -876,7 +876,7 @@ $AllScriptList_ListUpdate = {
 				}
 			# Edge Case 
 			}catch{
-				$Global:Req7LocalFolderPermsHTML = "<h2>Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>An Unexpected Error Has Occurred<br>Folder Selected: $Global:FilePathFilePopupTmp</p>"
+				$Global:Req7LocalFolderPermsHTML = "<h2>7.1 - Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>An Unexpected Error Has Occurred<br>Folder Selected: $Global:FilePathFilePopupTmp</p>"
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("An Unexpected Error Has Occurred")
 				}else{
@@ -927,25 +927,25 @@ $AllScriptList_ListUpdate = {
 			}
 		# Find Edge-Case if user input is empty
 		}else{
-			$Global:Req7LocalFolderPermsHTML = "<h2>Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Invalid Folder Selected</p>"
+			$Global:Req7LocalFolderPermsHTML = "<h2>7.1 - Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Invalid Folder Selected</p>"
 			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$Req7Output.AppendText("7.1 - Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
 				$Req7Output.AppendText("`nInvalid Folder Selected`n")
 			}else{
-				$AllOutput.AppendText("Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
+				$AllOutput.AppendText("7.1 - Grab and analyse folder permissions that hold sensitive data`n`nLocal folder premissions...")
 				$AllOutput.AppendText("`nInvalid Folder Selected`n")
 			}
 		}
 	}
 	
-	# Check for deny all permissions
+	# 7.2 - Check for deny all permissions
 	Function Req7DenyAll {
 		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
 			# Write Header
 			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText("Check for deny all permissions`n")
+				$Req7Output.AppendText("7.2 - Check for deny all permissions`n")
 			}else{
-				$AllOutput.AppendText("Check for deny all permissions`n")
+				$AllOutput.AppendText("7.2 - Check for deny all permissions`n")
 			}
 			# Find premissions for user selected path
 			try{
@@ -953,7 +953,7 @@ $AllScriptList_ListUpdate = {
 				$Req7FolderPermsRTB = $Req7FolderPerms | Format-List | Out-String
 				# Edge Case for child objects
 				if([string]::IsNullOrEmpty($Req7FolderPerms)){
-					$Global:Req7FolderPermsHTML = "<h2>Check for deny all permissions</h2><p>No Child Objects Found, Select Root Object that contains a Child Object.<br>Path Selected: $Global:FilePathFilePopupTmp</p>"
+					$Global:Req7FolderPermsHTML = "<h2>7.2 - Check for deny all permissions</h2><p>No Child Objects Found, Select Root Object that contains a Child Object.<br>Path Selected: $Global:FilePathFilePopupTmp</p>"
 					if($EverythingToggle -eq $false){
 						$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object. Path Selected: " + $Global:FilePathFilePopupTmp)
 					}else{
@@ -970,7 +970,7 @@ $AllScriptList_ListUpdate = {
 				}
 			# Edge Case
 			}catch{
-				$Global:Req7FolderPermsHTML = "<h2>Check for deny all permissions</h2><p>An Error Has Occurred...</p>"
+				$Global:Req7FolderPermsHTML = "<h2>7.2 - Check for deny all permissions</h2><p>An Error Has Occurred...</p>"
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`An Error Has Occurred...`n")
 				}else{
@@ -979,7 +979,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Find Edge-Case if user input is empty
 		}else{
-			$Global:Req7FolderPermsHTML = "<h2>Check for deny all permissions</h2><p>Invalid Folder Selected</p>"
+			$Global:Req7FolderPermsHTML = "<h2>7.2 - Check for deny all permissions</h2><p>Invalid Folder Selected</p>"
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("Check for deny all permissions`n")
 				$Req7Output.AppendText("`nInvalid Folder Selected`n")
@@ -990,14 +990,14 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Grab User Privileges
+	# 7.1.2 - Grab User Privileges
 	Function Req7UserPriviledges {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req7Output.AppendText("Grab User Privileges`nThis may take a while`n")
+			$Req7Output.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n")
 			Start-Sleep -Seconds 0.5
 		}else{
-			$AllOutput.AppendText("Grab User Privileges`nThis may take a while`n")
+			$AllOutput.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n")
 			Start-Sleep -Seconds 0.5
 		}
 		# Query AD
@@ -1032,10 +1032,10 @@ $AllScriptList_ListUpdate = {
 				}
 			}
 			# After Looping Print to HTML
-			$Global:Req7GroupMembershipListHTML = "<h2>Grab User Privileges</h2><pre>" + $Req7GroupMembershipList + "</pre>"
+			$Global:Req7GroupMembershipListHTML = "<h2>7.1.2 - Grab User Privileges</h2><pre>" + $Req7GroupMembershipList + "</pre>"
 		# Edge Case
 		}catch{
-			$Global:Req7GroupMembershipListHTML = "<h2>Grab User Privileges</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req7GroupMembershipListHTML = "<h2>7.1.2 - Grab User Privileges</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n")
 			}else{
@@ -1046,23 +1046,20 @@ $AllScriptList_ListUpdate = {
 
 	# onClick event handler
 	$Req7ScriptList_ListUpdate = {
-		if($Req7ScriptList.SelectedItem -eq "Grab and analyse folder permissions that hold sensitive data"){
+		if($Req7ScriptList.SelectedItem -eq "7.1 - Grab and analyse folder permissions that hold sensitive data"){
 			$Req7Output.Clear()
-			# Alert User for Input
-			# $UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 			Req7FolderInput
 			Req7FolderPerms
-		}elseif($Req7ScriptList.SelectedItem -eq "Check for deny all permissions"){
+		}elseif($Req7ScriptList.SelectedItem -eq "7.2 - Check for deny all permissions"){
 			$Req7Output.Clear()
 			Req7FolderInput
 			Req7DenyAll
-		}elseif($Req7ScriptList.SelectedItem -eq "Grab User Privileges"){
+		}elseif($Req7ScriptList.SelectedItem -eq "7.1.2 - Grab User Privileges"){
 			$Req7Output.Clear()
 			Req7UserPriviledges
 		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
-				# $UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 				Req7FolderInput
 				Req7FolderPerms
 				$Req7Output.AppendText($Global:SectionHeader)
@@ -1588,7 +1585,7 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Ten Tab
-	# Dump of Audit Category Settings
+	# 10.2 - Dump of Audit Category Settings
 	Function Req10AuditSettings {
 		# Write Header
 		if($EverythingToggle -eq $false){
@@ -1617,7 +1614,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Grab NTP Settings
+	# 10.4 - Grab NTP Settings
 	Function Req10NTPSettings {
 		# Write Header
 		if($EverythingToggle -eq $false){
@@ -1646,7 +1643,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Grab NTP Settings on Multiple Devices
+	# 10.4 - Grab NTP Settings on Multiple Devices
 	Function Req10NTPSettingsMultipleDevices {
 		# Write Header
 		if($EverythingToggle -eq $false){
@@ -1706,7 +1703,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Check Audit Log Permissions
+	# 10.5 - Check Audit Log Permissions
 	Function Req10AuditLogPrems {
 		# Write Header
 		if($EverythingToggle -eq $false){
@@ -1751,7 +1748,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Grab Previous Audit Logs
+	# 10.7 - Grab Previous Audit Logs
 	Function Req10PastAuditLogs {
 		# Write Header
 		if($EverythingToggle -eq $false){
