@@ -300,7 +300,7 @@ $Req2Back.add_Click($AuxiliaryBack_Click)
 #Req2ScriptList
 #
 $Req2ScriptList.FormattingEnabled = $true
-$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'Grab Running Processes',[System.String]'Grab Running Services',[System.String]'Grab Listening Services',[System.String]'Grab Installed Software',[System.String]'Grab Installed Windows Features',[System.String]'Grab All Computer Objects from Active Directory'))
+$Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'2.2.1 - Grab Installed Windows Features',[System.String]'2.2.2 - Grab Running Processes',[System.String]'2.2.2 - Grab Running Services',[System.String]'2.2.2 - Established Network Connections',[System.String]'2.2.2 - Grab Installed Software',[System.String]'2.4 - Grab All Computer Objects from Active Directory'))
 $Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
 $Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
@@ -859,7 +859,6 @@ $AuxiliaryForm.ClientSize = (New-Object -TypeName System.Drawing.Size -ArgumentL
 $AuxiliaryForm.Controls.Add($MainTabControl)
 $AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
 $AuxiliaryForm.MaximizeBox = $false
-$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
 $AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $AuxiliaryForm.Text = [System.String]'Anordium Audits'
