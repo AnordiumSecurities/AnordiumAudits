@@ -611,18 +611,18 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$Req4WifiList = netsh wlan show networks mode=Bssid | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req4WifiListHTML = "<h2>Analyse Wi-Fi Envrioment</h2><pre>" + $Req4WifiList + "</pre>"
+			$Global:Req4WifiListHTML = "<h2>4.1 - Analyse Wi-Fi Envrioment</h2><pre>" + $Req4WifiList + "</pre>"
 		# Edge Case
 		}catch{
 			$Req4WifiList = "Unable to find Wi-Fi Networks"
-			$Global:Req4WifiListHTML = "<h2>Analyse Wi-Fi Envrioment</h2><p>Unable to find Wi-Fi Networks</p>"
+			$Global:Req4WifiListHTML = "<h2>4.1 - Analyse Wi-Fi Envrioment</h2><p>Unable to find Wi-Fi Networks</p>"
 		}
 		# Data Ouput
 		if($EverythingToggle -eq $false){
-			$Req4Output.AppendText("List of Wi-Fi Networks:`n")
+			$Req4Output.AppendText("4.1 - List of Wi-Fi Networks:`n")
 			$Req4Output.AppendText($Req4WifiList)
 		}else{
-			$AllOutput.AppendText("List of Wi-Fi Networks:`n")
+			$AllOutput.AppendText("4.1 - List of Wi-Fi Networks:`n")
 			$AllOutput.AppendText($Req4WifiList)
 		}
 	}
@@ -635,24 +635,24 @@ $AllScriptList_ListUpdate = {
 			$Req4CurrentUserCerts = Get-ChildItem -Recurse -path cert:\CurrentUser
 			$Req4LocalMachineCertsRTB = $Req4LocalMachineCerts | Format-List | Out-String
 			$Req4CurrentUserCertsRTB = $Req4CurrentUserCerts | Format-List | Out-String
-			$Global:Req4LocalMachineCertsHTML = "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><pre>" + $Req4LocalMachineCertsRTB + "</pre>"
+			$Global:Req4LocalMachineCertsHTML = "<h2>4.1 - List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><pre>" + $Req4LocalMachineCertsRTB + "</pre>"
 			$Global:Req4CurrentUserCertsHTML =  "<h3>Current User Certificates</h3><pre>" + $Req4CurrentUserCertsRTB + "</pre>"
 		# Edge Case
 		}catch{
 			$Req4LocalMachineCertsRTB = "Something went wrong, Could not get keys or certs."
 			$Req4CurrentUserCertsRTB = "Something went wrong, Could not get keys or certs."
-			$Global:Req4LocalMachineCertsHTML = "<h2>List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><p>Something went wrong, Could not get keys or certs.</p>"
+			$Global:Req4LocalMachineCertsHTML = "<h2>4.1 - List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><p>Something went wrong, Could not get keys or certs.</p>"
 			$Global:Req4CurrentUserCertsHTML = "<h3>Current User Certificates</h3><p>Something went wrong, Could not get keys or certs.</p>"
 		}
 		# Data Output
 		if($EverythingToggle -eq $false){
-			$Req4Output.AppendText("`nList of Keys and Certificates:`nLocal Machine Certificates:`n")
+			$Req4Output.AppendText("`n4.1 - List of Keys and Certificates:`nLocal Machine Certificates:`n")
 			$Req4Output.AppendText($Req4LocalMachineCertsRTB)
 			$Req4Output.AppendText($Global:SectionHeader)
 			$Req4Output.AppendText("Current User Certificates:`n")
 			$Req4Output.AppendText($Req4CurrentUserCertsRTB)
 		}else{
-			$AllOutput.AppendText("List of Keys and Certificates:`nLocal Machine Certificates:`n")
+			$AllOutput.AppendText("4.1 - List of Keys and Certificates:`nLocal Machine Certificates:`n")
 			$AllOutput.AppendText($Req4LocalMachineCertsRTB)
 			$AllOutput.AppendText($Global:SectionHeader)
 			$AllOutput.AppendText("Current User Certificates:`n")
@@ -662,10 +662,10 @@ $AllScriptList_ListUpdate = {
 
 	# onClick Event Handler for Requirement Four
 	$Req4ScriptList_ListUpdate = {
-		if($Req4ScriptList.SelectedItem -eq "Analyse Wi-Fi Environment"){
+		if($Req4ScriptList.SelectedItem -eq "4.1 - Analyse Wi-Fi Environment"){
 			$Req4Output.Clear()
 			Req4WifiScan
-		}elseif($Req4ScriptList.SelectedItem -eq "Analyse Keys and Certificates"){
+		}elseif($Req4ScriptList.SelectedItem -eq "4.1 - Analyse Keys and Certificates"){
 			$Req4Output.Clear()
 			Req4GetKeysAndCerts
 		}elseif($Req4ScriptList.SelectedItem -eq "Everything in Requirement Four"){
@@ -709,20 +709,20 @@ $AllScriptList_ListUpdate = {
 	Function Req5AVSettingsAndGPO {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req5Output.AppendText("List of Anti-Virus Programs Detected. This may take a while.`n")
+			$Req5Output.AppendText("5.1 - List of Anti-Virus Programs Detected. This may take a while.`n")
 		}else{
-			$AllOutput.AppendText("List of Anti-Virus Programs Detected. This may take a while.`n")
+			$AllOutput.AppendText("5.1 - List of Anti-Virus Programs Detected. This may take a while.`n")
 		}
 		# Data Gathering
 		try{
 			$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name
 			$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Antivirus Program and GPO Analysis</h2><h3>List of Anti-Virus Programs Detected</h3>"
+			$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>5.1 - Antivirus Program and GPO Analysis</h2><h3>List of Anti-Virus Programs Detected</h3>"
 			# Edge Case incase No Anti-Virus Programs are Found
 			if([string]::IsNullOrEmpty($AVProgramQuery)){
 				$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version,InstallDate | Sort-Object Vendor,Name
 				$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
-				$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Antivirus Program and GPO Analysis</h2><h3>No Anti-Virus detected, Here is the list of all programs detected</h3>"
+				$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>5.1 - Antivirus Program and GPO Analysis</h2><h3>No Anti-Virus detected, Here is the list of all programs detected</h3>"
 				# Data Output for when there is No Anti-Virus Programs
 				if($EverythingToggle -eq $false){
 					$Req5Output.AppendText("No Anti-Virus detected, Here is the list of all programs detected and a GPO Dump for futher analysis:`n")
@@ -754,14 +754,14 @@ $AllScriptList_ListUpdate = {
 		# Requirement Five Everything Switch. This is because all of the remaining stuff in Requirement Five is telling the user to check GPO dump. This Function is called inplace of calling all the Requirement Five Functions.
 		# Data Output Inside Requirement Five Tab
 		if(($EverythingToggle -ne $true) -and ($Global:Req5AllSwitch -eq $true)){
-			# Data Output for Software Deployment Settings
+			# 5.1 - Data Output for Software Deployment Settings
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
-			$Global:Req5SoftwareDeploymentHTML = "<h2>Grab Software Deployment Settings in Organization</h2><p>Check GPO Dump for Software Deployment Settings in Organization</p>"
-			# Data Output for End User Permissions
+			$Req5Output.AppendText("5.1 - Check GPO Dump for Software Deployment Settings in Organization")
+			$Global:Req5SoftwareDeploymentHTML = "<h2>5.1 - Grab Software Deployment Settings in Organization</h2><p>Check GPO Dump for Software Deployment Settings in Organization</p>"
+			# 5.3 - Data Output for End User Permissions
 			$Req5Output.AppendText($Global:SectionHeader)
-			$Req5Output.AppendText("Check end user permissions to modify Anti-Virus software in GPO Dump")
-			$Global:Req5AVPermsHTML = "<h2>Check end user permissions to modify antivirus software</h2><p>Check end user permissions to modify Anti-Virus software in GPO Dump</p>"
+			$Req5Output.AppendText("5.3 - Check end user permissions to modify Anti-Virus software in GPO Dump")
+			$Global:Req5AVPermsHTML = "<h2>5.3 - Check end user permissions to modify antivirus software</h2><p>Check end user permissions to modify Anti-Virus software in GPO Dump</p>"
 			# Data Output and Append GPO Dump for Requirement Five (Everything in Requirement Five Item in List)
 			$Req5Output.AppendText($Global:SectionHeader)
 			$Req5Output.AppendText("GPO Dump")
@@ -770,14 +770,14 @@ $AllScriptList_ListUpdate = {
 			$Global:Req5AllSwitch = $false
 		# Data Output In All Tab
 		}elseif(($EverythingToggle -ne $false) -and ($Global:Req5AllSwitch -eq $true)){
-			# Data Output for Software Deployment Settings
+			# 5.1 - Data Output for Software Deployment Settings
 			$AllOutput.AppendText($Global:SectionHeader)
-			$AllOutput.AppendText("Check GPO Dump for Software Deployment Settings in Organization")
-			$Global:Req5SoftwareDeploymentHTML = "<h2>Grab Software Deployment Settings in Organization</h2><p>Check GPO Dump for Software Deployment Settings in Organization</p>"
-			# Data Output for End User Permissions
+			$AllOutput.AppendText("5.1 - Check GPO Dump for Software Deployment Settings in Organization")
+			$Global:Req5SoftwareDeploymentHTML = "<h2>5.1 - Grab Software Deployment Settings in Organization</h2><p>Check GPO Dump for Software Deployment Settings in Organization</p>"
+			# 5.1 - Data Output for End User Permissions
 			$AllOutput.AppendText($Global:SectionHeader)
-			$AllOutput.AppendText("Check end user permissions to modify Anti-Virus software in GPO Dump")
-			$Global:Req5AVPermsHTML = "<h2>Check end user permissions to modify antivirus software</h2><p>Check end user permissions to modify Anti-Virus software in GPO Dump</p>"
+			$AllOutput.AppendText("5.3 - Check end user permissions to modify Anti-Virus software in GPO Dump")
+			$Global:Req5AVPermsHTML = "<h2>5.3 - Check end user permissions to modify antivirus software</h2><p>Check end user permissions to modify Anti-Virus software in GPO Dump</p>"
 			# No need to append GPO Dump here but instead append it in the dedicated function
 		# If the switch has not been switch then just output the GPO Dump for only after the Anti-Virus Programs/List of Programs.
 		}else{
@@ -787,27 +787,27 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 	
-	# Grab Software Deployment Settings in Organization
+	# 5.1 - Grab Software Deployment Settings in Organization
 	Function Req5SoftwareDeployment {
-		$Req5Output.AppendText("Check GPO Dump for Software Deployment Settings in Organization`n")
+		$Req5Output.AppendText("5.1 - Check GPO Dump for Software Deployment Settings in Organization`n")
 		$Req5Output.AppendText($global:GPODump)
 	}
 
-	# Check end user permissions to modify antivirus software
+	# 5.3 - Check end user permissions to modify antivirus software
 	Function Req5AVPermissions {
-		$Req5Output.AppendText("Check end user permissions to modify antivirus software in GPO Dump`n")
+		$Req5Output.AppendText("5.3 - Check end user permissions to modify antivirus software in GPO Dump`n")
 		$Req5Output.AppendText($global:GPODump)
 	}
 
 	# onClick Event Handler
 	$Req5ScriptList_ListUpdate = {
-		if($Req5ScriptList.SelectedItem -eq "Antivirus Program and GPO Analysis"){
+		if($Req5ScriptList.SelectedItem -eq "5.1 - Antivirus Program and GPO Analysis"){
 			$Req5Output.Clear()
 			Req5AVSettingsAndGPO
-		}elseif($Req5ScriptList.SelectedItem -eq "Grab Software Deployment Settings in Organization"){
+		}elseif($Req5ScriptList.SelectedItem -eq "5.1 - Grab Software Deployment Settings in Organization"){
 			$Req5Output.Clear()
 			Req5SoftwareDeployment
-		}elseif($Req5ScriptList.SelectedItem -eq "Check end user permissions to modify antivirus software"){
+		}elseif($Req5ScriptList.SelectedItem -eq "5.3 - Check end user permissions to modify antivirus software"){
 			$Req5Output.Clear()
 			Req5AVPermissions
 		}elseif($Req5ScriptList.SelectedItem -eq "Everything in Requirement Five"){
@@ -1592,14 +1592,14 @@ $AllScriptList_ListUpdate = {
 	Function Req10AuditSettings {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Dump of Audit Category Settings`n`n")
+			$Req10Output.AppendText("10.2 - Dump of Audit Category Settings`n`n")
 		}else{
-			$AllOutput.AppendText("Dump of Audit Category Settings`n`n")
+			$AllOutput.AppendText("10.2 - Dump of Audit Category Settings`n`n")
 		}
 		# Data Gathering
 		try{
 			$Req10AuditList = auditpol.exe /get /category:* | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req10AuditListHTML = "<h2>Dump of Audit Category Settings</h2><pre>"+$Req10AuditList+"</pre>"
+			$Global:Req10AuditListHTML = "<h2>10.2 - Dump of Audit Category Settings</h2><pre>"+$Req10AuditList+"</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText($Req10AuditList)
@@ -1608,7 +1608,7 @@ $AllScriptList_ListUpdate = {
 			}
 		#Edge Case
 		}catch{
-			$Global:Req10AuditListHTML = "<h2>Dump of Audit Category Settings</h2><p>An Error Has Occurred, Unable to find Audit Category Settings</p>"
+			$Global:Req10AuditListHTML = "<h2>10.2 - Dump of Audit Category Settings</h2><p>An Error Has Occurred, Unable to find Audit Category Settings</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("`nAn Error Has Occurred, Unable to find Audit Settings.")
 			}else{
@@ -1621,14 +1621,14 @@ $AllScriptList_ListUpdate = {
 	Function Req10NTPSettings {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Grab NTP Settings for Current Device`n")
+			$Req10Output.AppendText("10.4 - Grab NTP Settings for Current Device`n")
 		}else{
-			$AllOutput.AppendText("Grab NTP Settings for Current Device`n")
+			$AllOutput.AppendText("10.4 - Grab NTP Settings for Current Device`n")
 		}
 		# Data Gathering
 		try{
 			$Req10NTPSettings = w32tm /query /status | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req10NTPSettings = "<h2>Grab NTP Settings for Current Device</h2><pre>"+$Req10NTPSettings+"</pre>"
+			$Global:Req10NTPSettings = "<h2>10.4 - Grab NTP Settings for Current Device</h2><pre>"+$Req10NTPSettings+"</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText($Req10NTPSettings)
@@ -1637,7 +1637,7 @@ $AllScriptList_ListUpdate = {
 			}
 		#Edge Case
 		}catch{
-			$Global:Req10NTPSettings = "<h2>Grab NTP Settings for Current Device</h2><p>An Error Has Occurred, Unable to find NTP settings.</p>"
+			$Global:Req10NTPSettings = "<h2>10.4 - Grab NTP Settings for Current Device</h2><p>An Error Has Occurred, Unable to find NTP settings.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("An Error Has Occurred, Unable to find NTP settings.")
 			}else{
@@ -1650,9 +1650,9 @@ $AllScriptList_ListUpdate = {
 	Function Req10NTPSettingsMultipleDevices {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Check NTP Settings on Multiple Devices`nThis may take a while.`n")
+			$Req10Output.AppendText("10.4 - Check NTP Settings on Multiple Devices`nThis may take a while.`n")
 		}else{
-			$AllOutput.AppendText("Check NTP Settings on Multiple Devices`nThis may take a while.`n")
+			$AllOutput.AppendText("10.4 - Check NTP Settings on Multiple Devices`nThis may take a while.`n")
 		}
 		# Data Gathering
 		try{
@@ -1694,10 +1694,10 @@ $AllScriptList_ListUpdate = {
 				}
 			}
 			# Output for HTML
-			$Global:Req10NTPSettingsAllDevices = "<h2>Check NTP Settings on Multiple Devices</h2>" + $Req10NTPSettingsAllStrings
+			$Global:Req10NTPSettingsAllDevices = "<h2>10.4 - Check NTP Settings on Multiple Devices</h2>" + $Req10NTPSettingsAllStrings
 		# Edge Case (Non-DC)
 		}catch{
-			$Global:Req10NTPSettingsAllDevices = "<h2>Check NTP Settings on Multiple Devices</h2><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
+			$Global:Req10NTPSettingsAllDevices = "<h2>10.4 - Check NTP Settings on Multiple Devices</h2><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
 			}else{
@@ -1710,9 +1710,9 @@ $AllScriptList_ListUpdate = {
 	Function Req10AuditLogPrems {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Check Audit Log Permissions`nListed below are the Domain & Enterprise Administrators:`n")
+			$Req10Output.AppendText("10.5 - Check Audit Log Permissions`nListed below are the Domain & Enterprise Administrators:`n")
 		}else{
-			$AllOutput.AppendText("Check Audit Log Permissions`nListed below are the Domain & Enterprise Administrators:`n")
+			$AllOutput.AppendText("10.5 - Check Audit Log Permissions`nListed below are the Domain & Enterprise Administrators:`n")
 		}
 		# Data Gathering
 		try{
@@ -1720,7 +1720,7 @@ $AllScriptList_ListUpdate = {
 			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
 			$ADDomainAdminListRTB = $ADDomainAdminList | Format-Table -Autosize | Out-String -Width 1200
 			$ADEnterpriseAdminListRTB = $ADEnterpriseAdminList |  Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req10ADDomainAdminListHTML = $ADDomainAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h2>Check Audit Log Permissions</h2><p>Listed below are the Domain & Enterprise Administrators. Check GPO Dump for more infomation.</p><h3>Domain Administrators</h3>"
+			$Global:Req10ADDomainAdminListHTML = $ADDomainAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h2>10.5 - Check Audit Log Permissions</h2><p>Listed below are the Domain & Enterprise Administrators. Check GPO Dump for more infomation.</p><h3>Domain Administrators</h3>"
 			$Global:Req10ADEnterpriseAdminListHTML = $ADEnterpriseAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h3>Enterprise Administrators</h3>"
 			# Data Output
 			if($EverythingToggle -eq $false){
@@ -1732,7 +1732,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case (Non-DC)
 		}catch{
-			$Global:Req10ADDomainAdminListHTML =  "<h2>Check Audit Log Permissions</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
+			$Global:Req10ADDomainAdminListHTML =  "<h2>10.5 - Check Audit Log Permissions</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			$Global:Req10ADEnterpriseAdminListHTML = "<h3>Enterprise Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
@@ -1755,9 +1755,9 @@ $AllScriptList_ListUpdate = {
 	Function Req10PastAuditLogs {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
+			$Req10Output.AppendText("10.7 - Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
 		}else{
-			$AllOutput.AppendText("Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
+			$AllOutput.AppendText("10.7 - Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
 		}
 		# Data Gathering, Wait so Header is written.
 		$AuditLogsBegin = (Get-Date).AddDays(-90)
@@ -1766,7 +1766,7 @@ $AllScriptList_ListUpdate = {
 		try{
 			$Global:AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd | Select-Object Index,Time,EntryType,InstanceID,Message | Format-List | Out-String
 			$AuditLogsRecent = Get-EventLog -LogName Security -Source "*auditing*" -Newest 1000 | Select-Object Index,Time,EntryType,InstanceID,Message | Format-List | Out-String
-			$Global:Req10AllAuditLogs = "<h2>Grabbing Previous Audit Logs for the Past Three Months</h2><h3>1000 Most Recent Entries Displayed</h3><p>View All Audit Log Entries for the Past Three Months in the Exported Text File " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt" + "</p><br><pre>" + $AuditLogsRecent + "</pre>"
+			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Previous Audit Logs for the Past Three Months</h2><h3>1000 Most Recent Entries Displayed</h3><p>View All Audit Log Entries for the Past Three Months in the Exported Text File " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt" + "</p><br><pre>" + $AuditLogsRecent + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText($AuditLogsRecent)
@@ -1775,7 +1775,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req10AllAuditLogs = "<h2>Grabbing Previous Audit Logs for the Past Three Months</h2><p>An Error Has Occurred, No Audit Logs Found.</p>"
+			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Previous Audit Logs for the Past Three Months</h2><p>An Error Has Occurred, No Audit Logs Found.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("An Error Has Occurred, No Audit Logs Found.")
 			}else{
@@ -1786,19 +1786,19 @@ $AllScriptList_ListUpdate = {
 
 	#onClick event handler
 	$Req10ScriptList_ListUpdate = {
-		if($Req10ScriptList.SelectedItem -eq "Dump of Audit Category Settings"){
+		if($Req10ScriptList.SelectedItem -eq "10.2 - Dump of Audit Category Settings"){
 			$Req10Output.Clear()
 			Req10AuditSettings
-		}elseif($Req10ScriptList.SelectedItem -eq "Grab NTP Settings"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.4 - Grab NTP Settings"){
 			$Req10Output.Clear()
 			Req10NTPSettings
-		}elseif($Req10ScriptList.SelectedItem -eq "Check NTP Settings on Multiple Devices"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.4 - Check NTP Settings on Multiple Devices"){
 			$Req10Output.Clear()
 			Req10NTPSettingsMultipleDevices
-		}elseif($Req10ScriptList.SelectedItem -eq "Check Audit Log Permissions"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.5 - Check Audit Log Permissions"){
 			$Req10Output.Clear()
 			Req10AuditLogPrems
-		}elseif($Req10ScriptList.SelectedItem -eq "Grab Previous Audit Logs"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.7 - Grab Previous Audit Logs"){
 			$Req10Output.Clear()
 			Req10PastAuditLogs
 		}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
