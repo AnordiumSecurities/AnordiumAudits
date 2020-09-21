@@ -207,9 +207,11 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
 			$AllOutput.AppendText("Everything in Requirement Eight `n")
-			Req8DomainPasswordPolicy
+			Req8GrabCurrentUser
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8LocalPasswordPolicy
+			Req8GrabDomainAdmins
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabLocalAdmins
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpActiveADUsers
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -217,17 +219,15 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpInactiveADUsers
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabCurrentUser
+			Req8GrabScreensaverSettings
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabLocalAdmins
+			Req8DomainPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabDomainAdmins
+			Req8LocalPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUsersPasswordExpiry
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUserLastPassChange
-			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabScreensaverSettings
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8GrabRDPSettings
 			$AllOutput.AppendText($Global:SectionBreak)
@@ -277,7 +277,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2ADComputerListAll $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2ADComputerListAll $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -333,9 +333,11 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
 			$AllOutput.AppendText("Everything in Requirement Eight `n")
-			Req8DomainPasswordPolicy
+			Req8GrabCurrentUser
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8LocalPasswordPolicy
+			Req8GrabDomainAdmins
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8GrabLocalAdmins
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpActiveADUsers
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -343,17 +345,15 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpInactiveADUsers
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabCurrentUser
+			Req8GrabScreensaverSettings
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabLocalAdmins
+			Req8DomainPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabDomainAdmins
+			Req8LocalPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUsersPasswordExpiry
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUserLastPassChange
-			$AllOutput.AppendText($Global:SectionHeader)
-			Req8GrabScreensaverSettings
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8GrabRDPSettings
 			$AllOutput.AppendText($Global:SectionBreak)
@@ -458,7 +458,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$Req2SvcListListening = Get-NetTCPConnection | Where-Object State -eq "Established" | Sort-Object LocalPort,LocalAddress 
-			$Req2UDPList = Get-NetUDPEndpoint
+			$Req2UDPList = Get-NetUDPEndpoint | Sort-Object LocalPort,LocalAddress
 			$Req2SvcListListeningRTB = $Req2SvcListListening | Format-Table -Autosize | Out-String -Width 1200
 			$Req2UDPListRTB = $Req2UDPList | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2SvcListListeningHTML = $Req2SvcListListening | ConvertTo-Html -As Table -Property LocalAddress,LocalPort,RemoteAddress,RemotePort,State,AppliedSetting,OwningProcess -Fragment -PreContent "<h2>2.2.2 - Established Network Connections</h2><h3>TCP Connections</h3>"
@@ -1098,18 +1098,18 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Eight Tab #
-	# Grab Domain Password Policy Settings
+	# 8.2 - Grab Domain Password Policy Settings
 	Function Req8DomainPasswordPolicy{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Current Domain Password Policy Settings:")
+			$Req8Output.AppendText("8.2 - Current Domain Password Policy Settings:")
 		}else{
-			$AllOutput.AppendText("Current Domain Password Policy Settings:")
+			$AllOutput.AppendText("8.2 - Current Domain Password Policy Settings:")
 		}
 		# Data Gathering
 		try{
 			$CurrentDomainPolicies = (Get-ADForest -Current LoggedOnUser).Domains | %{ Get-ADDefaultDomainPasswordPolicy -Identity $_ } | Out-String
-			$Global:Req8CurrentDomainPoliciesHTML = "<h2>Current Domain Password Policy Settings</h2><pre>" + $CurrentDomainPolicies + "</pre>"
+			$Global:Req8CurrentDomainPoliciesHTML = "<h2>8.2 - Current Domain Password Policy Settings</h2><pre>" + $CurrentDomainPolicies + "</pre>"
 			# Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($CurrentDomainPolicies)
@@ -1118,7 +1118,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge case
 		}catch{
-			$Global:Req8CurrentDomainPoliciesHTML = "<h2>Current Domain Password Policy Settings</h2><pre>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</pre>"
+			$Global:Req8CurrentDomainPoliciesHTML = "<h2>8.2 - Current Domain Password Policy Settings</h2><pre>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</pre>"
 			# Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
@@ -1128,33 +1128,33 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab Local Password Policy Settings
+	# 8.2 - Grab Local Password Policy Settings
 	Function Req8LocalPasswordPolicy{
-		$Global:Req8LocalPolicyHTML = "<h2>Local Password Policy Settings</h2><p>Check GPO Dump for Local GPO Policies.</p>"
+		$Global:Req8LocalPolicyHTML = "<h2>8.2 - Local Password Policy Settings</h2><p>Check GPO Dump for Local GPO Policies.</p>"
 		# Data Output
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
+			$Req8Output.AppendText("8.2 - Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
 			$Req8Output.AppendText($global:GPODump)
 		}else{
-			$AllOutput.AppendText("Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
+			$AllOutput.AppendText("8.2 - Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
 			# Don't Dump GPO in all output but instead have a dedicated function for that later on.
 			# $AllOutput.AppendText($global:GPODump)
 		}
 	}
 
-	#Dump of Active Directory Users
+	# 8.1.1 - Dump of Active Directory Users
 	Function Req8DumpActiveADUsers{
 		# Write Header 
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Dump of All AD Users:")
+			$Req8Output.AppendText("8.1.1 - Dump of All AD Users:")
 		}else{
-			$AllOutput.AppendText("Dump of All AD Users:")
+			$AllOutput.AppendText("8.1.1 - Dump of All AD Users:")
 		}
 		# Data Gathering
 		try{
 			$ADUserListAll = Get-ADUser -Filter * | Select-Object GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName |Sort-Object GivenName,Surname
 			$ADUserListAllRTB = $ADUserListAll | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8ADUserListAllHTML = $ADUserListAll | ConvertTo-Html -As Table -Property GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName -Fragment -PreContent "<h2>Dump of All AD Users</h2>"
+			$Global:Req8ADUserListAllHTML = $ADUserListAll | ConvertTo-Html -As Table -Property GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName -Fragment -PreContent "<h2>8.1.1 - Dump of All AD Users</h2>"
 			$Global:Req8ADUserListAllHTML = $Global:Req8ADUserListAllHTML -replace '<td>True</td>','<td class="EnabledStatus">True</td>'
 			$Global:Req8ADUserListAllHTML = $Global:Req8ADUserListAllHTML -replace '<td>False</td>','<td class="DisabledStatus">False</td>'
 			# Data Output
@@ -1165,7 +1165,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ADUserListAllHTML = "<h2>Dump of All AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req8ADUserListAllHTML = "<h2>8.1.1 - Dump of All AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
 			}else{
@@ -1174,19 +1174,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Dump of Disabled AD Users
+	# 8.1.3 - Dump of Disabled AD Users
 	Function Req8DumpDisabledADUsers{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Dump of All Disabled AD Users:")
+			$Req8Output.AppendText("8.1.3 - Dump of All Disabled AD Users:")
 		}else{
-			$AllOutput.AppendText("Dump of All Disabled AD Users:")
+			$AllOutput.AppendText("8.1.3 - Dump of All Disabled AD Users:")
 		}
 		# Data Gathering
 		try{
 			$ADUserListDisabled = Get-ADUser -Filter 'Enabled -eq $false' | Select-Object GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName |Sort-Object GivenName,Surname
 			$ADUserListDisabledRTB = $ADUserListDisabled  | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8ADUserListDisabledHTML = $ADUserListDisabled | ConvertTo-Html -As Table -Property GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName -Fragment -PreContent "<h2>Dump of All Disabled AD Users</h2>"
+			$Global:Req8ADUserListDisabledHTML = $ADUserListDisabled | ConvertTo-Html -As Table -Property GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName -Fragment -PreContent "<h2>8.1.3 - Dump of All Disabled AD Users</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($ADUserListDisabled)
@@ -1195,7 +1195,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ADUserListDisabledHTML = "<h2>Dump of All Disabled AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req8ADUserListDisabledHTML = "<h2>8.1.3 - Dump of All Disabled AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
 			}else{
@@ -1204,19 +1204,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Dump of Inactive AD Users
+	# 8.1.3 - Dump of Inactive AD Users
 	Function Req8DumpInactiveADUsers{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Dump of All Inactive AD Users:")
+			$Req8Output.AppendText("8.1.3 - Dump of All Inactive AD Users:")
 		}else{
-			$AllOutput.AppendText("Dump of All Inactive AD Users:")
+			$AllOutput.AppendText("8.1.3 - Dump of All Inactive AD Users:")
 		}
 		# Data Gathering
 		try{
 			$ADUserListInactiveADUsers = Search-ADAccount -UsersOnly -AccountInactive -TimeSpan 90 | ?{$_.enabled -eq $True} | Select-Object Name,SamAccountName,UserPrincipalName,DistinguishedName,LastLogonDate |Sort-Object Name
 			$ADUserListInactiveADUsersRTB = $ADUserListInactiveADUsers | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8ADUserListInactiveADUsersHTML = $ADUserListInactiveADUsers | ConvertTo-Html -As Table -Property Name,SamAccountName,UserPrincipalName,DistinguishedName,LastLogonDate -Fragment -PreContent "<h2>Dump of Inactive AD Users</h2>"
+			$Global:Req8ADUserListInactiveADUsersHTML = $ADUserListInactiveADUsers | ConvertTo-Html -As Table -Property Name,SamAccountName,UserPrincipalName,DistinguishedName,LastLogonDate -Fragment -PreContent "<h2>8.1.3 - Dump of Inactive AD Users</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($ADUserListInactiveADUsersRTB)
@@ -1225,7 +1225,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ADUserListInactiveADUsersHTML = "<h2>Dump of Inactive AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req8ADUserListInactiveADUsersHTML = "<h2>8.1.3 - Dump of Inactive AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
 			}else{
@@ -1234,21 +1234,21 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# Grab Current User
+	# 8.1 - Grab Current User
 	Function Req8GrabCurrentUser{
 		try{
-			$Global:Req8CurrentUserHTML = "<h2>Current Logged-In User</h2><p>Username: " + $env:UserName + "<br>Domain: " + $env:UserDNSDomain + "<br>Computer: " + $env:ComputerName + "</p>"
+			$Global:Req8CurrentUserHTML = "<h2>8.1 - Current Logged-In User</h2><p>Username: " + $env:UserName + "<br>Domain: " + $env:UserDNSDomain + "<br>Computer: " + $env:ComputerName + "</p>"
 			# Data Output
 			if($EverythingToggle -eq $false){
-				$Req8Output.AppendText("Current Logged-In User:`n")
+				$Req8Output.AppendText("8.1 - Current Logged-In User:`n")
 				$Req8Output.AppendText("Username: " + $env:UserName + "`nDomain: " + $env:UserDNSDomain + "`nComputer: " + $env:ComputerName)
 			}else{
-				$AllOutput.AppendText("Current Logged-In User:`n")
+				$AllOutput.AppendText("8.1 - Current Logged-In User:`n")
 				$AllOutput.AppendText("Username: " + $env:UserName + "`nDomain: " + $env:UserDNSDomain + "`nComputer: " + $env:ComputerName)
 			}
 		# Edge case that should never happen but you never know.
 		}catch{
-			$Global:Req8CurrentUserHTML = "<h2>Current Logged-In User</h2><p>An Unexpected Error Has Occurred</p>"
+			$Global:Req8CurrentUserHTML = "<h2>8.1 - Current Logged-In User</h2><p>An Unexpected Error Has Occurred</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nAn Unexpected Error Has Occurred.")
 			}else{
@@ -1257,19 +1257,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab Local Administrator Accounts
+	# 8.1 - Grab Local Administrator Accounts
 	Function Req8GrabLocalAdmins{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Grab Local Administrators:`n")
+			$Req8Output.AppendText("8.1 - Grab Local Administrators:`n")
 		}else{
-			$AllOutput.AppendText("Grab Local Administrators:`n")
+			$AllOutput.AppendText("8.1 - Grab Local Administrators:`n")
 		}
 		# Data Gathering
 		try{
 			$LocalAdminList = Get-LocalGroupMember -Group "Administrators" -ErrorAction Stop
 			$LocalAdminListRTB = $LocalAdminList | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8LocalAdminListHTML = $LocalAdminList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Grab Local Administrators</h2>"
+			$Global:Req8LocalAdminListHTML = $LocalAdminList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>8.1 - Grab Local Administrators</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($LocalAdminList)
@@ -1278,7 +1278,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case (1)
 		}catch [Microsoft.PowerShell.Commands.GroupNotFoundException]{
-			$Global:Req8LocalAdminListHTML = "<h2>Grab Local Administrators</h2><p>Error, Something went wrong. There are no Local Administrator Accounts</p>"
+			$Global:Req8LocalAdminListHTML = "<h2>8.1 - Grab Local Administrators</h2><p>Error, Something went wrong. There are no Local Administrator Accounts</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nError, Something went wrong. There are no Local Administrator Accounts.")
 			}else{
@@ -1286,7 +1286,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case (2)
 		}catch{
-			$Global:Req8LocalAdminListHTML = "<h2>Grab Local Administrators</h2><p>Error, Something went wrong. There are no Local Administrator Accounts</p>"
+			$Global:Req8LocalAdminListHTML = "<h2>8.1 - Grab Local Administrators</h2><p>Error, Something went wrong. There are no Local Administrator Accounts</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nError, Something Unexpected went wrong.")
 			}else{
@@ -1295,13 +1295,13 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab Domain Administrator Accounts
+	# 8.1 - Grab Domain Administrator Accounts
 	Function Req8GrabDomainAdmins{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Grab Domain & Enterprise Administrators:`n")
+			$Req8Output.AppendText("8.1 - Grab Domain & Enterprise Administrators:`n")
 		}else{
-			$AllOutput.AppendText("Grab Domain & Enterprise Administrators:`n")
+			$AllOutput.AppendText("8.1 - Grab Domain & Enterprise Administrators:`n")
 		}
 		# Data Gathering
 		try{
@@ -1309,7 +1309,7 @@ $AllScriptList_ListUpdate = {
 			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select-Object Name, Enabled
 			$ADDomainAdminListRTB = $ADDomainAdminList | Format-Table -Autosize | Out-String -Width 1200
 			$ADEnterpriseAdminListRTB = $ADEnterpriseAdminList | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8ADDomainAdminListHTML = $ADDomainAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h2>Grab Domain & Enterprise Administrators</h2><h3>Domain Administrators</h3>"
+			$Global:Req8ADDomainAdminListHTML = $ADDomainAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h2>8.1 - Grab Domain & Enterprise Administrators</h2><h3>Domain Administrators</h3>"
 			$Global:Req8ADEnterpriseAdminListHTML = $ADEnterpriseAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h3>Enterprise Administrators</h3>"
 			# Data Output
 			if($EverythingToggle -eq $false){
@@ -1321,7 +1321,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ADDomainAdminListHTML = "<h2>Grab Domain & Enterprise Administrators</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req8ADDomainAdminListHTML = "<h2>8.1 - Grab Domain & Enterprise Administrators</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			$Global:Req8ADEnterpriseAdminListHTML = "<h3>Enterprise Administrators</h3><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
@@ -1331,19 +1331,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Dump of Users whose Password Never Expire
+	# 8.2.4 - Dump of Users whose Password Never Expire
 	Function Req8DumpADUsersPasswordExpiry{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Dump of Users whose Password Never Expires:`n")
+			$Req8Output.AppendText("8.2.4 - Dump of Users whose Password Never Expires:`n")
 		}else{
-			$AllOutput.AppendText("Dump of Users whose Password Never Expires:`n")
+			$AllOutput.AppendText("8.2.4 - Dump of Users whose Password Never Expires:`n")
 		}
 		# Data Gathering
 		try{
 			$ADUserPasswordExpiryList = Search-ADAccount -PasswordNeverExpires -UsersOnly | Select-Object Name, SamAccountName, DistinguishedName, PasswordNeverExpires
 			$ADUserPasswordExpiryListRTB = $ADUserPasswordExpiryList | Format-Table -AutoSize | Out-String -Width 1200
-			$Global:Req8ADUserPasswordExpiryListHTML = $ADUserPasswordExpiryList | ConvertTo-Html -As Table -Property Name, SamAccountName, DistinguishedName, PasswordNeverExpires -Fragment -PreContent "<h2>Dump of Users whose Password Never Expires</h2>"
+			$Global:Req8ADUserPasswordExpiryListHTML = $ADUserPasswordExpiryList | ConvertTo-Html -As Table -Property Name, SamAccountName, DistinguishedName, PasswordNeverExpires -Fragment -PreContent "<h2>8.2.4 - Dump of Users whose Password Never Expires</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($ADUserPasswordExpiryListRTB)
@@ -1352,7 +1352,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ADUserPasswordExpiryListHTML = "<h2>Dump of Users whose Password Never Expires</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req8ADUserPasswordExpiryListHTML = "<h2>8.2.4 - Dump of Users whose Password Never Expires</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
 			}else{
@@ -1361,19 +1361,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Dump of Users and Their Last Password Change
+	# 8.2.4 - Dump of Users and Their Last Password Change
 	Function Req8DumpADUserLastPassChange{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Dump of All AD Users and Their Last Password Change:`n")
+			$Req8Output.AppendText("8.2.4 - Dump of All AD Users and Their Last Password Change:`n")
 		}else{
-			$AllOutput.AppendText("Dump of All AD Users and Their Last Password Change:`n")
+			$AllOutput.AppendText("8.2.4 - Dump of All AD Users and Their Last Password Change:`n")
 		}
 		# Data Gathering
 		try{
 			$ADUserPasswordLastChangeList = Get-aduser -filter * -properties PasswordLastSet, PasswordNeverExpires | Select-Object Name, SamAccountName, DistinguishedName, PasswordLastSet, PasswordNeverExpires | Sort-Object PasswordLastSet,PasswordNeverExpires
 			$ADUserPasswordLastChangeListRTB = $ADUserPasswordLastChangeList  | Format-Table -Autosize | Out-String -Width 1200
-			$Global:ADUserPasswordLastChangeListHTML = $ADUserPasswordLastChangeList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>Dump of All AD Users and Their Last Password Change</h2>"
+			$Global:ADUserPasswordLastChangeListHTML = $ADUserPasswordLastChangeList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>8.2.4 - Dump of All AD Users and Their Last Password Change</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($ADUserPasswordLastChangeListRTB)
@@ -1382,7 +1382,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:ADUserPasswordLastChangeListHTML = "<h2>Dump of All AD Users and Their Last Password Change</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:ADUserPasswordLastChangeListHTML = "<h2>8.2.4 - Dump of All AD Users and Their Last Password Change</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
 			}else{
@@ -1391,19 +1391,19 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	#Grab the Screensaver Settings
+	# 8.1.8 - Grab the Screensaver Settings
 	Function Req8GrabScreensaverSettings{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("Grab of Screensaver Settings:`n")
+			$Req8Output.AppendText("8.1.8 - Grab of Screensaver Settings:`n")
 		}else{
-			$AllOutput.AppendText("Grab of Screensaver Settings:`n")
+			$AllOutput.AppendText("8.1.8 - Grab of Screensaver Settings:`n")
 		}
 		# Data Gathering
 		try{
 			$ScreensaverSettings = Get-Wmiobject win32_desktop | Where-Object Name -match $env:USERNAME
 			$ScreensaverSettingsRTB = $ScreensaverSettings | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8ScreensaverSettingsHTML = $ScreensaverSettings | ConvertTo-Html -As Table -Property Name, ScreenSaverActive, ScreenSaverSecure, ScreenSaverTimeout, SettingID -Fragment -PreContent "<h2>Grab of Screensaver Settings</h2>"
+			$Global:Req8ScreensaverSettingsHTML = $ScreensaverSettings | ConvertTo-Html -As Table -Property Name, ScreenSaverActive, ScreenSaverSecure, ScreenSaverTimeout, SettingID -Fragment -PreContent "<h2>8.1.8 - Grab of Screensaver Settings</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 			 $Req8Output.AppendText($ScreensaverSettingsRTB)
@@ -1412,7 +1412,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ScreensaverSettingsHTML = "<h2>Grab of Screensaver Settings</h2><p>Error, Screensaver Settings not found.</p>"
+			$Global:Req8ScreensaverSettingsHTML = "<h2>8.1.8 - Grab of Screensaver Settings</h2><p>Error, Screensaver Settings not found.</p>"
 			if($EverythingToggle -eq $false){
 				 $Req8Output.AppendText("`nError, Screensaver Settings not found.")
 			}else{
@@ -1421,18 +1421,18 @@ $AllScriptList_ListUpdate = {
 		}	
 	}
 
-	#Grab RDP Encryption and Idle Settings
+	# 8.4 - Grab RDP Encryption and Idle Settings
 	Function Req8GrabRDPSettings{
 		# Write Header
 		if($EverythingToggle -eq $false){
-		 $Req8Output.AppendText("Grab RDP Encryption and Idle Settings:")
+		 $Req8Output.AppendText("8.4 - Grab RDP Encryption and Idle Settings:")
 		}else{
-			$AllOutput.AppendText("Grab RDP Encryption and Idle Settings:")
+			$AllOutput.AppendText("8.4 - Grab RDP Encryption and Idle Settings:")
 		}
 		# Data Gathering - RDP Settings
 		try{
 			$RDPSettings = Get-WmiObject -Class 'Win32_TSGeneralSetting' -Namespace 'root/CIMV2/TerminalServices' | Select-Object PSComputerName,TerminalName,TerminalProtocol,Certifcates,CertificateName,MinEncryptionLevel,PolicySourceMinEncryptionLevel,PolicySourceSecurityLayer,SecurityLayer | Format-List | Out-String
-			$Global:Req8RDPSettingsHTML = "<h2>Grab RDP Encryption and Idle Settings</h2><h3>RDP Encryption</h3><pre>" + $RDPSettings + "</pre>"
+			$Global:Req8RDPSettingsHTML = "<h2>8.4 - Grab RDP Encryption and Idle Settings</h2><h3>RDP Encryption</h3><pre>" + $RDPSettings + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($RDPSettings)
@@ -1441,7 +1441,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case - RDP Settings
 		}catch{
-			$Global:Req8RDPSettingsHTML = "<h2>Grab RDP Encryption and Idle Settings</h2><p>Error - No RDP Settings Found</p>"
+			$Global:Req8RDPSettingsHTML = "<h2>8.4 - Grab RDP Encryption and Idle Settings</h2><p>Error - No RDP Settings Found</p>"
 			$Req8Output.AppendText("Error - No RDP Settings Found")
 		}
 		# Data Gathering - PowerPlans
@@ -1474,48 +1474,50 @@ $AllScriptList_ListUpdate = {
 
 	# onClick Event Handler
 		$Req8ScriptList_ListUpdate = {
-			if($Req8ScriptList.SelectedItem -eq "Grab Domain Password Policy Settings"){
+			if($Req8ScriptList.SelectedItem -eq "8.2 - Grab Domain Password Policy Settings"){
 				$Req8Output.Clear()
 				Req8DomainPasswordPolicy
-			}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Password Policy Settings"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.2 - Grab Local Password Policy Settings"){
 				$Req8Output.Clear()
 				Req8LocalPasswordPolicy
-			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Active Active Directory Users"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1.1 - Dump of Active Active Directory Users"){
 				$Req8Output.Clear()
 				Req8DumpActiveADUsers
-			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Disabled Active Directory Users"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1.3 - Dump of Disabled Active Directory Users"){
 				$Req8Output.Clear()
 				Req8DumpDisabledADUsers
-			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Inactive Active Directory Users"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1.4 - Dump of Inactive Active Directory Users"){
 				$Req8Output.Clear()
 				Req8DumpInactiveADUsers
-			}elseif($Req8ScriptList.SelectedItem -eq "Grab Current User"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1 - Grab Current User"){
 				$Req8Output.Clear()
 				Req8GrabCurrentUser
-			}elseif($Req8ScriptList.SelectedItem -eq "Grab Local Administrator Accounts"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1 - Grab Local Administrator Accounts"){
 				$Req8Output.Clear()
 				Req8GrabLocalAdmins
-			}elseif($Req8ScriptList.SelectedItem -eq "Grab Domain Administrator Accounts"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1 - Grab Domain Administrator Accounts"){
 				$Req8Output.Clear()
 				Req8GrabDomainAdmins
-			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users whose Password Never Expire"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.2.4 - Dump of Users whose Password Never Expire"){
 				$Req8Output.Clear()
 				Req8DumpADUsersPasswordExpiry
-			}elseif($Req8ScriptList.SelectedItem -eq "Dump of Users and Their Last Password Change"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.2.4 - Dump of Users and Their Last Password Change"){
 				$Req8Output.Clear()
 				Req8DumpADUserLastPassChange
-			}elseif($Req8ScriptList.SelectedItem -eq "Grab the Screensaver Settings"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1.8 - Grab the Screensaver Settings"){
 				$Req8Output.Clear()
 				Req8GrabScreensaverSettings
-			}elseif($Req8ScriptList.SelectedItem -eq "Grab RDP Encryption and Idle Settings"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.4 - Grab RDP Encryption and Idle Settings"){
 				$Req8Output.Clear()
 				Req8GrabRDPSettings
 			}elseif($Req8ScriptList.SelectedItem -eq "Everything in Requirement Eight"){
 				$Req8Output.Clear()
 				$Req8Output.AppendText("Everything in Requirement Eight`n")
-				Req8DomainPasswordPolicy
+				Req8GrabCurrentUser
 				$Req8Output.AppendText($Global:SectionHeader)
-				Req8LocalPasswordPolicy
+				Req8GrabDomainAdmins
+				$Req8Output.AppendText($Global:SectionHeader)
+				Req8GrabLocalAdmins
 				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpActiveADUsers
 				$Req8Output.AppendText($Global:SectionHeader)
@@ -1523,17 +1525,15 @@ $AllScriptList_ListUpdate = {
 				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpInactiveADUsers
 				$Req8Output.AppendText($Global:SectionHeader)
-				Req8GrabCurrentUser
+				Req8GrabScreensaverSettings
 				$Req8Output.AppendText($Global:SectionHeader)
-				Req8GrabLocalAdmins
+				Req8DomainPasswordPolicy
 				$Req8Output.AppendText($Global:SectionHeader)
-				Req8GrabDomainAdmins
+				Req8LocalPasswordPolicy
 				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpADUsersPasswordExpiry
 				$Req8Output.AppendText($Global:SectionHeader)
 				Req8DumpADUserLastPassChange
-				$Req8Output.AppendText($Global:SectionHeader)
-				Req8GrabScreensaverSettings
 				$Req8Output.AppendText($Global:SectionHeader)
 				Req8GrabRDPSettings
 				$Req8Output.AppendText($Global:SectionHeader)
@@ -1548,7 +1548,7 @@ $AllScriptList_ListUpdate = {
 	Function Req8ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
-		$Requirement8Report = ConvertTo-HTML -Body "$Global:ReportRequirementEightName $ReportComputerName $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$Requirement8Report = ConvertTo-HTML -Body "$Global:ReportRequirementEightName $ReportComputerName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement8ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
 		$Req8Output.AppendText("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html")
@@ -1558,9 +1558,11 @@ $AllScriptList_ListUpdate = {
 	$Req8ExportReport = {
 			$Req8Output.Clear()
 			$Req8Output.AppendText("Writing Report for the Following`n`n")
-			Req8DomainPasswordPolicy
+			Req8GrabCurrentUser
 			$Req8Output.AppendText($Global:SectionHeader)
-			Req8LocalPasswordPolicy
+			Req8GrabDomainAdmins
+			$Req8Output.AppendText($Global:SectionHeader)
+			Req8GrabLocalAdmins
 			$Req8Output.AppendText($Global:SectionHeader)
 			Req8DumpActiveADUsers
 			$Req8Output.AppendText($Global:SectionHeader)
@@ -1568,17 +1570,15 @@ $AllScriptList_ListUpdate = {
 			$Req8Output.AppendText($Global:SectionHeader)
 			Req8DumpInactiveADUsers
 			$Req8Output.AppendText($Global:SectionHeader)
-			Req8GrabCurrentUser
+			Req8GrabScreensaverSettings
 			$Req8Output.AppendText($Global:SectionHeader)
-			Req8GrabLocalAdmins
+			Req8DomainPasswordPolicy
 			$Req8Output.AppendText($Global:SectionHeader)
-			Req8GrabDomainAdmins
+			Req8LocalPasswordPolicy
 			$Req8Output.AppendText($Global:SectionHeader)
 			Req8DumpADUsersPasswordExpiry
 			$Req8Output.AppendText($Global:SectionHeader)
 			Req8DumpADUserLastPassChange
-			$Req8Output.AppendText($Global:SectionHeader)
-			Req8GrabScreensaverSettings
 			$Req8Output.AppendText($Global:SectionHeader)
 			Req8GrabRDPSettings
 			Req8ExportReportFunction
