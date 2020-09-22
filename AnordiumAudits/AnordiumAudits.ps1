@@ -183,6 +183,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware		
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2MapNeighboringDevices
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
@@ -277,7 +279,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2ADComputerListAll $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -308,6 +310,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware	
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req2MapNeighboringDevices
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
@@ -536,6 +540,86 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
+	# 2.4 - Map Neighboring Devices
+	Function Req2MapNeighboringDevices {
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req5Output.AppendText("2.4 - List of Neighboring Devices.`n")
+		}else{
+			$AllOutput.AppendText("2.4 - List of Neighboring Devices.`n")
+		}
+		# Data Gathering for IPV4
+		try{
+			# IPV4 Adapters
+			$IPV4Adapters = Get-NetIPAddress | Select-Object InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState | Where-Object AddressFamily -eq IPv4 | Sort-Object InterfaceIndex,InterfaceAlias
+			$IPV4AdaptersRTB = $IPV4Adapters | Format-Table | Out-String
+			$Global:Req2IPV4AdaptersHTML = $IPV4Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h2>2.4 - Map Neighboring Devices</h2><h3>IPV4 Adapters</h3>"
+			# IPV4 Neighbors
+			$IPV4Neighbors = Get-NetNeighbor -AddressFamily IPv4 | Sort-Object ifIndex,IPAddress
+			$IPV4NeighborsRTB = $IPV4Neighbors | Format-Table | Out-String
+			$Global:Req2IPV4NeighborsHTML = $IPV4Neighbors | ConvertTo-Html -As Table -Property ifIndex,InterfaceAlias,IPAddress,LinkLayerAddress,State,PolicyStore -Fragment -PreContent "<h3>IPV4 Neighbors</h3>"
+			$Global:Req2IPV4NeighborsHTML = $Global:Req2IPV4NeighborsHTML -replace '<td>Stale</td>','<td class="AvailableStatus">Stale</td>' 
+			$Global:Req2IPV4NeighborsHTML = $Global:Req2IPV4NeighborsHTML -replace '<td>Reachable</td>','<td class="InstalledStatus">Reachable</td>'
+			$Global:Req2IPV4NeighborsHTML = $Global:Req2IPV4NeighborsHTML -replace '<td>Permanent</td>','<td class="RemovedStatus">Permanent</td>'
+			# Data Output for IPV4
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("IPV4 Adapters`n")
+				$Req2Output.AppendText($IPV4AdaptersRTB)
+				$Req2Output.AppendText("IPV4 Neighbors`n")
+				$Req2Output.AppendText($IPV4NeighborsRTB)
+			}else{
+				$AllOutput.AppendText("IPV4 Adapters`n")
+				$AllOutput.AppendText($IPV4AdaptersRTB)
+				$AllOutput.AppendText("IPV4 Neighbors`n")
+				$AllOutput.AppendText($IPV4NeighborsRTB)
+			}
+		# Edge Case IPV4
+		}catch{
+			$Global:Req2IPV4AdaptersHTML = "<h2>2.4 - Map Neighboring Devices</h2><h3>IPV4 Adapters</h3><p>Unable to List IPV6 Adapters.</p>"
+			$Global:Req2IPV4NeighborsHTML = "<h3>IPV4 Neighbors</h3><p>Unable to List Neighboring Devices.</p>"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`nUnable to List Neighboring Devices.`n")
+			}else{
+				$AllOutput.AppendText("`nUnable to List Neighboring Devices.`n")
+			}
+		}
+		# Data Gathering for IPV6
+		try{
+			# IPV6 Adapters
+			$IPV6Adapters = Get-NetIPAddress | Select-Object InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState | Where-Object AddressFamily -eq IPv6 | Sort-Object InterfaceIndex,InterfaceAlias
+			$IPV6AdaptersRTB = $IPV6Adapters | Format-Table | Out-String
+			$Global:Req2IPV6AdaptersHTML = $IPV6Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h3>IPV6 Adapters</h3>"
+			# IPV6 Neighbors
+			$IPV6Neighbors = Get-NetNeighbor -AddressFamily IPv6 | Sort-Object ifIndex,IPAddress
+			$IPV6NeighborsRTB = $IPV6Neighbors | Format-Table | Out-String
+			$Global:Req2IPV6NeighborsHTML = $IPV6Neighbors | ConvertTo-Html -As Table -Property ifIndex,InterfaceAlias,IPAddress,LinkLayerAddress,State,PolicyStore -Fragment -PreContent "<h3>IPV6 Neighbors</h3>"
+			$Global:Req2IPV6NeighborsHTML = $Global:Req2IPV6NeighborsHTML -replace '<td>Stale</td>','<td class="AvailableStatus">Stale</td>' 
+			$Global:Req2IPV6NeighborsHTML = $Global:Req2IPV6NeighborsHTML -replace '<td>Reachable</td>','<td class="InstalledStatus">Reachable</td>'
+			$Global:Req2IPV6NeighborsHTML = $Global:Req2IPV6NeighborsHTML -replace '<td>Permanent</td>','<td class="RemovedStatus">Permanent</td>'
+			# Data Output for IPV6
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("IPV6 Adapters`n")
+				$Req2Output.AppendText($IPV6AdaptersRTB)
+				$Req2Output.AppendText("IPV6 Neighbors`n")
+				$Req2Output.AppendText($IPV6NeighborsRTB)
+			}else{
+				$AllOutput.AppendText("IPV6 Adapters`n")
+				$AllOutput.AppendText($IPV6AdaptersRTB)
+				$AllOutput.AppendText("IPV6 Neighbors`n")
+				$AllOutput.AppendText($IPV6NeighborsRTB)
+			}
+		# Edge Case IPV6
+		}catch{
+			$Global:Req2IPV6AdaptersHTML = "<h3>IPV6 Adapters</h3><p>Unable to List IPV6 Adapters.</p>"
+			$Global:Req2IPV6NeighborsHTML = "<h3>IPV6 Neighbors</h3><p>Unable to List Neighboring Devices.</p>"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`nUnable to List Neighboring Devices.`n")
+			}else{
+				$AllOutput.AppendText("`nUnable to List Neighboring Devices.`n")
+			}
+		}
+	}
+
 	# onClick Event Handler - Requirement Two
 	$Req2ScriptList_ListUpdate = {
 		if($Req2ScriptList.SelectedItem -eq "2.2.1 - Grab Installed Windows Features"){
@@ -556,6 +640,9 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "2.4 - Grab All Computer Objects from Active Directory"){
 			$Req2Output.Clear()
 			Req2GrabADComputers
+		}elseif($Req2ScriptList.SelectedItem -eq "2.4 - Map Neighboring Devices"){
+			$Req2Output.Clear()
+			Req2MapNeighboringDevices
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
@@ -570,6 +657,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
+			$Req2Output.AppendText($Global:SectionHeader)
+			Req2MapNeighboringDevices
 		}else{
 			$Req2Output.Clear()
 			$Req2Output.AppendText("You must select an object from the script list.")
@@ -581,7 +670,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2ADComputerListAll" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
@@ -602,6 +691,8 @@ $AllScriptList_ListUpdate = {
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
+			$Req2Output.AppendText($Global:SectionHeader)
+			Req2MapNeighboringDevices
 			Req2ExportReportFunction
 	}
 
