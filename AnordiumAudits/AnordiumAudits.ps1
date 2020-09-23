@@ -44,7 +44,7 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 		$DotNetVersion = "4.5"
 		$DotNetCorrect = $false
 	}else{
-		$DotNetVersion = "N/A - Dot Net Framework 4.5 or later not detected. Install Dot Net Framework 4.6.2 or Later."
+		$DotNetVersion = "N/A - Dot Net Framework 4.5 or later not detected. Please Install Dot Net Framework 4.6.2 or Later."
 		$DotNetCorrect = $false
 	}
 	# Print Dot Net Framework Version to Console
@@ -172,6 +172,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Two... Total Progress... 0%"
+			$AllScriptOutputLabel.Refresh()
 			Req2GrabInstalledFeatures
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
@@ -180,37 +182,53 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2ListeningServices
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Two... Total Progress... 10%"
+			$AllScriptOutputLabel.Refresh()
 			Req2GrabInstalledSoftware		
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabDrivesAndShares
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Two... Total Progress... 15%"
+			$AllScriptOutputLabel.Refresh()
 			Req2MapNeighboringDevices
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Four... Total Progress... 20%"
+			$AllScriptOutputLabel.Refresh()
 			Req4WifiScan
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Five Functions
 			$AllOutput.AppendText("Everything in Requirement Five `n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Five... Total Progress... 30%"
+			$AllScriptOutputLabel.Refresh()
 			$Global:Req5AllSwitch = $true
 			Req5AVSettingsAndGPO
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Seven Functions
 			$AllOutput.AppendText("Everything in Requirement Seven `n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Seven... Waiting for User Input. Total Progress... 40%"
+			$AllScriptOutputLabel.Refresh()
 			# Alert User for Input
 			Req7FolderInput
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Seven... Total Progress... 45%"
+			$AllScriptOutputLabel.Refresh()
 			Req7FolderPerms
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req7DenyAll
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Seven... Total Progress... 50%"
+			$AllScriptOutputLabel.Refresh()
 			Req7UserPriviledges
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
 			$AllOutput.AppendText("Everything in Requirement Eight `n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Eight... Total Progress... 55%"
+			$AllScriptOutputLabel.Refresh()
 			Req8GrabCurrentUser
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8GrabDomainAdmins
@@ -222,6 +240,8 @@ $AllScriptList_ListUpdate = {
 			Req8DumpDisabledADUsers
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpInactiveADUsers
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Eight... Total Progress... 60%"
+			$AllScriptOutputLabel.Refresh()
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8GrabScreensaverSettings
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -233,32 +253,46 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUserLastPassChange
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Eight... Total Progress... 70%"
+			$AllScriptOutputLabel.Refresh()
 			Req8GrabRDPSettings
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Ten Functions
 			$AllOutput.AppendText("Everything in Requirement Ten `n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Ten... Total Progress... 75%"
+			$AllScriptOutputLabel.Refresh()
 			Req10AuditSettings
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10NTPSettings
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Ten... Grabbing NTP Settings on Multiple Devices, This Will Take Awhile. Total Progress... 80%"
+			$AllScriptOutputLabel.Refresh()
 			Req10NTPSettingsMultipleDevices
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10AuditLogPrems
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Ten... Gathering Past Audit Logs, This Will Take Awhile. Total Progress... 85%"
+			$AllScriptOutputLabel.Refresh()
 			Req10PastAuditLogs
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Diagnosis Functions
 			$AllOutput.AppendText("Everything in Diagnostics`n")
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Diagnosis... Total Progress... 90%"
+			$AllScriptOutputLabel.Refresh()
 			DiagSysInfo
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagInstalledUpdates
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagIPConfig
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Diagnosis... Total Progress... 95%"
+			$AllScriptOutputLabel.Refresh()
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagTCPConnectivity
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagGPODump
 			$AllOutput.AppendText($Global:SectionBreak)
+			$AllScriptOutputLabel.Text = "Output:"
+			$AllScriptOutputLabel.Refresh()
 		# Print End of Script Stuff
 			$AllOutput.AppendText("Script Completed Successfully.`n")
 			# Message Box Popup
@@ -301,6 +335,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Two... Total Progress... 0%"
+			$AllScriptOutputLabel.Refresh()
 			Req2GrabInstalledFeatures
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
@@ -308,31 +344,41 @@ $AllScriptList_ListUpdate = {
 			Req2RunningServices
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2ListeningServices
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Two... Total Progress... 10%"
+			$AllScriptOutputLabel.Refresh()
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req2GrabInstalledSoftware	
+			Req2GrabInstalledSoftware
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabDrivesAndShares
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Two... Total Progress... 15%"
+			$AllScriptOutputLabel.Refresh()
 			Req2MapNeighboringDevices
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Four Functions
 			$AllOutput.AppendText("Everything in Requirement Four `n")
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Four... Total Progress... 20%"
+			$AllScriptOutputLabel.Refresh()
 			Req4WifiScan
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Five Functions
 			$AllOutput.AppendText("Everything in Requirement Five `n")
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Five... Total Progress... 30%"
+			$AllScriptOutputLabel.Refresh()
 			$Global:Req5AllSwitch = $true
 			Req5AVSettingsAndGPO
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Seven Functions
 			$AllOutput.AppendText("Everything in Requirement Seven `n")
-			# Alert User for Input
-			# $UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Waiting for User Input for Requirement Seven... Total Progress... 40%"
+			$AllScriptOutputLabel.Refresh()
 			Req7FolderInput
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Seven... Total Progress... 45%"
+			$AllScriptOutputLabel.Refresh()
 			Req7FolderPerms
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req7DenyAll
@@ -341,6 +387,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
 			$AllOutput.AppendText("Everything in Requirement Eight `n")
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Eight... Total Progress... 50%"
+			$AllScriptOutputLabel.Refresh()
 			Req8GrabCurrentUser
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8GrabDomainAdmins
@@ -353,6 +401,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpInactiveADUsers
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Eight... Total Progress... 60%"
+			$AllScriptOutputLabel.Refresh()
 			Req8GrabScreensaverSettings
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DomainPasswordPolicy
@@ -363,32 +413,48 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUserLastPassChange
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Eight... Total Progress... 70%"
+			$AllScriptOutputLabel.Refresh()
 			Req8GrabRDPSettings
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Ten Functions
 			$AllOutput.AppendText("Everything in Requirement Ten `n")
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Ten... Total Progress... 75%"
+			$AllScriptOutputLabel.Refresh()
 			Req10AuditSettings
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10NTPSettings
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Ten, Grabbing NTP Settings on Multiple Devices, This Will Take Awhile.... Total Progress... 80%"
+			$AllScriptOutputLabel.Refresh()
 			Req10NTPSettingsMultipleDevices
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10AuditLogPrems
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Ten, Grabbing Past Audit Logs, This Will Take Awhile... Total Progress... 85%"
+			$AllScriptOutputLabel.Refresh()
 			Req10PastAuditLogs
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Diagnosis Functions
 			$AllOutput.AppendText("Everything in Diagnostics`n")
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Diagnosis... Total Progress... 90%"
+			$AllScriptOutputLabel.Refresh()
 			DiagSysInfo
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagInstalledUpdates
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagIPConfig
 			$AllOutput.AppendText($Global:SectionHeader)
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Diagnosis... Total Progress... 95%"
+			$AllScriptOutputLabel.Refresh()
 			DiagTCPConnectivity
 			$AllOutput.AppendText($Global:SectionHeader)
 			DiagGPODump
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Diagnosis... Total Progress... 99%"
+			$AllScriptOutputLabel.Refresh()
 			AllExportReportFunction
+			$AllScriptOutputLabel.Text = "Output:"
+			$AllScriptOutputLabel.Refresh()
 	}
 
 # Requirement Two Tab #
@@ -694,21 +760,37 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
+			$Req2OutputLabel.Text = "Output: Progressing... 10%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledFeatures
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 20%"
+			$Req2OutputLabel.Refresh()
 			Req2RunningProcesses
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 40%"
+			$Req2OutputLabel.Refresh()
 			Req2RunningServices
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 50%"
+			$Req2OutputLabel.Refresh()
 			Req2ListeningServices
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 60%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 80%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabDrivesAndShares
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 90%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabADComputers
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Refresh()
 			Req2MapNeighboringDevices
+			$Req2OutputLabel.Text = "Output:"
 		}else{
 			$Req2Output.Clear()
 			$Req2Output.AppendText("You must select an object from the script list.")
@@ -730,22 +812,39 @@ $AllScriptList_ListUpdate = {
 	$Req2ExportReport = {
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Writing Report for the Following`n`n")
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledFeatures
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 20%"
+			$Req2OutputLabel.Refresh()
 			Req2RunningProcesses
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 40%"
+			$Req2OutputLabel.Refresh()
 			Req2RunningServices
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 50%"
+			$Req2OutputLabel.Refresh()
 			Req2ListeningServices
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 60%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 80%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabDrivesAndShares
 			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 90%"
+			$Req2OutputLabel.Refresh()
 			Req2GrabADComputers
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2MapNeighboringDevices
+			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 99%"
+			$Req2OutputLabel.Refresh()
 			Req2ExportReportFunction
+			$Req2OutputLabel.Text = "Output:"
 	}
 
 # Requirement Four Tab # 
@@ -814,9 +913,15 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req4ScriptList.SelectedItem -eq "Everything in Requirement Four"){
 			$Req4Output.Clear()
 			$Req4Output.AppendText("Everything in Requirement Four`n")
+			$Req4OutputLabel.Text = "Output: Progressing... 10%"
+			$Req4OutputLabel.Refresh()
 			Req4WifiScan
+			$Req4OutputLabel.Text = "Output: Progressing... 50%"
+			$Req4OutputLabel.Refresh()
 			$Req4Output.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
+			$Req4OutputLabel.Text = "Output:"
+			$Req4OutputLabel.Refresh()
 		}else{
 			$Req4Output.Clear()
 			$Req4Output.AppendText("You must select an object from the script list.")
@@ -838,10 +943,17 @@ $AllScriptList_ListUpdate = {
 	$Req4ExportReport = {
 			$Req4Output.Clear()
 			$Req4Output.AppendText("Writing Report for the Following`n`n")
+			$Req4OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
+			$Req4OutputLabel.Refresh()
 			Req4WifiScan
+			$Req4OutputLabel.Text = "Output: Data Exporting in Progress... 50%"
+			$Req4OutputLabel.Refresh()
 			$Req4Output.AppendText($Global:SectionHeader)
 			Req4GetKeysAndCerts
+			$Req4OutputLabel.Text = "Output: Data Exporting in Progress... 99%"
+			$Req4OutputLabel.Refresh()
 			Req4ExportReportFunction
+			$Req4OutputLabel.Text = "Output:"
 	}
 
 # Requirement Five Tab #
