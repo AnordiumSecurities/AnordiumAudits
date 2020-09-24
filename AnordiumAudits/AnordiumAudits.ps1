@@ -49,6 +49,11 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 	}
 	# Print Dot Net Framework Version to Console
 	Write-Host "Detected Dot Net Framework: $DotNetVersion"
+	if($DotNetVersion -eq $false){
+		Write-Host "Dot Net Framework Not Supported. Please Install Dot Net Framework 4.6.2 or Later."
+	}else{
+		Write-Host "Dot Net Framework Supported."
+	}
 
 # Global GPO Result Function. Gather GPO Data
 Function GPResults{
@@ -462,9 +467,9 @@ $AllScriptList_ListUpdate = {
 	Function Req2GrabInstalledFeatures{
 		# Data Gathering
 		try{
-			$Req2FeatureList = Get-WindowsFeature | Format-Table -Autosize | Out-String -Width 1200
+			$Req2FeatureList = Get-WindowsFeature | Where-Object InstallState -EQ Installed | Format-Table -Autosize | Out-String -Width 1200
 			# HTML Report and Adding Colour Classes to Table Output
-			$Global:Req2FeatureListHTML = Get-WindowsFeature | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>2.2.1 - List of Installed Windows Features</h2>"
+			$Global:Req2FeatureListHTML = Get-WindowsFeature | Where-Object InstallState -EQ Installed | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>2.2.1 - List of Installed Windows Features</h2>"
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Available</td>','<td class="AvailableStatus">Available</td>' 
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Installed</td>','<td class="InstalledStatus">Installed</td>'
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Removed</td>','<td class="RemovedStatus">Removed</td>'
@@ -666,7 +671,7 @@ $AllScriptList_ListUpdate = {
 			$IPV4AdaptersRTB = $IPV4Adapters | Format-Table | Out-String
 			$Global:Req2IPV4AdaptersHTML = $IPV4Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h2>2.4 - Map Neighboring Devices</h2><h3>IPV4 Adapters</h3>"
 			# IPV4 Neighbors
-			$IPV4Neighbors = Get-NetNeighbor -AddressFamily IPv4 | Sort-Object ifIndex,IPAddress
+			$IPV4Neighbors = Get-NetNeighbor -AddressFamily IPv4 | Where-Object State -ne Unreachable | Sort-Object ifIndex,IPAddress
 			$IPV4NeighborsRTB = $IPV4Neighbors | Format-Table | Out-String
 			$Global:Req2IPV4NeighborsHTML = $IPV4Neighbors | ConvertTo-Html -As Table -Property ifIndex,InterfaceAlias,IPAddress,LinkLayerAddress,State,PolicyStore -Fragment -PreContent "<h3>IPV4 Neighbors</h3>"
 			$Global:Req2IPV4NeighborsHTML = $Global:Req2IPV4NeighborsHTML -replace '<td>Stale</td>','<td class="AvailableStatus">Stale</td>' 
@@ -701,7 +706,7 @@ $AllScriptList_ListUpdate = {
 			$IPV6AdaptersRTB = $IPV6Adapters | Format-Table | Out-String
 			$Global:Req2IPV6AdaptersHTML = $IPV6Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h3>IPV6 Adapters</h3>"
 			# IPV6 Neighbors
-			$IPV6Neighbors = Get-NetNeighbor -AddressFamily IPv6 | Sort-Object ifIndex,IPAddress
+			$IPV6Neighbors = Get-NetNeighbor -AddressFamily IPv6 | Where-Object State -ne Unreachable | Sort-Object ifIndex,IPAddress
 			$IPV6NeighborsRTB = $IPV6Neighbors | Format-Table | Out-String
 			$Global:Req2IPV6NeighborsHTML = $IPV6Neighbors | ConvertTo-Html -As Table -Property ifIndex,InterfaceAlias,IPAddress,LinkLayerAddress,State,PolicyStore -Fragment -PreContent "<h3>IPV6 Neighbors</h3>"
 			$Global:Req2IPV6NeighborsHTML = $Global:Req2IPV6NeighborsHTML -replace '<td>Stale</td>','<td class="AvailableStatus">Stale</td>' 
@@ -1121,8 +1126,8 @@ $AllScriptList_ListUpdate = {
 			# Take user input/file path and get permissions
 			try{
 				$LocalFolderPerms = (Get-Acl -Path $Global:FilePathFilePopupTmp).Access | Sort-Object IsInherited, Identity-Reference | Select-Object IdentityReference, FileSystemRights, IsInherited
-				$LocalFolderPermsRTB = $LocalFolderPerms | Format-List IdentityReference, FileSystemRights, IsInherited | Out-String
-				$Global:Req7LocalFolderPermsHTML = $LocalFolderPerms | ConvertTo-Html -As List -Fragment -PreContent "<h2>7.1 - Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Folder Selected: $Global:FilePathFilePopupTmp</p>"
+				$LocalFolderPermsRTB = $LocalFolderPerms | Format-Table IdentityReference, FileSystemRights, IsInherited | Out-String
+				$Global:Req7LocalFolderPermsHTML = $LocalFolderPerms | ConvertTo-Html -As Table -Fragment -PreContent "<h2>7.1 - Grab and analyse folder permissions that hold sensitive data</h2><h3>Local folder premissions</h3><p>Folder Selected: $Global:FilePathFilePopupTmp</p>"
 				# Data Output
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText($LocalFolderPermsRTB)
@@ -1397,21 +1402,20 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# 8.1.1 - Dump of Active Directory Users
+	# 8.1.1 - Dump of All Active Directory Users
 	Function Req8DumpActiveADUsers{
 		# Write Header 
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("8.1.1 - Dump of All AD Users:")
+			$Req8Output.AppendText("8.1.1 - Dump of All Enabled AD Users:")
 		}else{
-			$AllOutput.AppendText("8.1.1 - Dump of All AD Users:")
+			$AllOutput.AppendText("8.1.1 - Dump of All Enabled AD Users:")
 		}
 		# Data Gathering
 		try{
-			$ADUserListAll = Get-ADUser -Filter * | Select-Object GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName |Sort-Object GivenName,Surname
+			$ADUserListAll = Get-ADUser -Filter * | Select-Object GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName |Sort-Object GivenName,Surname | Where-Object Enabled -eq Enabled
 			$ADUserListAllRTB = $ADUserListAll | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req8ADUserListAllHTML = $ADUserListAll | ConvertTo-Html -As Table -Property GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName -Fragment -PreContent "<h2>8.1.1 - Dump of All AD Users</h2>"
+			$Global:Req8ADUserListAllHTML = $ADUserListAll | ConvertTo-Html -As Table -Property GivenName, Surname, Enabled, SamAccountName, UserPrincipalName, DistinguishedName -Fragment -PreContent "<h2>8.1.1 - Dump of All Enabled Active Directory Users</h2>"
 			$Global:Req8ADUserListAllHTML = $Global:Req8ADUserListAllHTML -replace '<td>True</td>','<td class="EnabledStatus">True</td>'
-			$Global:Req8ADUserListAllHTML = $Global:Req8ADUserListAllHTML -replace '<td>False</td>','<td class="DisabledStatus">False</td>'
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText($ADUserListAllRTB)
@@ -1420,7 +1424,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case
 		}catch{
-			$Global:Req8ADUserListAllHTML = "<h2>8.1.1 - Dump of All AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:Req8ADUserListAllHTML = "<h2>8.1.1 - Dump of All Enabled Active AD Users</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
 			if($EverythingToggle -eq $false){
 				$Req8Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.")
 			}else{
@@ -1442,11 +1446,12 @@ $AllScriptList_ListUpdate = {
 			$ADUserListDisabled = Get-ADUser -Filter 'Enabled -eq $false' | Select-Object GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName |Sort-Object GivenName,Surname
 			$ADUserListDisabledRTB = $ADUserListDisabled  | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req8ADUserListDisabledHTML = $ADUserListDisabled | ConvertTo-Html -As Table -Property GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName -Fragment -PreContent "<h2>8.1.3 - Dump of All Disabled AD Users</h2>"
+			$Global:Req8ADUserListDisabledHTML = $Global:Req8ADUserListDisabledHTML -replace '<td>False</td>','<td class="DisabledStatus">False</td>'
 			# Data Output
 			if($EverythingToggle -eq $false){
-				$Req8Output.AppendText($ADUserListDisabled)
+				$Req8Output.AppendText($ADUserListDisabledRTB)
 			}else{
-				$AllOutput.AppendText($ADUserListDisabled)
+				$AllOutput.AppendText($ADUserListDisabledRTB)
 			}
 		# Edge Case
 		}catch{
@@ -1735,7 +1740,7 @@ $AllScriptList_ListUpdate = {
 			}elseif($Req8ScriptList.SelectedItem -eq "8.2 - Grab Local Password Policy Settings"){
 				$Req8Output.Clear()
 				Req8LocalPasswordPolicy
-			}elseif($Req8ScriptList.SelectedItem -eq "8.1.1 - Dump of Active Active Directory Users"){
+			}elseif($Req8ScriptList.SelectedItem -eq "8.1.1 - Dump of Enabled Active Directory Users"){
 				$Req8Output.Clear()
 				Req8DumpActiveADUsers
 			}elseif($Req8ScriptList.SelectedItem -eq "8.1.3 - Dump of Disabled Active Directory Users"){

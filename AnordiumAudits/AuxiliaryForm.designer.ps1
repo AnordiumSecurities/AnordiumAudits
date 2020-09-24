@@ -664,7 +664,7 @@ $Req8Refresh.add_Click($Req8ScriptList_ListUpdate)
 #Req8ScriptList
 #
 $Req8ScriptList.FormattingEnabled = $true
-$Req8ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Eight',[System.String]'8.1 - Grab Current User',[System.String]'8.1 - Grab Local Administrator Accounts',[System.String]'8.1 - Grab Domain Administrator Accounts',[System.String]'8.1.1 - Dump of Active Active Directory Users',[System.String]'8.1.3 - Dump of Disabled Active Directory Users',[System.String]'8.1.4 - Dump of Inactive Active Directory Users',[System.String]'8.1.8 - Grab the Screensaver Settings',[System.String]'8.2 - Grab Domain Password Policy Settings',[System.String]'8.2 - Grab Local Password Policy Settings',[System.String]'8.2.4 - Dump of Users whose Password Never Expire',[System.String]'8.2.4 - Dump of Users and Their Last Password Change',[System.String]'8.4 - Grab RDP Encryption and Idle Settings'))
+$Req8ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Eight',[System.String]'8.1 - Grab Current User',[System.String]'8.1 - Grab Local Administrator Accounts',[System.String]'8.1 - Grab Domain Administrator Accounts',[System.String]'8.1.1 - Dump of Enabled Active Directory Users',[System.String]'8.1.3 - Dump of Disabled Active Directory Users',[System.String]'8.1.4 - Dump of Inactive Active Directory Users',[System.String]'8.1.8 - Grab the Screensaver Settings',[System.String]'8.2 - Grab Domain Password Policy Settings',[System.String]'8.2 - Grab Local Password Policy Settings',[System.String]'8.2.4 - Dump of Users whose Password Never Expire',[System.String]'8.2.4 - Dump of Users and Their Last Password Change',[System.String]'8.4 - Grab RDP Encryption and Idle Settings'))
 $Req8ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req8ScriptList.Name = [System.String]'Req8ScriptList'
 $Req8ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
@@ -852,6 +852,10 @@ $DiagOutput.ReadOnly = $true
 $DiagOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $DiagOutput.TabIndex = [System.Int32]16
 $DiagOutput.Text = [System.String]''
+#
+#Req7FolderBrowserDialog
+#
+$Req7FolderBrowserDialog.RootFolder = [System.Environment+SpecialFolder]::MyComputer
 #
 #AuxiliaryForm
 #
