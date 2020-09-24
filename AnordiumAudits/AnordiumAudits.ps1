@@ -1,6 +1,8 @@
 # Anordium Audits #
-Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing
-#Join Path for CSS Code in the Report
+# Add Required Dot Net Assemblies
+Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing, System.DirectoryServices.AccountManagement
+
+#Join Path for CSS Code in the Report, Required for HTML Exporting
 . (Join-Path $PSScriptRoot 'CSSReport.ps1')
 
 # Check Script Rights & Ensure is in Administrator Mode
@@ -179,6 +181,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Two... Total Progress... 0%"
 			$AllScriptOutputLabel.Refresh()
+			Req2TestDefaultAccounts
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
@@ -320,7 +324,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -342,6 +346,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Two... Total Progress... 0%"
 			$AllScriptOutputLabel.Refresh()
+			Req2TestDefaultAccounts
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2RunningProcesses
@@ -463,6 +469,51 @@ $AllScriptList_ListUpdate = {
 	}
 
 # Requirement Two Tab #
+	# 2.1 - Test Vendor Default Credentials in AD
+	Function Req2TestDefaultAccounts {
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("2.1 - Test Vendor Default Credentials in AD.`n`n")
+		}else{
+			$AllOutput.AppendText("2.1 - Test Vendor Default Credentials in AD.`n`n")
+		}
+		# Usernames and Password Arrays 
+		$UsernameToTest = @("LDAP_Anonymous","","Administrator","Administrator","Guest","Guest","IS_$Env:COMPUTERNAME","User","free user","Mail")
+		$PasswordToTest = @("LdapPassword_1","","Administrator","","Guest","","IS_$Env:COMPUTERNAME","User","user","")
+		$MaxLength = [Math]::Max($UsernameToTest.Length, $PasswordToTest.Length)
+		$ResultTable = @()
+		# Data Gathering
+		for ($loop_index = 0; $loop_index -lt $MaxLength; $loop_index++){ 
+			$DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('Domain')
+			$DSResult = $DS.ValidateCredentials($UsernameToTest[$loop_index],$PasswordToTest[$loop_index])
+			# Check Boolean Switch, Check if Password is vaild
+			if($DSResult -eq $true){
+				$ResultTable += @{Username=$UsernameToTest[$loop_index];Password=$PasswordToTest[$loop_index];Result="Succesful"}
+				# Data Output
+				if($EverythingToggle -eq $false){
+					$Req2Output.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was SUCCESSFUL. PLEASE CHANGE OR DISABLE ACCOUNT`n`n")
+				}else{
+					$AllOutput.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was SUCCESSFUL. PLEASE CHANGE OR DISABLE ACCOUNT`n`n")
+				}
+			# Check Boolean Switch, Password is not vaild.
+			}else{
+				$ResultTable += @{Username=$UsernameToTest[$loop_index];Password=$PasswordToTest[$loop_index];Result="Unsuccesful"}
+				# Data Output
+				if($EverythingToggle -eq $false){
+					$Req2Output.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was UNSUCCESSFUL.`n`n")
+				}else{
+					$AllOutput.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was UNSUCCESSFUL.`n`n")
+				}
+			}
+		}
+		# Create HTML
+        $CovertedTable = $ResultTable | ForEach {[PSCustomObject]$_}
+		$CovertedTable | Sort-Object Username,Result
+		$Global:Req2UserCredentialResult = $CovertedTable | ConvertTo-Html -As Table -Fragment -Property Username,Password,Result -PreContent "<h2>2.1 - Test Vendor Default Credentials in AD</h2>"
+		$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Unsuccesful</td>','<td class="InstalledStatus">Unsuccesful</td>'
+		$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Succesful</td>','<td class="RemovedStatus">Succesful</td>'
+	}
+
 	# 2.2.1 Grab Installed Features
 	Function Req2GrabInstalledFeatures{
 		# Data Gathering
@@ -738,7 +789,10 @@ $AllScriptList_ListUpdate = {
 
 	# onClick Event Handler - Requirement Two
 	$Req2ScriptList_ListUpdate = {
-		if($Req2ScriptList.SelectedItem -eq "2.2.1 - Grab Installed Windows Features"){
+		if($Req2ScriptList.SelectedItem -eq "2.1 - Test Vendor Default Credentials in AD"){
+			$Req2Output.Clear()
+			Req2TestDefaultAccounts
+		}elseif($Req2ScriptList.SelectedItem -eq "2.2.1 - Grab Installed Windows Features"){
 			$Req2Output.Clear()
 			Req2GrabInstalledFeatures
 		}elseif($Req2ScriptList.SelectedItem -eq "2.2.2 - Grab Running Processes"){
@@ -767,6 +821,8 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText("Everything in Requirement Two `n")
 			$Req2OutputLabel.Text = "Output: Progressing... 10%"
 			$Req2OutputLabel.Refresh()
+			Req2TestDefaultAccounts
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			$Req2Output.AppendText($Global:SectionHeader)
 			$Req2OutputLabel.Text = "Output: Progressing... 20%"
@@ -807,7 +863,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
@@ -819,6 +875,8 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText("Writing Report for the Following`n`n")
 			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
 			$Req2OutputLabel.Refresh()
+			Req2TestDefaultAccounts
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			$Req2Output.AppendText($Global:SectionHeader)
 			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 20%"
