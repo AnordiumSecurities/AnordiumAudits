@@ -15,8 +15,7 @@
     <RequireElevation>True</RequireElevation>
     <PackageModules>True</PackageModules>
     <PackageAsExecutable>False</PackageAsExecutable>
-    <PostBuildScript>
-    </PostBuildScript>
+    <PostBuildScript>Robocopy C:\Users\M.Chen\source\repos\AnordiumAudits\AnordiumAudits\bin\Release Z:\Release</PostBuildScript>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

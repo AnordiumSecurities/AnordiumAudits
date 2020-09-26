@@ -765,7 +765,7 @@ $Req10Output.Name = [System.String]'Req10Output'
 $Req10Output.ReadOnly = $true
 $Req10Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
 $Req10Output.TabIndex = [System.Int32]5
-$Req10Output.Text = [System.String]'`'
+$Req10Output.Text = [System.String]''
 #
 #DiagTab
 #
@@ -864,7 +864,6 @@ $AuxiliaryForm.Controls.Add($MainTabControl)
 $AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
 $AuxiliaryForm.MaximizeBox = $false
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
-$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $AuxiliaryForm.Text = [System.String]'Anordium Audits'
 $MainTabControl.ResumeLayout($false)
