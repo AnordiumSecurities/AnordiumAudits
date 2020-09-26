@@ -181,6 +181,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Two... Total Progress... 0%"
 			$AllScriptOutputLabel.Refresh()
+			Req2ComplianceChecker
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2TestDefaultAccounts
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
@@ -346,6 +348,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText("Everything in Requirement Two `n")
 			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Two... Total Progress... 0%"
 			$AllScriptOutputLabel.Refresh()
+			Req2ComplianceChecker
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2TestDefaultAccounts
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
@@ -471,13 +475,54 @@ $AllScriptList_ListUpdate = {
 # Requirement Two Tab #
 	# Requirement Two Compliance Check
 	Function Req2ComplianceChecker {
-		# Write Header
+		# Run All Functions To Gather Data
+			$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
+			$Req2OutputLabel.Text = "Output: Progressing... 10%"
+			$Req2OutputLabel.Refresh()
+			Req2TestDefaultAccounts
+			$Req2Output.AppendText($Global:SectionHeader)
+			Req2GrabInstalledFeatures
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 20%"
+			$Req2OutputLabel.Refresh()
+			Req2RunningProcesses
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 40%"
+			$Req2OutputLabel.Refresh()
+			Req2RunningServices
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 50%"
+			$Req2OutputLabel.Refresh()
+			Req2ListeningServices
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 60%"
+			$Req2OutputLabel.Refresh()
+			Req2GrabInstalledSoftware
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 80%"
+			$Req2OutputLabel.Refresh()
+			Req2GrabDrivesAndShares
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Text = "Output: Progressing... 90%"
+			$Req2OutputLabel.Refresh()
+			Req2GrabADComputers
+			$Req2Output.AppendText($Global:SectionHeader)
+			$Req2OutputLabel.Refresh()
+			Req2MapNeighboringDevices
+			$Req2OutputLabel.Text = "Output:"
+			$Req2OutputLabel.Refresh()
+		# Clear Output and Append Results
+		$Req2Output.Clear()
+		# Write Header and Results
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
+			$Req2Output.AppendText($Global:Req2VendorPassResult)
+			$Req2Output.AppendText($Global:Req2FeatureResult)
 		}else{
 			$AllOutput.AppendText("Requirement Two Compliance Check.`n`n")
+			$AllOutput.AppendText($Global:Req2VendorPassResult)
+			$AllOutput.AppendText($Global:Req2FeatureResult)
 		}
-		# Run All Functions Again
 	}
 
 	# 2.1 - Test Vendor Default Credentials in AD
@@ -517,6 +562,22 @@ $AllScriptList_ListUpdate = {
 				}
 			}
 		}
+		# Compliance Result
+		if($DSResult -eq $true){
+			$Global:Req2VendorPassResult = "2.1 - Default Credentials Have Access in The Network. [FAILED]`n"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("2.1 - Default Credentials Have Access in The Network. [FAILED]`n")
+			}else{
+				$AllOutput.AppendText("2.1 - Default Credentials Have Access in The Network. [FAILED]`n")
+			}
+		}else{
+			$Global:Req2VendorPassResult = "2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n")
+			}else{
+				$AllOutput.AppendText("2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n")
+			}
+		}
 		# Create HTML
         $CovertedTable = $ResultTable | ForEach {[PSCustomObject]$_}
 		$CovertedTable | Sort-Object Username,Result
@@ -527,6 +588,12 @@ $AllScriptList_ListUpdate = {
 
 	# 2.2.1 Grab Installed Features
 	Function Req2GrabInstalledFeatures{
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("2.2.1 - List of Installed Windows Features:`n")
+		}else{
+			$AllOutput.AppendText("2.2.1 - List of Installed Windows Features:`n")
+		}
 		# Data Gathering
 		try{
 			$Req2FeatureList = Get-WindowsFeature | Where-Object InstallState -EQ Installed | Format-Table -Autosize | Out-String -Width 1200
@@ -535,18 +602,49 @@ $AllScriptList_ListUpdate = {
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Available</td>','<td class="AvailableStatus">Available</td>' 
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Installed</td>','<td class="InstalledStatus">Installed</td>'
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Removed</td>','<td class="RemovedStatus">Removed</td>'
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText($Req2FeatureList)
+			}else{
+				$AllOutput.AppendText($Req2FeatureList)
+			}		
+			# Check Compliance
+			$Req2ListOfAllFeatures = Get-WindowsFeature | Where-Object {($_.Name -ne "FileAndStorage-Services" -and $_.Name -ne "Storage-Services" -and $_.Name -ne "NET-Framework-45-Feature" -and $_.Name -ne "NET-Framework-45-Core" -and $_.Name -ne "NET-WCF-Services45" -and $_.Name -ne "NET-WCF-TCP-PortSharing45" -and $_.Name -ne "System-DataArchiver" -and $_.Name -ne "Windows-Defender" -and $_.Name -ne "PowerShellRoot" -and $_.Name -ne "PowerShell" -and $_.Name -ne "PowerShell-ISE" -and $_.Name -ne "WoW64-Support" -and $_.Name -ne "XPS-Viewer")} | Where-Object {($_.InstallState -eq "Installed")}
+			$Req2ListOfAllFeaturesRTB = $Req2ListOfAllFeatures | Format-Table | Out-String
+			$FeatureCounter = 0
+			foreach($FeatureRole in $Req2ListOfAllFeatures){
+				$FeatureCounter++
+			}
+			if($FeatureCounter -ge 1){
+				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Feature or Role Installed. [FAILED]`n"
+				if($EverythingToggle -eq $false){
+					$Req2Output.AppendText("2.2.1 - Detected More Than One Feature or Role Installed. [FAILED]`nCheck List Below and Analyze The Features and Roles.`nList Below Contains No Default Features or Roles.`n")
+					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
+				}else{
+					$AllOutput.AppendText("2.2.1 - Detected More Than One Feature or Role Installed. [FAILED]`nCheck List Below and Analyze The Features and Roles.`nList Below Contains No Default Features or Roles.`n")
+					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
+				}
+			}else{
+				$Global:Req2FeatureResult = "2.2.1 - Only Detected One Feature or Role Installled. PCI-DSS Compliant. [PASS]`n"
+				# Output
+				if($EverythingToggle -eq $false){
+					$Req2Output.AppendText("2.2.1 - Only Detected One Feature or Role Installled. PCI-DSS Compliant. [PASS]`n")
+					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
+				}else{
+					$AllOutput.AppendText("2.2.1 - Only Detected One Feature or Role Installled. PCI-DSS Compliant. [PASS]`n")
+					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
+				}
+			}
 		# Edge Case
 		}catch{
-			$Req2FeatureList = "Unable to Grab Installed Features."
+			# Data Output
 			$Global:Req2FeatureListHTML = "<h2>2.2.1 - List of Installed Windows Features</h2><p>Unable to Grab Installed Features.</p>"
-		}
-		# Data Output
-		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("2.2.1 - List of Installed Windows Features:`n")
-			$Req2Output.AppendText($Req2FeatureList)
-		}else{
-			$AllOutput.AppendText("2.2.1 - List of Installed Windows Features:`n")
-			$AllOutput.AppendText($Req2FeatureList)
+			$Req2FeatureList = "Unable to Grab Installed Features."
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("Unable to Grab Installed Features.")
+			}else{
+				$AllOutput.AppendText("Unable to Grab Installed Features.")
+			}	
 		}
 	}
 
@@ -827,11 +925,16 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "2.4 - Map Neighboring Devices"){
 			$Req2Output.Clear()
 			Req2MapNeighboringDevices
+		}elseif($Req2ScriptList.SelectedItem -eq "Requirement Two Compliance Check"){
+			$Req2Output.Clear()
+			Req2ComplianceChecker
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
 			$Req2OutputLabel.Text = "Output: Progressing... 10%"
 			$Req2OutputLabel.Refresh()
+			Req2ComplianceChecker
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2TestDefaultAccounts
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
