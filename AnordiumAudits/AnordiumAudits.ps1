@@ -12,6 +12,14 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
   exit
 }
 
+# Internal Testing Switch, Predefine Export Folder and Skip Main Window
+$TestingSwitch = $true
+# Check MainForm.ps1 for bypass code
+if($TestingSwitch -eq $true){
+	$UserInputPath = "Z:\Release"
+	Write-Host "Debug Mode Enabled, Exporting to $UserInputPath"
+}
+
 # Check for Dot Net Framework Version and Print to Console
 	$NetFrameworkReleaseKey = (Get-ItemProperty "HKLM:SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full").Release
 	# Data Gathering
@@ -86,7 +94,9 @@ $WelcomeSubmitButton_Click = {
 	$MainFormXYLoc = $MainForm.Location
 	$AuxiliaryForm.Location = $MainFormXYLoc
 	# Check User Input
-	$UserInputPath = $MainForm.MainUserInput.Text
+	if($TestingSwitch -eq $false){
+		$UserInputPath = $MainForm.MainUserInput.Text
+	}
 	try{
 		$UserInputTestingPath = Test-Path -Path $UserInputPath
 		if($UserInputTestingPath -eq $true){
@@ -586,19 +596,19 @@ $AllScriptList_ListUpdate = {
 		$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Succesful</td>','<td class="RemovedStatus">Succesful</td>'
 	}
 
-	# 2.2.1 Grab Installed Features
+	# 2.2.1 Grab Installed Roles and Features
 	Function Req2GrabInstalledFeatures{
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("2.2.1 - List of Installed Windows Features:`n")
+			$Req2Output.AppendText("2.2.1 - List of Installed Windows Roles and Features:`n")
 		}else{
-			$AllOutput.AppendText("2.2.1 - List of Installed Windows Features:`n")
+			$AllOutput.AppendText("2.2.1 - List of Installed Windows Roles and Features:`n")
 		}
 		# Data Gathering
 		try{
 			$Req2FeatureList = Get-WindowsFeature | Where-Object InstallState -EQ Installed | Format-Table -Autosize | Out-String -Width 1200
 			# HTML Report and Adding Colour Classes to Table Output
-			$Global:Req2FeatureListHTML = Get-WindowsFeature | Where-Object InstallState -EQ Installed | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>2.2.1 - List of Installed Windows Features</h2>"
+			$Global:Req2FeatureListHTML = Get-WindowsFeature | Where-Object InstallState -EQ Installed | ConvertTo-Html -As Table -Property DisplayName,Name,InstallState,FeatureType -Fragment -PreContent "<h2>2.2.1 - List of Installed Windows Roles and Features</h2>"
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Available</td>','<td class="AvailableStatus">Available</td>' 
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Installed</td>','<td class="InstalledStatus">Installed</td>'
 			$Global:Req2FeatureListHTML = $Global:Req2FeatureListHTML -replace '<td>Removed</td>','<td class="RemovedStatus">Removed</td>'
@@ -610,40 +620,40 @@ $AllScriptList_ListUpdate = {
 			}		
 			# Check Compliance
 			$Req2ListOfAllFeatures = Get-WindowsFeature | Where-Object {($_.Name -ne "FileAndStorage-Services" -and $_.Name -ne "Storage-Services" -and $_.Name -ne "NET-Framework-45-Feature" -and $_.Name -ne "NET-Framework-45-Core" -and $_.Name -ne "NET-WCF-Services45" -and $_.Name -ne "NET-WCF-TCP-PortSharing45" -and $_.Name -ne "System-DataArchiver" -and $_.Name -ne "Windows-Defender" -and $_.Name -ne "PowerShellRoot" -and $_.Name -ne "PowerShell" -and $_.Name -ne "PowerShell-ISE" -and $_.Name -ne "WoW64-Support" -and $_.Name -ne "XPS-Viewer")} | Where-Object {($_.InstallState -eq "Installed")}
-			$Req2ListOfAllFeaturesRTB = $Req2ListOfAllFeatures | Format-Table | Out-String
+			$Req2ListOfAllFeaturesRTB = $Req2ListOfAllFeatures | Format-Table -Autosize | Out-String -Width 1200
 			$FeatureCounter = 0
 			foreach($FeatureRole in $Req2ListOfAllFeatures){
 				$FeatureCounter++
 			}
 			if($FeatureCounter -ge 1){
-				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Feature or Role Installed. [FAILED]`n"
+				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Role or Feature Installed. [FAILED]`nDetected $FeatureCounter Features or Roles.`n"
 				if($EverythingToggle -eq $false){
-					$Req2Output.AppendText("2.2.1 - Detected More Than One Feature or Role Installed. [FAILED]`nCheck List Below and Analyze The Features and Roles.`nList Below Contains No Default Features or Roles.`n")
+					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
 				}else{
-					$AllOutput.AppendText("2.2.1 - Detected More Than One Feature or Role Installed. [FAILED]`nCheck List Below and Analyze The Features and Roles.`nList Below Contains No Default Features or Roles.`n")
+					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
 				}
 			}else{
-				$Global:Req2FeatureResult = "2.2.1 - Only Detected One Feature or Role Installled. PCI-DSS Compliant. [PASS]`n"
+				$Global:Req2FeatureResult = "2.2.1 - Only Detected One Role or Feature Installled. PCI-DSS Compliant. [PASS]`n"
 				# Output
 				if($EverythingToggle -eq $false){
-					$Req2Output.AppendText("2.2.1 - Only Detected One Feature or Role Installled. PCI-DSS Compliant. [PASS]`n")
+					$Req2Output.AppendText("2.2.1 - Only Detected One Role or Feature Installled. PCI-DSS Compliant. [PASS]`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
 				}else{
-					$AllOutput.AppendText("2.2.1 - Only Detected One Feature or Role Installled. PCI-DSS Compliant. [PASS]`n")
+					$AllOutput.AppendText("2.2.1 - Only Detected One Role or Feature Installled. PCI-DSS Compliant. [PASS]`n")
 					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
 				}
 			}
 		# Edge Case
 		}catch{
 			# Data Output
-			$Global:Req2FeatureListHTML = "<h2>2.2.1 - List of Installed Windows Features</h2><p>Unable to Grab Installed Features.</p>"
+			$Global:Req2FeatureListHTML = "<h2>2.2.1 - List of Installed Windows Roles and Features</h2><p>Unable to Grab Installed Roles or Features.</p>"
 			$Req2FeatureList = "Unable to Grab Installed Features."
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("Unable to Grab Installed Features.")
+				$Req2Output.AppendText("Unable to Grab Installed Roles or Features.")
 			}else{
-				$AllOutput.AppendText("Unable to Grab Installed Features.")
+				$AllOutput.AppendText("Unable to Grab Installed Roles or Features.")
 			}	
 		}
 	}
@@ -901,7 +911,7 @@ $AllScriptList_ListUpdate = {
 		if($Req2ScriptList.SelectedItem -eq "2.1 - Test Vendor Default Credentials in AD"){
 			$Req2Output.Clear()
 			Req2TestDefaultAccounts
-		}elseif($Req2ScriptList.SelectedItem -eq "2.2.1 - Grab Installed Windows Features"){
+		}elseif($Req2ScriptList.SelectedItem -eq "2.2.1 - Grab Installed Windows Roles and Features"){
 			$Req2Output.Clear()
 			Req2GrabInstalledFeatures
 		}elseif($Req2ScriptList.SelectedItem -eq "2.2.2 - Grab Running Processes"){
