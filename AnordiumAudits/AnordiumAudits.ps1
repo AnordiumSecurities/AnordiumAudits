@@ -7,9 +7,9 @@ Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawi
 
 # Check Script Rights & Ensure is in Administrator Mode
 If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)){
-  # Relaunch as an elevated process:
-  Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
-  exit
+	# Relaunch as an elevated process:
+	Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
+	exit
 }
 
 # Internal Testing Switch, Predefine Export Folder and Skip Main Window
@@ -76,7 +76,7 @@ Function GPResults{
 	}
 	# Dedicated HTML GPO Report Export
 	try{
-		$Global:GPOExportPathLocation =  $Global:ExportPathLocation + "\GPO-Report.html"
+		$Global:GPOExportPathLocation = $Global:ExportPathLocation + "\GPO-Report.html"
 		gpresult.exe /SCOPE COMPUTER /f /h $Global:GPOExportPathLocation
 		$AllOutput.AppendText("GPO Report Exported to: " + $Global:ExportPathLocation + "\GPO-Report.html")
 		$Global:GPOExportReportStatus = $true
@@ -159,7 +159,7 @@ $CreditsButton = {
 $UserInputBrowse = {
 	$MainForm.MainUserInput.Clear()
 	$UserBrowsePopup = $MainForm.MainExportFolderBrowse.ShowDialog()
-	if($UserBrowsePopup -eq "OK"){    
+	if($UserBrowsePopup -eq "OK"){
 		$Global:FilePathExportPopup = $MainExportFolderBrowse.SelectedPath
 		$MainForm.MainUserInput.Clear()
 		$MainForm.MainFormOutput.Clear()
@@ -589,7 +589,7 @@ $AllScriptList_ListUpdate = {
 			}
 		}
 		# Create HTML
-        $CovertedTable = $ResultTable | ForEach {[PSCustomObject]$_}
+		$CovertedTable = $ResultTable | ForEach {[PSCustomObject]$_}
 		$CovertedTable | Sort-Object Username,Result
 		$Global:Req2UserCredentialResult = $CovertedTable | ConvertTo-Html -As Table -Fragment -Property Username,Password,Result -PreContent "<h2>2.1 - Test Vendor Default Credentials in AD</h2>"
 		$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Unsuccesful</td>','<td class="InstalledStatus">Unsuccesful</td>'
@@ -626,7 +626,7 @@ $AllScriptList_ListUpdate = {
 				$FeatureCounter++
 			}
 			if($FeatureCounter -ge 1){
-				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Role or Feature Installed. [FAILED]`nDetected $FeatureCounter Features or Roles.`n"
+				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Role or Feature Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`n"
 				if($EverythingToggle -eq $false){
 					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
@@ -663,7 +663,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
-			$Req2ProcessListRTB = $Req2ProcessList  | Format-Table -Autosize | Out-String -Width 1200
+			$Req2ProcessListRTB = $Req2ProcessList | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req2ProcessListHTML = Get-Process | ConvertTo-Html -As Table -Property Name,Id,ProductVersion,Company,StartTime,Path -Fragment -PreContent "<h2>2.2.2 - List of Running Processes</h2>" 
 		# Edge Case
 		}catch{
@@ -992,7 +992,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
-		$Req2EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html","Requirement Two Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)    
+		$Req2EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html","Requirement Two Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req2ExportReport = {
@@ -1067,7 +1067,7 @@ $AllScriptList_ListUpdate = {
 			$Req4LocalMachineCertsRTB = $Req4LocalMachineCerts | Format-List | Out-String
 			$Req4CurrentUserCertsRTB = $Req4CurrentUserCerts | Format-List | Out-String
 			$Global:Req4LocalMachineCertsHTML = "<h2>4.1 - List of Keys and Certificates</h2><h3>Local Machine Certificates</h3><pre>" + $Req4LocalMachineCertsRTB + "</pre>"
-			$Global:Req4CurrentUserCertsHTML =  "<h3>Current User Certificates</h3><pre>" + $Req4CurrentUserCertsRTB + "</pre>"
+			$Global:Req4CurrentUserCertsHTML = "<h3>Current User Certificates</h3><pre>" + $Req4CurrentUserCertsRTB + "</pre>"
 		# Edge Case
 		}catch{
 			$Req4LocalMachineCertsRTB = "Something went wrong, Could not get keys or certs."
@@ -1308,7 +1308,7 @@ $AllScriptList_ListUpdate = {
 	Function Req7FolderInput {
 		$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
-		if($FilePopupTmp -eq "OK"){    
+		if($FilePopupTmp -eq "OK"){
 			$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
 		}
 	}
@@ -1646,7 +1646,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$ADUserListDisabled = Get-ADUser -Filter 'Enabled -eq $false' | Select-Object GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName |Sort-Object GivenName,Surname
-			$ADUserListDisabledRTB = $ADUserListDisabled  | Format-Table -Autosize | Out-String -Width 1200
+			$ADUserListDisabledRTB = $ADUserListDisabled | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req8ADUserListDisabledHTML = $ADUserListDisabled | ConvertTo-Html -As Table -Property GivenName,Surname,Enabled,SamAccountName,UserPrincipalName,DistinguishedName -Fragment -PreContent "<h2>8.1.3 - Dump of All Disabled AD Users</h2>"
 			$Global:Req8ADUserListDisabledHTML = $Global:Req8ADUserListDisabledHTML -replace '<td>False</td>','<td class="DisabledStatus">False</td>'
 			# Data Output
@@ -1834,7 +1834,7 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering
 		try{
 			$ADUserPasswordLastChangeList = Get-aduser -filter * -properties PasswordLastSet, PasswordNeverExpires | Select-Object Name, SamAccountName, DistinguishedName, PasswordLastSet, PasswordNeverExpires | Sort-Object PasswordLastSet,PasswordNeverExpires
-			$ADUserPasswordLastChangeListRTB = $ADUserPasswordLastChangeList  | Format-Table -Autosize | Out-String -Width 1200
+			$ADUserPasswordLastChangeListRTB = $ADUserPasswordLastChangeList | Format-Table -Autosize | Out-String -Width 1200
 			$Global:ADUserPasswordLastChangeListHTML = $ADUserPasswordLastChangeList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>8.2.4 - Dump of All AD Users and Their Last Password Change</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
@@ -2240,7 +2240,7 @@ $AllScriptList_ListUpdate = {
 			$ADDomainAdminList = Get-ADGroupMember -Identity "Domain Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
 			$ADEnterpriseAdminList = Get-ADGroupMember -Identity "Enterprise Admins" -Recursive | %{Get-ADUser -Identity $_.distinguishedName} | Select Name, Enabled
 			$ADDomainAdminListRTB = $ADDomainAdminList | Format-Table -Autosize | Out-String -Width 1200
-			$ADEnterpriseAdminListRTB = $ADEnterpriseAdminList |  Format-Table -Autosize | Out-String -Width 1200
+			$ADEnterpriseAdminListRTB = $ADEnterpriseAdminList | Format-Table -Autosize | Out-String -Width 1200
 			$Global:Req10ADDomainAdminListHTML = $ADDomainAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h2>10.5 - Check Audit Log Permissions</h2><p>Listed below are the Domain & Enterprise Administrators. Check GPO Dump for more infomation.</p><h3>Domain Administrators</h3>"
 			$Global:Req10ADEnterpriseAdminListHTML = $ADEnterpriseAdminList | ConvertTo-Html -As Table -Property Name, Enabled -Fragment -PreContent "<h3>Enterprise Administrators</h3>"
 			# Data Output
@@ -2253,7 +2253,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Edge Case (Non-DC)
 		}catch{
-			$Global:Req10ADDomainAdminListHTML =  "<h2>10.5 - Check Audit Log Permissions</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
+			$Global:Req10ADDomainAdminListHTML = "<h2>10.5 - Check Audit Log Permissions</h2><h3>Domain Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			$Global:Req10ADEnterpriseAdminListHTML = "<h3>Enterprise Administrators</h3><p>Unable to contact Active Directory, Ensure the script is run on a DC.</p>"
 			if($EverythingToggle -eq $false){
 				$Req10Output.AppendText("Unable to contact Active Directory, Ensure the script is run on a DC.")
