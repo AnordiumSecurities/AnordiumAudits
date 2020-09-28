@@ -13,11 +13,24 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 # Internal Testing Switch, Predefine Export Folder and Skip Main Window
-$TestingSwitch = $true
-# Check MainForm.ps1 for bypass code
+#$TestingSwitch = $true
+$TestingSwitch = $false
+
 if($TestingSwitch -eq $true){
 	$UserInputPath = "Z:\Release"
 	Write-Host "Debug Mode Enabled, Exporting to $UserInputPath"
+}
+
+# Test Connection
+try{
+	$CurrentDomain = Get-ADDomainController -ErrorAction Stop
+	Write-Host "Current DC:"$CurrentDomain.Name
+	Write-Host "Domain:"$CurrentDomain.Domain
+	Write-Host "Forest:"$CurrentDomain.Forest
+	Write-Host ""
+	$Global:TestDCConnection = $true
+}catch{
+	$Global:TestDCConnection = $false
 }
 
 # Check for Dot Net Framework Version and Print to Console
@@ -528,10 +541,14 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
 			$Req2Output.AppendText($Global:Req2VendorPassResult)
 			$Req2Output.AppendText($Global:Req2FeatureResult)
+			$Req2Output.AppendText($Global:RunningProcessesResult)
+			$Req2Output.AppendText($Global:RunningServicesResult)
 		}else{
 			$AllOutput.AppendText("Requirement Two Compliance Check.`n`n")
 			$AllOutput.AppendText($Global:Req2VendorPassResult)
 			$AllOutput.AppendText($Global:Req2FeatureResult)
+			$AllOutput.AppendText($Global:RunningProcessesResult)
+			$AllOutput.AppendText($Global:RunningServicesResult)
 		}
 	}
 
@@ -549,51 +566,61 @@ $AllScriptList_ListUpdate = {
 		$MaxLength = [Math]::Max($UsernameToTest.Length, $PasswordToTest.Length)
 		$ResultTable = @()
 		# Data Gathering
-		for ($loop_index = 0; $loop_index -lt $MaxLength; $loop_index++){ 
-			$DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('Domain')
-			$DSResult = $DS.ValidateCredentials($UsernameToTest[$loop_index],$PasswordToTest[$loop_index])
-			# Check Boolean Switch, Check if Password is vaild
+		if($Global:TestDCConnection -eq $true){
+			for ($loop_index = 0; $loop_index -lt $MaxLength; $loop_index++){ 
+				$DS = New-Object System.DirectoryServices.AccountManagement.PrincipalContext('Domain')
+				$DSResult = $DS.ValidateCredentials($UsernameToTest[$loop_index],$PasswordToTest[$loop_index])
+				# Check Boolean Switch, Check if Password is vaild
+				if($DSResult -eq $true){
+					$ResultTable += @{Username=$UsernameToTest[$loop_index];Password=$PasswordToTest[$loop_index];Result="Succesful"}
+					# Data Output
+					if($EverythingToggle -eq $false){
+						$Req2Output.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was SUCCESSFUL. PLEASE CHANGE OR DISABLE ACCOUNT`n`n")
+					}else{
+						$AllOutput.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was SUCCESSFUL. PLEASE CHANGE OR DISABLE ACCOUNT`n`n")
+					}
+				# Check Boolean Switch, Password is not vaild.
+				}else{
+					$ResultTable += @{Username=$UsernameToTest[$loop_index];Password=$PasswordToTest[$loop_index];Result="Unsuccesful"}
+					# Data Output
+					if($EverythingToggle -eq $false){
+						$Req2Output.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was UNSUCCESSFUL.`n`n")
+					}else{
+						$AllOutput.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was UNSUCCESSFUL.`n`n")
+					}
+				}
+			}
+			# Compliance Result
 			if($DSResult -eq $true){
-				$ResultTable += @{Username=$UsernameToTest[$loop_index];Password=$PasswordToTest[$loop_index];Result="Succesful"}
-				# Data Output
+				$Global:Req2VendorPassResult = "2.1 - Default Credentials Have Access in The Network. [FAILED]`n"
 				if($EverythingToggle -eq $false){
-					$Req2Output.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was SUCCESSFUL. PLEASE CHANGE OR DISABLE ACCOUNT`n`n")
+					$Req2Output.AppendText("2.1 - Default Credentials Have Access in The Network. [FAILED]`n")
 				}else{
-					$AllOutput.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was SUCCESSFUL. PLEASE CHANGE OR DISABLE ACCOUNT`n`n")
+					$AllOutput.AppendText("2.1 - Default Credentials Have Access in The Network. [FAILED]`n")
 				}
-			# Check Boolean Switch, Password is not vaild.
 			}else{
-				$ResultTable += @{Username=$UsernameToTest[$loop_index];Password=$PasswordToTest[$loop_index];Result="Unsuccesful"}
-				# Data Output
+				$Global:Req2VendorPassResult = "2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n"
 				if($EverythingToggle -eq $false){
-					$Req2Output.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was UNSUCCESSFUL.`n`n")
+					$Req2Output.AppendText("2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n")
 				}else{
-					$AllOutput.AppendText("Tested Username: '" + $UsernameToTest[$loop_index] + "' with Password: '" + $PasswordToTest[$loop_index] + "' - Login was UNSUCCESSFUL.`n`n")
+					$AllOutput.AppendText("2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n")
 				}
 			}
-		}
-		# Compliance Result
-		if($DSResult -eq $true){
-			$Global:Req2VendorPassResult = "2.1 - Default Credentials Have Access in The Network. [FAILED]`n"
-			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("2.1 - Default Credentials Have Access in The Network. [FAILED]`n")
-			}else{
-				$AllOutput.AppendText("2.1 - Default Credentials Have Access in The Network. [FAILED]`n")
-			}
+			# Create HTML
+			$CovertedTable = $ResultTable | ForEach {[PSCustomObject]$_}
+			$CovertedTable | Sort-Object Username,Result
+			$Global:Req2UserCredentialResult = $CovertedTable | ConvertTo-Html -As Table -Fragment -Property Username,Password,Result -PreContent "<h2>2.1 - Test Vendor Default Credentials in AD</h2>"
+			$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Unsuccesful</td>','<td class="InstalledStatus">Unsuccesful</td>'
+			$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Succesful</td>','<td class="RemovedStatus">Succesful</td>'
+		# Edge Case No Connection to Domain
 		}else{
-			$Global:Req2VendorPassResult = "2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n"
+			$Global:Req2VendorPassResult = "2.1 - Unable to Test Credentials in The Network. Not Connected to Domain. [ERROR]`n"
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n")
+				$Req2Output.AppendText("Unable to Test Default Accounts, Not Connected to Domain`n")
 			}else{
-				$AllOutput.AppendText("2.1 - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant. [PASS]`n")
+				$AllOutput.AppendText("Unable to Test Default Accounts, Not Connected to Domain`n")
 			}
 		}
-		# Create HTML
-		$CovertedTable = $ResultTable | ForEach {[PSCustomObject]$_}
-		$CovertedTable | Sort-Object Username,Result
-		$Global:Req2UserCredentialResult = $CovertedTable | ConvertTo-Html -As Table -Fragment -Property Username,Password,Result -PreContent "<h2>2.1 - Test Vendor Default Credentials in AD</h2>"
-		$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Unsuccesful</td>','<td class="InstalledStatus">Unsuccesful</td>'
-		$Global:Req2UserCredentialResult = $Global:Req2UserCredentialResult -replace '<td>Succesful</td>','<td class="RemovedStatus">Succesful</td>'
 	}
 
 	# 2.2.1 Grab Installed Roles and Features
@@ -625,13 +652,13 @@ $AllScriptList_ListUpdate = {
 			foreach($FeatureRole in $Req2ListOfAllFeatures){
 				$FeatureCounter++
 			}
-			if($FeatureCounter -ge 1){
-				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Role or Feature Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`n"
+			if($FeatureCounter -gt 1){
+				$Global:Req2FeatureResult = "2.2.1 - Detected More Than One Role or Feature Installed. [FAILED]`n2.2.1 - Detected $FeatureCounter Role(s) or Feature(s). [INFOMATION]`n"
 				if($EverythingToggle -eq $false){
-					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
+					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
 				}else{
-					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Roles or Features.`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
+					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
 				}
 			}else{
@@ -649,56 +676,95 @@ $AllScriptList_ListUpdate = {
 		}catch{
 			# Data Output
 			$Global:Req2FeatureListHTML = "<h2>2.2.1 - List of Installed Windows Roles and Features</h2><p>Unable to Grab Installed Roles or Features.</p>"
+			$Global:Req2FeatureResult= "2.2.1 - List of Installed Windows Roles and Features`nUnable to Grab Installed Roles or Features.`n"
 			$Req2FeatureList = "Unable to Grab Installed Features."
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("Unable to Grab Installed Roles or Features.")
+				$Req2Output.AppendText("`nUnable to Grab Installed Roles or Features.")
 			}else{
-				$AllOutput.AppendText("Unable to Grab Installed Roles or Features.")
+				$AllOutput.AppendText("`nUnable to Grab Installed Roles or Features.")
 			}	
 		}
 	}
 
 	# 2.2.2 - List of Runnning Processes
 	Function Req2RunningProcesses{
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("2.2.2 - List of Running Processes:`n")
+		}else{
+			$AllOutput.AppendText("2.2.2 - List of Running Processes:`n")
+		}
 		# Data Gathering
 		try{
 			$Req2ProcessList = Get-Process | Select-Object name, Path | Sort-Object name
 			$Req2ProcessListRTB = $Req2ProcessList | Format-Table -Autosize | Out-String -Width 1200
+			# HTML Report
 			$Global:Req2ProcessListHTML = Get-Process | ConvertTo-Html -As Table -Property Name,Id,ProductVersion,Company,StartTime,Path -Fragment -PreContent "<h2>2.2.2 - List of Running Processes</h2>" 
+			# Count Processes
+			$ProcessesCounter = 0
+			foreach($Process in $Req2ProcessList){
+				$ProcessesCounter++
+			}
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText($Req2ProcessListRTB)
+				$Req2Output.AppendText("`n2.2.2 - Detected $ProcessesCounter Running Processes.`n")
+			}else{
+				$AllOutput.AppendText($Req2ProcessListRTB)
+				$AllOutput.AppendText("`n2.2.2 - Detected $ProcessesCounter Running Processes.`n")
+			}
+			# Total Processes
+			$Global:RunningProcessesResult = "2.2.2 - Detected $ProcessesCounter Running Processes. [INFOMATION]`n"	
 		# Edge Case
 		}catch{
-			$Req2ProcessListRTB = "Unable to List Running Processes."
 			$Global:Req2ProcessListHTML = "<h2>2.2.2 - List of Running Processes</h2><p>Unable to List Running Processes.<p>"
-		}
-		# Data Output
-		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("2.2.2 - List of Running Processes:`n")
-			$Req2Output.AppendText($Req2ProcessListRTB)
-		}else{
-			$AllOutput.AppendText("2.2.2 - List of Running Processes:`n")
-			$AllOutput.AppendText($Req2ProcessListRTB)
+			$Global:RunningProcessesResult = "`n2.2.2 - List of Running Processes`nUnable to List Running Processes."
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`nUnable to List Running Processes.")
+			}else{
+				$AllOutput.AppendText("`nUnable to List Running Processes.")
+			}
 		}
 	}
 
 	# 2.2.2 - List of Running Services
 	Function Req2RunningServices{
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("2.2.2 - List of Running Services:`n")
+		}else{
+			$AllOutput.AppendText("2.2.2 - List of Running Services:`n")
+		}
 		# Data Gathering
 		try{
 			$Req2SvcListRunning = Get-Service | Where-Object Status -eq "Running" | Sort-Object Name 
 			$Req2SvcListRunningRTB = $Req2SvcListRunning | Format-Table -Autosize | Out-String -Width 1200
+			# HTML Report
 			$Global:Req2SvcListRunningHTML = $Req2SvcListRunning | ConvertTo-Html -As Table -Property Status,Name,DisplayName -Fragment -PreContent "<h2>2.2.2 - List of Running Services</h2>"
+			# Count Services
+			$ServicesCounter = 0
+			foreach($Service in $Req2SvcListRunning){
+				$ServicesCounter++
+			}
+			# Total Processes
+			$Global:RunningServicesResult = "2.2.2 - Detected $ServicesCounter Running Services. [INFOMATION]`n"
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText($Req2SvcListRunningRTB)
+				$Req2Output.AppendText("`n2.2.2 - Detected $ServicesCounter Running Services.`n")
+			}else{
+				$AllOutput.AppendText($Req2SvcListRunningRTB)
+				$AllOutput.AppendText("`n2.2.2 - Detected $ServicesCounter Running Services.`n")
+			}
 		# Edge Case
 		}catch{
-			$Req2SvcListRunningRTB = "Unable to List Running Serivces."
 			$Global:Req2SvcListRunningHTML = "<h2>2.2.2 - List of Running Services</h2><p>Unable to List Running Serivces.</p>"
-		}
-		# Data Output
-		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("2.2.2 - List of Running Services:`n")
-			$Req2Output.AppendText($Req2SvcListRunningRTB)
-		}else{
-			$AllOutput.AppendText("2.2.2 - List of Running Services:`n")
-			$AllOutput.AppendText($Req2SvcListRunningRTB)
+			$Global:RunningServicesResult = "`n2.2.2 - List of Running Services`nUnable to List Running Serivces."
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("Unable to List Running Serivces.`n")
+			}else{
+				$AllOutput.AppendText("Unable to List Running Serivces.`n")
+			}
 		}
 	}
 
