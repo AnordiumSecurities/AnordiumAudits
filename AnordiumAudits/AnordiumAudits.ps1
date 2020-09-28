@@ -349,7 +349,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -500,38 +500,29 @@ $AllScriptList_ListUpdate = {
 	Function Req2ComplianceChecker {
 		# Run All Functions To Gather Data
 			$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
-			$Req2OutputLabel.Text = "Output: Progressing... 10%"
+			$Req2OutputLabel.Text = "Output: Progressing... 1%"
 			$Req2OutputLabel.Refresh()
 			Req2TestDefaultAccounts
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
 			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 20%"
+			$Req2OutputLabel.Text = "Output: Progressing... 3%"
 			$Req2OutputLabel.Refresh()
 			Req2RunningProcesses
 			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 40%"
+			$Req2OutputLabel.Text = "Output: Progressing... 5%"
 			$Req2OutputLabel.Refresh()
 			Req2RunningServices
 			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 50%"
-			$Req2OutputLabel.Refresh()
-			Req2ListeningServices
-			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 60%"
+			$Req2OutputLabel.Text = "Output: Progressing... 7%"
 			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledSoftware
 			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 80%"
-			$Req2OutputLabel.Refresh()
 			Req2GrabDrivesAndShares
-			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 90%"
+			$Req2OutputLabel.Text = "Output: Progressing... 9%"
 			$Req2OutputLabel.Refresh()
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
-			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Refresh()
-			Req2MapNeighboringDevices
 			$Req2OutputLabel.Text = "Output:"
 			$Req2OutputLabel.Refresh()
 		# Clear Output and Append Results
@@ -543,12 +534,22 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:Req2FeatureResult)
 			$Req2Output.AppendText($Global:RunningProcessesResult)
 			$Req2Output.AppendText($Global:RunningServicesResult)
+			$Req2Output.AppendText($Global:32BitAppsResult)
+			$Req2Output.AppendText($Global:64BitAppsResult)
+			$Req2Output.AppendText($Global:LocalDrivesResult)
+			$Req2Output.AppendText($Global:SMBSharesResult)
+			$Req2Output.AppendText($Global:ADComputersResult)
 		}else{
 			$AllOutput.AppendText("Requirement Two Compliance Check.`n`n")
 			$AllOutput.AppendText($Global:Req2VendorPassResult)
 			$AllOutput.AppendText($Global:Req2FeatureResult)
 			$AllOutput.AppendText($Global:RunningProcessesResult)
 			$AllOutput.AppendText($Global:RunningServicesResult)
+			$AllOutput.AppendText($Global:32BitAppsResult)
+			$AllOutput.AppendText($Global:64BitAppsResult)
+			$AllOutput.AppendText($Global:LocalDrivesResult)
+			$AllOutput.AppendText($Global:SMBSharesResult)
+			$AllOutput.AppendText($Global:ADComputersResult)
 		}
 	}
 
@@ -646,7 +647,8 @@ $AllScriptList_ListUpdate = {
 				$AllOutput.AppendText($Req2FeatureList)
 			}		
 			# Check Compliance
-			$Req2ListOfAllFeatures = Get-WindowsFeature | Where-Object {($_.Name -ne "FileAndStorage-Services" -and $_.Name -ne "Storage-Services" -and $_.Name -ne "NET-Framework-45-Feature" -and $_.Name -ne "NET-Framework-45-Core" -and $_.Name -ne "NET-WCF-Services45" -and $_.Name -ne "NET-WCF-TCP-PortSharing45" -and $_.Name -ne "System-DataArchiver" -and $_.Name -ne "Windows-Defender" -and $_.Name -ne "PowerShellRoot" -and $_.Name -ne "PowerShell" -and $_.Name -ne "PowerShell-ISE" -and $_.Name -ne "WoW64-Support" -and $_.Name -ne "XPS-Viewer")} | Where-Object {($_.InstallState -eq "Installed")}
+			# Filter Out Server 2019 Features and Installed Only
+			$Req2ListOfAllFeatures = Get-WindowsFeature | Where-Object {($_.Name -ne "FileAndStorage-Services" -and $_.Name -ne "Storage-Services" -and $_.Name -ne "NET-Framework-45-Features" -and $_.Name -ne "NET-Framework-45-Core" -and $_.Name -ne "NET-WCF-Services45" -and $_.Name -ne "NET-WCF-TCP-PortSharing45" -and $_.Name -ne "System-DataArchiver" -and $_.Name -ne "Windows-Defender" -and $_.Name -ne "PowerShellRoot" -and $_.Name -ne "PowerShell" -and $_.Name -ne "PowerShell-ISE" -and $_.Name -ne "WoW64-Support" -and $_.Name -ne "XPS-Viewer" -and $_.Name -ne "FS-SMB1" -and $_.Name -ne "Windows-Defender-Features" -and $_.Name -ne "Windows-Defender-Gui" -and $_.Name -ne "User-Interfaces-Infra" -and $_.Name -ne "Server-Gui-Mgmt-Infra" -and $_.Name -ne "Server-Gui-Shell")} | Where-Object {($_.InstallState -eq "Installed")}
 			$Req2ListOfAllFeaturesRTB = $Req2ListOfAllFeatures | Format-Table -Autosize | Out-String -Width 1200
 			$FeatureCounter = 0
 			foreach($FeatureRole in $Req2ListOfAllFeatures){
@@ -676,7 +678,7 @@ $AllScriptList_ListUpdate = {
 		}catch{
 			# Data Output
 			$Global:Req2FeatureListHTML = "<h2>2.2.1 - List of Installed Windows Roles and Features</h2><p>Unable to Grab Installed Roles or Features.</p>"
-			$Global:Req2FeatureResult= "2.2.1 - List of Installed Windows Roles and Features`nUnable to Grab Installed Roles or Features.`n"
+			$Global:Req2FeatureResult= "2.2.1 - List of Installed Windows Roles and Features`nUnable to Grab Installed Roles or Features. [ERROR]`n"
 			$Req2FeatureList = "Unable to Grab Installed Features."
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("`nUnable to Grab Installed Roles or Features.")
@@ -718,7 +720,7 @@ $AllScriptList_ListUpdate = {
 		# Edge Case
 		}catch{
 			$Global:Req2ProcessListHTML = "<h2>2.2.2 - List of Running Processes</h2><p>Unable to List Running Processes.<p>"
-			$Global:RunningProcessesResult = "`n2.2.2 - List of Running Processes`nUnable to List Running Processes."
+			$Global:RunningProcessesResult = "`n2.2.2 - List of Running Processes`nUnable to List Running Processes. [ERROR]"
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("`nUnable to List Running Processes.")
 			}else{
@@ -759,7 +761,7 @@ $AllScriptList_ListUpdate = {
 		# Edge Case
 		}catch{
 			$Global:Req2SvcListRunningHTML = "<h2>2.2.2 - List of Running Services</h2><p>Unable to List Running Serivces.</p>"
-			$Global:RunningServicesResult = "`n2.2.2 - List of Running Services`nUnable to List Running Serivces."
+			$Global:RunningServicesResult = "`n2.2.2 - List of Running Services`nUnable to List Running Serivces. [ERROR]"
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("Unable to List Running Serivces.`n")
 			}else{
@@ -799,23 +801,73 @@ $AllScriptList_ListUpdate = {
 
 	# 2.2.2 - Grab Installed Software
 	Function Req2GrabInstalledSoftware{
-		# Data Gathering
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("2.2.2 - Grab Installed Software:`n`n32-Bit Apps:")
+		}else{
+			$AllOutput.AppendText("2.2.2 - Grab Installed Software:`n`n32-Bit Apps:")
+		}
+		# Data Gathering 32 Bit Apps
 		try{
-			$Req2SoftwareList = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
-			$Req2SoftwareListRTB = $Req2SoftwareList | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req2SoftwareListHTML = $Req2SoftwareList | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>2.2.2 - Grab Installed Software</h2>"
+			$Req2SoftwareList32Bit = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
+			$Req2SoftwareList32BitRTB = $Req2SoftwareList32Bit | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SoftwareList32BitHTML = $Req2SoftwareList32Bit | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>2.2.2 - Grab Installed Software</h2><h3>32-Bit Apps</h3>"
+			# 32 Bit Apps Counter
+			$32BitAppsCounter = 0
+			foreach($App in $Req2SoftwareList32Bit){
+				$32BitAppsCounter++
+			}
+			# Total Processes
+			$Global:32BitAppsResult = "2.2.2 - Detected $32BitAppsCounter 32-Bit Apps Installed. [INFOMATION]`n"
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText($Req2SoftwareList32BitRTB)
+				$Req2Output.AppendText("2.2.2 - Detected " + $32BitAppsCounter + " 32-Bit Apps Installed. [INFOMATION]`n")
+			}else{
+				$AllOutput.AppendText($Req2SoftwareList32BitRTB)
+				$AllOutput.AppendText("2.2.2 - Detected " + $32BitAppsCounter + " 32-Bit Apps Installed. [INFOMATION]`n")
+			}
 		# Edge Case
 		}catch{
-			$Req2SoftwareListRTB = "Unable to Grab Installed Software."
-			$Global:Req2SoftwareListHTML = "<h2>2.2.2 - Grab Installed Software</h2><p>Unable to Grab Installed Software.</p>"
+			$Global:Req2SoftwareList32BitHTML = "<h2>2.2.2 - Grab Installed Software</h2><h3>32-Bit Apps</h3><p>Unable to Grab Installed Software.</p>"
+			$Global:32BitAppsResult = "2.2.2 - Unable to Find Any 32-Bit Apps Installed. [ERROR]`n"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("Unable to Grab Installed Software - 32 Bit Apps.")
+			}else{
+				$AllOutput.AppendText("Unable to Grab Installed Software - 32 Bit Apps.")
+			}
 		}
-		# Data Output
-		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("2.2.2 - Grab Installed Software:`n")
-			$Req2Output.AppendText($Req2SoftwareListRTB)
-		}else{
-			$AllOutput.AppendText("2.2.2 - Grab Installed Software:`n")
-			$AllOutput.AppendText($Req2SoftwareListRTB)
+		# Data Gathering 64 Bit Apps
+		try{
+			$Req2SoftwareList64Bit = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
+			$Req2SoftwareList64BitRTB = $Req2SoftwareList64Bit | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SoftwareList64BitHTML = $Req2SoftwareList64Bit | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h3>64-Bit Apps</h3>"
+			# 64 Bit Apps Counter
+			$64BitAppsCounter = 0
+			foreach($App in $Req2SoftwareList64Bit){
+				$64BitAppsCounter++
+			}
+			# Total Processes
+			$Global:64BitAppsResult = "2.2.2 - Detected $64BitAppsCounter 64-Bit Apps Installed. [INFOMATION]`n"
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`n64-Bit Apps:")
+				$Req2Output.AppendText($Req2SoftwareList64BitRTB)
+				$Req2Output.AppendText("2.2.2 - Detected " + $64BitAppsCounter + " 64-Bit Apps Installed. [INFOMATION]`n")
+			}else{
+				$AllOutput.AppendText("`n64-Bit Apps:")
+				$AllOutput.AppendText($Req2SoftwareList64BitRTB)
+				$AllOutput.AppendText("2.2.2 - Detected " + $64BitAppsCounter + " 64-Bit Apps Installed. [INFOMATION]`n")
+			}
+		# Edge Case
+		}catch{
+			$Global:Req2SoftwareList64BitHTML = "<h3>64-Bit Apps</h3><p>Unable to Grab Installed Software.</p>"
+			$Global:64BitAppsResult = "2.2.2 - Unable to Find Any 64-Bit Apps Installed. [ERROR]`n"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("Unable to Grab Installed Software - 64 Bit Apps.")
+			}else{
+				$AllOutput.AppendText("Unable to Grab Installed Software - 64 Bit Apps.")
+			}
 		}
 	}
 
@@ -841,17 +893,35 @@ $AllScriptList_ListUpdate = {
 			$LocalNetworkShares = Get-SmbShare | Select-Object Name,ScopeName,Path,Description,CurrentUsers,Special
 			$LocalNetworkSharesRTB = $LocalNetworkShares | Format-Table | Out-String
 			$Global:Req2LocalNetworkSharesHTML = $LocalNetworkShares | ConvertTo-Html -As Table -Fragment -Property Name,ScopeName,Path,Description,CurrentUsers,Special -PreContent "<h3>Network Shares</h3>"
+			# Counters for Local Drives and Network Drives
+			$LocalDriveCounter = 0
+			foreach($LocalDrive in $LocalDrives){
+				$LocalDriveCounter++
+			}
+			$NetworkDriveCounter  = 0
+			foreach($SMBShare in $LocalNetworkShares){
+				$NetworkDriveCounter++
+			}
+			# Totals
+			$Global:LocalDrivesResult = "2.2.5 - Detected $LocalDriveCounter Local Drives. [INFOMATION]`n"
+			$Global:SMBSharesResult = "2.2.5 - Detected $NetworkDriveCounter Network Shares. [INFOMATION]`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($LocalDrivesRTB + "`nExtra Drive Infomation`n" + $LocalDrivesExtraRTB + "`nNetwork Shares`n" + $LocalNetworkSharesRTB)
+				$Req2Output.AppendText("2.2.5 - Detected " + $LocalDriveCounter + " Local Drives. [INFOMATION]`n")
+				$Req2Output.AppendText("2.2.5 - Detected " + $NetworkDriveCounter + " Network Shares. [INFOMATION]`n")
 			}else{
 				$AllOutput.AppendText($LocalDrivesRTB + "`nExtra Drive Infomation`n" + $LocalDrivesExtraRTB + "`nNetwork Shares`n" + $LocalNetworkSharesRTB)
+				$AllOutput.AppendText("2.2.5 - Detected " + $LocalDriveCounter + " Local Drives. [INFOMATION]`n")
+				$AllOutput.AppendText("2.2.5 - Detected " + $NetworkDriveCounter + " Network Shares. [INFOMATION]`n")
 			}
 		# Edge Case
 		}catch{
 			$Global:Req2LocalDrivesHTML = "<h2>2.2.5 - Grab Local Drives and Network Shares</h2><p>Error - Could Not Grab Local Drives or Network Shares.</p>"
 			$Global:Req2LocalDrivesExtraHTML = ""
 			$Global:Req2LocalNetworkSharesHTML = "<h3>Network Shares</h3><p>Error</p>"
+			$Global:LocalDrivesResult = "2.2.5 - Could Not Grab Local Drives. [ERROR]`n"
+			$Global:SMBSharesResult = "2.2.5 - Could Not Grab Network Shares. [ERROR]`n"
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("Error - Could Not Grab Local Drives or Network Shares.`n")
 			}else{
@@ -875,15 +945,25 @@ $AllScriptList_ListUpdate = {
 			$Global:Req2ADComputerListAll = $ADComputerListAll | ConvertTo-Html -As Table -Property Name, Enabled, DNSHostName, DistinguishedName -Fragment -PreContent "<h2>2.4 - Grab All Computer Objects from Active Directory</h2>"
 			$Global:Req2ADComputerListAll = $Global:Req2ADComputerListAll -replace '<td>True</td>','<td class="EnabledStatus">True</td>'
 			$Global:Req2ADComputerListAll = $Global:Req2ADComputerListAll -replace '<td>False</td>','<td class="DisabledStatus">False</td>'
+			# Counters for Computer Objects
+			$ADComputerCounter = 0
+			foreach($Computer in $ADComputerListAll){
+				$ADComputerCounter++
+			}
+			#Totals
+			$Global:ADComputersResult = "2.4 - Detected $ADComputerCounter Active Directory Computer Objects. [INFOMATION]`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($ADComputerListAllRTB)
+				$Req2Output.AppendText("2.4 - Detected " + $ADComputerCounter + " Active Directory Computer Objects. [INFOMATION]`n")
 			}else{
 				$AllOutput.AppendText($ADComputerListAllRTB)
+				$AllOutput.AppendText("2.4 - Detected " + $ADComputerCounter + " Active Directory Computer Objects. [INFOMATION]`n")
 			}
 		# Edge Case
 		}catch{
 			$Global:Req2ADComputerListAll = "<h2>2.4 - Grab All Computer Objects from Active Directory</h2><p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			$Global:ADComputersResult = "2.4 - Unable to contact Active Directory, Ensure Script is run on a Domain Controller. [ERROR]`n"
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n")
 			}else{
@@ -1054,7 +1134,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareListHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
