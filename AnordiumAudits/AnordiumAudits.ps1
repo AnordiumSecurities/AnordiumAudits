@@ -13,8 +13,8 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 }
 
 # Internal Testing Switch, Predefine Export Folder and Skip Main Window
-#$TestingSwitch = $true
-$TestingSwitch = $false
+$TestingSwitch = $true
+#$TestingSwitch = $false
 
 if($TestingSwitch -eq $true){
 	$UserInputPath = "Z:\Release"
@@ -95,6 +95,16 @@ Function GPResults{
 		$Global:GPOExportReportStatus = $true
 	}catch{
 		$Global:GPOExportReportStatus = $false
+	}
+	# Global System Settings
+	try{
+		$Global:SecExportPathLocation = $Global:ExportPathLocation + "\Secpol.cfg"
+		SecEdit.exe /export /cfg $Global:SecExportPathLocation
+		$Global:SecDump = Get-Content -Path $Global:SecExportPathLocation
+		$AllOutput.AppendText("`nLocal Security Policy Exported to: " + $Global:SecExportPathLocation)
+		$Global:SecPolExportStatus = $true
+	}catch{
+		$Global:SecPolExportStatus = $false
 	}
 }
 
@@ -387,6 +397,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabInstalledSoftware
 			$AllOutput.AppendText($Global:SectionHeader)
+			Req2GrabSysConfig
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabDrivesAndShares
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabADComputers
@@ -517,6 +529,7 @@ $AllScriptList_ListUpdate = {
 			$Req2OutputLabel.Text = "Output: Progressing... 7%"
 			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledSoftware
+			Req2GrabSysConfig
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabDrivesAndShares
 			$Req2OutputLabel.Text = "Output: Progressing... 9%"
@@ -536,6 +549,12 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:RunningServicesResult)
 			$Req2Output.AppendText($Global:32BitAppsResult)
 			$Req2Output.AppendText($Global:64BitAppsResult)
+			$Req2Output.AppendText($Global:Req2RenameAdminResult)
+			$Req2Output.AppendText($Global:Req2RenameGuestResult)
+			$Req2Output.AppendText($Global:Req2DisabledAdminResult)
+			$Req2Output.AppendText($Global:Req2DisabledGuestResult)
+			$Req2Output.AppendText($Global:Req2LimitBlankPassUseResult)
+			$Req2Output.AppendText($Global:Req2LimitRemoveableMediaResult)
 			$Req2Output.AppendText($Global:LocalDrivesResult)
 			$Req2Output.AppendText($Global:SMBSharesResult)
 			$Req2Output.AppendText($Global:ADComputersResult)
@@ -547,6 +566,12 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:RunningServicesResult)
 			$AllOutput.AppendText($Global:32BitAppsResult)
 			$AllOutput.AppendText($Global:64BitAppsResult)
+			$AllOutput.AppendText($Global:Req2RenameAdminResult)
+			$AllOutput.AppendText($Global:Req2RenameGuestResult)
+			$AllOutput.AppendText($Global:Req2DisabledAdminResult)
+			$AllOutput.AppendText($Global:Req2DisabledGuestResult)
+			$AllOutput.AppendText($Global:Req2LimitBlankPassUseResult)
+			$AllOutput.AppendText($Global:Req2LimitRemoveableMediaResult)
 			$AllOutput.AppendText($Global:LocalDrivesResult)
 			$AllOutput.AppendText($Global:SMBSharesResult)
 			$AllOutput.AppendText($Global:ADComputersResult)
@@ -664,13 +689,13 @@ $AllScriptList_ListUpdate = {
 					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
 				}
 			}else{
-				$Global:Req2FeatureResult = "2.2.1 - Only Detected One Role or Feature Installled. PCI-DSS Compliant. [PASS]`n"
+				$Global:Req2FeatureResult = "2.2.1 - Only Detected One Role or Feature Installed. PCI-DSS Compliant. [PASS]`n"
 				# Output
 				if($EverythingToggle -eq $false){
-					$Req2Output.AppendText("2.2.1 - Only Detected One Role or Feature Installled. PCI-DSS Compliant. [PASS]`n")
+					$Req2Output.AppendText("2.2.1 - Only Detected One Role or Feature Installed. PCI-DSS Compliant. [PASS]`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
 				}else{
-					$AllOutput.AppendText("2.2.1 - Only Detected One Role or Feature Installled. PCI-DSS Compliant. [PASS]`n")
+					$AllOutput.AppendText("2.2.1 - Only Detected One Role or Feature Installed. PCI-DSS Compliant. [PASS]`n")
 					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
 				}
 			}
@@ -868,6 +893,88 @@ $AllScriptList_ListUpdate = {
 			}else{
 				$AllOutput.AppendText("Unable to Grab Installed Software - 64 Bit Apps.")
 			}
+		}
+	}
+	# 2.2.4 - Grab System Security Configuration
+	Function Req2GrabSysConfig {
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText("2.2.4 - Grab System Security Configuration:`n")
+		}else{
+			$AllOutput.AppendText("2.2.4 - Grab System Security Configuration`n")
+		}
+		# Data Gathering
+			# Check Administrator Name
+			$RenameLocalAdmin = $Global:SecDump | Select-String -SimpleMatch 'NewAdministratorName' | Out-String
+			$RenameLocalAdminResult = $RenameLocalAdmin.split('"')[1]
+			if($RenameLocalAdminResult -eq "Administrator"){
+				$Global:Req2RenameAdminResult = "2.2.4 - Administrator Account Not Renamed. [FAILED]`n"
+			}else{
+				$Global:Req2RenameAdminResult = "2.2.4 - Administrator Account Renamed to " + $RenameLocalAdminResult + ". PCI-DSS Compliant. [PASS]`n"
+			}
+			# Check Guest Name
+			$RenameLocalGuest = $Global:SecDump | Select-String -SimpleMatch 'NewGuestName' | Out-String
+			$RenameLocalGuestResult = $RenameLocalGuest.split('"')[1]
+			if($RenameLocalGuestResult -eq "Guest"){
+				$Global:Req2RenameGuestResult = "2.2.4 - Guest Account Not Renamed. [FAILED]`n"
+			}else{
+				$Global:Req2RenameGuestResult = "2.2.4 - Guest Account Renamed to " + $RenameLocalGuestResult + ". PCI-DSS Compliant. [PASS]`n"
+			}
+			# Check Administrator Status
+			$AdminAccountStatus = $Global:SecDump | Select-String -SimpleMatch 'EnableAdminAccount' | Out-String
+			$AdminAccountStatusResult = $AdminAccountStatus.split(' ')[2]
+			$AdminAccountStatusResult = $AdminAccountStatusResult -as [int]
+			if($AdminAccountStatusResult -eq "1"){
+				$Global:Req2DisabledAdminResult = "2.2.4 - Admin Account Is Enabled. [FAILED]`n"
+			}else{
+				$Global:Req2DisabledAdminResult = "2.2.4 - Admin Account Is Disabled. PCI-DSS Compliant. [PASS]`n"
+			}
+		    # Check Guest Status
+			$GuestAccountStatus = $Global:SecDump | Select-String -SimpleMatch 'EnableGuestAccount' | Out-String
+			$GuestAccountStatusResult = $GuestAccountStatus.split(' ')[2]
+			$GuestAccountStatusResult = $GuestAccountStatusResult -as [int]
+			if($GuestAccountStatusResult -eq "1"){
+				$Global:Req2DisabledGuestResult = "2.2.4 - Guest Account Is Enabled. [FAILED]`n"
+			}else{
+				$Global:Req2DisabledGuestResult = "2.2.4 - Guest Account Is Disabled. PCI-DSS Compliant. [PASS]`n"
+			}
+		    # Check Limit Blank Password Use
+			$LimitBlankPassUse = $Global:SecDump | Select-String -SimpleMatch 'LimitBlankPass' | Out-String
+			$LimitBlankPassUseResult = $LimitBlankPassUse.split(',')[1]
+			$LimitBlankPassUseResult = $LimitBlankPassUseResult -as [int]
+			if($LimitBlankPassUseResult -eq "1"){
+				$Global:Req2LimitBlankPassUseResult = "2.2.4 - Limit Blank Password Use Is Enabled. PCI-DSS Compliant. [PASS]`n"
+			}else{
+				$Global:Req2LimitBlankPassUseResult = "2.2.4 - Limit Blank Password Use Is Disabled. [FAILED]`n"
+			}
+		    # Check Allowed to format and eject removable media (AllocateDASD)
+			$LimitRemoveableMedia = $Global:SecDump | Select-String -SimpleMatch 'AllocateDASD' | Out-String
+			$LimitRemoveableMediaResult = $LimitRemoveableMedia.split('"')[1]
+			$LimitRemoveableMediaResult = $LimitRemoveableMediaResult -as [int]
+			if(-not([string]::IsNullOrEmpty($LimitRemoveableMedia))){
+				if($LimitRemoveableMediaResult -eq "0"){
+					$Global:Req2LimitRemoveableMediaResult = "2.2.4 - Format and Eject Removable Media Policy Configured to Administrators. PCI-DSS Compliant. [PASS]`n"
+				}else{
+					$Global:Req2LimitRemoveableMediaResult = "2.2.4 - Format and Eject Removable Media Policy Not Configured to Administrator. [FAILED]`n"
+				}
+			}else{
+				$Global:Req2LimitRemoveableMediaResult = "2.2.4 - Format and Eject Removable Media Policy Not Configured. [FAILED]`n"
+			}
+		# Data Output
+		if($EverythingToggle -eq $false){
+			$Req2Output.AppendText($Global:Req2RenameAdminResult)
+			$Req2Output.AppendText($Global:Req2RenameGuestResult)
+			$Req2Output.AppendText($Global:Req2DisabledAdminResult)
+			$Req2Output.AppendText($Global:Req2DisabledGuestResult)
+			$Req2Output.AppendText($Global:Req2LimitBlankPassUseResult)
+			$Req2Output.AppendText($Global:Req2LimitRemoveableMediaResult)
+		}else{
+			$AllOutput.AppendText($Global:Req2RenameAdminResult)
+			$AllOutput.AppendText($Global:Req2RenameGuestResult)
+			$AllOutput.AppendText($Global:Req2DisabledAdminResult)
+			$AllOutput.AppendText($Global:Req2DisabledGuestResult)
+			$AllOutput.AppendText($Global:Req2LimitBlankPassUseResult)
+			$AllOutput.AppendText($Global:Req2LimitRemoveableMediaResult)
 		}
 	}
 
@@ -1072,6 +1179,9 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req2ScriptList.SelectedItem -eq "2.2.2 - Grab Installed Software"){
 			$Req2Output.Clear()
 			Req2GrabInstalledSoftware
+		}elseif($Req2ScriptList.SelectedItem -eq "2.2.4 - Grab System Security Configuration"){
+			$Req2Output.Clear()
+			Req2GrabSysConfig
 		}elseif($Req2ScriptList.SelectedItem -eq "2.2.5 - Grab Local Drives and Network Shares"){
 			$Req2Output.Clear()
 			Req2GrabDrivesAndShares
@@ -1110,6 +1220,7 @@ $AllScriptList_ListUpdate = {
 			$Req2OutputLabel.Text = "Output: Progressing... 60%"
 			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledSoftware
+			Req2GrabSysConfig
 			$Req2Output.AppendText($Global:SectionHeader)
 			$Req2OutputLabel.Text = "Output: Progressing... 80%"
 			$Req2OutputLabel.Refresh()
@@ -1165,6 +1276,8 @@ $AllScriptList_ListUpdate = {
 			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 60%"
 			$Req2OutputLabel.Refresh()
 			Req2GrabInstalledSoftware
+			$Req2Output.AppendText($Global:SectionHeader)
+			Req2GrabSysConfig
 			$Req2Output.AppendText($Global:SectionHeader)
 			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 80%"
 			$Req2OutputLabel.Refresh()
