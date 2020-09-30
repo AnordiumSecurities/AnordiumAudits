@@ -1387,10 +1387,11 @@ $AllScriptList_ListUpdate = {
 				$Global:Req2AllIncludesPoliciesResult = "2.3.10.5 - Let Everyone Permission Apply to Anonymous Users Policy is enabled. [FAILED]`n"
 			}
 
-			# 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only) (Scored) - WIP Broken atm
+			# 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only) (Scored)
 			$AnonymousNamedPipes = $Global:SecDump | Select-String -SimpleMatch 'NullSessionPipes' | Out-String
 			if(-not([string]::IsNullOrEmpty($AnonymousNamedPipes))){
-				$ProcessedNamedPipes = $AnonymousNamedPipes -replace "`n|`r",""
+				$ProcessedNamedPipes = $AnonymousNamedPipes -replace '`n|`r|"| ',""
+				Write-Host $ProcessedNamedPipes
 				$CharCount = ($ProcessedNamedPipes.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
 				$CharArray = $ProcessedNamedPipes.Split(",")
 				#Counters
