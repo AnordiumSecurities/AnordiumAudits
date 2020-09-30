@@ -1389,23 +1389,31 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only) (Scored) - WIP Broken atm
 			$AnonymousNamedPipes = $Global:SecDump | Select-String -SimpleMatch 'NullSessionPipes' | Out-String
-			$AnonymousNamedPipesSplit1 = $AnonymousNamedPipes.split(',')[2]
-			$AnonymousNamedPipesSplit2 = $AnonymousNamedPipes.split(',')[3]
-			$AnonymousNamedPipesSplit3 = $AnonymousNamedPipes.split(',')[4]
-			$ProcessedStringA = $AnonymousNamedPipesSplit1 -replace "`n|`r",""
-			$ProcessedStringB = $AnonymousNamedPipesSplit2 -replace "`n|`r",""
-			$ProcessedStringC = $AnonymousNamedPipesSplit3 -replace "`n|`r",""
-			Write-Host $ProcessedStringA
-			Write-Host $ProcessedStringB
-			Write-Host $ProcessedStringC
-
-
 			if(-not([string]::IsNullOrEmpty($AnonymousNamedPipes))){
-				if(($ProcessedStringA -eq "netlogon") -and ($ProcessedStringB -eq "samr") -and ($ProcessedStringC -eq "lsarpc")){
+				$ProcessedNamedPipes = $AnonymousNamedPipes -replace "`n|`r",""
+				$CharCount = ($ProcessedNamedPipes.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
+				$CharArray = $ProcessedNamedPipes.Split(",")
+				#Counters
+				$PipeCounter = 0
+				$ResultCounter = 0
+				# Check Array
+				foreach($Pipe in $CharArray){
+					if($PipeCounter -gt $CharCount){
+						break
+					}else{
+						if(($CharArray[$PipeCounter] -eq "netlogon") -or ($CharArray[$PipeCounter] -eq "samr") -or ($CharArray[$PipeCounter] -eq "lsarpc")){
+							$ResultCounter++
+						}
+						$PipeCounter++
+					}
+				}
+				# Check Data
+				if($ResultCounter -eq "3"){
 					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6 - Named Pipes that are Accessed Anonymously are Configured Correctly. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6 - Named Pipes that are Accessed Anonymously are Not Configured Correctly. [FAILED]`n"
 				}
+			# Edge Case
 			}else{
 				$Global:Req2AnonymousNamedPipesResult = "2.3.10.6 - Named Pipes that are Accessed Anonymously are Not Defined. [FAILED]`n"
 			}
