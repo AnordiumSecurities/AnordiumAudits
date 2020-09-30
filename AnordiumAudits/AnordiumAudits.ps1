@@ -593,6 +593,7 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:Req2LanManagerAuthLevelResult)
 			$Req2Output.AppendText($Global:Req2LDAPClientSigningReqsResult)
 			$Req2Output.AppendText($Global:Req2NTLMMinClientResults)
+			$Req2Output.AppendText($Global:Req2NTLMMinServerResults)
 			$Req2Output.AppendText($Global:Req2AutoAdminLogonResult)
 			$Req2Output.AppendText($Global:Req2AllowFloppyAccessResult)
 			$Req2Output.AppendText($Global:Req2ShutdownWithoutLoggingInResult)
@@ -655,6 +656,7 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:Req2LanManagerAuthLevelResult)
 			$AllOutput.AppendText($Global:Req2LDAPClientSigningReqsResult)
 			$AllOutput.AppendText($Global:Req2NTLMMinClientResults)
+			$AllOutput.AppendText($Global:Req2NTLMMinServerResults)
 			$AllOutput.AppendText($Global:Req2AutoAdminLogonResult)
 			$AllOutput.AppendText($Global:Req2AllowFloppyAccessResult)
 			$AllOutput.AppendText($Global:Req2ShutdownWithoutLoggingInResult)
@@ -1217,13 +1219,13 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.7.6 (L2) Ensure 'Interactive logon: Number of previous logons to cache (in case domain controller is not available)' is set to '4 or fewer logon(s)' (MS only) (Scored)
 			$PreviousCachedLogons = $Global:SecDump | Select-String -SimpleMatch 'CachedLogonsCount' | Out-String
-			$PreviousCachedLogonsResult = $PreviousCachedLogons.split(',')[1]
+			$PreviousCachedLogonsResult = $PreviousCachedLogons.split('"')[1]
 			$PreviousCachedLogonsResult = $PreviousCachedLogonsResult -as [int]
 			if(-not([string]::IsNullOrEmpty($PreviousCachedLogons))){
 				if($PreviousCachedLogonsResult -le "4"){
-					$Global:Req2PreviousCachedLogonsResult = "2.3.7.6 - Number of Previous Logons to Cache is set to Four or Fewer Logons. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2PreviousCachedLogonsResult = "2.3.7.6 - Number of Previous Logons to Cache is set to Four or Fewer Logons. The current value is set to $PreviousCachedLogonsResult. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2PreviousCachedLogonsResult = "2.3.7.6 - Number of Previous Logons to Cache is set Higher than Four Logons. [FAILED]`n"
+					$Global:Req2PreviousCachedLogonsResult = "2.3.7.6 - Number of Previous Logons to Cache is set Higher than Four Logons. The current value is set to $PreviousCachedLogonsResult. [FAILED]`n"
 				}
 			}else{
 				$Global:Req2PreviousCachedLogonsResult = "2.3.7.6 - Number of Previous Logons to Cache is Not Defined. [FAILED]`n"
@@ -1231,13 +1233,13 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.7.7 (L1) Ensure 'Interactive logon: Prompt user to change password before expiration' is set to 'between 5 and 14 days' (Scored)
 			$PassExpiryWarning = $Global:SecDump | Select-String -SimpleMatch 'PasswordExpiryWarning' | Out-String
-			$PassExpiryWarningResult = $PassExpiryWarning.split('"')[1]
+			$PassExpiryWarningResult = $PassExpiryWarning.split(',')[1]
 			$PassExpiryWarningResult = $PassExpiryWarningResult -as [int]
 			if(-not([string]::IsNullOrEmpty($PassExpiryWarningResult))){
-				if(($PassExpiryWarningResult -le "14") -and ($PassExpiryWarningResult -ge "5")){
-					$Global:Req2PassExpiryWarningResult = "2.3.7.7 - Prompt User to Change Password Before Expiration is set to between 5 and 14 Days. PCI-DSS Compliant. [PASS]`n"
+				if(($PassExpiryWarningResult -le 14) -and ($PassExpiryWarningResult -ge 5)){
+					$Global:Req2PassExpiryWarningResult = "2.3.7.7 - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's currently set to $PassExpiryWarningResult Days. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2PassExpiryWarningResult = "2.3.7.7 - Prompt User to Change Password Before Expiration is set to Greater than 14 Days. [FAILED]`n"
+					$Global:Req2PassExpiryWarningResult = "2.3.7.7 - Prompt User to Change Password Before Expiration is set greater than 14 Days. It's currently set to $PassExpiryWarningResult Days. [FAILED]`n"
 				}
 			}else{
 				$Global:Req2PassExpiryWarningResult = "2.3.7.7 - Prompt User to Change Password Before Expiration is set to less than 5 Days. [FAILED]`n"
@@ -1248,7 +1250,7 @@ $AllScriptList_ListUpdate = {
 			$DCAuthUnlockResult = $DCAuthUnlock.split(',')[1]
 			$DCAuthUnlockResult = $DCAuthUnlockResult -as [int]
 			if(-not([string]::IsNullOrEmpty($DCAuthUnlockResult))){
-				if($LimitRemoveableMediaResult -eq "1"){
+				if($DCAuthUnlockResult -eq "1"){
 					$Global:Req2DCAuthUnlockResult = "2.3.7.8 - Require Domain Controller Authentication to Unlock Workstation is Enabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2DCAuthUnlockResult = "2.3.7.8 - Require Domain Controller Authentication to Unlock Workstation is Disabled. [FAILED]`n"
@@ -1259,13 +1261,13 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.8.1 (L1) Ensure 'Microsoft network client: Digitally sign communications (always)' is set to 'Enabled' (Scored)
 			$DigitallySignAlways = $Global:SecDump | Select-String -SimpleMatch 'LanmanWorkstation\Parameters\RequireSecuritySignature' | Out-String
-			$DigitallySignAlwaysResult = $DigitallySignAlways.split('"')[1]
+			$DigitallySignAlwaysResult = $DigitallySignAlways.split(',')[1]
 			$DigitallySignAlwaysResult = $DigitallySignAlwaysResult -as [int]
 			if(-not([string]::IsNullOrEmpty($DigitallySignAlwaysResult))){
 				if($DigitallySignAlwaysResult -eq "1"){
-					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1 - Microsoft Network Server: Digitally Sign Communication (Always) is Enabled. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1 - Digitally Sign Communication (Always) is Enabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1 - Microsoft Network Server: Digitally Sign Communication(Always) is Disabled. [FAILED]`n"
+					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1 - Digitally Sign Communication (Always) is Disabled. [FAILED]`n"
 				}
 			}else{
 				$Global:Req2DigitallySignAlwaysResult = "2.3.8.1 - Digitally Sign Commuications (Always) is Not Configured. [FAILED]`n"
@@ -1276,7 +1278,7 @@ $AllScriptList_ListUpdate = {
 			$DigitallySignComsServerResult = $DigitallySignComsServer.split(',')[1]
 			$DigitallySignComsServerResult = $DigitallySignComsServerResult -as [int]
 			if(-not([string]::IsNullOrEmpty($DigitallySignComsServerResult))){
-				if($LimitRemoveableMediaResult -eq "1"){
+				if($DigitallySignComsServerResult -eq "1"){
 					$Global:Req2DigitallySignComsServerResult = "2.3.8.2 - Digitally Sign Commuications (if server agrees) is Enabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2DigitallySignComsServerResult = "2.3.8.2 - Digitally Sign Commuications (if server agrees) is Disabled. [FAILED]`n"
@@ -1289,7 +1291,7 @@ $AllScriptList_ListUpdate = {
 			$EnabledPlainText = $Global:SecDump | Select-String -SimpleMatch "EnablePlainTextPassword" | Out-String
 			$EnabledPlainTextResult = $EnabledPlainText.split(',')[1]
 			$EnabledPlainTextResult = $EnabledPlainTextResult -as [int]
-			if($EnabledPlainText -eq "0"){
+			if($EnabledPlainTextResult -eq "0"){
 				$Global:Req2EnablePlainTextResult = "2.3.8.3 - Sending Unencrypted Passwords to SMB server policy is disabled. PCI-DSS Compliant. [PASS]`n"
 			}else{
 				$Global:Req2EnablePlainTextResult = "2.3.8.3 - Sending Unencrypted Passwords to SMB server policy is enabled. [FAILED]`n"
@@ -1299,11 +1301,11 @@ $AllScriptList_ListUpdate = {
 			$SuspendingSessionIdleTime = $Global:SecDump | Select-String -SimpleMatch 'AutoDisconnect' | Out-String
 			$SuspendingSessionIdleTimeResult = $SuspendingSessionIdleTime.split(',')[1]
 			$SuspendingSessionIdleTimeResult = $SuspendingSessionIdleTimeResult -as [int]
-			if(-not([string]::IsNullOrEmpty($SuspendingSessionIdleTime))){
+			if(-not([string]::IsNullOrEmpty($SuspendingSessionIdleTimeResult))){
 				if($SuspendingSessionIdleTimeResult -le "15"){
-					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1 - Amount of Idle Time Required before Suspending Session is set to 15 minutes or less. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1 - Amount of Idle Time Required before Suspending Session is set to 15 minutes or less. Current Value: $SuspendingSessionIdleTimeResult minutes. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1 - Amount of Idle Time Required before Suspending Session is set higher than 15 minutes. [FAILED]`n"
+					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1 - Amount of Idle Time Required before Suspending Session is set higher than 15 minutes. Current Value: $SuspendingSessionIdleTimeResult minutes. [FAILED]`n"
 				}
 			}else{
 				$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1 - Amount of Idle Time Required before Suspending Session is Not Defined. [FAILED]`n"
@@ -1314,7 +1316,7 @@ $AllScriptList_ListUpdate = {
 			$DigitallySignComsClientResult = $DigitallySignComsClient.split(',')[1]
 			$DigitallySignComsClientResult = $DigitallySignComsClientResult -as [int]
 			if(-not([string]::IsNullOrEmpty($DigitallySignComsClientResult))){
-				if($LimitRemoveableMediaResult -eq "1"){
+				if($DigitallySignComsClientResult -eq "1"){
 					$Global:Req2DigitallySignComsClientResult = "2.3.9.3 - Digitally Sign Commuications (if client agrees) is Enabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2DigitallySignComsClientResult = "2.3.9.3 - Digitally Sign Commuications (if client agrees) is Disabled. [FAILED]`n"
@@ -1349,20 +1351,20 @@ $AllScriptList_ListUpdate = {
 			
 			# 2.3.10.2 (L1) Ensure 'Network access: Do not allow anonymous enumeration of SAM accounts' is set to 'Enabled' (MS only) (Scored)
 			$RestrictAnonymousSAM = $Global:SecDump | Select-String -SimpleMatch 'RestrictAnonymousSAM' | Out-String
-			$RestrictAnonymousSAMResult = $RestrictAnonymousSAM.split('"')[1]
+			$RestrictAnonymousSAMResult = $RestrictAnonymousSAM.split(',')[1]
 			$RestrictAnonymousSAMResult = $RestrictAnonymousSAMResult -as [int]
 			if(-not([string]::IsNullOrEmpty($RestrictAnonymousSAMResult))){
 				if($RestrictAnonymousSAMResult -eq "1"){
-					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2 - Network Access: Do not allow Anonymous Enumeration of SAM Accounts is Enabled. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2 - Do not allow Anonymous Enumeration of SAM Accounts is Enabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2 - Network Access: Do not allow Anonymous Enumeration of SAM Accounts is Disabled. [FAILED]`n"
+					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2 - Do not allow Anonymous Enumeration of SAM Accounts is Disabled. [FAILED]`n"
 				}
 			}else{
-				$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2 - Network Access: Do not allow Anonymous Enumeration of SAM Accounts is Not Configured. [FAILED]`n"
+				$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2 - Do not allow Anonymous Enumeration of SAM Accounts is Not Configured. [FAILED]`n"
 			}
 
 			# 2.3.10.3 (L1) Ensure 'Network access: Do not allow anonymous enumeration of SAM accounts and shares' is set to 'Enabled' (MS only) (Scored)
-			$AnonymousEmuerationAccounts = $Global:SecDump | Select-String -SimpleMatch 'RestrictAnonymous' | Out-String
+			$AnonymousEmuerationAccounts = $Global:SecDump | Select-String -SimpleMatch 'RestrictAnonymous=' | Out-String
 			$AnonymousEmuerationAccountsResult = $AnonymousEmuerationAccounts.split(',')[1]
 			$AnonymousEmuerationAccountsResult = $AnonymousEmuerationAccountsResult -as [int]
 			if(-not([string]::IsNullOrEmpty($AnonymousEmuerationAccountsResult))){
@@ -1385,14 +1387,21 @@ $AllScriptList_ListUpdate = {
 				$Global:Req2AllIncludesPoliciesResult = "2.3.10.5 - Let Everyone Permission Apply to Anonymous Users Policy is enabled. [FAILED]`n"
 			}
 
-			# 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only) (Scored)
+			# 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only) (Scored) - WIP Broken atm
 			$AnonymousNamedPipes = $Global:SecDump | Select-String -SimpleMatch 'NullSessionPipes' | Out-String
-			$AnonymousNamedPipesSplit1 = $AnonymousNamedPipes.split(',')[1]
-			$AnonymousNamedPipesSplit2 = $AnonymousNamedPipes.split(',')[2]
-			$AnonymousNamedPipesSplit3 = $AnonymousNamedPipes.split(',')[3]
-			$AnonymousNamedPipesSplit4 = $AnonymousNamedPipes.split(',')[4]
-			if([string]::IsNullOrEmpty($AnonymousNamedPipes)){
-				if(($AnonymousNamedPipesSplit1 -eq "") -and ($AnonymousNamedPipesSplit2 -eq "netlogon") -and ($AnonymousNamedPipesSplit3 -eq "samr") -and ($AnonymousNamedPipesSplit4 -eq "lsarpc")){
+			$AnonymousNamedPipesSplit1 = $AnonymousNamedPipes.split(',')[2]
+			$AnonymousNamedPipesSplit2 = $AnonymousNamedPipes.split(',')[3]
+			$AnonymousNamedPipesSplit3 = $AnonymousNamedPipes.split(',')[4]
+			$ProcessedStringA = $AnonymousNamedPipesSplit1 -replace "`n|`r",""
+			$ProcessedStringB = $AnonymousNamedPipesSplit2 -replace "`n|`r",""
+			$ProcessedStringC = $AnonymousNamedPipesSplit3 -replace "`n|`r",""
+			Write-Host $ProcessedStringA
+			Write-Host $ProcessedStringB
+			Write-Host $ProcessedStringC
+
+
+			if(-not([string]::IsNullOrEmpty($AnonymousNamedPipes))){
+				if(($ProcessedStringA -eq "netlogon") -and ($ProcessedStringB -eq "samr") -and ($ProcessedStringC -eq "lsarpc")){
 					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6 - Named Pipes that are Accessed Anonymously are Configured Correctly. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6 - Named Pipes that are Accessed Anonymously are Not Configured Correctly. [FAILED]`n"
@@ -1403,17 +1412,21 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.10.8 (L1) Configure 'Network access: Remotely accessible registry paths' (Scored)
 			$AllowedExactPaths = $Global:SecDump | Select-String -SimpleMatch 'AllowedExactPaths' | Out-String
-			$AllowedExactPathsResultSplit1 = $AllowedExactPaths.split(',')[1]
-			$AllowedExactPathsResultSplit2 = $AllowedExactPaths.split(',')[2]
-			$AllowedExactPathsResultSplit3 = $AllowedExactPaths.split(',')[3]
-			if(-not([string]::IsNullOrEmpty($AllowedExactPathsResult))){
-				if(($AllowedExactPathsSplit1 -eq "System\CurrentControlSet\Control\ProductOptions") -and ($AllowedExactPathsSplit2 -eq "System\CurrentControlSet\Control\Server Applications") -and ($AllowedExactPathsSplit3 -eq "Software\Microsoft\Windows NT\CurrentVersion")){
-					$Global:Req2AllowedExactPathsResult = "2.3.10.8 - Network Access: Remotely accessible Registry Paths are Matched. PCI-DSS Compliant. [PASS]`n"
+			$AllowedExactPathsResultSplit1 = $AllowedExactPaths.split(',')[1] | Out-String
+			$AllowedExactPathsResultSplit2 = $AllowedExactPaths.split(',')[2] | Out-String
+			$AllowedExactPathsResultSplit3 = $AllowedExactPaths.split(',')[3] | Out-String
+			$ProcessedString1 = $AllowedExactPathsResultSplit1 -replace "`n|`r",""
+			$ProcessedString2 = $AllowedExactPathsResultSplit2 -replace "`n|`r",""
+			$ProcessedString3 = $AllowedExactPathsResultSplit3 -replace "`n|`r",""
+
+			if(-not([string]::IsNullOrEmpty($AllowedExactPaths))){
+				if(($ProcessedString1 -eq "System\CurrentControlSet\Control\ProductOptions") -and ($ProcessedString2 -eq "System\CurrentControlSet\Control\Server Applications") -and ($ProcessedString3 -eq "Software\Microsoft\Windows NT\CurrentVersion")){
+					$Global:Req2AllowedExactPathsResult = "2.3.10.8 - Remotely accessible Registry Paths are Matched. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2AllowedExactPathsResult = "2.3.10.8 -Network Access: Remotely accessible Registry Paths are not Matched. [FAILED]`n"
+					$Global:Req2AllowedExactPathsResult = "2.3.10.8 - Remotely accessible Registry Paths are not Matched. [FAILED]`n"
 				}
 			}else{
-				$Global:Req2AllowedExactPathsResult = "2.3.10.8 - Network Access: Remotely accessible Registry Paths are not defined. [FAILED]`n"
+				$Global:Req2AllowedExactPathsResult = "2.3.10.8 - Remotely accessible Registry Paths are not defined. [FAILED]`n"
 			}
 
 			# 2.3.10.10 (L1) Ensure 'Network access: Restrict anonymous access to Named Pipes and Shares' is set to 'Enabled' (Scored)
@@ -1432,7 +1445,8 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.10.12 (L1) Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None' (Scored)
 			$NullSessionShares = $Global:SecDump | Select-String -SimpleMatch 'NullSessionsShares' | Out-String
-			if(-not([string]::IsNullOrEmpty($NullSessionShares))){
+			$NullSessionSharesResult = $NullSessionShares.split(',')[1]
+			if([string]::IsNullOrEmpty($NullSessionSharesResult)){
 				$Global:Req2NullSessionShares = "2.3.10.12 - Shares that can be accessed Anonymously is empty. PCI-DSS Compliant. [PASS]`n"
 			}else{
 				$Global:Req2NullSessionShares = "2.3.10.12 - Shares that can be accessed Anonymously is defined. [FAILED]`n"
@@ -1453,7 +1467,7 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.11.7 (L1) Ensure 'Network security: LAN Manager authentication level' is set to 'Send NTLMv2 response only. Refuse LM & NTLM' (Scored)
 			$LanManagerAuthLevel = $Global:SecDump | Select-String -SimpleMatch 'LmCompatibilityLevel' | Out-String
-			$LanManagerAuthLevelResult = $LanManagerAuthLevel.split('"')[1]
+			$LanManagerAuthLevelResult = $LanManagerAuthLevel.split(',')[1]
 			$LanManagerAuthLevelResult = $LanManagerAuthLevelResult -as [int]
 			if(-not([string]::IsNullOrEmpty($LanManagerAuthLevel))){
 				if($LanManagerAuthLevelResult -eq "5"){
@@ -1470,7 +1484,7 @@ $AllScriptList_ListUpdate = {
 			$LDAPClientSigningReqsResult = $LDAPClientSigningReqs.split(',')[1]
 			$LDAPClientSigningReqsResult = $LDAPClientSigningReqsResult -as [int]
 			if(-not([string]::IsNullOrEmpty($LDAPClientSigningReqsResult))){
-				if($LDAPClientSigningReqsResult -eq "1"){
+				if($LDAPClientSigningReqsResult -ge "1"){
 					$Global:Req2LDAPClientSigningReqsResult = "2.3.11.8 - LDAP Client Signing Requirements is set to 'Negotidate Signing' or Higher. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2LDAPClientSigningReqsResult = "2.3.11.8 - LDAP Client Signing Requirements is set to 'None'. [FAILED]`n"
@@ -1484,9 +1498,9 @@ $AllScriptList_ListUpdate = {
 			$NTLMMinClientResults = $NTLMMinClient.split(',')[1]
 			$NTLMMinClientResults = $NTLMMinClientResults -as [int]
 			if($NTLMMinClientResults -eq "537395200"){
-				$Global:Req2NTLMMinClientResults = "2.3.11.9 - Minimum Session Security for NTLM SSP based Client is following the recommended settings. PCI-DSS Compliant. [PASS]`n"
+				$Global:Req2NTLMMinClientResults = "2.3.11.9 - Minimum Session Security for NTLM SSP based Clients is following the recommended settings. PCI-DSS Compliant. [PASS]`n"
 			}else{
-				$Global:Req2NTLMMinClientResults = "2.3.11.9 - Minimum Session Security for NTLM SSP based Client does not have both NTLMv2 Sessions Security and 128-bit encryption enabled. [FAILED]`n"
+				$Global:Req2NTLMMinClientResults = "2.3.11.9 - Minimum Session Security for NTLM SSP based Clients does not have both NTLMv2 Sessions Security and 128-bit encryption enabled. [FAILED]`n"
 			}
 
 			# 2.3.11.10 (L1) Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require NTLMv2 session security, Require 128-bit encryption' (Scored)
@@ -1494,9 +1508,9 @@ $AllScriptList_ListUpdate = {
 			$NTLMMinServerResults = $NTLMMinServer.split(',')[1]
 			$NTLMMinServerResults = $NTLMMinServerResults -as [int]
 			if($NTLMMinServerResults -eq "537395200"){
-				$Global:Req2NTLMMinServerResults = "2.3.11.10 - Minimum Session Security for NTLM SSP based Server is following the recommended setting. PCI-DSS Compliant. [PASS]`n"
+				$Global:Req2NTLMMinServerResults = "2.3.11.10 - Minimum Session Security for NTLM SSP based Servers is following the recommended setting. PCI-DSS Compliant. [PASS]`n"
 			}else{
-				$Global:Req2NTLMMinServerResults = "2.3.11.10 - Minimum Sessions Security for NTLM SSP Based Server does not have both NTLMv2 and 128-bit encryption enabled.[FAILED]`n "
+				$Global:Req2NTLMMinServerResults = "2.3.11.10 - Minimum Sessions Security for NTLM SSP Based Servers does not have both NTLMv2 and 128-bit encryption enabled.[FAILED]`n"
 
 			# 2.3.12 Recovery console: Allow automatic administrative logon
 			$AutoAdminLogon = $Global:SecDump | Select-String -SimpleMatch 'SecurityLevel' | Out-String
@@ -1514,13 +1528,13 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.12 Recovery console: Allow floppy copy and access to all drives and all folders "SetCommand"
 			$AllowFloppyAccess = $Global:SecDump | Select-String -SimpleMatch 'SetCommand' | Out-String
-			$AllowFloppyAccessResult = $AllowFloppyAccess.split('"')[1]
+			$AllowFloppyAccessResult = $AllowFloppyAccess.split(',')[1]
 			$AllowFloppyAccessResult = $AllowFloppyAccessResult -as [int]
 			if(-not([string]::IsNullOrEmpty($AllowFloppyAccess))){
 				if($AllowFloppyAccessResult -eq "0"){
-					$Global:Req2AllowFloppyAccessResult = "2.3.12 - Floppy Copy and Access to all Drives and all Folders is Not Allowed. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2AllowFloppyAccessResult = "2.3.12 - Allow Floppy Copy and Access to all Drives and all Folders is Not Allowed. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2AllowFloppyAccessResult = "2.3.12 - Floppy Copy and Access to all Drives and all Folders is Allowed. [FAILED]`n"
+					$Global:Req2AllowFloppyAccessResult = "2.3.12 - Allow Floppy Copy and Access to all Drives and all Folders is Allowed. [FAILED]`n"
 				}
 			}else{
 				$Global:Req2AllowFloppyAccessResult = "2.3.12 - Floppy Copy and Access to all Drives and all Folders is Not Defined. [FAILED]`n"
@@ -1531,7 +1545,7 @@ $AllScriptList_ListUpdate = {
 			$ShutdownWithoutLoggingInResult = $ShutdownWithoutLoggingIn.split(',')[1]
 			$ShutdownWithoutLoggingInResult = $ShutdownWithoutLoggingInResult -as [int]
 			if(-not([string]::IsNullOrEmpty($ShutdownWithoutLoggingInResult))){
-				if($ShutdownWithoutLoggingInResult -eq "1"){
+				if($ShutdownWithoutLoggingInResult -eq "0"){
 					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1 - Allow system to be shut down without having to log on is set to Disabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1 - Allow system to be shut down without having to log on is set to is Enabled. [FAILED]`n"
@@ -1608,6 +1622,7 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:Req2LanManagerAuthLevelResult)
 			$Req2Output.AppendText($Global:Req2LDAPClientSigningReqsResult)
 			$Req2Output.AppendText($Global:Req2NTLMMinClientResults)
+			$Req2Output.AppendText($Global:Req2NTLMMinServerResults)
 			$Req2Output.AppendText($Global:Req2AutoAdminLogonResult)
 			$Req2Output.AppendText($Global:Req2AllowFloppyAccessResult)
 			$Req2Output.AppendText($Global:Req2ShutdownWithoutLoggingInResult)
@@ -1657,6 +1672,7 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:Req2LanManagerAuthLevelResult)
 			$AllOutput.AppendText($Global:Req2LDAPClientSigningReqsResult)
 			$AllOutput.AppendText($Global:Req2NTLMMinClientResults)
+			$AllOutput.AppendText($Global:Req2NTLMMinServerResults)
 			$AllOutput.AppendText($Global:Req2AutoAdminLogonResult)
 			$AllOutput.AppendText($Global:Req2AllowFloppyAccessResult)
 			$AllOutput.AppendText($Global:Req2ShutdownWithoutLoggingInResult)
