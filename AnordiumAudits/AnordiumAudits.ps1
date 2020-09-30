@@ -2,6 +2,15 @@
 # Add Required Dot Net Assemblies
 Add-Type -AssemblyName PresentationFramework, System.Windows.Forms, System.Drawing, System.DirectoryServices.AccountManagement
 
+# Internal Testing Switch, Predefine Export Folder and Skip Main Window
+#$TestingSwitch = $true
+$TestingSwitch = $false
+
+if($TestingSwitch -eq $true){
+	$UserInputPath = "Z:\Release"
+	Write-Host "Debug Mode Enabled, Exporting to $UserInputPath"
+}
+
 #Join Path for CSS Code in the Report, Required for HTML Exporting
 . (Join-Path $PSScriptRoot 'CSSReport.ps1')
 
@@ -10,15 +19,6 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 	# Relaunch as an elevated process:
 	Start-Process powershell.exe "-File",('"{0}"' -f $MyInvocation.MyCommand.Path) -Verb RunAs
 	exit
-}
-
-# Internal Testing Switch, Predefine Export Folder and Skip Main Window
-$TestingSwitch = $true
-#$TestingSwitch = $false
-
-if($TestingSwitch -eq $true){
-	$UserInputPath = "Z:\Release"
-	Write-Host "Debug Mode Enabled, Exporting to $UserInputPath"
 }
 
 # Test Connection
@@ -1035,7 +1035,7 @@ $AllScriptList_ListUpdate = {
 
 			# No CIS Number -AllocateCDRoms
 			$RestrictCDRoms = $Global:SecDump | Select-String -SimpleMatch 'AllocateCDRoms' | Out-String
-			$RestrictCDRomsResult = $RestrictCDRoms.split(',')[1]
+			$RestrictCDRomsResult = $RestrictCDRoms.split('"')[1]
 			$RestrictCDRomsResult = $RestrictCDRomsResult -as [int]
 			if(-not([string]::IsNullOrEmpty($RestrictCDRoms))){
 				if($RestrictCDRomsResult -eq "1"){
@@ -1051,8 +1051,8 @@ $AllScriptList_ListUpdate = {
 			$RestrictFloppies = $Global:SecDump | Select-String -SimpleMatch 'AllocateFloppies' | Out-String
 			$RestrictFloppiesResult = $RestrictFloppies.split('"')[1]
 			$RestrictFloppiesResult = $RestrictFloppiesResult -as [int]
-			if(-not([string]::IsNullOrEmpty($RestrictFloppiesResult))){
-				if($RestrictFloppiesResult -eq "0"){
+			if(-not([string]::IsNullOrEmpty($RestrictFloppies))){
+				if($RestrictFloppiesResult -eq "1"){
 					$Global:Req2RestrictFloppiesResult = "No CIS Number - Floppy Access is restricted to Locally Logged-on User Only. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2RestrictFloppiesResult = "No CIS Number - Floppy Access is not restricted to Locally Logged-on User Only. [FAILED]`n"
@@ -1105,9 +1105,9 @@ $AllScriptList_ListUpdate = {
 			$DigitalEncryptSignResult = $DigitalEncryptSign.split(",")[1]
 			$DigitalEncryptSignResult = $DigitalEncryptSignResult -as [int]
 			if($DigitalEncryptSignResult -eq "1"){
-				$Global:Req2DigitalEncryptSignResult = "2.3.6.1 - Digitally Encrypt or Signing Policy is Enabled. PCI-DSS Compliant. [PASS]`n"
+				$Global:Req2DigitalEncryptSignResult = "2.3.6.1 - Digitally encrypt or Signing Policy is Enabled. PCI-DSS Compliant. [PASS]`n"
 			}else{
-				$Global:Req2DigitalEncryptSignResult = "2.3.6.1 - Digitally Encrypt or Signing Channel Policy is Disabled [FAILED]`n"
+				$Global:Req2DigitalEncryptSignResult = "2.3.6.1 - Digitally encrypt or Signing Channel Policy is Disabled [FAILED]`n"
 			}
 
 			# 2.3.6.2 (L1) Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled' (Scored)
@@ -1136,21 +1136,21 @@ $AllScriptList_ListUpdate = {
 			$DisableMachinePassChangeResult = $DisableMachinePassChangeResult -as [int]
 			if(-not([string]::IsNullOrEmpty($DisableMachinePassChange))){
 				if($DisableMachinePassChangeResult -eq "0"){
-					$Global:Req2DisableMachinePassChangeResult = "2.3.6.4 - Machine Account Password Changes Disabled. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2DisableMachinePassChangeResult = "2.3.6.4 - Machine Account Password Changes is set to Disabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2DisableMachinePassChangeResult = "2.3.6.4 - Machine Account Password Changes Enabled. [FAILED]`n"
+					$Global:Req2DisableMachinePassChangeResult = "2.3.6.4 - Machine Account Password Changes is set to Enabled. [FAILED]`n"
 				}
 			}else{
-				$Global:Req2DisableMachinePassChangeResult = "2.3.6.4 - Machine Account Password Changes Not Defined. [FAILED]`n"
+				$Global:Req2DisableMachinePassChangeResult = "2.3.6.4 - Machine Account Password Changes is not Not Defined. [FAILED]`n"
 			}
 
 			# 2.3.6.5 (L1) Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0' (Scored)
 			$MaxMachinePassAge = $Global:SecDump | Select-String -SimpleMatch 'Parameters\MaximumPasswordAge' | Out-String
-			$MaxMachinePassAgeResult = $MaxMachinePassAge.split('"')[1]
+			$MaxMachinePassAgeResult = $MaxMachinePassAge.split(',')[1]
 			$MaxMachinePassAgeResult = $MaxMachinePassAgeResult -as [int]
 			if(-not([string]::IsNullOrEmpty($MaxMachinePassAgeResult))){
 				if(($MaxMachinePassAgeResult -le "30") -and ($MaxMachinePassAgeResult -ne "0")){
-					$Global:Req2MaxMachinePassAgeResult = "2.3.6.5 - Maximum Machine Account Password Age is set to between 1 and 30 Days. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2MaxMachinePassAgeResult = "2.3.6.5 - Maximum Machine Account Password Age is set to between 1 and 30 Days. The current setting is $MaxMachinePassAgeResult Days. PCI-DSS Compliant. [PASS]`n"
 				}else{
 					$Global:Req2MaxMachinePassAgeResult = "2.3.6.5 - Maximum Machine Account Password Age is set to 0 Days. [FAILED]`n"
 				}
@@ -1178,12 +1178,12 @@ $AllScriptList_ListUpdate = {
 			$LoginCntlAltDelStatusResult = $LoginCntlAltDelStatusResult -as [int]
 			if(-not([string]::IsNullOrEmpty($LoginCntlAltDelStatusResult))){
 				if($LoginCntlAltDelStatusResult -eq "0"){
-					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1 - Interactive logon: Do not require CTRL+ALT+DEL is set to Disabled. PCI-DSS Compliant. [PASS]`n"
+					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1 - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Disabled. PCI-DSS Compliant. [PASS]`n"
 				}else{
-					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1 - Interactive logon: Do not require CTRL+ALT+DEL is set to Enabled. [FAILED]`n"
+					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1 - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Enabled. [FAILED]`n"
 				}
 			}else{
-				$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1 - Interactive logon: Do not require CTRL+ALT+DEL is Not Configured. [FAILED]`n"
+				$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1 - Policy for Do not require CTRL+ALT+DEL on the Login page is Not Configured. [FAILED]`n"
 			}
 
 			# 2.3.7.2 (L1) Ensure 'Interactive logon: Don't display last signed-in' is set to 'Enabled' (Scored)
@@ -1191,25 +1191,26 @@ $AllScriptList_ListUpdate = {
 			$DontDisplayLastUserResult = $DontDisplayLastUser.Split(",")[1]
 			$DontDisplayLastUserResult = $DontDisplayLastUserResult -as [int]
 			if($DontDisplayLastUserResult -eq "1"){
-				$Global:Req2DontDisplayLastUser = "2.3.7.2 - Policy of Not Displaying of Username Last Logged in is Enabled. [PASS]`n"
+				$Global:Req2DontDisplayLastUser = "2.3.7.2 - Policy of Not Displaying the Last Logged-in Username is set to Enabled. PCI-DIS Compliant [PASS]`n"
 			}else{
-				$Global:Req2DontDisplayLastUser = "2.3.7.2 - Policy of Not Displaying of Username Last Logged in is Disabled. [FAILED]`n"
+				$Global:Req2DontDisplayLastUser = "2.3.7.2 - Policy of Not Displaying the Last Logged-in Username is set to Disabled. [FAILED]`n"
 			}
 
 			# 2.3.7.4 (L1) Configure 'Interactive logon: Message text for users attempting to log on' (Scored)
 			$LegalNoticeText = $Global:SecDump | Select-String -SimpleMatch "LegalNoticeText" | Out-String
 			$LegalNoticeTextResult = $LegalNoticeText.split(',')[1]
-			if(-not([string]::IsNullOrEmpty($LegalNoticeTextResult))){
-				$Global:Req2LegalNoticeTextResult = "2.3.7.4 - Message Text for User log in Attempt is defined. PCI-DSS Compliant [PASS]`n"
+			if(-not([string]::IsNullOrWhiteSpace($LegalNoticeTextResult))){
+				$Global:Req2LegalNoticeTextResult = "2.3.7.4 - Message Text for User Log-in Attempt is defined. PCI-DSS Compliant [PASS]`n"
 			}else{
-				$Global:Req2LegalNoticeTextResult = "2.3.7.4 - Message Text for User Log in Attempt is not defined. [FAILED]"
+				$Global:Req2LegalNoticeTextResult = "2.3.7.4 - Message Text for User Log-in Attempt is not defined. [FAILED]`n"
 			}
 
 			# 2.3.7.5 (L1) Configure 'Interactive logon: Message title for users attempting to log on' (Scored)
 			$LegalNoticeCaption = $Global:SecDump | Select-String -SimpleMatch "LegalNoticeCaption" | Out-String
 			$LegalNoticeCaptionResult = $LegalNoticeCaption.split('"')[1]
-			if(-not([string]::IsNullOrEmpty($LegalNoticeCaptionResult))){
-				$Global:Req2LegalNoticeCaptionResult = "2.3.7.5 - Message Title for User Log in Attempt is defined. PCI-DSS Compliant [PASS]`n "
+			$LegalNoticeCaptionResult2 = $LegalNoticeCaptionResult.split('"')[0]
+			if(-not([string]::IsNullOrEmpty($LegalNoticeCaptionResult2))){
+				$Global:Req2LegalNoticeCaptionResult = "2.3.7.5 - Message Title for User Log in Attempt is defined. PCI-DSS Compliant [PASS]`n"
 			}else{
 				$Global:Req2LegalNoticeCaptionResult = "2.3.7.5 - Message Title for User Log in Attempt is not defined. [FAILED]`n"
 			}
