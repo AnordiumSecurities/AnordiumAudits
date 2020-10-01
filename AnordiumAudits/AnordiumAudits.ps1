@@ -1354,9 +1354,9 @@ $AllScriptList_ListUpdate = {
 			$PassExpiryWarningResult = $PassExpiryWarningResult -as [int]
 			if(-not([string]::IsNullOrEmpty($PassExpiryWarningResult))){
 				if(($PassExpiryWarningResult -le 14) -and ($PassExpiryWarningResult -ge 5)){
-					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [PASS] - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's currently set to $PassExpiryWarningResult Days. PCI-DSS Compliant.`n"
+					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [PASS] - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassExpiryWarningResult Days. PCI-DSS Compliant.`n"
 				}else{
-					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [FAILED] - Prompt User to Change Password Before Expiration is set greater than 14 Days. It's currently set to $PassExpiryWarningResult Days.`n"
+					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [FAILED] - Prompt User to Change Password Before Expiration is set greater than 14 Days. It's set to $PassExpiryWarningResult Days.`n"
 				}
 			}else{
 				$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [FAILED] - Prompt User to Change Password Before Expiration is set to less than 5 Days.`n"
@@ -1436,9 +1436,9 @@ $AllScriptList_ListUpdate = {
 			$SuspendingSessionIdleTimeResult = $SuspendingSessionIdleTimeResult -as [int]
 			if(-not([string]::IsNullOrEmpty($SuspendingSessionIdleTimeResult))){
 				if($SuspendingSessionIdleTimeResult -le "15"){
-					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [PASS] - Amount of Idle Time Required before Suspending Session is set to 15 minutes or less. Current Value: $SuspendingSessionIdleTimeResult mins. PCI-DSS Compliant.`n"
+					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [PASS] - Amount of Idle Time Required before Suspending Session is set to 15 mins or less. Current Value: $SuspendingSessionIdleTimeResult mins. PCI-DSS Compliant.`n"
 				}else{
-					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [FAILED] - Amount of Idle Time Required before Suspending Session is set higher than 15 minutes. Current Value: $SuspendingSessionIdleTimeResult mins.`n"
+					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [FAILED] - Amount of Idle Time Required before Suspending Session is set higher than 15 mins. Current Value: $SuspendingSessionIdleTimeResult mins.`n"
 				}
 			}else{
 				$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [FAILED] - Amount of Idle Time Required before Suspending Session is Not Defined.`n"
@@ -1655,6 +1655,7 @@ $AllScriptList_ListUpdate = {
 				$Global:Req2NTLMMinServerResults = "2.3.11.10 - [PASS] - Minimum Session Security for NTLM SSP based Servers is following the recommended setting. PCI-DSS Compliant.`n"
 			}else{
 				$Global:Req2NTLMMinServerResults = "2.3.11.10 - [FAILED] - Minimum Sessions Security for NTLM SSP Based Servers does not have both NTLMv2 and 128-bit encryption enabled.`n"
+			}
 
 			# 2.3.12 Recovery Console
 			# 2.3.12 Recovery console: Allow automatic administrative logon
@@ -1716,7 +1717,7 @@ $AllScriptList_ListUpdate = {
 			$UserKeyProtectionResult = $UserKeyProtection.split(',')[1]
 			$UserKeyProtectionResult = $UserKeyProtectionResult -as [int]
 			if(-not([string]::IsNullOrEmpty($UserKeyProtection))){
-				if($UserKeyProtectionResult -ge "0"){
+				if($UserKeyProtectionResult -eq "2"){
 					$Global:Req2UserKeyProtectionResult = "2.3.14    - [PASS] - Strong Key Protection is Enforced for User Keys stored on this Computer. PCI-DSS Compliant.`n"
 				}else{
 					$Global:Req2UserKeyProtectionResult = "2.3.14    - [FAILED] - Strong Key Protection is Not Enforced for User Keys stored on this Computer.`n"
@@ -1880,7 +1881,6 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:Req2FipsPolicyResults)
 			$AllOutput.AppendText($Global:Req2UserKeyProtectionResult)
 		}
-	}
 	}
 
 	# 2.2.5 - Grab Local Drives and Network Shares
