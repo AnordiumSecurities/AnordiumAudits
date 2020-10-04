@@ -198,7 +198,9 @@ $UserInputBrowse = {
 # Everything Tab # 
 # Initialize Switch & Headers
 $EverythingToggle = $false
+$EverythingExportingSwitch = $false
 $Req2EverythingSwitch = $false
+$Req2ExportingSwitch = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 $Global:ProgramVersionCode = "1.1.0"
@@ -360,7 +362,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2PCIPSSComplianceResultHTML $Global:Req2ComplianceResultHTML $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -377,6 +379,7 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.Clear()
 			$AllOutput.AppendText("Writing Report for the Following`n`nBe patient and do not tab away. This may take A While.")
 			$EverythingToggle = $true
+			$EverythingExportingSwitch = $true
 			$AllOutput.AppendText($Global:SectionBreak)
 		#Call Requirement Two Functions
 			$AllOutput.AppendText("Everything in Requirement Two `n")
@@ -506,6 +509,7 @@ $AllScriptList_ListUpdate = {
 			AllExportReportFunction
 			$AllScriptOutputLabel.Text = "Output:"
 			$AllScriptOutputLabel.Refresh()
+			$EverythingExportingSwitch = $false
 	}
 
 # Requirement Two Tab #
@@ -567,14 +571,15 @@ $AllScriptList_ListUpdate = {
 				$AllScriptOutputLabel.Refresh()
 				$AllOutput.AppendText($Global:SectionHeader)
 				Req2GrabADComputers
-				#$AllOutputLabel.Text = "Output:"
-				#$AllOutputLabel.Refresh()
 				$AuxiliaryForm.AllOutput.Clear()
 			}
 		# Write Header and Results
 		if($EverythingToggle -eq $false){
-			if($Req2EverythingSwitch -eq $true){
+			if(($Req2EverythingSwitch -eq $true) -and ($Req2ExportingSwitch -eq $false)){
 				$Req2Output.AppendText("Everything in Requirement Two `n")
+				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
+			}elseif(($Req2EverythingSwitch -eq $false) -and ($Req2ExportingSwitch -eq $true)){
+				$Req2Output.AppendText("Writing Report for the Following:`n`nEverything in Requirement Two `n")
 				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
 			}else{
 				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
@@ -695,7 +700,12 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:SMBSharesResult)
 			$Req2Output.AppendText($Global:ADComputersResult)
 		}else{
-			$AllOutput.AppendText("Gathering Infomation for Everything.`nBe patient and do not tab away. This may take A While.`n" + $Global:SectionBreak + "Everything in Requirement Two`nRequirement Two Compliance Check.`n`n")
+			if(($EverythingToggle -eq $true) -and ($EverythingExportingSwitch -eq $true)){
+				$AllOutput.AppendText("Writing Report for the Following:`n`nGathering Infomation for Everything.`nBe patient and do not tab away. This may take A While.`n" + $Global:SectionBreak + "Everything in Requirement Two`nRequirement Two Compliance Check.`n`n")
+			}else{
+				$AllOutput.AppendText("Gathering Infomation for Everything.`nBe patient and do not tab away. This may take A While.`n" + $Global:SectionBreak + "Everything in Requirement Two`nRequirement Two Compliance Check.`n`n")
+			}
+
 			$AllOutput.AppendText($Global:Req2VendorPassResult)
 			$AllOutput.AppendText($Global:Req2FeatureResult)
 			$AllOutput.AppendText($Global:RunningProcessesResult)
@@ -2112,6 +2122,10 @@ $AllScriptList_ListUpdate = {
 			}
 
 		# Data Output
+		# HTML Report
+		$Global:Req2PCIPSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResult+ "<br>" + $Global:Req2FeatureResult+ "<br>" + $Global:RunningProcessesResult+ "<br>" + $Global:RunningServicesResult+ "<br>" + $Global:64BitAppsResult+ "<br>" + $Global:LocalDrivesResult+ "<br>" + $Global:SMBSharesResult+ "<br>" + $Global:ADComputersResult+ "</p>"
+		$Global:Req2ComplianceResultHTML = "<h2>2.4 - CIS Compliance Check</h2><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResult + "<br>" + $Global:Req2BlockMSAccountsResult + "<br>" + $Global:Req2DisabledGuestResult + "<br>" + $Global:Req2LimitBlankPassUseResult + "<br>" + $Global:Req2RenameAdminResult + "<br>" + $Global:Req2RenameGuestResult + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResult + "<br>" + $Global:Req2ShutdownAuditSettingsResult + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResult + "<br>" + $Global:Req2RestrictCDRomsResult + "<br>" + $Global:Req2RestrictFloppiesResult + "<br>" + $Global:Req2LimitRemoveableMediaResult + "<br>" + $Global:Req2LimitPrinterDriversResult + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResult + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResult + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResult + "<br>" + $Global:Req2DigitalSecureChannel + "<br>" + $Global:Req2DigitalSecureChannelSigned + "<br>" + $Global:Req2DisableMachinePassChangeResult + "<br>" + $Global:Req2MaxMachinePassAgeResult + "<br>" + $Global:Req2StrongSessionKeyResult + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResult + "<br>" + $Global:Req2DontDisplayLastUser + "<br>" + $Global:Req2MachineAFKLimitResult + "<br>" + $Global:Req2LegalNoticeTextResult + "<br>" + $Global:Req2LegalNoticeCaptionResult + "<br>" + $Global:Req2PreviousCachedLogonsResult + "<br>" + $Global:Req2PassExpiryWarningResult + "<br>" + $Global:Req2DCAuthUnlockResult + "<br>" + $Global:Req2SmartCardRemovalResult + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResult + "<br>" + $Global:Req2DigitallySignComsServerResult + "<br>" + $Global:Req2EnablePlainTextResult + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResult + "<br>" + $Global:Req2DigitallySignComsForcedResult + "<br>" + $Global:Req2DigitallySignComsClientResult + "<br>" + $Global:Req2ForcedClientLogoffResult + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResult + "<br>" + $Global:Req2RestrictAnonymousSAMResult + "<br>" + $Global:Req2AnonymousEmuerationAccountsResult + "<br>" + $Global:Req2StorageOfPasswordsResult + "<br>" + $Global:Req2AllIncludesPoliciesResult + "<br>" + $Global:Req2AnonymousNamedPipesResult + "<br>" + $Global:Req2AllowedExactPathsResult + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResult + "<br>" + $Global:Req2NullSessionShares + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResult + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResult + "<br>" + $Global:Req2LocalSystemNULLSessionResult + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResult + "<br>" + $Global:Req2KerberosEncryptionTypesResult + "<br>" + $Global:Req2LanManagerHashResult + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResult + "<br>" + $Global:Req2LanManagerAuthLevelResult + "<br>" + $Global:Req2LDAPClientSigningReqsResult + "<br>" + $Global:Req2NTLMMinClientResults + "<br>" + $Global:Req2NTLMMinServerResults + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResult + "<br>" + $Global:Req2AllowFloppyAccessResult + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResult + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResults + "<br>" + $Global:Req2UserKeyProtectionResult + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResult + "<br>" + $Global:Req2StrengthenPermissionsResult + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResult + "<br>" + $Global:Req2BehaviorforAdminResult + "<br>" + $Global:Req2BehaviorforStandardResult + "<br>" + $Global:Req2InstallerDetectionResult + "<br>" + $Global:Req2UIAccessSecureLocationsResult + "<br>" + $Global:Req2RunAllAdminsModeResult + "<br>" + $Global:Req2SwitchSecureDesktopResult + "<br>" + $Global:Req2VitualFileLocationsResult + "</p>"
+		# Rich Text Boxes
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("The Following Sub-Sections are directly from the CIS Benchmarks`n")
 			# 2.3.1 - Accounts
@@ -2592,7 +2606,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$Global:ReportRequirementTwoName $ReportComputerName $Global:Req2PCIPSSComplianceResultHTML $Global:Req2ComplianceResultHTML $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
@@ -2601,9 +2615,12 @@ $AllScriptList_ListUpdate = {
 	# onClick Event Handler to Gather Data for Report
 	$Req2ExportReport = {
 			$Req2Output.Clear()
+			$Req2ExportingSwitch = $true
 			$Req2Output.AppendText("Writing Report for the Following`n`n")
 			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
 			$Req2OutputLabel.Refresh()
+			Req2ComplianceChecker
+			$Req2Output.AppendText($Global:SectionHeader)
 			Req2TestDefaultAccounts
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2GrabInstalledFeatures
@@ -2640,6 +2657,7 @@ $AllScriptList_ListUpdate = {
 			Req2ExportReportFunction
 			$Req2OutputLabel.Text = "Output:"
 			$Req2OutputLabel.Refresh()
+			$Req2ExportingSwitch = $false
 	}
 
 # Requirement Four Tab # 
