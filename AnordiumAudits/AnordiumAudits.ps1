@@ -198,6 +198,7 @@ $UserInputBrowse = {
 # Everything Tab # 
 # Initialize Switch & Headers
 $EverythingToggle = $false
+$Req2EverythingSwitch = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 $Global:ProgramVersionCode = "1.1.0"
@@ -511,38 +512,73 @@ $AllScriptList_ListUpdate = {
 	# Requirement Two Compliance Check
 	Function Req2ComplianceChecker {
 		# Run All Functions To Gather Data
-			$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
-			$Req2OutputLabel.Text = "Output: Progressing... 1%"
-			$Req2OutputLabel.Refresh()
-			Req2TestDefaultAccounts
-			$Req2Output.AppendText($Global:SectionHeader)
-			Req2GrabInstalledFeatures
-			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 3%"
-			$Req2OutputLabel.Refresh()
-			Req2RunningProcesses
-			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 5%"
-			$Req2OutputLabel.Refresh()
-			Req2RunningServices
-			$Req2Output.AppendText($Global:SectionHeader)
-			$Req2OutputLabel.Text = "Output: Progressing... 7%"
-			$Req2OutputLabel.Refresh()
-			Req2GrabInstalledSoftware
-			Req2GrabSysConfig
-			$Req2Output.AppendText($Global:SectionHeader)
-			Req2GrabDrivesAndShares
-			$Req2OutputLabel.Text = "Output: Progressing... 9%"
-			$Req2OutputLabel.Refresh()
-			$AllOutput.AppendText($Global:SectionHeader)
-			Req2GrabADComputers
-			$Req2OutputLabel.Text = "Output:"
-			$Req2OutputLabel.Refresh()
-		# Clear Output and Append Results
-		$Req2Output.Clear()
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
+				$Req2OutputLabel.Text = "Output: Progressing... 1%"
+				$Req2OutputLabel.Refresh()
+				Req2TestDefaultAccounts
+				$Req2Output.AppendText($Global:SectionHeader)
+				Req2GrabInstalledFeatures
+				$Req2Output.AppendText($Global:SectionHeader)
+				$Req2OutputLabel.Text = "Output: Progressing... 3%"
+				$Req2OutputLabel.Refresh()
+				Req2RunningProcesses
+				$Req2Output.AppendText($Global:SectionHeader)
+				$Req2OutputLabel.Text = "Output: Progressing... 5%"
+				$Req2OutputLabel.Refresh()
+				Req2RunningServices
+				$Req2Output.AppendText($Global:SectionHeader)
+				$Req2OutputLabel.Text = "Output: Progressing... 7%"
+				$Req2OutputLabel.Refresh()
+				Req2GrabInstalledSoftware
+				Req2GrabSysConfig
+				$Req2Output.AppendText($Global:SectionHeader)
+				Req2GrabDrivesAndShares
+				$Req2OutputLabel.Text = "Output: Progressing... 9%"
+				$Req2OutputLabel.Refresh()
+				$Req2Output.AppendText($Global:SectionHeader)
+				Req2GrabADComputers
+				$Req2OutputLabel.Text = "Output:"
+				$Req2OutputLabel.Refresh()
+				$Req2Output.Clear()
+			}else{
+				$AllOutput.AppendText("Gathering Compliance in Requirement Two `n")
+				$AllScriptOutputLabel.Text = "Output: Progressing... 1%"
+				$AllScriptOutputLabel.Refresh()
+				Req2TestDefaultAccounts
+				$AllOutput.AppendText($Global:SectionHeader)
+				Req2GrabInstalledFeatures
+				$AllOutput.AppendText($Global:SectionHeader)
+				$AllScriptOutputLabel.Text = "Output: Progressing... 3%"
+				$AllScriptOutputLabel.Refresh()
+				Req2RunningProcesses
+				$AllOutput.AppendText($Global:SectionHeader)
+				$AllScriptOutputLabel.Text = "Output: Progressing... 5%"
+				$AllScriptOutputLabel.Refresh()
+				Req2RunningServices
+				$AllOutput.AppendText($Global:SectionHeader)
+				$AllScriptOutputLabel.Text = "Output: Progressing... 7%"
+				$AllScriptOutputLabel.Refresh()
+				Req2GrabInstalledSoftware
+				Req2GrabSysConfig
+				$AllOutput.AppendText($Global:SectionHeader)
+				Req2GrabDrivesAndShares
+				$AllScriptOutputLabel.Text = "Output: Progressing... 9%"
+				$AllScriptOutputLabel.Refresh()
+				$AllOutput.AppendText($Global:SectionHeader)
+				Req2GrabADComputers
+				#$AllOutputLabel.Text = "Output:"
+				#$AllOutputLabel.Refresh()
+				$AuxiliaryForm.AllOutput.Clear()
+			}
 		# Write Header and Results
 		if($EverythingToggle -eq $false){
-			$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
+			if($Req2EverythingSwitch -eq $true){
+				$Req2Output.AppendText("Everything in Requirement Two `n")
+				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
+			}else{
+				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
+			}
 			$Req2Output.AppendText($Global:Req2VendorPassResult)
 			$Req2Output.AppendText($Global:Req2FeatureResult)
 			$Req2Output.AppendText($Global:RunningProcessesResult)
@@ -659,7 +695,7 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:SMBSharesResult)
 			$Req2Output.AppendText($Global:ADComputersResult)
 		}else{
-			$AllOutput.AppendText("Requirement Two Compliance Check.`n`n")
+			$AllOutput.AppendText("Gathering Infomation for Everything.`nBe patient and do not tab away. This may take A While.`n" + $Global:SectionBreak + "Everything in Requirement Two`nRequirement Two Compliance Check.`n`n")
 			$AllOutput.AppendText($Global:Req2VendorPassResult)
 			$AllOutput.AppendText($Global:Req2FeatureResult)
 			$AllOutput.AppendText($Global:RunningProcessesResult)
@@ -885,7 +921,7 @@ $AllScriptList_ListUpdate = {
 					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
 				}else{
-					$Req2Output.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
+					$AllOutput.AppendText("2.2.1 - Detected More Than One Role or Feature or Role Installed. [FAILED]`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$AllOutput.AppendText($Req2ListOfAllFeaturesRTB)
 				}
 			}else{
@@ -2504,9 +2540,10 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.Clear()
 			Req2ComplianceChecker
 		}elseif($Req2ScriptList.SelectedItem -eq "Everything in Requirement Two"){
+			$Req2EverythingSwitch = $true
 			$Req2Output.Clear()
 			$Req2Output.AppendText("Everything in Requirement Two `n")
-			$Req2OutputLabel.Text = "Output: Progressing... 10%"
+			$Req2OutputLabel.Text = "Output: Progressing... 0%"
 			$Req2OutputLabel.Refresh()
 			Req2ComplianceChecker
 			$Req2Output.AppendText($Global:SectionHeader)
@@ -2543,6 +2580,7 @@ $AllScriptList_ListUpdate = {
 			Req2MapNeighboringDevices
 			$Req2OutputLabel.Text = "Output:"
 			$Req2OutputLabel.Refresh()
+			$Req2EverythingSwitch = $false
 		}else{
 			$Req2Output.Clear()
 			$Req2Output.AppendText("You must select an object from the script list.")
