@@ -517,34 +517,53 @@ $AllScriptList_ListUpdate = {
 	Function Req2ComplianceChecker {
 		# Run All Functions To Gather Data
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
-				$Req2OutputLabel.Text = "Output: Progressing... 1%"
-				$Req2OutputLabel.Refresh()
-				Req2TestDefaultAccounts
-				$Req2Output.AppendText($Global:SectionHeader)
-				Req2GrabInstalledFeatures
-				$Req2Output.AppendText($Global:SectionHeader)
-				$Req2OutputLabel.Text = "Output: Progressing... 3%"
-				$Req2OutputLabel.Refresh()
-				Req2RunningProcesses
-				$Req2Output.AppendText($Global:SectionHeader)
-				$Req2OutputLabel.Text = "Output: Progressing... 5%"
-				$Req2OutputLabel.Refresh()
-				Req2RunningServices
-				$Req2Output.AppendText($Global:SectionHeader)
-				$Req2OutputLabel.Text = "Output: Progressing... 7%"
-				$Req2OutputLabel.Refresh()
-				Req2GrabInstalledSoftware
-				Req2GrabSysConfig
-				$Req2Output.AppendText($Global:SectionHeader)
-				Req2GrabDrivesAndShares
-				$Req2OutputLabel.Text = "Output: Progressing... 9%"
-				$Req2OutputLabel.Refresh()
-				$Req2Output.AppendText($Global:SectionHeader)
-				Req2GrabADComputers
-				$Req2OutputLabel.Text = "Output:"
-				$Req2OutputLabel.Refresh()
-				$Req2Output.Clear()
+				if(($Req2EverythingSwitch -eq $false) -and ($Req2ExportingSwitch = $false)){
+					$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
+					$Req2OutputLabel.Text = "Output: Progressing... 1%"
+					$Req2OutputLabel.Refresh()
+					Req2TestDefaultAccounts
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabInstalledFeatures
+					$Req2Output.AppendText($Global:SectionHeader)
+					$Req2OutputLabel.Text = "Output: Progressing... 3%"
+					$Req2OutputLabel.Refresh()
+					Req2RunningProcesses
+					$Req2Output.AppendText($Global:SectionHeader)
+					$Req2OutputLabel.Text = "Output: Progressing... 5%"
+					$Req2OutputLabel.Refresh()
+					Req2RunningServices
+					$Req2Output.AppendText($Global:SectionHeader)
+					$Req2OutputLabel.Text = "Output: Progressing... 7%"
+					$Req2OutputLabel.Refresh()
+					Req2GrabInstalledSoftware
+					Req2GrabSysConfig
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabDrivesAndShares
+					$Req2OutputLabel.Text = "Output: Progressing... 9%"
+					$Req2OutputLabel.Refresh()
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabADComputers
+					$Req2OutputLabel.Text = "Output:"
+					$Req2OutputLabel.Refresh()
+					$Req2Output.Clear()
+				}else{
+					$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
+					Req2TestDefaultAccounts
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabInstalledFeatures
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2RunningProcesses
+					$Req2OutputLabel.Refresh()
+					Req2RunningServices
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabInstalledSoftware
+					Req2GrabSysConfig
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabDrivesAndShares
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabADComputers
+					$Req2Output.Clear()
+				}
 			}else{
 				$AllOutput.AppendText("Gathering Compliance in Requirement Two `n")
 				$AllScriptOutputLabel.Text = "Output: Progressing... 1%"
