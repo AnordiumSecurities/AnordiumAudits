@@ -1340,7 +1340,7 @@ $AllScriptList_ListUpdate = {
 					$Global:Req2DCRefuseMachineAccountChangesResult = "2.3.5.3   - [FAILED] - Refuse Machine Account Password Change Policy is set to Enabled.`n"
 				}
 			}else{
-				$Global:Req2DCRefuseMachineAccountChangesResult = "2.3.5.3   - [FAILED] - Refuse Machine Account Password Change Policy is set Not Defined.`n"
+				$Global:Req2DCRefuseMachineAccountChangesResult = "2.3.5.3   - [FAILED] - Refuse Machine Account Password Change Policy is Not Defined.`n"
 			}
 
 			# 2.3.6 - Domain Member
@@ -1436,7 +1436,7 @@ $AllScriptList_ListUpdate = {
 			$DontDisplayLastUserResult = $DontDisplayLastUser.Split(",")[1]
 			$DontDisplayLastUserResult = $DontDisplayLastUserResult -as [int]
 			if($DontDisplayLastUserResult -eq "1"){
-				$Global:Req2DontDisplayLastUser = "2.3.7.2   - [PASS] - Policy of Not Displaying the Last Logged-in Username is set to Enabled. PCI-DIS Compliant.`n"
+				$Global:Req2DontDisplayLastUser = "2.3.7.2   - [PASS] - Policy of Not Displaying the Last Logged-in Username is set to Enabled. CIS Compliant.`n"
 			}else{
 				$Global:Req2DontDisplayLastUser = "2.3.7.2   - [FAILED] - Policy of Not Displaying the Last Logged-in Username is set to Disabled.`n"
 			}
@@ -1660,7 +1660,7 @@ $AllScriptList_ListUpdate = {
 				if($AnonymousEmuerationAccountsResult -eq "1"){
 					$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [PASS] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Enabled. (MS Only) CIS Compliant.`n"
 				}else{
-					$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [FAILED] - Do not allow Anonymous Enueration of SAM Accounts and Shares. (MS Only)`n"
+					$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [FAILED] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Disabled. (MS Only)`n"
 				}
 			}else{
 				$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [FAILED] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Not Configured. (MS Only)`n"
@@ -1774,7 +1774,7 @@ $AllScriptList_ListUpdate = {
 					$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [FAILED] - Sharing and security model for local accounts is not set to Classic - local users authenticate as themselves.`n"
 				}
 			}else{
-				$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [FAILED] - Sharingg and security model for local accounts is Not Configured.`n"
+				$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [FAILED] - Sharing and security model for local accounts is Not Configured.`n"
 			}
 
 			# 2.3.11 Network Security
@@ -1897,7 +1897,7 @@ $AllScriptList_ListUpdate = {
 			if($NTLMMinClientResults -eq "537395200"){
 				$Global:Req2NTLMMinClientResults = "2.3.11.9  - [PASS] - Minimum Session Security for NTLM SSP based Clients is following the recommended settings. CIS Compliant.`n"
 			}else{
-				$Global:Req2NTLMMinClientResults = "2.3.11.9  - [FAILED] - Minimum Session Security for NTLM SSP based Clients does not have both NTLMv2 Sessions Security and 128-bit encryption enabled.`n"
+				$Global:Req2NTLMMinClientResults = "2.3.11.9  - [FAILED] - Minimum Session Security of NTLMv2 Sessions Security & 128-bit encryption is Not Enabled for NTLM SSP based Clients.`n"
 			}
 
 			# 2.3.11.10 (L1) Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require NTLMv2 session security, Require 128-bit encryption' (Scored)
@@ -1948,10 +1948,10 @@ $AllScriptList_ListUpdate = {
 				if($ShutdownWithoutLoggingInResult -eq "0"){
 					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [PASS] - Allow system to be shut down without having to log on is set to Disabled. CIS Compliant.`n"
 				}else{
-					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [FAILED] - Allow system to be shut down without having to log on is set to is Enabled.`n"
+					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [FAILED] - Allow system to be shut down without having to log on is set to Enabled.`n"
 				}
 			}else{
-				$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [FAILED] - Allow system to be shut down without having to log on is set to is Not Configured.`n"
+				$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [FAILED] - Allow system to be shut down without having to log on is Not Configured.`n"
 			}
 
 			# 2.3.14 System Cryptography
@@ -2101,7 +2101,7 @@ $AllScriptList_ListUpdate = {
 				if($SwitchSecureDesktopResult -eq "1"){
 					$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [PASS] - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Enabled'. CIS Compliant.`n"
 				}else{
-					$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [FAILED] - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Disabled'..`n"
+					$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [FAILED] - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Disabled'.`n"
 				}
 			}else{
 				$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [FAILED] - Switch to the Secure Desktop when Prompting for Elevation' is not Defined.`n"
