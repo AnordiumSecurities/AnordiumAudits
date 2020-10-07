@@ -203,8 +203,8 @@ $Req2EverythingSwitch = $false
 $Req2ExportingSwitch = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
-$Global:ProgramVersionCode = "1.2.0"
-$Global:ProgramVersionDate = "5th October 2020"
+$Global:ProgramVersionCode = "1.2.1"
+$Global:ProgramVersionDate = "7th October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -1203,10 +1203,10 @@ $AllScriptList_ListUpdate = {
 			$EnforcePasswordHistoryResult = $EnforcePasswordHistoryResult -as [int]
 			if(-not([string]::IsNullOrEmpty($EnforcePasswordHistoryResult))){
 				if($EnforcePasswordHistoryResult -ge "24"){
-					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [PASS] - 'Enforce Password History' is set to '24 or more password(s)'. CIS Compliant.`n"
+					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [PASS] - 'Enforce Password History' is set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [FAILED] - 'Enforce Password History' is Not set to '24 or more password(s)'.`n"
+					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [FAILED] - 'Enforce Password History' is Not set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult.`n"
 					$CISFailCounter++
 				}
 			}else{
@@ -1220,10 +1220,10 @@ $AllScriptList_ListUpdate = {
 			$MaximumPasswordAgeResult = $MaximumPasswordAgeResult -as [int]
 			if(-not([string]::IsNullOrEmpty($MaximumPasswordAgeResult))){
 				if(($MaximumPasswordAgeResult -le "60") -and ($MaximumPasswordAgeResult -ne "0")){
-					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [PASS] - 'Maximum Password Age' is set to '60 or fewer days, and not 0'. CIS Compliant.`n"
+					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [PASS] - 'Maximum Password Age' is set to '60 or fewer days, and not 0'. Current Value: $MaximumPasswordAgeResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [FAILED] - 'Maximum Password Age' is Not set to '60 or fewer days, or is set to 0'.`n"
+					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [FAILED] - 'Maximum Password Age' is Not set to '60 or fewer days, or is set to 0'. Current Value: $MaximumPasswordAgeResult.`n"
 					$CISFailCounter++
 				}
 			}else{
@@ -1237,10 +1237,10 @@ $AllScriptList_ListUpdate = {
 			$MinimumPasswordAgeResult = $MinimumPasswordAgeResult -as [int]
 			if(-not([string]::IsNullOrEmpty($MinimumPasswordAgeResult))){
 				if($MinimumPasswordAgeResult -ge "1"){
-					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [PASS] - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant.`n"
+					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [PASS] - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [FAILED] - 'Minimum Password Age' is Not set to '1 or more day(s)'.`n"
+					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [FAILED] - 'Minimum Password Age' is Not set to '1 or more day(s)'. Current Value: $MinimumPasswordAgeResult.`n"
 					$CISFailCounter++
 				}
 			}else{
@@ -1254,10 +1254,10 @@ $AllScriptList_ListUpdate = {
 			$MinimumPasswordLengthResult = $MinimumPasswordLengthResult -as [int]
 			if(-not([string]::IsNullOrEmpty($MinimumPasswordLengthResult))){
 				if($MinimumPasswordLengthResult -ge "14"){
-					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [PASS] - 'Minimum Password Length' is set to '14 or more character(s)'. CIS Compliant.`n"
+					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [PASS] - 'Minimum Password Length' is set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [FAILED] - 'Minimum Password Length' is Not set to '14 or more character(s)'.`n"
+					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [FAILED] - 'Minimum Password Length' is Not set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult.`n"
 					$CISFailCounter++
 				}
 			}else{
@@ -1499,7 +1499,7 @@ $AllScriptList_ListUpdate = {
 			# 2.3.5 Domain controller
 			# 2.3.5.1 (L1) Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled' (DC only) (Scored)
 			$ServerOpsScheduleTasks = $Global:SecDump | Select-String -SimpleMatch 'SubmitControl' | Out-String
-			$ServerOpsScheduleTasksResult = $ServerOpsScheduleTasks.split('"')[1]
+			$ServerOpsScheduleTasksResult = $ServerOpsScheduleTasks.split(',')[1]
 			$ServerOpsScheduleTasksResult = $ServerOpsScheduleTasksResult -as [int]
 			if(-not([string]::IsNullOrEmpty($ServerOpsScheduleTasks))){
 				if($ServerOpsScheduleTasksResult -eq "0"){
@@ -1536,11 +1536,16 @@ $AllScriptList_ListUpdate = {
 			$DigitalEncryptSign = $Global:SecDump | Select-String -SimpleMatch "RequireSignOrSeal" | Out-String
 			$DigitalEncryptSignResult = $DigitalEncryptSign.split(",")[1]
 			$DigitalEncryptSignResult = $DigitalEncryptSignResult -as [int]
-			if($DigitalEncryptSignResult -eq "1"){
-				$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [PASS] - Digitally encrypt or Signing Policy is Enabled. CIS Compliant.`n"
-				$CISPassCounter++
+			if(-not([string]::IsNullOrEmpty($DigitalEncryptSignResult))){
+				if($DigitalEncryptSignResult -eq "1"){
+					$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [PASS] - Digitally encrypt or sign secure channel data (always)' is Enabled. CIS Compliant.`n"
+					$CISPassCounter++
+				}else{
+					$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [FAILED] - Digitally encrypt or sign secure channel data (always)' is Disabled.`n"
+					$CISFailCounter++
+				}
 			}else{
-				$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [FAILED] - Digitally encrypt or Signing Channel Policy is Disabled.`n"
+				$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [FAILED] - Digitally encrypt or sign secure channel data (always)' is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1622,7 +1627,7 @@ $AllScriptList_ListUpdate = {
 			# 2.3.7 - Interactive Login
 			# 2.3.7.1 (L1) Ensure 'Interactive logon: Do not require CTRL+ALT+DEL' is set to 'Disabled' (Scored)
 			$LoginCntlAltDelStatus = $Global:SecDump | Select-String -SimpleMatch 'DisableCAD' | Out-String
-			$LoginCntlAltDelStatusResult = $LoginCntlAltDelStatus.split('"')[1]
+			$LoginCntlAltDelStatusResult = $LoginCntlAltDelStatus.split(',')[1]
 			$LoginCntlAltDelStatusResult = $LoginCntlAltDelStatusResult -as [int]
 			if(-not([string]::IsNullOrEmpty($LoginCntlAltDelStatusResult))){
 				if($LoginCntlAltDelStatusResult -eq "0"){
@@ -1651,7 +1656,7 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.7.3 (L1) Ensure 'Interactive logon: Machine inactivity limit' is set to '900 or fewer second(s), but not 0' (Scored)
 			# "InactivityTimeoutSecs"
-			$MachineAFKLimit = $Global:SecDump | Select-String -SimpleMatch 'Parameters\MaximumPasswordAge' | Out-String
+			$MachineAFKLimit = $Global:SecDump | Select-String -SimpleMatch 'InactivityTimeoutSecs' | Out-String
 			$MachineAFKLimitResult = $MachineAFKLimit.split(',')[1]
 			$MachineAFKLimitResult = $MachineAFKLimitResult -as [int]
 			if(-not([string]::IsNullOrEmpty($MachineAFKLimitResult))){
@@ -2024,7 +2029,7 @@ $AllScriptList_ListUpdate = {
 			}
 
 			# 2.3.10.12 (L1) Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None' (Scored)
-			$NullSessionShares = $Global:SecDump | Select-String -SimpleMatch 'NullSessionsShares' | Out-String
+			$NullSessionShares = $Global:SecDump | Select-String -SimpleMatch 'NullSessionShares' | Out-String
 			$NullSessionSharesResult = $NullSessionShares.split(',')[1]
 			if([string]::IsNullOrEmpty($NullSessionSharesResult)){
 				$Global:Req2NullSessionShares = "2.3.10.12 - [PASS] - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
