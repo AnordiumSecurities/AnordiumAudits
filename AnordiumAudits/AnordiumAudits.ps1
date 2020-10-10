@@ -310,6 +310,8 @@ $AllScriptList_ListUpdate = {
 			$AllScriptOutputLabel.Refresh()
 			Req10AuditSettings
 			$AllOutput.AppendText($Global:SectionHeader)
+			Req10AuditLogsCompliance
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req10NTPSettings
 			$AllOutput.AppendText($Global:SectionHeader)
 			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Ten... Grabbing NTP Settings on Multiple Devices, This Will Take A While. Total Progress... 80%"
@@ -362,7 +364,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2PCIPSSComplianceResultHTML $Global:Req2ComplianceResultHTML $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$ReportAllName $ReportComputerName $Global:ReportRequirementTwoName $Global:Req2PCIPSSComplianceResultHTML $Global:Req2ComplianceResultHTML $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -471,6 +473,8 @@ $AllScriptList_ListUpdate = {
 			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Ten... Total Progress... 75%"
 			$AllScriptOutputLabel.Refresh()
 			Req10AuditSettings
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req10AuditLogsCompliance
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10NTPSettings
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -4119,7 +4123,7 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# 10.2 - Grab Audit Log Policy
+	# 10.2 - Grab Audit Log Retention Policy
 	Function Req10AuditLogsCompliance {
 		# Data Gathering Phase
 		# 10.2 PCI DSS - Audit System Events
@@ -4267,8 +4271,11 @@ $AllScriptList_ListUpdate = {
 		}
 
 		# Data Output
+		# HTML Report
+		$Global:Req10PCIPSSComplianceResultHTML = "<h2>10.2 - Grab Audit Log Retention Policy</h2><p>" + $Global:Req10AuditSysEventsResult + "<br>" + $Global:Req10AuditLogonEventsResult + "<br>" + $Global:Req10AuditObjectAccessResult + "<br>" + $Global:Req10AuditPolicyChangeResult + "<br>" + $Global:Req10AuditAccountManageResult + "<br>" + $Global:Req10AuditProcessTrackingResult + "<br>" + $Global:Req10AuditDSAccessResult + "<br>" + $Global:Req10AuditAccountLogonResult + "</p>"
+
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("10.2 - Grab Audit Log Policy`n")
+			$Req10Output.AppendText("10.2 - Grab Audit Log Retention Policy:`n`n")
 			$Req10Output.AppendText($Global:Req10AuditSysEventsResult)
 			$Req10Output.AppendText($Global:Req10AuditLogonEventsResult)
 			$Req10Output.AppendText($Global:Req10AuditObjectAccessResult)
@@ -4279,7 +4286,7 @@ $AllScriptList_ListUpdate = {
 			$Req10Output.AppendText($Global:Req10AuditDSAccessResult)
 			$Req10Output.AppendText($Global:Req10AuditAccountLogonResult)
 		}else{
-			$AllOutput.AppendText("10.2 - Grab Audit Log Policy`n")
+			$AllOutput.AppendText("10.2 - Grab Audit Log Retention Policy:`n`n")
 			$AllOutput.AppendText($Global:Req10AuditSysEventsResult)
 			$AllOutput.AppendText($Global:Req10AuditLogonEventsResult)
 			$AllOutput.AppendText($Global:Req10AuditObjectAccessResult)
@@ -4372,7 +4379,8 @@ $AllScriptList_ListUpdate = {
 							}
 						}
 					}catch{
-						Write-Host $Req10Counter
+						# For Debugging
+						#Write-Host $Req10Counter
 					}
 				}
 			}
@@ -4434,13 +4442,13 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# 10.7 - Grab Audit Log Retention Configuration
+	# 10.7 - Grab Audit Retention Log Configuration
 	Function Req10PastAuditLogs {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("10.7 - Grabbing Audit Log Retention Configuration`n")
+			$Req10Output.AppendText("10.7 - Grabbing Audit Retention Log Configuration`n")
 		}else{
-			$AllOutput.AppendText("10.7 - Grabbing Audit Log Retention Configuration`n")
+			$AllOutput.AppendText("10.7 - Grabbing Audit Retention Log Configuration`n")
 		}
 		# Data Gathering
 		$AuditLogsBegin = (Get-Date).AddDays(-365)
@@ -4448,9 +4456,9 @@ $AllScriptList_ListUpdate = {
 		try{
 			$AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd -Newest 1 | Format-List | Out-String
 			if(-not([string]::IsNullOrEmpty($AuditLogs))){
-				$AuditLogsResult = "Audit Logs from 1 Year Ago Found, Retention Configuration is in accordance with PCI-DSS.`n"
+				$AuditLogsResult = "Audit Logs from 1 Year Ago Found, Retention Configuration is in accordance with PCI-DSS.`n`n"
 			}else{
-				$AuditLogsResult = "Audit Logs from 1 Year Ago Not Found, Retention Configuration is not in accordance with PCI-DSS.`n"
+				$AuditLogsResult = "Audit Logs from 1 Year Ago Not Found, Retention Configuration is not in accordance with PCI-DSS.`n`n"
 			}
 			# Data Output
 			if($EverythingToggle -eq $false){
@@ -4458,15 +4466,15 @@ $AllScriptList_ListUpdate = {
 			}else{
 				$AllOutput.AppendText($AuditLogsResult + $AuditLogs)
 			}
-			# HTMl Report
-			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Audit Log Retention Configuration</h2><p>$AuditLogsResult</p><br><pre>" + $AuditLogsResult + "</pre>"
+			# HTML Report
+			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Audit Retention Log Configuration</h2><p>$AuditLogsResult</p><br><pre>" + $AuditLogs + "</pre>"
 		# Edge Case
 		}catch{
-			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Audit Log Retention Configuration</h2><p>An Error Has Occurred, No Audit Log Retention Configuration Found.</p>"
+			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Audit Retention Log Configuration</h2><p>An Error Has Occurred, No Audit Retention Log Configuration Found.</p>"
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText("An Error Has Occurred, No Audit Log Retention Configuration Found.")
+				$Req10Output.AppendText("An Error Has Occurred, No Audit Retention Log Configuration Found.")
 			}else{
-				$AllOutput.AppendText("An Error Has Occurred, No Audit Log Retention Configuration Found.")
+				$AllOutput.AppendText("An Error Has Occurred, No Audit Retention Log Configuration Found.")
 			}
 		}
 	}
@@ -4476,7 +4484,7 @@ $AllScriptList_ListUpdate = {
 		if($Req10ScriptList.SelectedItem -eq "10.2 - Dump of Audit Category Settings"){
 			$Req10Output.Clear()
 			Req10AuditSettings
-		}elseif($Req10ScriptList.SelectedItem -eq "10.2 - Grab Audit Log Policy"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.2 - Grab Audit Log Retention Policy"){
 			$Req10Output.Clear()
 			Req10AuditLogsCompliance
 		}elseif($Req10ScriptList.SelectedItem -eq "10.4 - Grab NTP Settings"){
@@ -4488,7 +4496,7 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req10ScriptList.SelectedItem -eq "10.5 - Check Audit Log Permissions"){
 			$Req10Output.Clear()
 			Req10AuditLogPrems
-		}elseif($Req10ScriptList.SelectedItem -eq "10.7 - Grab Audit Log Retention Configuration"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.7 - Grab Audit Retention Log Configuration"){
 			$Req10Output.Clear()
 			Req10PastAuditLogs
 		}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
@@ -4497,6 +4505,8 @@ $AllScriptList_ListUpdate = {
 			$Req10OutputLabel.Text = "Output: Progressing... 10%"
 			$Req10OutputLabel.Refresh()
 			Req10AuditSettings
+			$Req10Output.AppendText($Global:SectionHeader)
+			Req10AuditLogsCompliance
 			$Req10Output.AppendText($Global:SectionHeader)
 			$Req10OutputLabel.Text = "Output: Progressing... 20%"
 			$Req10OutputLabel.Refresh()
@@ -4528,7 +4538,7 @@ $AllScriptList_ListUpdate = {
 		# HTML Report
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
-		$Requirement10Report = ConvertTo-HTML -Body "$Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
+		$Requirement10Report = ConvertTo-HTML -Body "$Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement10ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
 		# Write Output
@@ -4542,6 +4552,8 @@ $AllScriptList_ListUpdate = {
 			$Req10OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
 			$Req10OutputLabel.Refresh()
 			Req10AuditSettings
+			$Req10Output.AppendText($Global:SectionHeader)
+			Req10AuditLogsCompliance
 			$Req10Output.AppendText($Global:SectionHeader)
 			$Req10OutputLabel.Text = "Output: Data Exporting in Progress... 20%"
 			$Req10OutputLabel.Refresh()

@@ -202,9 +202,9 @@ $AllScriptListLabel.Text = [System.String]'List of Scripts:'
 #
 #AllBack
 #
-$AllBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$AllBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $AllBack.Name = [System.String]'AllBack'
-$AllBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$AllBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $AllBack.TabIndex = [System.Int32]7
 $AllBack.Text = [System.String]'Back'
 $AllBack.UseVisualStyleBackColor = $true
@@ -212,9 +212,9 @@ $AllBack.add_Click($AuxiliaryBack_Click)
 #
 #AllExport
 #
-$AllExport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$AllExport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $AllExport.Name = [System.String]'AllExport'
-$AllExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$AllExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $AllExport.TabIndex = [System.Int32]6
 $AllExport.Text = [System.String]'Export'
 $AllExport.UseVisualStyleBackColor = $true
@@ -222,9 +222,9 @@ $AllExport.add_Click($AllExportReport)
 #
 #AllRefresh
 #
-$AllRefresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$AllRefresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $AllRefresh.Name = [System.String]'AllRefresh'
-$AllRefresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$AllRefresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $AllRefresh.TabIndex = [System.Int32]5
 $AllRefresh.Text = [System.String]'Refresh'
 $AllRefresh.UseVisualStyleBackColor = $true
@@ -236,7 +236,7 @@ $AllScriptList.FormattingEnabled = $true
 $AllScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything'))
 $AllScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $AllScriptList.Name = [System.String]'AllScriptList'
-$AllScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$AllScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $AllScriptList.TabIndex = [System.Int32]4
 $AllScriptList.add_SelectedIndexChanged($AllScriptList_ListUpdate)
 #
@@ -246,7 +246,7 @@ $AllOutput.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sys
 $AllOutput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $AllOutput.Name = [System.String]'AllOutput'
 $AllOutput.ReadOnly = $true
-$AllOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$AllOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $AllOutput.TabIndex = [System.Int32]1
 $AllOutput.Text = [System.String]''
 #
@@ -289,9 +289,9 @@ $Req2ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req2Back
 #
-$Req2Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req2Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $Req2Back.Name = [System.String]'Req2Back'
-$Req2Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req2Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req2Back.TabIndex = [System.Int32]5
 $Req2Back.Text = [System.String]'Back'
 $Req2Back.UseVisualStyleBackColor = $true
@@ -303,15 +303,15 @@ $Req2ScriptList.FormattingEnabled = $true
 $Req2ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Two',[System.String]'Requirement Two Compliance Check',[System.String]'2.1 - Test Vendor Default Credentials in AD',[System.String]'2.2.1 - Grab Installed Windows Roles and Features',[System.String]'2.2.2 - Grab Running Processes',[System.String]'2.2.2 - Grab Running Services',[System.String]'2.2.2 - Grab Established Network Connections',[System.String]'2.2.2 - Grab Installed Software',[System.String]'2.2.4 - Grab System Security Policy Configuration',[System.String]'2.2.5 - Grab Local Drives and Network Shares',[System.String]'2.4 - Grab All Computer Objects from Active Directory',[System.String]'2.4 - Map Neighboring Devices'))
 $Req2ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req2ScriptList.Name = [System.String]'Req2ScriptList'
-$Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$Req2ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $Req2ScriptList.TabIndex = [System.Int32]3
 $Req2ScriptList.add_SelectedIndexChanged($Req2ScriptList_ListUpdate)
 #
 #Req2Refresh
 #
-$Req2Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$Req2Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $Req2Refresh.Name = [System.String]'Req2Refresh'
-$Req2Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req2Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req2Refresh.TabIndex = [System.Int32]2
 $Req2Refresh.Text = [System.String]'Refresh'
 $Req2Refresh.UseVisualStyleBackColor = $true
@@ -319,9 +319,9 @@ $Req2Refresh.add_Click($Req2ScriptList_ListUpdate)
 #
 #Req2Export
 #
-$Req2Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$Req2Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $Req2Export.Name = [System.String]'Req2Export'
-$Req2Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req2Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req2Export.TabIndex = [System.Int32]1
 $Req2Export.Text = [System.String]'Export'
 $Req2Export.UseVisualStyleBackColor = $true
@@ -333,7 +333,7 @@ $Req2Output.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sy
 $Req2Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req2Output.Name = [System.String]'Req2Output'
 $Req2Output.ReadOnly = $true
-$Req2Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$Req2Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $Req2Output.TabIndex = [System.Int32]0
 $Req2Output.Text = [System.String]''
 #
@@ -375,9 +375,9 @@ $Req4ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req4Back
 #
-$Req4Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req4Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $Req4Back.Name = [System.String]'Req4Back'
-$Req4Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req4Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req4Back.TabIndex = [System.Int32]7
 $Req4Back.Text = [System.String]'Back'
 $Req4Back.UseVisualStyleBackColor = $true
@@ -385,9 +385,9 @@ $Req4Back.add_Click($AuxiliaryBack_Click)
 #
 #Req4Export
 #
-$Req4Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$Req4Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $Req4Export.Name = [System.String]'Req4Export'
-$Req4Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req4Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req4Export.TabIndex = [System.Int32]6
 $Req4Export.Text = [System.String]'Export'
 $Req4Export.UseVisualStyleBackColor = $true
@@ -395,9 +395,9 @@ $Req4Export.add_Click($Req4ExportReport)
 #
 #Req4Refresh
 #
-$Req4Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$Req4Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $Req4Refresh.Name = [System.String]'Req4Refresh'
-$Req4Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req4Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req4Refresh.TabIndex = [System.Int32]5
 $Req4Refresh.Text = [System.String]'Refresh'
 $Req4Refresh.UseVisualStyleBackColor = $true
@@ -409,7 +409,7 @@ $Req4ScriptList.FormattingEnabled = $true
 $Req4ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Four',[System.String]'4.1 - Analyse Wi-Fi Environment',[System.String]'4.1 - Analyse Keys and Certificates'))
 $Req4ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req4ScriptList.Name = [System.String]'Req4ScriptList'
-$Req4ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$Req4ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $Req4ScriptList.TabIndex = [System.Int32]4
 $Req4ScriptList.add_SelectedIndexChanged($Req4ScriptList_ListUpdate)
 #
@@ -419,7 +419,7 @@ $Req4Output.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sy
 $Req4Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req4Output.Name = [System.String]'Req4Output'
 $Req4Output.ReadOnly = $true
-$Req4Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$Req4Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $Req4Output.TabIndex = [System.Int32]1
 $Req4Output.Text = [System.String]''
 #
@@ -461,9 +461,9 @@ $Req5ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req5Back
 #
-$Req5Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req5Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $Req5Back.Name = [System.String]'Req5Back'
-$Req5Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req5Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req5Back.TabIndex = [System.Int32]9
 $Req5Back.Text = [System.String]'Back'
 $Req5Back.UseVisualStyleBackColor = $true
@@ -471,9 +471,9 @@ $Req5Back.add_Click($AuxiliaryBack_Click)
 #
 #Req5Export
 #
-$Req5Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$Req5Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $Req5Export.Name = [System.String]'Req5Export'
-$Req5Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req5Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req5Export.TabIndex = [System.Int32]8
 $Req5Export.Text = [System.String]'Export'
 $Req5Export.UseVisualStyleBackColor = $true
@@ -481,9 +481,9 @@ $Req5Export.add_Click($Req5ExportReport)
 #
 #Req5Refresh
 #
-$Req5Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$Req5Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $Req5Refresh.Name = [System.String]'Req5Refresh'
-$Req5Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req5Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req5Refresh.TabIndex = [System.Int32]7
 $Req5Refresh.Text = [System.String]'Refresh'
 $Req5Refresh.UseVisualStyleBackColor = $true
@@ -495,7 +495,7 @@ $Req5ScriptList.FormattingEnabled = $true
 $Req5ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Five',[System.String]'5.1 - Antivirus Program and GPO Analysis',[System.String]'5.1 - Grab Software Deployment Settings in Organization',[System.String]'5.3 - Check end user permissions to modify antivirus software'))
 $Req5ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req5ScriptList.Name = [System.String]'Req5ScriptList'
-$Req5ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$Req5ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $Req5ScriptList.TabIndex = [System.Int32]5
 $Req5ScriptList.add_SelectedIndexChanged($Req5ScriptList_ListUpdate)
 #
@@ -505,7 +505,7 @@ $Req5Output.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sy
 $Req5Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req5Output.Name = [System.String]'Req5Output'
 $Req5Output.ReadOnly = $true
-$Req5Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$Req5Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $Req5Output.TabIndex = [System.Int32]2
 $Req5Output.Text = [System.String]''
 #
@@ -547,9 +547,9 @@ $Req7ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req7Back
 #
-$Req7Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req7Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $Req7Back.Name = [System.String]'Req7Back'
-$Req7Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req7Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req7Back.TabIndex = [System.Int32]11
 $Req7Back.Text = [System.String]'Back'
 $Req7Back.UseVisualStyleBackColor = $true
@@ -557,9 +557,9 @@ $Req7Back.add_Click($AuxiliaryBack_Click)
 #
 #Req7Export
 #
-$Req7Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$Req7Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $Req7Export.Name = [System.String]'Req7Export'
-$Req7Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req7Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req7Export.TabIndex = [System.Int32]10
 $Req7Export.Text = [System.String]'Export'
 $Req7Export.UseVisualStyleBackColor = $true
@@ -567,9 +567,9 @@ $Req7Export.add_Click($Req7ExportReport)
 #
 #Req7Refresh
 #
-$Req7Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$Req7Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $Req7Refresh.Name = [System.String]'Req7Refresh'
-$Req7Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req7Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req7Refresh.TabIndex = [System.Int32]9
 $Req7Refresh.Text = [System.String]'Refresh'
 $Req7Refresh.UseVisualStyleBackColor = $true
@@ -581,7 +581,7 @@ $Req7ScriptList.FormattingEnabled = $true
 $Req7ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Seven',[System.String]'7.1 - Grab and analyse folder permissions that hold sensitive data',[System.String]'7.2 - Check for deny all permissions',[System.String]'7.1.2 - Grab User Privileges'))
 $Req7ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req7ScriptList.Name = [System.String]'Req7ScriptList'
-$Req7ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$Req7ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $Req7ScriptList.TabIndex = [System.Int32]6
 $Req7ScriptList.add_SelectedIndexChanged($Req7ScriptList_ListUpdate)
 #
@@ -591,7 +591,7 @@ $Req7Output.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sy
 $Req7Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req7Output.Name = [System.String]'Req7Output'
 $Req7Output.ReadOnly = $true
-$Req7Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$Req7Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $Req7Output.TabIndex = [System.Int32]3
 $Req7Output.Text = [System.String]''
 #
@@ -719,9 +719,9 @@ $Req10ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req10Back
 #
-$Req10Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req10Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $Req10Back.Name = [System.String]'Req10Back'
-$Req10Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req10Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req10Back.TabIndex = [System.Int32]15
 $Req10Back.Text = [System.String]'Back'
 $Req10Back.UseVisualStyleBackColor = $true
@@ -729,9 +729,9 @@ $Req10Back.add_Click($AuxiliaryBack_Click)
 #
 #Req10Export
 #
-$Req10Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$Req10Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $Req10Export.Name = [System.String]'Req10Export'
-$Req10Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req10Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req10Export.TabIndex = [System.Int32]14
 $Req10Export.Text = [System.String]'Export'
 $Req10Export.UseVisualStyleBackColor = $true
@@ -739,9 +739,9 @@ $Req10Export.add_Click($Req10ExportReport)
 #
 #Req10Refresh
 #
-$Req10Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$Req10Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $Req10Refresh.Name = [System.String]'Req10Refresh'
-$Req10Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req10Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req10Refresh.TabIndex = [System.Int32]13
 $Req10Refresh.Text = [System.String]'Refresh'
 $Req10Refresh.UseVisualStyleBackColor = $true
@@ -750,10 +750,10 @@ $Req10Refresh.add_Click($Req10ScriptList_ListUpdate)
 #Req10ScriptList
 #
 $Req10ScriptList.FormattingEnabled = $true
-$Req10ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Ten',[System.String]'10.2 - Dump of Audit Category Settings',[System.String]'10.2 - Grab Audit Log Policy',[System.String]'10.4 - Grab NTP Settings',[System.String]'10.4 - Check NTP Settings on Multiple Devices',[System.String]'10.5 - Check Audit Log Permissions',[System.String]'10.7 - Grab Audit Log Retention Configuration'))
+$Req10ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Ten',[System.String]'10.2 - Dump of Audit Category Settings',[System.String]'10.2 - Grab Audit Log Retention Policy',[System.String]'10.4 - Grab NTP Settings',[System.String]'10.4 - Check NTP Settings on Multiple Devices',[System.String]'10.5 - Check Audit Log Permissions',[System.String]'10.7 - Grab Audit Retention Log Configuration'))
 $Req10ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req10ScriptList.Name = [System.String]'Req10ScriptList'
-$Req10ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$Req10ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $Req10ScriptList.TabIndex = [System.Int32]8
 $Req10ScriptList.add_SelectedIndexChanged($Req10ScriptList_ListUpdate)
 #
@@ -763,7 +763,7 @@ $Req10Output.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([S
 $Req10Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req10Output.Name = [System.String]'Req10Output'
 $Req10Output.ReadOnly = $true
-$Req10Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$Req10Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $Req10Output.TabIndex = [System.Int32]5
 $Req10Output.Text = [System.String]''
 #
@@ -805,9 +805,9 @@ $DiagListLabel.Text = [System.String]'List of Scripts:'
 #
 #DiagBack
 #
-$DiagBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$DiagBack.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $DiagBack.Name = [System.String]'DiagBack'
-$DiagBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$DiagBack.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $DiagBack.TabIndex = [System.Int32]20
 $DiagBack.Text = [System.String]'Back'
 $DiagBack.UseVisualStyleBackColor = $true
@@ -815,9 +815,9 @@ $DiagBack.add_Click($AuxiliaryBack_Click)
 #
 #DiagExport
 #
-$DiagExport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$DiagExport.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $DiagExport.Name = [System.String]'DiagExport'
-$DiagExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$DiagExport.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $DiagExport.TabIndex = [System.Int32]19
 $DiagExport.Text = [System.String]'Export'
 $DiagExport.UseVisualStyleBackColor = $true
@@ -825,9 +825,9 @@ $DiagExport.add_Click($DiagExportReport)
 #
 #DiagRefresh
 #
-$DiagRefresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$DiagRefresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $DiagRefresh.Name = [System.String]'DiagRefresh'
-$DiagRefresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$DiagRefresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $DiagRefresh.TabIndex = [System.Int32]18
 $DiagRefresh.Text = [System.String]'Refresh'
 $DiagRefresh.UseVisualStyleBackColor = $true
@@ -839,7 +839,7 @@ $DiagScriptList.FormattingEnabled = $true
 $DiagScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Diagnostics',[System.String]'Grab System Information',[System.String]'Grab Installed Software Patches',[System.String]'Grab IP Config',[System.String]'Check TCP Connectivity',[System.String]'GPO Dump'))
 $DiagScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $DiagScriptList.Name = [System.String]'DiagScriptList'
-$DiagScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$DiagScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $DiagScriptList.TabIndex = [System.Int32]17
 $DiagScriptList.add_SelectedIndexChanged($DiagScriptList_ListUpdate)
 #
@@ -849,7 +849,7 @@ $DiagOutput.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sy
 $DiagOutput.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $DiagOutput.Name = [System.String]'DiagOutput'
 $DiagOutput.ReadOnly = $true
-$DiagOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$DiagOutput.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $DiagOutput.TabIndex = [System.Int32]16
 $DiagOutput.Text = [System.String]''
 #
