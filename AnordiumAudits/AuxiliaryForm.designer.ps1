@@ -633,9 +633,9 @@ $Req8ListLabel.Text = [System.String]'List of Scripts:'
 #
 #Req8Back
 #
-$Req8Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]787))
+$Req8Back.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]140,[System.Int32]10))
 $Req8Back.Name = [System.String]'Req8Back'
-$Req8Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req8Back.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req8Back.TabIndex = [System.Int32]13
 $Req8Back.Text = [System.String]'Back'
 $Req8Back.UseVisualStyleBackColor = $true
@@ -643,9 +643,9 @@ $Req8Back.add_Click($AuxiliaryBack_Click)
 #
 #Req8Export
 #
-$Req8Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1376,[System.Int32]787))
+$Req8Export.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]241,[System.Int32]10))
 $Req8Export.Name = [System.String]'Req8Export'
-$Req8Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req8Export.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req8Export.TabIndex = [System.Int32]12
 $Req8Export.Text = [System.String]'Export'
 $Req8Export.UseVisualStyleBackColor = $true
@@ -653,9 +653,9 @@ $Req8Export.add_Click($Req8ExportReport)
 #
 #Req8Refresh
 #
-$Req8Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]787))
+$Req8Refresh.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]1456,[System.Int32]10))
 $Req8Refresh.Name = [System.String]'Req8Refresh'
-$Req8Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]180,[System.Int32]40))
+$Req8Refresh.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]100,[System.Int32]25))
 $Req8Refresh.TabIndex = [System.Int32]11
 $Req8Refresh.Text = [System.String]'Refresh'
 $Req8Refresh.UseVisualStyleBackColor = $true
@@ -667,7 +667,7 @@ $Req8ScriptList.FormattingEnabled = $true
 $Req8ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Eight',[System.String]'8.1 - Grab Current User',[System.String]'8.1 - Grab Local Administrator Accounts',[System.String]'8.1 - Grab Domain Administrator Accounts',[System.String]'8.1.1 - Dump of Enabled Active Directory Users',[System.String]'8.1.3 - Dump of Disabled Active Directory Users',[System.String]'8.1.4 - Dump of Inactive Active Directory Users',[System.String]'8.1.8 - Grab the Screensaver Settings',[System.String]'8.2 - Grab Domain Password Policy Settings',[System.String]'8.2 - Grab Local Password Policy Settings',[System.String]'8.2.4 - Dump of Users whose Password Never Expire',[System.String]'8.2.4 - Dump of Users and Their Last Password Change',[System.String]'8.4 - Grab RDP Encryption and Idle Settings'))
 $Req8ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req8ScriptList.Name = [System.String]'Req8ScriptList'
-$Req8ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
+$Req8ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
 $Req8ScriptList.TabIndex = [System.Int32]7
 $Req8ScriptList.add_SelectedIndexChanged($Req8ScriptList_ListUpdate)
 #
@@ -677,7 +677,7 @@ $Req8Output.Font = (New-Object -TypeName System.Drawing.Font -ArgumentList @([Sy
 $Req8Output.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]356,[System.Int32]40))
 $Req8Output.Name = [System.String]'Req8Output'
 $Req8Output.ReadOnly = $true
-$Req8Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]745))
+$Req8Output.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]1200,[System.Int32]784))
 $Req8Output.TabIndex = [System.Int32]4
 $Req8Output.Text = [System.String]''
 #
@@ -864,7 +864,6 @@ $AuxiliaryForm.Controls.Add($MainTabControl)
 $AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
 $AuxiliaryForm.MaximizeBox = $false
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
-$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $AuxiliaryForm.Text = [System.String]'Anordium Audits'
 $MainTabControl.ResumeLayout($false)
