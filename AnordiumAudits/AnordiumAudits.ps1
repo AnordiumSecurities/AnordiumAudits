@@ -318,7 +318,7 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10AuditLogPrems
 			$AllOutput.AppendText($Global:SectionHeader)
-			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Ten... Gathering Past Audit Logs, This Will Take A While. Total Progress... 85%"
+			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Ten... Total Progress... 85%"
 			$AllScriptOutputLabel.Refresh()
 			Req10PastAuditLogs
 			$AllOutput.AppendText($Global:SectionBreak)
@@ -366,13 +366,8 @@ $AllScriptList_ListUpdate = {
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
-		$AllOutput.AppendText("`nRequirement Ten Audit Logs Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt")
-		# Audit Logs Text File
-		$AllAuditLogs = "Grabbing Previous Audit Logs for the Past Three Months.`n" + $Global:AuditLogs 
-		$Requirement10ReportPathLogs = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt"
-		$AllAuditLogs | Out-File $Requirement10ReportPathLogs
 		# Alert User
-		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html`n`nRequirement Ten Audit Logs Exported to: " + $Requirement10ReportPathLogs,"All PCI-DSS Requirements Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html","All PCI-DSS Requirements Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$AllExportReport = {
@@ -485,7 +480,7 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req10AuditLogPrems
 			$AllOutput.AppendText($Global:SectionHeader)
-			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Ten, Grabbing Past Audit Logs, This Will Take A While... Total Progress... 85%"
+			$AllScriptOutputLabel.Text = "Output: Data Export in Progress. Working on Requirement Ten... Total Progress... 85%"
 			$AllScriptOutputLabel.Refresh()
 			Req10PastAuditLogs
 			$AllOutput.AppendText($Global:SectionBreak)
@@ -4124,6 +4119,179 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
+	# 10.2 - Grab Audit Log Policy
+	Function Req10AuditLogsCompliance {
+		# Data Gathering Phase
+		# 10.2 PCI DSS - Audit System Events
+		$AuditSysEvents = $Global:SecDump | Select-String -SimpleMatch 'AuditSystemEvents' | Out-String
+		$AuditSysEventsResult = $AuditSysEvents.split(' ')[2]
+		$AuditSysEventsResult = $AuditSysEventsResult -as [int]
+		if($AuditSysEventsResult -eq "3"){
+			$Global:Req10AuditSysEventsResult = "10.2    - [PASS] - Audit System Events is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditSysEventsResult -eq "2"){
+			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is set to Failure.`n"
+		}elseif($AuditSysEventsResult -eq "1"){
+			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is set to Success.`n"
+		}elseif($AuditSysEventsResult -eq "0"){
+			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Logon Events
+		$AuditLogonEvents = $Global:SecDump | Select-String -SimpleMatch 'AuditLogonEvents' | Out-String
+		$AuditLogonEventsResult = $AuditLogonEvents.split(' ')[2]
+		$AuditLogonEventsResult = $AuditLogonEventsResult -as [int]
+		if($AuditLogonEventsResult -eq "3"){
+			$Global:Req10AuditLogonEventsResult = "10.2    - [PASS] - Audit Logon Events is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditLogonEventsResult -eq "2"){
+			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is set to Failure.`n"
+		}elseif($AuditLogonEventsResult -eq "1"){
+			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is set to Success.`n"
+		}elseif($AuditLogonEventsResult -eq "0"){
+			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Object Access
+		$AuditObjectAccess = $Global:SecDump | Select-String -SimpleMatch 'AuditObjectAccess' | Out-String
+		$AuditObjectAccessResult = $AuditObjectAccess.split(' ')[2]
+		$AuditObjectAccessResult = $AuditObjectAccessResult -as [int]
+		if($AuditObjectAccessResult -eq "3"){
+			$Global:Req10AuditObjectAccessResult = "10.2    - [PASS] - Audit Object Access is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditObjectAccessResult -eq "2"){
+			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is set to Failure.`n"
+		}elseif($AuditObjectAccessResult -eq "1"){
+			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is set to Success.`n"
+		}elseif($AuditObjectAccessResult -eq "0"){
+			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Privilege Use
+		$AuditPrivilegeUse = $Global:SecDump | Select-String -SimpleMatch 'AuditPrivilegeUse' | Out-String
+		$AuditPrivilegeUseResult = $AuditPrivilegeUse.split(' ')[2]
+		$AuditPrivilegeUseResult = $AuditPrivilegeUseResult -as [int]
+		if($AuditPrivilegeUseResult -eq "3"){
+			$Global:Req10AuditPrivilegeUseResult = "10.2    - [PASS] - Audit Privilege Use is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditPrivilegeUseResult -eq "2"){
+			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is set to Failure.`n"
+		}elseif($AuditPrivilegeUseResult -eq "1"){
+			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is set to Success.`n"
+		}elseif($AuditPrivilegeUseResult -eq "0"){
+			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Policy Change
+		$AuditPolicyChange = $Global:SecDump | Select-String -SimpleMatch 'AuditPolicyChange' | Out-String
+		$AuditPolicyChangeResult = $AuditPolicyChange.split(' ')[2]
+		$AuditPolicyChangeResult = $AuditPolicyChangeResult -as [int]
+		if($AuditPolicyChangeResult -eq "3"){
+			$Global:Req10AuditPolicyChangeResult = "10.2    - [PASS] - Audit Policy Change is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditPolicyChangeResult -eq "2"){
+			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is set to Failure.`n"
+		}elseif($AuditPolicyChangeResult -eq "1"){
+			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is set to Success.`n"
+		}elseif($AuditPolicyChangeResult -eq "0"){
+			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Account Management
+		$AuditAccountManage = $Global:SecDump | Select-String -SimpleMatch 'AuditAccountManage' | Out-String
+		$AuditAccountManageResult = $AuditAccountManage.split(' ')[2]
+		$AuditAccountManageResult = $AuditAccountManageResult -as [int]
+		if($AuditAccountManageResult -eq "3"){
+			$Global:Req10AuditAccountManageResult = "10.2    - [PASS] - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditAccountManageResult -eq "2"){
+			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is set to Failure.`n"
+		}elseif($AuditAccountManageResult -eq "1"){
+			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is set to Success.`n"
+		}elseif($AuditAccountManageResult -eq "0"){
+			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Process Tracking
+		$AuditProcessTracking = $Global:SecDump | Select-String -SimpleMatch 'AuditProcessTracking' | Out-String
+		$AuditProcessTrackingResult = $AuditProcessTracking.split(' ')[2]
+		$AuditProcessTrackingResult = $AuditProcessTrackingResult -as [int]
+		if($AuditProcessTrackingResult -eq "3"){
+			$Global:Req10AuditProcessTrackingResult = "10.2    - [PASS] - Audit Process Tracking is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditProcessTrackingResult -eq "2"){
+			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is set to Failure.`n"
+		}elseif($AuditProcessTrackingResult -eq "1"){
+			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is set to Success.`n"
+		}elseif($AuditProcessTrackingResult -eq "0"){
+			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Directory Services Access
+		$AuditDSAccess = $Global:SecDump | Select-String -SimpleMatch 'AuditDSAccess' | Out-String
+		$AuditDSAccessResult = $AuditDSAccess.split(' ')[2]
+		$AuditDSAccessResult = $AuditDSAccessResult -as [int]
+		if($AuditDSAccessResult -eq "3"){
+			$Global:Req10AuditDSAccessResult = "10.2    - [PASS] - Audit Directory Services Access is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditDSAccessResult -eq "2"){
+			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is set to Failure.`n"
+		}elseif($AuditDSAccessResult -eq "1"){
+			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is set to Success.`n"
+		}elseif($AuditDSAccessResult -eq "0"){
+			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is Not Defined.`n"
+		}
+
+		# 10.2 PCI DSS - Audit Account Logon Events
+		$AuditAccountLogon = $Global:SecDump | Select-String -SimpleMatch 'AuditAccountLogon' | Out-String
+		$AuditAccountLogonResult = $AuditAccountLogon.split(' ')[2]
+		$AuditAccountLogonResult = $AuditAccountLogonResult -as [int]
+		if($AuditAccountLogonResult -eq "3"){
+			$Global:Req10AuditAccountLogonResult = "10.2    - [PASS] - Audit Account Logon Events is set to Success and Failure. PCI DSS Compliant.`n"
+		}elseif($AuditAccountLogonResult -eq "2"){
+			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is set to Failure.`n"
+		}elseif($AuditAccountLogonResult -eq "1"){
+			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is set to Success.`n"
+		}elseif($AuditAccountLogonResult -eq "0"){
+			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is set to No Auditing.`n"
+		}else{
+			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is Not Defined.`n"
+		}
+
+		# Data Output
+		if($EverythingToggle -eq $false){
+			$Req10Output.AppendText("10.2 - Grab Audit Log Policy`n")
+			$Req10Output.AppendText($Global:Req10AuditSysEventsResult)
+			$Req10Output.AppendText($Global:Req10AuditLogonEventsResult)
+			$Req10Output.AppendText($Global:Req10AuditObjectAccessResult)
+			$Req10Output.AppendText($Global:Req10AuditPrivilegeUseResult)
+			$Req10Output.AppendText($Global:Req10AuditPolicyChangeResult)
+			$Req10Output.AppendText($Global:Req10AuditAccountManageResult)
+			$Req10Output.AppendText($Global:Req10AuditProcessTrackingResult)
+			$Req10Output.AppendText($Global:Req10AuditDSAccessResult)
+			$Req10Output.AppendText($Global:Req10AuditAccountLogonResult)
+		}else{
+			$AllOutput.AppendText("10.2 - Grab Audit Log Policy`n")
+			$AllOutput.AppendText($Global:Req10AuditSysEventsResult)
+			$AllOutput.AppendText($Global:Req10AuditLogonEventsResult)
+			$AllOutput.AppendText($Global:Req10AuditObjectAccessResult)
+			$AllOutput.AppendText($Global:Req10AuditPrivilegeUseResult)
+			$AllOutput.AppendText($Global:Req10AuditPolicyChangeResult)
+			$AllOutput.AppendText($Global:Req10AuditAccountManageResult)
+			$AllOutput.AppendText($Global:Req10AuditProcessTrackingResult)
+			$AllOutput.AppendText($Global:Req10AuditDSAccessResult)
+			$AllOutput.AppendText($Global:Req10AuditAccountLogonResult)
+		}
+	}
+
 	# 10.4 - Grab NTP Settings
 	Function Req10NTPSettings {
 		# Write Header
@@ -4266,35 +4434,39 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-	# 10.7 - Grab Previous Audit Logs
+	# 10.7 - Grab Audit Log Retention Configuration
 	Function Req10PastAuditLogs {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req10Output.AppendText("10.7 - Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
+			$Req10Output.AppendText("10.7 - Grabbing Audit Log Retention Configuration`n")
 		}else{
-			$AllOutput.AppendText("10.7 - Grabbing Previous Audit Logs for the Past Three Months`nThis may take a while`n")
+			$AllOutput.AppendText("10.7 - Grabbing Audit Log Retention Configuration`n")
 		}
-		# Data Gathering, Wait so Header is written.
-		$AuditLogsBegin = (Get-Date).AddDays(-90)
-		$AuditLogsEnd = Get-Date
-		Start-Sleep -Seconds 0.5
+		# Data Gathering
+		$AuditLogsBegin = (Get-Date).AddDays(-365)
+		$AuditLogsEnd = (Get-Date).AddDays(-364)
 		try{
-			$Global:AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd | Select-Object Index,Time,EntryType,InstanceID,Message | Format-List | Out-String
-			$AuditLogsRecent = Get-EventLog -LogName Security -Source "*auditing*" -Newest 1000 | Select-Object Index,Time,EntryType,InstanceID,Message | Format-List | Out-String
-			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Previous Audit Logs for the Past Three Months</h2><h3>1000 Most Recent Entries Displayed</h3><p>View All Audit Log Entries for the Past Three Months in the Exported Text File " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt" + "</p><br><pre>" + $AuditLogsRecent + "</pre>"
+			$AuditLogs = Get-EventLog -LogName Security -Source "*auditing*" -After $AuditLogsBegin -Before $AuditLogsEnd -Newest 1 | Format-List | Out-String
+			if(-not([string]::IsNullOrEmpty($AuditLogs))){
+				$AuditLogsResult = "Audit Logs from 1 Year Ago Found, Retention Configuration is in accordance with PCI-DSS.`n"
+			}else{
+				$AuditLogsResult = "Audit Logs from 1 Year Ago Not Found, Retention Configuration is not in accordance with PCI-DSS.`n"
+			}
 			# Data Output
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText($AuditLogsRecent)
+				$Req10Output.AppendText($AuditLogsResult + $AuditLogs)
 			}else{
-				$AllOutput.AppendText($AuditLogsRecent)
+				$AllOutput.AppendText($AuditLogsResult + $AuditLogs)
 			}
+			# HTMl Report
+			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Audit Log Retention Configuration</h2><p>$AuditLogsResult</p><br><pre>" + $AuditLogsResult + "</pre>"
 		# Edge Case
 		}catch{
-			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Previous Audit Logs for the Past Three Months</h2><p>An Error Has Occurred, No Audit Logs Found.</p>"
+			$Global:Req10AllAuditLogs = "<h2>10.7 - Grabbing Audit Log Retention Configuration</h2><p>An Error Has Occurred, No Audit Log Retention Configuration Found.</p>"
 			if($EverythingToggle -eq $false){
-				$Req10Output.AppendText("An Error Has Occurred, No Audit Logs Found.")
+				$Req10Output.AppendText("An Error Has Occurred, No Audit Log Retention Configuration Found.")
 			}else{
-				$AllOutput.AppendText("An Error Has Occurred, No Audit Logs Found.")
+				$AllOutput.AppendText("An Error Has Occurred, No Audit Log Retention Configuration Found.")
 			}
 		}
 	}
@@ -4304,6 +4476,9 @@ $AllScriptList_ListUpdate = {
 		if($Req10ScriptList.SelectedItem -eq "10.2 - Dump of Audit Category Settings"){
 			$Req10Output.Clear()
 			Req10AuditSettings
+		}elseif($Req10ScriptList.SelectedItem -eq "10.2 - Grab Audit Log Policy"){
+			$Req10Output.Clear()
+			Req10AuditLogsCompliance
 		}elseif($Req10ScriptList.SelectedItem -eq "10.4 - Grab NTP Settings"){
 			$Req10Output.Clear()
 			Req10NTPSettings
@@ -4313,7 +4488,7 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req10ScriptList.SelectedItem -eq "10.5 - Check Audit Log Permissions"){
 			$Req10Output.Clear()
 			Req10AuditLogPrems
-		}elseif($Req10ScriptList.SelectedItem -eq "10.7 - Grab Previous Audit Logs"){
+		}elseif($Req10ScriptList.SelectedItem -eq "10.7 - Grab Audit Log Retention Configuration"){
 			$Req10Output.Clear()
 			Req10PastAuditLogs
 		}elseif($Req10ScriptList.SelectedItem -eq "Everything in Requirement Ten"){
@@ -4335,7 +4510,7 @@ $AllScriptList_ListUpdate = {
 			$Req10OutputLabel.Refresh()
 			Req10AuditLogPrems
 			$Req10Output.AppendText($Global:SectionHeader)
-			$Req10OutputLabel.Text = "Output: Grabbing Past Audit Longs, This may take a while. Progressing... 90%"
+			$Req10OutputLabel.Text = "Output: Progressing... 90%"
 			$Req10OutputLabel.Refresh()
 			Req10PastAuditLogs
 			$Req10Output.AppendText($Global:SectionHeader)
@@ -4356,14 +4531,9 @@ $AllScriptList_ListUpdate = {
 		$Requirement10Report = ConvertTo-HTML -Body "$Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design.</p>"
 		$Requirement10ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
-		# Audit Logs Text File
-		$AllAuditLogs = "Grabbing Previous Audit Logs for the Past Three Months.`n" + $Global:AuditLogs 
-		$Requirement10ReportPathLogs = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt"
-		$AllAuditLogs | Out-File $Requirement10ReportPathLogs
 		# Write Output
 		$Req10Output.AppendText("Requirement Ten Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html")
-		$Req10Output.AppendText("Requirement Ten Audit Logs Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Audit-Logs.txt")
-		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Ten Report Exported to: " + $Requirement10ReportPath + "`n`nRequirement Ten Audit Logs Exported to: " + $Requirement10ReportPathLogs,"Requirement Ten Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Ten Report Exported to: " + $Requirement10ReportPath,"Requirement Ten Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req10ExportReport = {
@@ -4385,7 +4555,7 @@ $AllScriptList_ListUpdate = {
 			$Req10OutputLabel.Refresh()
 			Req10AuditLogPrems
 			$Req10Output.AppendText($Global:SectionHeader)
-			$Req10OutputLabel.Text = "Output: Grabbing Past Audit Logs, This may take a while. Data Export in Progressing... 90%"
+			$Req10OutputLabel.Text = "Output: Data Export in Progressing... 90%"
 			$Req10OutputLabel.Refresh()
 			Req10PastAuditLogs
 			$Req10OutputLabel.Text = "Output: Data Exporting in Progress... 99%"

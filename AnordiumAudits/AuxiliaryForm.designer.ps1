@@ -750,7 +750,7 @@ $Req10Refresh.add_Click($Req10ScriptList_ListUpdate)
 #Req10ScriptList
 #
 $Req10ScriptList.FormattingEnabled = $true
-$Req10ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Ten',[System.String]'10.2 - Dump of Audit Category Settings',[System.String]'10.4 - Grab NTP Settings',[System.String]'10.4 - Check NTP Settings on Multiple Devices',[System.String]'10.5 - Check Audit Log Permissions',[System.String]'10.7 - Grab Previous Audit Logs'))
+$Req10ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Ten',[System.String]'10.2 - Dump of Audit Category Settings',[System.String]'10.2 - Grab Audit Log Policy',[System.String]'10.4 - Grab NTP Settings',[System.String]'10.4 - Check NTP Settings on Multiple Devices',[System.String]'10.5 - Check Audit Log Permissions',[System.String]'10.7 - Grab Audit Log Retention Configuration'))
 $Req10ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req10ScriptList.Name = [System.String]'Req10ScriptList'
 $Req10ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]745))
