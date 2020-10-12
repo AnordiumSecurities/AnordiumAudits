@@ -348,7 +348,7 @@ $AllScriptList_ListUpdate = {
 		# Print End of Script Stuff
 			$AllOutput.AppendText("Script Completed Successfully.`n")
 			# Message Box Popup
-			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Completed Successfully","Script Completed Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)	
+			$EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Script Completed Successfully","Script Completed Successfully","OK","Information")
 	}else{
 		$AllOutput.Clear()
 		$AllOutput.AppendText("You must select an object from the script list.")
@@ -373,7 +373,7 @@ $AllScriptList_ListUpdate = {
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
 		# Alert User
-		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html","All PCI-DSS Requirements Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("All PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html","All PCI-DSS Requirements Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$AllExportReport = {
@@ -2983,7 +2983,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
-		$Req2EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html","Requirement Two Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req2EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html","Requirement Two Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req2ExportReport = {
@@ -3123,7 +3123,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement4ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html"
 		$Requirement4Report | Out-File $Requirement4ReportPath
 		$Req4Output.AppendText("Requirement Four Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html")
-		$Req4EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Four Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html","Requirement Four Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req4EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Four Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html","Requirement Four Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req4ExportReport = {
@@ -3289,7 +3289,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement5ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html"
 		$Requirement5Report | Out-File $Requirement5ReportPath
 		$Req5Output.AppendText("Requirement Five Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html")
-		$Req5EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Five Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html","Requirement Five Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req5EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Five Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html","Requirement Five Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req5ExportReport = {
@@ -3303,7 +3303,7 @@ $AllScriptList_ListUpdate = {
 # Requirement Seven Tab
 	# User Folder Input
 	Function Req7FolderInput {
-		$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$UserFolderInputMessageBox = [System.Windows.Forms.MessageBox]::Show("When this Warning Message is Closed, You will be prompted to select a folder for analysis.","Warning","OK","Information")
 		$FilePopupTmp = $AuxiliaryForm.Req7FolderBrowserDialog.ShowDialog()
 		if($FilePopupTmp -eq "OK"){
 			$Global:FilePathFilePopupTmp = $Req7FolderBrowserDialog.SelectedPath
@@ -3453,10 +3453,10 @@ $AllScriptList_ListUpdate = {
 	Function Req7UserPriviledges {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req7Output.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n")
+			$Req7Output.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n`n")
 			Start-Sleep -Seconds 0.5
 		}else{
-			$AllOutput.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n")
+			$AllOutput.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n`n")
 			Start-Sleep -Seconds 0.5
 		}
 		# Query AD
@@ -3467,26 +3467,35 @@ $AllScriptList_ListUpdate = {
 			$ActiveDirectoryGroups = (Get-ADGroup -Filter *).Name
 			# Loop
 			foreach ($Group in $ActiveDirectoryGroups){
-			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass | Format-Table | Out-String
+			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass
+			$GroupMembershipRTB = $GroupMembership | Format-Table | Out-String
+			$GroupInfomation = Get-ADGroup -Identity $Group
+			$GroupInfomationRTB = $GroupInfomation | Format-List | Out-String
+			# HTML Info Stuff
+			$Req7FormatGroupInfoHTML = $GroupInfomation | ConvertTo-Html -As Table -Property DistinguishedName,GroupCategory,GroupScope,Name,ObjectClass,ObjectGUID,SamAccountName,SID -Fragment -PreContent "<h3>$Group Group Details</h3>"
+			# Data Output/Append
 			if([string]::IsNullOrEmpty($GroupMembership)){
 				# Add to HTML List 
-				$Req7GroupMembershipList += "`nNo Users in " + $Group + "`n"
+				$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + "<h3>No Users in $Group</h3><p>$Global:SectionBreak</p>"
 				# Data Output
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`nNo Users in " + $Group + "`n")
+					$Req7Output.AppendText($Global:SectionBreak)
 				}else{
 					$AllOutput.AppendText("`nNo Users in " + $Group + "`n")
+					$AllOutput.AppendText($Global:SectionBreak)
 				}
 			}else{
-				# Add to HTML List 
-				$Req7GroupMembershipList += "`nHere are the Users in " + $Group + "`n" + $GroupMembership
+				# Add to HTML List
+				$Req7FormatGroupListHTML = $GroupMembership | ConvertTo-Html -As Table -Property Name,SamaccountName,objectClass,distinguishedName -Fragment -PreContent "<h3>Here are the Users in $Group</h3>" -PostContent "<p>$Global:SectionBreak</p>"
+				$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + $Req7FormatGroupListHTML
 				# Data Output
 				if($EverythingToggle -eq $false){
-					$Req7Output.AppendText("`nHere are the Users in " + $Group)
-					$Req7Output.AppendText($GroupMembership)
+					$Req7Output.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
+					$Req7Output.AppendText($Global:SectionBreak)
 				}else{
-					$AllOutput.AppendText("`nHere are the Users in " + $Group)
-					$AllOutput.AppendText($GroupMembership)
+					$AllOutput.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
+					$AllOutput.AppendText($Global:SectionBreak)
 					}
 				}
 			}
@@ -3541,7 +3550,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement7ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html"
 		$Requirement7Report | Out-File $Requirement7ReportPath
 		$Req7Output.AppendText("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html")
-		$Req7EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html","Requirement Seven Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req7EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html","Requirement Seven Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req7ExportReport = {
@@ -3731,9 +3740,9 @@ $AllScriptList_ListUpdate = {
 			$Global:Req8LocalAdminListHTML = $LocalAdminList | ConvertTo-Html -As Table -Fragment -PreContent "<h2>8.1 - Grab Local Administrators</h2>"
 			# Data Output
 			if($EverythingToggle -eq $false){
-				$Req8Output.AppendText($LocalAdminList)
+				$Req8Output.AppendText($LocalAdminListRTB)
 			}else{
-				$AllOutput.AppendText($LocalAdminList)
+				$AllOutput.AppendText($LocalAdminListRTB)
 			}
 		# Edge Case (1)
 		}catch [Microsoft.PowerShell.Commands.GroupNotFoundException]{
@@ -4037,7 +4046,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement8ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
 		$Req8Output.AppendText("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html")
-		$Req8EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html","Requirement Eight Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req8EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html","Requirement Eight Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req8ExportReport = {
@@ -4547,7 +4556,7 @@ $AllScriptList_ListUpdate = {
 		$Requirement10Report | Out-File $Requirement10ReportPath
 		# Write Output
 		$Req10Output.AppendText("Requirement Ten Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html")
-		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Ten Report Exported to: " + $Requirement10ReportPath,"Requirement Ten Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$Req10EndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Requirement Ten Report Exported to: " + $Requirement10ReportPath,"Requirement Ten Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$Req10ExportReport = {
@@ -4768,7 +4777,7 @@ $AllScriptList_ListUpdate = {
 		$DiagReportPath = $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html"
 		$DiagReport | Out-File $DiagReportPath
 		$DiagOutput.AppendText("`nDiagnostics Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html")
-		$DiagEndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Diagnostics Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html","Diagnostics Report Exported Successfully",[System.Windows.MessageBoxButton]::OK,[System.Windows.MessageBoxImage]::Information)
+		$DiagEndOfScriptMsg = [System.Windows.Forms.MessageBox]::Show("Diagnostics Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html","Diagnostics Report Exported Successfully","OK","Information")
 	}
 	# onClick Event Handler to Gather Data for Report
 	$DiagExportReport = {
