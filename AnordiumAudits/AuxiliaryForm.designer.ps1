@@ -864,6 +864,7 @@ $AuxiliaryForm.Controls.Add($MainTabControl)
 $AuxiliaryForm.FormBorderStyle = [System.Windows.Forms.FormBorderStyle]::FixedSingle
 $AuxiliaryForm.MaximizeBox = $false
 $AuxiliaryForm.Name = [System.String]'AuxiliaryForm'
+$AuxiliaryForm.Icon = ([System.Drawing.Icon]$resources.'$this.Icon')
 $AuxiliaryForm.StartPosition = [System.Windows.Forms.FormStartPosition]::Manual
 $AuxiliaryForm.Text = [System.String]'Anordium Audits'
 $MainTabControl.ResumeLayout($false)

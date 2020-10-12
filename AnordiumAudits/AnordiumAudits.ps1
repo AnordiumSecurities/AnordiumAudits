@@ -204,8 +204,10 @@ $Req2EverythingSwitch = $false
 $Req2ExportingSwitch = $false
 $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-`n`n"
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
-$Global:ProgramVersionCode = "1.3.0"
-$Global:ProgramVersionDate = "11th October 2020"
+
+# Version Number and Release Date
+$Global:ProgramVersionCode = "1.3.1"
+$Global:ProgramVersionDate = "13th October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -4133,15 +4135,15 @@ $AllScriptList_ListUpdate = {
 		$AuditSysEventsResult = $AuditSysEvents.split(' ')[2]
 		$AuditSysEventsResult = $AuditSysEventsResult -as [int]
 		if($AuditSysEventsResult -eq "3"){
-			$Global:Req10AuditSysEventsResult = "10.2    - [PASS] - Audit System Events is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditSysEventsResult = "10.2  - [PASS] - Audit System Events is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditSysEventsResult -eq "2"){
-			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is set to Failure.`n"
+			$Global:Req10AuditSysEventsResult = "10.2  - [FAILED] - Audit System Events is set to Failure.`n"
 		}elseif($AuditSysEventsResult -eq "1"){
-			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is set to Success.`n"
+			$Global:Req10AuditSysEventsResult = "10.2  - [FAILED] - Audit System Events is set to Success.`n"
 		}elseif($AuditSysEventsResult -eq "0"){
-			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is set to No Auditing.`n"
+			$Global:Req10AuditSysEventsResult = "10.2  - [FAILED] - Audit System Events is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditSysEventsResult = "10.2    - [FAILED] - Audit System Events is Not Defined.`n"
+			$Global:Req10AuditSysEventsResult = "10.2  - [FAILED] - Audit System Events is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Logon Events
@@ -4149,15 +4151,15 @@ $AllScriptList_ListUpdate = {
 		$AuditLogonEventsResult = $AuditLogonEvents.split(' ')[2]
 		$AuditLogonEventsResult = $AuditLogonEventsResult -as [int]
 		if($AuditLogonEventsResult -eq "3"){
-			$Global:Req10AuditLogonEventsResult = "10.2    - [PASS] - Audit Logon Events is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditLogonEventsResult = "10.2  - [PASS] - Audit Logon Events is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditLogonEventsResult -eq "2"){
-			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is set to Failure.`n"
+			$Global:Req10AuditLogonEventsResult = "10.2  - [FAILED] - Audit Logon Events is set to Failure.`n"
 		}elseif($AuditLogonEventsResult -eq "1"){
-			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is set to Success.`n"
+			$Global:Req10AuditLogonEventsResult = "10.2  - [FAILED] - Audit Logon Events is set to Success.`n"
 		}elseif($AuditLogonEventsResult -eq "0"){
-			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is set to No Auditing.`n"
+			$Global:Req10AuditLogonEventsResult = "10.2  - [FAILED] - Audit Logon Events is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditLogonEventsResult = "10.2    - [FAILED] - Audit Logon Events is Not Defined.`n"
+			$Global:Req10AuditLogonEventsResult = "10.2  - [FAILED] - Audit Logon Events is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Object Access
@@ -4165,15 +4167,15 @@ $AllScriptList_ListUpdate = {
 		$AuditObjectAccessResult = $AuditObjectAccess.split(' ')[2]
 		$AuditObjectAccessResult = $AuditObjectAccessResult -as [int]
 		if($AuditObjectAccessResult -eq "3"){
-			$Global:Req10AuditObjectAccessResult = "10.2    - [PASS] - Audit Object Access is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditObjectAccessResult = "10.2  - [PASS] - Audit Object Access is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditObjectAccessResult -eq "2"){
-			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is set to Failure.`n"
+			$Global:Req10AuditObjectAccessResult = "10.2  - [FAILED] - Audit Object Access is set to Failure.`n"
 		}elseif($AuditObjectAccessResult -eq "1"){
-			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is set to Success.`n"
+			$Global:Req10AuditObjectAccessResult = "10.2  - [FAILED] - Audit Object Access is set to Success.`n"
 		}elseif($AuditObjectAccessResult -eq "0"){
-			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is set to No Auditing.`n"
+			$Global:Req10AuditObjectAccessResult = "10.2  - [FAILED] - Audit Object Access is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditObjectAccessResult = "10.2    - [FAILED] - Audit Object Access is Not Defined.`n"
+			$Global:Req10AuditObjectAccessResult = "10.2  - [FAILED] - Audit Object Access is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Privilege Use
@@ -4181,15 +4183,15 @@ $AllScriptList_ListUpdate = {
 		$AuditPrivilegeUseResult = $AuditPrivilegeUse.split(' ')[2]
 		$AuditPrivilegeUseResult = $AuditPrivilegeUseResult -as [int]
 		if($AuditPrivilegeUseResult -eq "3"){
-			$Global:Req10AuditPrivilegeUseResult = "10.2    - [PASS] - Audit Privilege Use is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditPrivilegeUseResult = "10.2  - [PASS] - Audit Privilege Use is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditPrivilegeUseResult -eq "2"){
-			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is set to Failure.`n"
+			$Global:Req10AuditPrivilegeUseResult = "10.2  - [FAILED] - Audit Privilege Use is set to Failure.`n"
 		}elseif($AuditPrivilegeUseResult -eq "1"){
-			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is set to Success.`n"
+			$Global:Req10AuditPrivilegeUseResult = "10.2  - [FAILED] - Audit Privilege Use is set to Success.`n"
 		}elseif($AuditPrivilegeUseResult -eq "0"){
-			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is set to No Auditing.`n"
+			$Global:Req10AuditPrivilegeUseResult = "10.2  - [FAILED] - Audit Privilege Use is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditPrivilegeUseResult = "10.2    - [FAILED] - Audit Privilege Use is Not Defined.`n"
+			$Global:Req10AuditPrivilegeUseResult = "10.2  - [FAILED] - Audit Privilege Use is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Policy Change
@@ -4197,15 +4199,15 @@ $AllScriptList_ListUpdate = {
 		$AuditPolicyChangeResult = $AuditPolicyChange.split(' ')[2]
 		$AuditPolicyChangeResult = $AuditPolicyChangeResult -as [int]
 		if($AuditPolicyChangeResult -eq "3"){
-			$Global:Req10AuditPolicyChangeResult = "10.2    - [PASS] - Audit Policy Change is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditPolicyChangeResult = "10.2  - [PASS] - Audit Policy Change is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditPolicyChangeResult -eq "2"){
-			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is set to Failure.`n"
+			$Global:Req10AuditPolicyChangeResult = "10.2  - [FAILED] - Audit Policy Change is set to Failure.`n"
 		}elseif($AuditPolicyChangeResult -eq "1"){
-			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is set to Success.`n"
+			$Global:Req10AuditPolicyChangeResult = "10.2  - [FAILED] - Audit Policy Change is set to Success.`n"
 		}elseif($AuditPolicyChangeResult -eq "0"){
-			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is set to No Auditing.`n"
+			$Global:Req10AuditPolicyChangeResult = "10.2  - [FAILED] - Audit Policy Change is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditPolicyChangeResult = "10.2    - [FAILED] - Audit Policy Change is Not Defined.`n"
+			$Global:Req10AuditPolicyChangeResult = "10.2  - [FAILED] - Audit Policy Change is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Account Management
@@ -4213,15 +4215,15 @@ $AllScriptList_ListUpdate = {
 		$AuditAccountManageResult = $AuditAccountManage.split(' ')[2]
 		$AuditAccountManageResult = $AuditAccountManageResult -as [int]
 		if($AuditAccountManageResult -eq "3"){
-			$Global:Req10AuditAccountManageResult = "10.2    - [PASS] - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditAccountManageResult = "10.2  - [PASS] - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditAccountManageResult -eq "2"){
-			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is set to Failure.`n"
+			$Global:Req10AuditAccountManageResult = "10.2  - [FAILED] - Audit Account Management is set to Failure.`n"
 		}elseif($AuditAccountManageResult -eq "1"){
-			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is set to Success.`n"
+			$Global:Req10AuditAccountManageResult = "10.2  - [FAILED] - Audit Account Management is set to Success.`n"
 		}elseif($AuditAccountManageResult -eq "0"){
-			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is set to No Auditing.`n"
+			$Global:Req10AuditAccountManageResult = "10.2  - [FAILED] - Audit Account Management is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditAccountManageResult = "10.2    - [FAILED] - Audit Account Management is Not Defined.`n"
+			$Global:Req10AuditAccountManageResult = "10.2  - [FAILED] - Audit Account Management is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Process Tracking
@@ -4229,15 +4231,15 @@ $AllScriptList_ListUpdate = {
 		$AuditProcessTrackingResult = $AuditProcessTracking.split(' ')[2]
 		$AuditProcessTrackingResult = $AuditProcessTrackingResult -as [int]
 		if($AuditProcessTrackingResult -eq "3"){
-			$Global:Req10AuditProcessTrackingResult = "10.2    - [PASS] - Audit Process Tracking is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditProcessTrackingResult = "10.2  - [PASS] - Audit Process Tracking is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditProcessTrackingResult -eq "2"){
-			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is set to Failure.`n"
+			$Global:Req10AuditProcessTrackingResult = "10.2  - [FAILED] - Audit Process Tracking is set to Failure.`n"
 		}elseif($AuditProcessTrackingResult -eq "1"){
-			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is set to Success.`n"
+			$Global:Req10AuditProcessTrackingResult = "10.2  - [FAILED] - Audit Process Tracking is set to Success.`n"
 		}elseif($AuditProcessTrackingResult -eq "0"){
-			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is set to No Auditing.`n"
+			$Global:Req10AuditProcessTrackingResult = "10.2  - [FAILED] - Audit Process Tracking is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditProcessTrackingResult = "10.2    - [FAILED] - Audit Process Tracking is Not Defined.`n"
+			$Global:Req10AuditProcessTrackingResult = "10.2  - [FAILED] - Audit Process Tracking is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Directory Services Access
@@ -4245,15 +4247,15 @@ $AllScriptList_ListUpdate = {
 		$AuditDSAccessResult = $AuditDSAccess.split(' ')[2]
 		$AuditDSAccessResult = $AuditDSAccessResult -as [int]
 		if($AuditDSAccessResult -eq "3"){
-			$Global:Req10AuditDSAccessResult = "10.2    - [PASS] - Audit Directory Services Access is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditDSAccessResult = "10.2  - [PASS] - Audit Directory Services Access is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditDSAccessResult -eq "2"){
-			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is set to Failure.`n"
+			$Global:Req10AuditDSAccessResult = "10.2  - [FAILED] - Audit Directory Services Access is set to Failure.`n"
 		}elseif($AuditDSAccessResult -eq "1"){
-			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is set to Success.`n"
+			$Global:Req10AuditDSAccessResult = "10.2  - [FAILED] - Audit Directory Services Access is set to Success.`n"
 		}elseif($AuditDSAccessResult -eq "0"){
-			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is set to No Auditing.`n"
+			$Global:Req10AuditDSAccessResult = "10.2  - [FAILED] - Audit Directory Services Access is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditDSAccessResult = "10.2    - [FAILED] - Audit Directory Services Access is Not Defined.`n"
+			$Global:Req10AuditDSAccessResult = "10.2  - [FAILED] - Audit Directory Services Access is Not Defined.`n"
 		}
 
 		# 10.2 PCI DSS - Audit Account Logon Events
@@ -4261,15 +4263,15 @@ $AllScriptList_ListUpdate = {
 		$AuditAccountLogonResult = $AuditAccountLogon.split(' ')[2]
 		$AuditAccountLogonResult = $AuditAccountLogonResult -as [int]
 		if($AuditAccountLogonResult -eq "3"){
-			$Global:Req10AuditAccountLogonResult = "10.2    - [PASS] - Audit Account Logon Events is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditAccountLogonResult = "10.2  - [PASS] - Audit Account Logon Events is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditAccountLogonResult -eq "2"){
-			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is set to Failure.`n"
+			$Global:Req10AuditAccountLogonResult = "10.2  - [FAILED] - Audit Account Logon Events is set to Failure.`n"
 		}elseif($AuditAccountLogonResult -eq "1"){
-			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is set to Success.`n"
+			$Global:Req10AuditAccountLogonResult = "10.2  - [FAILED] - Audit Account Logon Events is set to Success.`n"
 		}elseif($AuditAccountLogonResult -eq "0"){
-			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is set to No Auditing.`n"
+			$Global:Req10AuditAccountLogonResult = "10.2  - [FAILED] - Audit Account Logon Events is set to No Auditing.`n"
 		}else{
-			$Global:Req10AuditAccountLogonResult = "10.2    - [FAILED] - Audit Account Logon Events is Not Defined.`n"
+			$Global:Req10AuditAccountLogonResult = "10.2  - [FAILED] - Audit Account Logon Events is Not Defined.`n"
 		}
 
 		# Data Output
