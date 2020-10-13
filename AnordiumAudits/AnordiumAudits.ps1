@@ -206,7 +206,7 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.3.1"
+$Global:ProgramVersionCode = "1.4.0"
 $Global:ProgramVersionDate = "13th October 2020"
 
 $AllScriptList_ListUpdate = {
@@ -600,7 +600,7 @@ $AllScriptList_ListUpdate = {
 			if(($Req2EverythingSwitch -eq $true) -and ($Req2ExportingSwitch -eq $false)){
 				$Req2Output.AppendText("Everything in Requirement Two `n")
 				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
-			}elseif(($Req2EverythingSwitch -eq $false) -and ($Req2ExportingSwitch -eq $true)){
+			}elseif($Req2ExportingSwitch -eq $true){
 				$Req2Output.AppendText("Writing Report for the Following:`n`nEverything in Requirement Two `n")
 				$Req2Output.AppendText("Requirement Two Compliance Check.`n`n")
 			}else{
@@ -2988,10 +2988,10 @@ $AllScriptList_ListUpdate = {
 	# onClick Event Handler to Gather Data for Report
 	$Req2ExportReport = {
 			$Req2Output.Clear()
-			$Req2ExportingSwitch = $true
 			$Req2Output.AppendText("Writing Report for the Following`n`n")
 			$Req2OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
 			$Req2OutputLabel.Refresh()
+			$Req2ExportingSwitch = $true
 			Req2ComplianceChecker
 			$Req2Output.AppendText($Global:SectionHeader)
 			Req2TestDefaultAccounts
