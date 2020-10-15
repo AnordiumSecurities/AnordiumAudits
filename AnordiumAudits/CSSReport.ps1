@@ -165,6 +165,18 @@ $CSSHeader = @"
 	#myBtn:hover {
 		background-color: #555; /* Add a dark-grey background on hover */
 	}
+
+	#CISFailedStatus {
+		color: #ff0000;
+	}
+
+	#CISPassStatus {
+		color: #008000;
+	}
+
+	#CISInfoStatus {
+		color: #000099;
+	}
 </style>
 "@
 

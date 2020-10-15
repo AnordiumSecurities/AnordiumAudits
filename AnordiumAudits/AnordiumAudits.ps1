@@ -368,7 +368,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementTenName = "<h1 id='Req10'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='ReqDiag'>PCI DSS Diagnostics Report</h1>"
 		$Global:ToCHTML = "<div id=`"toc_container`"`><p class=`"toc_title`">Contents</p><li><a href=`"#Req2`">PCI DSS Requirement Two</a></li><li><a href=`"#Req4`">PCI DSS Requirement Four</a></li><li><a href=`"#Req5`">PCI DSS Requirement Five</a></li><li><a href=`"#Req7`">PCI DSS Requirement Seven</a></li><li><a href=`"#Req8`">PCI DSS Requirement Eight</a></li><li><a href=`"#Req10`">PCI DSS Requirement Ten</a></li><li><a href=`"#ReqDiag`">PCI DSS Diagnostics Report</a></li></ul></div>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIPSSComplianceResultHTML $Global:Req2ComplianceResultHTML $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -907,6 +907,7 @@ $AllScriptList_ListUpdate = {
 			# Compliance Result
 			if($DSResult -eq $true){
 				$Global:Req2VendorPassResult = "2.1       - [FAILED] - Default Credentials Have Access in The Network.`n"
+				$Global:Req2VendorPassResultHTML = "2.1       - <span id=`"CISFailedStatus`">[FAILED]</span> - Default Credentials Have Access in The Network.`n"
 				if($EverythingToggle -eq $false){
 					$Req2Output.AppendText("2.1       - [FAILED] - Default Credentials Have Access in The Network.`n")
 				}else{
@@ -914,6 +915,7 @@ $AllScriptList_ListUpdate = {
 				}
 			}else{
 				$Global:Req2VendorPassResult = "2.1       - [PASS] - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant.`n"
+				$Global:Req2VendorPassResultHTML = "2.1       - <span id=`"CISPassStatus`">[PASS]</span> - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant.`n"
 				if($EverythingToggle -eq $false){
 					$Req2Output.AppendText("2.1       - [PASS] - Default Credentials Do Not Have Access in The Network. PCI-DSS Compliant.`n")
 				}else{
@@ -929,6 +931,7 @@ $AllScriptList_ListUpdate = {
 		# Edge Case No Connection to Domain
 		}else{
 			$Global:Req2VendorPassResult = "2.1       - [ERROR] - Unable to Test Credentials in The Network. Not Connected to Domain.`n"
+			$Global:Req2VendorPassResultHTML = "2.1       - <span id=`"CISFailedStatus`">[ERROR]</span> - Unable to Test Credentials in The Network. Not Connected to Domain.`n"
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("Unable to Test Default Accounts, Not Connected to Domain`n")
 			}else{
@@ -969,7 +972,9 @@ $AllScriptList_ListUpdate = {
 			}
 			if($FeatureCounter -gt 1){
 				$Global:Req2FeatureResult = "2.2.1     - [FAILED] - Detected More Than One Role or Feature Installed.`n"
+				$Global:Req2FeatureResultHTML = "2.2.1     - <span id=`"CISFailedStatus`">[FAILED]</span> - Detected More Than One Role or Feature Installed.`n"
 				$Global:Req2FeatureResultTotal = "2.2.1     - [INFORMATION] - Detected $FeatureCounter Role(s) or Feature(s).`n"
+				$Global:Req2FeatureResultTotalHTML = "2.2.1     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $FeatureCounter Role(s) or Feature(s).`n"
 				if($EverythingToggle -eq $false){
 					$Req2Output.AppendText("2.2.1     - [FAILED] - Detected More Than One Role or Feature or Role Installed.`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
@@ -979,6 +984,7 @@ $AllScriptList_ListUpdate = {
 				}
 			}else{
 				$Global:Req2FeatureResult = "2.2.1     - [PASS] - Only Detected One Role or Feature Installed. PCI-DSS Compliant.`n"
+				$Global:Req2FeatureResultHTML = "2.2.1     - <span id=`"CISPassStatus`">[PASS]</span> - Only Detected One Role or Feature Installed. PCI-DSS Compliant.`n"
 				$Global:Req2FeatureResultTotal = ""
 				# Output
 				if($EverythingToggle -eq $false){
@@ -994,6 +1000,7 @@ $AllScriptList_ListUpdate = {
 			# Data Output
 			$Global:Req2FeatureListHTML = "<h2>2.2.1 - List of Installed Windows Roles and Features</h2><p>Unable to Grab Installed Roles or Features.</p>"
 			$Global:Req2FeatureResult = "2.2.1     - [ERROR] - List of Installed Windows Roles and Features`nUnable to Grab Installed Roles or Features.`n"
+			$Global:Req2FeatureResultHTML = "2.2.1     - <span id=`"CISFailedStatus`">[ERROR]</span> - List of Installed Windows Roles and Features`nUnable to Grab Installed Roles or Features.`n"
 			$Global:Req2FeatureResultTotal = ""
 			$Req2FeatureList = "Unable to Grab Installed Features."
 			if($EverythingToggle -eq $false){
@@ -1032,11 +1039,13 @@ $AllScriptList_ListUpdate = {
 				$AllOutput.AppendText("`n2.2.2 - Detected $ProcessesCounter Running Processes.`n")
 			}
 			# Total Processes
-			$Global:RunningProcessesResult = "2.2.2     - [INFORMATION] - Detected $ProcessesCounter Running Processes.`n"	
+			$Global:RunningProcessesResult = "2.2.2     - [INFORMATION] - Detected $ProcessesCounter Running Processes.`n"
+			$Global:RunningProcessesResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $ProcessesCounter Running Processes.`n"
 		# Edge Case
 		}catch{
 			$Global:Req2ProcessListHTML = "<h2>2.2.2 - List of Running Processes</h2><p>Unable to List Running Processes.<p>"
 			$Global:RunningProcessesResult = "`n2.2.2     - [ERROR] - List of Running Processes`nUnable to List Running Processes."
+			$Global:RunningProcessesResultHTML = "`n2.2.2     - <span id=`"CISFailedStatus`">[ERROR]</span> - List of Running Processes`nUnable to List Running Processes."
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("`nUnable to List Running Processes.")
 			}else{
@@ -1066,6 +1075,7 @@ $AllScriptList_ListUpdate = {
 			}
 			# Total Processes
 			$Global:RunningServicesResult = "2.2.2     - [INFORMATION] - Detected $ServicesCounter Running Services.`n"
+			$Global:RunningServicesResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $ServicesCounter Running Services.`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($Req2SvcListRunningRTB)
@@ -1078,6 +1088,7 @@ $AllScriptList_ListUpdate = {
 		}catch{
 			$Global:Req2SvcListRunningHTML = "<h2>2.2.2 - List of Running Services</h2><p>Unable to List Running Serivces.</p>"
 			$Global:RunningServicesResult = "`n2.2.2     - [ERROR] - List of Running Services`n - Unable to List Running Serivces."
+			$Global:RunningServicesResultHTML = "`n2.2.2     - <span id=`"CISFailedStatus`">[ERROR]</span> - List of Running Services`n - Unable to List Running Serivces."
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("Unable to List Running Serivces.`n")
 			}else{
@@ -1165,6 +1176,7 @@ $AllScriptList_ListUpdate = {
 			}
 			# Total Processes
 			$Global:64BitAppsResult = "2.2.2     - [INFORMATION] - Detected $64BitAppsCounter 64-Bit Apps Installed.`n"
+			$Global:64BitAppsResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $64BitAppsCounter 64-Bit Apps Installed.`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("`n64-Bit Apps:")
@@ -1179,6 +1191,7 @@ $AllScriptList_ListUpdate = {
 		}catch{
 			$Global:Req2SoftwareList64BitHTML = "<h3>64-Bit Apps</h3><p>Unable to Grab Installed Software.</p>"
 			$Global:64BitAppsResult = "2.2.2     - [ERROR] - Unable to Find Any 64-Bit Apps Installed.`n"
+			$Global:64BitAppsResultHTML = "2.2.2     - <span id=`"CISFailedStatus`">[ERROR]</span> - Unable to Find Any 64-Bit Apps Installed.`n"
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("Unable to Grab Installed Software - 64 Bit Apps.")
 			}else{
@@ -1207,13 +1220,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($EnforcePasswordHistoryResult))){
 				if($EnforcePasswordHistoryResult -ge "24"){
 					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [PASS] - 'Enforce Password History' is set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult. CIS Compliant.`n"
+					$Global:Req2EnforcePasswordHistoryResultHTML = "1.1.1     - <span id=`"CISPassStatus`">[PASS]</span> - 'Enforce Password History' is set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [FAILED] - 'Enforce Password History' is Not set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult.`n"
+					$Global:Req2EnforcePasswordHistoryResultHTML = "1.1.1     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Enforce Password History' is Not set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [FAILED] - 'Enforce Password History' is Not Configured.`n"
+				$Global:Req2EnforcePasswordHistoryResultHTML = "1.1.1     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Enforce Password History' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1224,13 +1240,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($MaximumPasswordAgeResult))){
 				if(($MaximumPasswordAgeResult -le "60") -and ($MaximumPasswordAgeResult -ne "0")){
 					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [PASS] - 'Maximum Password Age' is set to '60 or fewer days, and not 0'. Current Value: $MaximumPasswordAgeResult. CIS Compliant.`n"
+					$Global:Req2MaximumPasswordAgeResultHTML = "1.1.2     - <span id=`"CISPassStatus`">[PASS]</span> - 'Maximum Password Age' is set to '60 or fewer days, and not 0'. Current Value: $MaximumPasswordAgeResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [FAILED] - 'Maximum Password Age' is Not set to '60 or fewer days, or is set to 0'. Current Value: $MaximumPasswordAgeResult.`n"
+					$Global:Req2MaximumPasswordAgeResultHTML = "1.1.2     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Maximum Password Age' is Not set to '60 or fewer days, or is set to 0'. Current Value: $MaximumPasswordAgeResult.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [FAILED] - 'Maximum Password Age' is Not Configured.`n"
+				$Global:Req2MaximumPasswordAgeResultHTML = "1.1.2     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Maximum Password Age' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1241,13 +1260,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($MinimumPasswordAgeResult))){
 				if($MinimumPasswordAgeResult -ge "1"){
 					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [PASS] - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
+					$Global:Req2MinimumPasswordAgeResultHTML = "1.1.3     - <span id=`"CISPassStatus`">[PASS]</span> - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [FAILED] - 'Minimum Password Age' is Not set to '1 or more day(s)'. Current Value: $MinimumPasswordAgeResult.`n"
+					$Global:Req2MinimumPasswordAgeResultHTML = "1.1.3     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Minimum Password Age' is Not set to '1 or more day(s)'. Current Value: $MinimumPasswordAgeResult.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [FAILED] - 'Minimum Password Age' is Not Configured.`n"
+				$Global:Req2MinimumPasswordAgeResultHTML = "1.1.3     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Minimum Password Age' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1258,13 +1280,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($MinimumPasswordLengthResult))){
 				if($MinimumPasswordLengthResult -ge "14"){
 					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [PASS] - 'Minimum Password Length' is set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult. CIS Compliant.`n"
+					$Global:Req2MinimumPasswordLengthResultHTML = "1.1.4     - <span id=`"CISPassStatus`">[PASS]</span> - 'Minimum Password Length' is set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [FAILED] - 'Minimum Password Length' is Not set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult.`n"
+					$Global:Req2MinimumPasswordLengthResultHTML = "1.1.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Minimum Password Length' is Not set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [FAILED] - 'Minimum Password Length' is Not Configured.`n"
+				$Global:Req2MinimumPasswordLengthResultHTML = "1.1.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Minimum Password Length' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1275,13 +1300,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($PasswordComplexityReqsResult))){
 				if($PasswordComplexityReqsResult -eq "0"){
 					$Global:Req2PasswordComplexityReqsResult = "1.1.5     - [PASS] - 'Password must meet complexity requirements' is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2PasswordComplexityReqsResultHTML = "1.1.5     - <span id=`"CISPassStatus`">[PASS]</span> - 'Password must meet complexity requirements' is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2PasswordComplexityReqsResult = "1.1.5     - [FAILED] - 'Password must meet complexity requirements' is set to 'Disabled'.`n"
+					$Global:Req2PasswordComplexityReqsResultHTML = "1.1.5     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Password must meet complexity requirements' is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2PasswordComplexityReqsResult = "1.1.5     - [FAILED] - 'Password must meet complexity requirements' is Not Configured.`n"
+				$Global:Req2PasswordComplexityReqsResultHTML = "1.1.5     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Password must meet complexity requirements' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1292,13 +1320,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ClearTextPasswordSettingResult))){
 				if($ClearTextPasswordSettingResult -eq "1"){
 					$Global:Req2ClearTextPasswordSettingResult = "1.1.6     - [PASS] - 'Store passwords using reversible encryption' is set to 'Disabled'. CIS Compliant.`n"
+					$Global:Req2ClearTextPasswordSettingResultHTML = "1.1.6     - <span id=`"CISPassStatus`">[PASS]</span> - 'Store passwords using reversible encryption' is set to 'Disabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ClearTextPasswordSettingResult = "1.1.6     - [FAILED] - 'Store passwords using reversible encryption' is set to 'Enabled'.`n"
+					$Global:Req2ClearTextPasswordSettingResultHTML = "1.1.6     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Store passwords using reversible encryption' is set to 'Enabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ClearTextPasswordSettingResult = "1.1.6     - [FAILED] - 'Store passwords using reversible encryption' is Not Configured.`n"
+				$Global:Req2ClearTextPasswordSettingResultHTML = "1.1.6     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Store passwords using reversible encryption' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1309,9 +1340,11 @@ $AllScriptList_ListUpdate = {
 			$AdminAccountStatusResult = $AdminAccountStatusResult -as [int]
 			if($AdminAccountStatusResult -eq "1"){
 				$Global:Req2DisabledAdminResult = "2.3.1.1   - [FAILED] - Administrator Account Is Enabled.`n"
+				$Global:Req2DisabledAdminResultHTML = "2.3.1.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Administrator Account Is Enabled.`n"
 				$CISFailCounter++
 			}else{
 				$Global:Req2DisabledAdminResult = "2.3.1.1   - [PASS] - Administrator Account Is Disabled. CIS Compliant.`n"
+				$Global:Req2DisabledAdminResultHTML = "2.3.1.1   - <span id=`"CISPassStatus`">[PASS]</span> - Administrator Account Is Disabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}
 
@@ -1322,13 +1355,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($BlockMSAccountsResult))){
 				if($BlockMSAccountsResult -eq "3"){
 					$Global:Req2BlockMSAccountsResult = "2.3.1.2   - [PASS] - Microsoft accounts is blocked correctly. Users can't add or log-in with Microsoft accounts. CIS Compliant.`n"
+					$Global:Req2BlockMSAccountsResultHTML = "2.3.1.2   - <span id=`"CISPassStatus`">[PASS]</span> - Microsoft accounts is blocked correctly. Users can't add or log-in with Microsoft accounts. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2BlockMSAccountsResult = "2.3.1.2   - [FAILED] - Microsoft accounts is blocked incorrectly. Users can add or log-in with Microsoft accounts.`n"
+					$Global:Req2BlockMSAccountsResultHTML = "2.3.1.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Microsoft accounts is blocked incorrectly. Users can add or log-in with Microsoft accounts.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2BlockMSAccountsResult = "2.3.1.2   - [FAILED] - Microsoft accounts policy is Not Configured.`n"
+				$Global:Req2BlockMSAccountsResultHTML = "2.3.1.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Microsoft accounts policy is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1338,9 +1374,11 @@ $AllScriptList_ListUpdate = {
 			$GuestAccountStatusResult = $GuestAccountStatusResult -as [int]
 			if($GuestAccountStatusResult -eq "1"){
 				$Global:Req2DisabledGuestResult = "2.3.1.3   - [FAILED] - Guest Account Is Enabled.`n"
+				$Global:Req2DisabledGuestResultHTML = "2.3.1.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Guest Account Is Enabled.`n"
 				$CISFailCounter++
 			}else{
 				$Global:Req2DisabledGuestResult = "2.3.1.3   - [PASS] - Guest Account Is Disabled. CIS Compliant.`n"
+				$Global:Req2DisabledGuestResultHTML = "2.3.1.3   - <span id=`"CISPassStatus`">[PASS]</span> - Guest Account Is Disabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}
 
@@ -1350,9 +1388,11 @@ $AllScriptList_ListUpdate = {
 			$LimitBlankPassUseResult = $LimitBlankPassUseResult -as [int]
 			if($LimitBlankPassUseResult -eq "1"){
 				$Global:Req2LimitBlankPassUseResult = "2.3.1.4   - [PASS] - Limit Blank Password Use Is Enabled. CIS Compliant.`n"
+				$Global:Req2LimitBlankPassUseResultHTML = "2.3.1.4   - <span id=`"CISPassStatus`">[PASS]</span> - Limit Blank Password Use Is Enabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2LimitBlankPassUseResult = "2.3.1.4   - [FAILED] - Limit Blank Password Use Is Disabled.`n"
+				$Global:Req2LimitBlankPassUseResultHTML = "2.3.1.4   - <span id=`"CISFailedStatus`">[FAILED]</span> - Limit Blank Password Use Is Disabled.`n"
 				$CISFailCounter++
 			}
 
@@ -1361,9 +1401,11 @@ $AllScriptList_ListUpdate = {
 			$RenameLocalAdminResult = $RenameLocalAdmin.split('"')[1]
 			if($RenameLocalAdminResult -eq "Administrator"){
 				$Global:Req2RenameAdminResult = "2.3.1.5   - [FAILED] - Administrator Account Not Renamed.`n"
+				$Global:Req2RenameAdminResultHTML = "2.3.1.5   - <span id=`"CISFailedStatus`">[FAILED]</span> - Administrator Account Not Renamed.`n"
 				$CISFailCounter++
 			}else{
 				$Global:Req2RenameAdminResult = "2.3.1.5   - [PASS] - Administrator Account Renamed to " + $RenameLocalAdminResult + ". CIS Compliant.`n"
+				$Global:Req2RenameAdminResultHTML = "2.3.1.5   - <span id=`"CISPassStatus`">[PASS]</span> - Administrator Account Renamed to " + $RenameLocalAdminResult + ". CIS Compliant.`n"
 				$CISPassCounter++
 			}
 
@@ -1372,9 +1414,11 @@ $AllScriptList_ListUpdate = {
 			$RenameLocalGuestResult = $RenameLocalGuest.split('"')[1]
 			if($RenameLocalGuestResult -eq "Guest"){
 				$Global:Req2RenameGuestResult = "2.3.1.6   - [FAILED] - Guest Account Not Renamed.`n"
+				$Global:Req2RenameGuestResultHTML = "2.3.1.6   - <span id=`"CISFailedStatus`">[FAILED]</span> - Guest Account Not Renamed.`n"
 				$CISFailCounter++
 			}else{
 				$Global:Req2RenameGuestResult = "2.3.1.6   - [PASS] - Guest Account Renamed to " + $RenameLocalGuestResult + ". CIS Compliant.`n"
+				$Global:Req2RenameGuestResultHTML = "2.3.1.6   - <span id=`"CISPassStatus`">[PASS]</span> - Guest Account Renamed to " + $RenameLocalGuestResult + ". CIS Compliant.`n"
 				$CISPassCounter++
 			}
 
@@ -1386,13 +1430,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ForceAuditPolicyOverrideResult))){
 				if($ForceAuditPolicyOverrideResult -eq "1"){
 					$Global:Req2ForceAuditPolicyOverrideResult = "2.3.2.1   - [PASS] - Force audit policy subcategory settings to override audit policy category settings is Enabled. CIS Compliant.`n"
+					$Global:Req2ForceAuditPolicyOverrideResultHTML = "2.3.2.1   - <span id=`"CISPassStatus`">[PASS]</span> - Force audit policy subcategory settings to override audit policy category settings is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ForceAuditPolicyOverrideResult = "2.3.2.1   - [FAILED] - Force audit policy subcategory settings to override audit policy category settings is Disabled.`n"
+					$Global:Req2ForceAuditPolicyOverrideResultHTML = "2.3.2.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Force audit policy subcategory settings to override audit policy category settings is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ForceAuditPolicyOverrideResult = "2.3.2.1   - [FAILED] - Force audit policy subcategory settings to override audit policy category settings is Not Configured.`n"
+				$Global:Req2ForceAuditPolicyOverrideResultHTML = "2.3.2.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Force audit policy subcategory settings to override audit policy category settings is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1403,13 +1450,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ShutdownAuditSettingsResult))){
 				if($ShutdownAuditSettingsResult -eq "0"){
 					$Global:Req2ShutdownAuditSettingsResult = "2.3.2.2   - [PASS] - Shut down system immediately if unable to log security audits is Disabled. CIS Compliant.`n"
+					$Global:Req2ShutdownAuditSettingsResultHTML = "2.3.2.2   - <span id=`"CISPassStatus`">[PASS]</span> - Shut down system immediately if unable to log security audits is Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ShutdownAuditSettingsResult = "2.3.2.2   - [FAILED] - Shut down system immediately if unable to log security audits is Enabled.`n"
+					$Global:Req2ShutdownAuditSettingsResultHTML = "2.3.2.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Shut down system immediately if unable to log security audits is Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ShutdownAuditSettingsResult = "2.3.2.2   - [FAILED] - Shut down system immediately if unable to log security audits is Not Configured.`n"
+				$Global:Req2ShutdownAuditSettingsResultHTML = "2.3.2.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Shut down system immediately if unable to log security audits is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1421,13 +1471,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($RestrictUserUndocking))){
 				if($RestrictUserUndockingResult -eq "0"){
 					$Global:Req2RestrictUserUndockingResult = "2.3.4     - [PASS] - The system must be logged in before removing from a docking system. CIS Compliant.`n"
+					$Global:Req2RestrictUserUndockingResultHTML = "2.3.4     - <span id=`"CISPassStatus`">[PASS]</span> - The system must be logged in before removing from a docking system. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2RestrictUserUndockingResult = "2.3.4     - [FAILED] - The system can be removed from a docking station without User Logging In.`n"
+					$Global:Req2RestrictUserUndockingResultHTML = "2.3.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - The system can be removed from a docking station without User Logging In.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2RestrictUserUndockingResult = "2.3.4     - [FAILED] - System undocking policy is Not Defined.`n"
+				$Global:Req2RestrictUserUndockingResultHTML = "2.3.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - System undocking policy is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1438,13 +1491,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($RestrictCDRoms))){
 				if($RestrictCDRomsResult -eq "1"){
 					$Global:Req2RestrictCDRomsResult = "2.3.4     - [PASS] - CD-ROM is Restricted to Locally Logged-on User Only. CIS Compliant.`n"
+					$Global:Req2RestrictCDRomsResultHTML = "2.3.4     - <span id=`"CISPassStatus`">[PASS]</span> - CD-ROM is Restricted to Locally Logged-on User Only. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2RestrictCDRomsResult = "2.3.4     - [FAILED] - CD-ROM is Not Restricted to Locally Logged-on User Only.`n"
+					$Global:Req2RestrictCDRomsResultHTML = "2.3.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - CD-ROM is Not Restricted to Locally Logged-on User Only.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2RestrictCDRomsResult = "2.3.4     - [FAILED] - Restricting CD-ROM to Locally Logged-on User Only Not Defined.`n"
+				$Global:Req2RestrictCDRomsResultHTML = "2.3.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - Restricting CD-ROM to Locally Logged-on User Only Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1455,13 +1511,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($RestrictFloppies))){
 				if($RestrictFloppiesResult -eq "1"){
 					$Global:Req2RestrictFloppiesResult = "2.3.4     - [PASS] - Floppy Access is restricted to Locally Logged-on User Only. CIS Compliant.`n"
+					$Global:Req2RestrictFloppiesResultHTML = "2.3.4     - <span id=`"CISPassStatus`">[PASS]</span> - Floppy Access is restricted to Locally Logged-on User Only. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2RestrictFloppiesResult = "2.3.4     - [FAILED] - Floppy Access is not restricted to Locally Logged-on User Only.`n"
+					$Global:Req2RestrictFloppiesResultHTML = "2.3.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - Floppy Access is not restricted to Locally Logged-on User Only.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2RestrictFloppiesResult = "2.3.4     - [FAILED] - Restrict Floppy Access to Locally Logged-on User Only Not Defined.`n"
+				$Global:Req2RestrictFloppiesResultHTML = "2.3.4     - <span id=`"CISFailedStatus`">[FAILED]</span> - Restrict Floppy Access to Locally Logged-on User Only Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1472,13 +1531,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LimitRemoveableMedia))){
 				if($LimitRemoveableMediaResult -eq "0"){
 					$Global:Req2LimitRemoveableMediaResult = "2.3.4.1   - [PASS] - Format and Eject Removable Media Policy Configured to Administrators. CIS Compliant.`n"
+					$Global:Req2LimitRemoveableMediaResultHTML = "2.3.4.1   - <span id=`"CISPassStatus`">[PASS]</span> - Format and Eject Removable Media Policy Configured to Administrators. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LimitRemoveableMediaResult = "2.3.4.1   - [FAILED] - Format and Eject Removable Media Policy Not Configured to Administrator.`n"
+					$Global:Req2LimitRemoveableMediaResultHTML = "2.3.4.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Format and Eject Removable Media Policy Not Configured to Administrator.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LimitRemoveableMediaResult = "2.3.4.1   - [FAILED] - Format and Eject Removable Media Policy Not Configured.`n"
+				$Global:Req2LimitRemoveableMediaResultHTML = "2.3.4.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Format and Eject Removable Media Policy Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1489,13 +1551,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LimitPrinterDriversResult))){
 				if($LimitRemoveableMediaResult -eq "0"){
 					$Global:Req2LimitPrinterDriversResult = "2.3.4.2   - [PASS] - Prevent users from installing printer drivers is Enabled. CIS Compliant.`n"
+					$Global:Req2LimitPrinterDriversResultHTML = "2.3.4.2   - <span id=`"CISPassStatus`">[PASS]</span> - Prevent users from installing printer drivers is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LimitPrinterDriversResult = "2.3.4.2   - [FAILED] - Prevent users from installing printer drivers is Disabled.`n"
+					$Global:Req2LimitPrinterDriversResultHTML = "2.3.4.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Prevent users from installing printer drivers is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LimitPrinterDriversResult = "2.3.4.2   - [FAILED] - Prevent users from installing printer drivers is Not Configured.`n"
+				$Global:Req2LimitPrinterDriversResultHTML = "2.3.4.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Prevent users from installing printer drivers is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1507,13 +1572,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ServerOpsScheduleTasks))){
 				if($ServerOpsScheduleTasksResult -eq "0"){
 					$Global:Req2ServerOpsScheduleTasksResult = "2.3.5.1   - [PASS] - Server Operators are not allowed to submit jobs by means of the AT schedule facility. CIS Compliant.`n"
+					$Global:Req2ServerOpsScheduleTasksResultHTML = "2.3.5.1   - <span id=`"CISPassStatus`">[PASS]</span> - Server Operators are not allowed to submit jobs by means of the AT schedule facility. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ServerOpsScheduleTasksResult = "2.3.5.1   - [FAILED] - Server Operators are allowed to submit jobs by means of the AT schedule facility.`n"
+					$Global:Req2ServerOpsScheduleTasksResultHTML = "2.3.5.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Server Operators are allowed to submit jobs by means of the AT schedule facility.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ServerOpsScheduleTasksResult = "2.3.5.1   - [FAILED] - Server Operators do not have configured permissions for submitting jobs.`n"
+				$Global:Req2ServerOpsScheduleTasksResultHTML = "2.3.5.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Server Operators do not have configured permissions for submitting jobs.`n"
 				$CISFailCounter++
 			}
 
@@ -1524,13 +1592,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DCRefuseMachineAccountChanges))){
 				if($DCRefuseMachineAccountChangesResult -eq "0"){
 					$Global:Req2DCRefuseMachineAccountChangesResult = "2.3.5.3   - [PASS] - Refuse Machine Account Password Change Policy is set to Disabled. CIS Compliant.`n"
+					$Global:Req2DCRefuseMachineAccountChangesResultHTML = "2.3.5.3   - <span id=`"CISPassStatus`">[PASS]</span> - Refuse Machine Account Password Change Policy is set to Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DCRefuseMachineAccountChangesResult = "2.3.5.3   - [FAILED] - Refuse Machine Account Password Change Policy is set to Enabled.`n"
+					$Global:Req2DCRefuseMachineAccountChangesResultHTML = "2.3.5.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Refuse Machine Account Password Change Policy is set to Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DCRefuseMachineAccountChangesResult = "2.3.5.3   - [FAILED] - Refuse Machine Account Password Change Policy is Not Defined.`n"
+				$Global:Req2DCRefuseMachineAccountChangesResultHTML = "2.3.5.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Refuse Machine Account Password Change Policy is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1542,13 +1613,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DigitalEncryptSignResult))){
 				if($DigitalEncryptSignResult -eq "1"){
 					$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [PASS] - Digitally encrypt or sign secure channel data (always)' is Enabled. CIS Compliant.`n"
+					$Global:Req2DigitalEncryptSignResultHTML = "2.3.6.1   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally encrypt or sign secure channel data (always)' is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [FAILED] - Digitally encrypt or sign secure channel data (always)' is Disabled.`n"
+					$Global:Req2DigitalEncryptSignResultHTML = "2.3.6.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally encrypt or sign secure channel data (always)' is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [FAILED] - Digitally encrypt or sign secure channel data (always)' is Not Defined.`n"
+				$Global:Req2DigitalEncryptSignResultHTML = "2.3.6.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally encrypt or sign secure channel data (always)' is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1558,9 +1632,11 @@ $AllScriptList_ListUpdate = {
 			$DigitalSecureChannelResult = $DigitalSecureChannelResult -as [int]
 			if($DigitalSecureChannelResult -eq "1"){
 				$Global:Req2DigitalSecureChannel = "2.3.6.2   - [PASS] - Digitally encrypt secure channel data (when possible) is Enabled. CIS Compliant.`n"
+				$Global:Req2DigitalSecureChannelHTML = "2.3.6.2   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally encrypt secure channel data (when possible) is Enabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2DigitalSecureChannel = "2.3.6.2   - [FAILED] - Digitally encrypt secure channel data (when possible) is Disabled.`n"
+				$Global:Req2DigitalSecureChannelHTML = "2.3.6.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally encrypt secure channel data (when possible) is Disabled.`n"
 				$CISFailCounter++
 			}
 
@@ -1570,9 +1646,11 @@ $AllScriptList_ListUpdate = {
 			$DigitalSecureChannelSignedResult = $DigitalSecureChannelResult -as [int]
 			if($DigitalSecureChannelSignedResult -eq "1"){
 				$Global:Req2DigitalSecureChannelSigned = "2.3.6.3   - [PASS] - Digitally sign secure channel data (when possible) is Enabled. CIS Compliant.`n"
+				$Global:Req2DigitalSecureChannelSignedHTML = "2.3.6.3   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally sign secure channel data (when possible) is Enabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2DigitalSecureChannelSigned = "2.3.6.3   - [FAILED] - Digitally sign secure channel data (when possible) is Disabled.`n"
+				$Global:Req2DigitalSecureChannelSignedHTML = "2.3.6.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally sign secure channel data (when possible) is Disabled.`n"
 				$CISFailCounter++
 			}
 
@@ -1583,13 +1661,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DisableMachinePassChange))){
 				if($DisableMachinePassChangeResult -eq "0"){
 					$Global:Req2DisableMachinePassChangeResult = "2.3.6.4   - [PASS] - Machine Account Password Changes is set to Disabled. CIS Compliant.`n"
+					$Global:Req2DisableMachinePassChangeResultHTML = "2.3.6.4   - <span id=`"CISPassStatus`">[PASS]</span> - Machine Account Password Changes is set to Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DisableMachinePassChangeResult = "2.3.6.4   - [FAILED] - Machine Account Password Changes is set to Enabled.`n"
+					$Global:Req2DisableMachinePassChangeResultHTML = "2.3.6.4   - <span id=`"CISFailedStatus`">[FAILED]</span> - Machine Account Password Changes is set to Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DisableMachinePassChangeResult = "2.3.6.4   - [FAILED] - Machine Account Password Changes is not Not Defined.`n"
+				$Global:Req2DisableMachinePassChangeResultHTML = "2.3.6.4   - <span id=`"CISFailedStatus`">[FAILED]</span> - Machine Account Password Changes is not Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1600,13 +1681,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($MaxMachinePassAgeResult))){
 				if(($MaxMachinePassAgeResult -le "30") -and ($MaxMachinePassAgeResult -ne "0")){
 					$Global:Req2MaxMachinePassAgeResult = "2.3.6.5   - [PASS] - Maximum Machine Account Password Age is set to between 1 and 30 Days. The current setting is $MaxMachinePassAgeResult Days. CIS Compliant.`n"
+					$Global:Req2MaxMachinePassAgeResultHTML = "2.3.6.5   - <span id=`"CISPassStatus`">[PASS]</span> - Maximum Machine Account Password Age is set to between 1 and 30 Days. The current setting is $MaxMachinePassAgeResult Days. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2MaxMachinePassAgeResult = "2.3.6.5   - [FAILED] - Maximum Machine Account Password Age is set to 0 Days.`n"
+					$Global:Req2MaxMachinePassAgeResultHTML = "2.3.6.5   - <span id=`"CISFailedStatus`">[FAILED]</span> - Maximum Machine Account Password Age is set to 0 Days.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2MaxMachinePassAgeResult = "2.3.6.5   - [FAILED] - Maximum Machine Account Password Age is set to Greater than 30 Days.`n"
+				$Global:Req2MaxMachinePassAgeResultHTML = "2.3.6.5   - <span id=`"CISFailedStatus`">[FAILED]</span> - Maximum Machine Account Password Age is set to Greater than 30 Days.`n"
 				$CISFailCounter++
 			}
 
@@ -1617,13 +1701,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($StrongSessionKeyResult))){
 				if($LimitRemoveableMediaResult -eq "0"){
 					$Global:Req2StrongSessionKeyResult = "2.3.6.6   - [PASS] - Require Strong Session Key for Windows Server 2000 is Enabled. CIS Compliant.`n"
+					$Global:Req2StrongSessionKeyResultHTML = "2.3.6.6   - <span id=`"CISPassStatus`">[PASS]</span> - Require Strong Session Key for Windows Server 2000 is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2StrongSessionKeyResult = "2.3.6.6   - [FAILED] - Require Strong Session Key for Windows Server 2000 is Disabled.`n"
+					$Global:Req2StrongSessionKeyResultHTML = "2.3.6.6   - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Strong Session Key for Windows Server 2000 is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2StrongSessionKeyResult = "2.3.6.6   - [FAILED] - Require Strong Session Key for Windows Server 2000 is Not Configured.`n"
+				$Global:Req2StrongSessionKeyResultHTML = "2.3.6.6   - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Strong Session Key for Windows Server 2000 is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1635,13 +1722,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LoginCntlAltDelStatusResult))){
 				if($LoginCntlAltDelStatusResult -eq "0"){
 					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1   - [PASS] - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Disabled. CIS Compliant.`n"
+					$Global:Req2LoginCntlAltDelStatusResultHTML = "2.3.7.1   - <span id=`"CISPassStatus`">[PASS]</span> - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1   - [FAILED] - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Enabled.`n"
+					$Global:Req2LoginCntlAltDelStatusResultHTML = "2.3.7.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1   - [FAILED] - Policy for Do not require CTRL+ALT+DEL on the Login page is Not Configured.`n"
+				$Global:Req2LoginCntlAltDelStatusResultHTML = "2.3.7.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Policy for Do not require CTRL+ALT+DEL on the Login page is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1651,9 +1741,11 @@ $AllScriptList_ListUpdate = {
 			$DontDisplayLastUserResult = $DontDisplayLastUserResult -as [int]
 			if($DontDisplayLastUserResult -eq "1"){
 				$Global:Req2DontDisplayLastUser = "2.3.7.2   - [PASS] - Policy of Not Displaying the Last Logged-in Username is set to Enabled. CIS Compliant.`n"
+				$Global:Req2DontDisplayLastUserHTML = "2.3.7.2   - <span id=`"CISPassStatus`">[PASS]</span> - Policy of Not Displaying the Last Logged-in Username is set to Enabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2DontDisplayLastUser = "2.3.7.2   - [FAILED] - Policy of Not Displaying the Last Logged-in Username is set to Disabled.`n"
+				$Global:Req2DontDisplayLastUserHTML = "2.3.7.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Policy of Not Displaying the Last Logged-in Username is set to Disabled.`n"
 				$CISFailCounter++
 			}
 
@@ -1665,13 +1757,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($MachineAFKLimitResult))){
 				if(($MachineAFKLimitResult -le "900") -and ($MachineAFKLimitResult -ne "0")){
 					$Global:Req2MachineAFKLimitResult = "2.3.7.3   - [PASS] - Machine inactivity limit is set between 1 and 900 seconds. The current setting is $MachineAFKLimitResult seconds. CIS Compliant.`n"
+					$Global:Req2MachineAFKLimitResultHTML = "2.3.7.3   - <span id=`"CISPassStatus`">[PASS]</span> - Machine inactivity limit is set between 1 and 900 seconds. The current setting is $MachineAFKLimitResult seconds. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2MachineAFKLimitResult = "2.3.7.3   - [FAILED] - Machine inactivity limit is set at 0 or greater than 900 seconds. The current setting is $MachineAFKLimitResult seconds.`n"
+					$Global:Req2MachineAFKLimitResultHTML = "2.3.7.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Machine inactivity limit is set at 0 or greater than 900 seconds. The current setting is $MachineAFKLimitResult seconds.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2MachineAFKLimitResult = "2.3.7.3   - [FAILED] - Machine inactivity limit is not defined.`n"
+				$Global:Req2MachineAFKLimitResultHTML = "2.3.7.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Machine inactivity limit is not defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1680,9 +1775,11 @@ $AllScriptList_ListUpdate = {
 			$LegalNoticeTextResult = $LegalNoticeText.split(',')[1]
 			if(-not([string]::IsNullOrWhiteSpace($LegalNoticeTextResult))){
 				$Global:Req2LegalNoticeTextResult = "2.3.7.4   - [PASS] - Message Text for User Log-in Attempt is defined. CIS Compliant.`n"
+				$Global:Req2LegalNoticeTextResultHTML = "2.3.7.4   - <span id=`"CISPassStatus`">[PASS]</span> - Message Text for User Log-in Attempt is defined. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2LegalNoticeTextResult = "2.3.7.4   - [FAILED] - Message Text for User Log-in Attempt is not defined.`n"
+				$Global:Req2LegalNoticeTextResultHTML = "2.3.7.4   - <span id=`"CISFailedStatus`">[FAILED]</span> - Message Text for User Log-in Attempt is not defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1692,9 +1789,11 @@ $AllScriptList_ListUpdate = {
 			$LegalNoticeCaptionResult2 = $LegalNoticeCaptionResult.split('"')[0]
 			if(-not([string]::IsNullOrEmpty($LegalNoticeCaptionResult2))){
 				$Global:Req2LegalNoticeCaptionResult = "2.3.7.5   - [PASS] - Message Title for User Log in Attempt is defined. CIS Compliant.`n"
+				$Global:Req2LegalNoticeCaptionResultHTML = "2.3.7.5   - <span id=`"CISPassStatus`">[PASS]</span> - Message Title for User Log in Attempt is defined. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2LegalNoticeCaptionResult = "2.3.7.5   - [FAILED] - Message Title for User Log in Attempt is not defined.`n"
+				$Global:Req2LegalNoticeCaptionResultHTML = "2.3.7.5   - <span id=`"CISFailedStatus`">[FAILED]</span> - Message Title for User Log in Attempt is not defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1705,13 +1804,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($PreviousCachedLogons))){
 				if($PreviousCachedLogonsResult -le "4"){
 					$Global:Req2PreviousCachedLogonsResult = "2.3.7.6   - [PASS] - Number of Previous Logons to Cache is set to Four or Fewer Logons. The current value is set to $PreviousCachedLogonsResult. CIS Compliant.`n"
+					$Global:Req2PreviousCachedLogonsResultHTML = "2.3.7.6   - <span id=`"CISPassStatus`">[PASS]</span> - Number of Previous Logons to Cache is set to Four or Fewer Logons. The current value is set to $PreviousCachedLogonsResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2PreviousCachedLogonsResult = "2.3.7.6   - [FAILED] - Number of Previous Logons to Cache is set Higher than Four Logons. The current value is set to $PreviousCachedLogonsResult.`n"
+					$Global:Req2PreviousCachedLogonsResultHTML = "2.3.7.6   - <span id=`"CISFailedStatus`">[FAILED]</span> - Number of Previous Logons to Cache is set Higher than Four Logons. The current value is set to $PreviousCachedLogonsResult.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2PreviousCachedLogonsResult = "2.3.7.6   - [FAILED] - Number of Previous Logons to Cache is Not Defined.`n"
+				$Global:Req2PreviousCachedLogonsResultHTML = "2.3.7.6   - <span id=`"CISFailedStatus`">[FAILED]</span> - Number of Previous Logons to Cache is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1722,13 +1824,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($PassExpiryWarningResult))){
 				if(($PassExpiryWarningResult -le 14) -and ($PassExpiryWarningResult -ge 5)){
 					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [PASS] - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassExpiryWarningResult Days. CIS Compliant.`n"
+					$Global:Req2PassExpiryWarningResultHTML = "2.3.7.7   - <span id=`"CISPassStatus`">[PASS]</span> - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassExpiryWarningResult Days. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [FAILED] - Prompt User to Change Password Before Expiration is set greater than 14 Days. It's set to $PassExpiryWarningResult Days.`n"
+					$Global:Req2PassExpiryWarningResultHTML = "2.3.7.7   - <span id=`"CISFailedStatus`">[FAILED]</span> - Prompt User to Change Password Before Expiration is set greater than 14 Days. It's set to $PassExpiryWarningResult Days.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [FAILED] - Prompt User to Change Password Before Expiration is set to less than 5 Days.`n"
+				$Global:Req2PassExpiryWarningResultHTML = "2.3.7.7   - <span id=`"CISFailedStatus`">[FAILED]</span> - Prompt User to Change Password Before Expiration is set to less than 5 Days.`n"
 				$CISFailCounter++
 			}
 
@@ -1739,13 +1844,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DCAuthUnlockResult))){
 				if($DCAuthUnlockResult -eq "1"){
 					$Global:Req2DCAuthUnlockResult = "2.3.7.8   - [PASS] - Require Domain Controller Authentication to Unlock Workstation is Enabled. CIS Compliant.`n"
+					$Global:Req2DCAuthUnlockResultHTML = "2.3.7.8   - <span id=`"CISPassStatus`">[PASS]</span> - Require Domain Controller Authentication to Unlock Workstation is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DCAuthUnlockResult = "2.3.7.8   - [FAILED] - Require Domain Controller Authentication to Unlock Workstation is Disabled.`n"
+					$Global:Req2DCAuthUnlockResultHTML = "2.3.7.8   - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Domain Controller Authentication to Unlock Workstation is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DCAuthUnlockResult = "2.3.7.8   - [FAILED] - Require Domain Controller Authentication to Unlock Workstation is Not Configured.`n"
+				$Global:Req2DCAuthUnlockResultHTML = "2.3.7.8   - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Domain Controller Authentication to Unlock Workstation is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1756,13 +1864,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($SmartCardRemovalResult))){
 				if($SmartCardRemovalResult -ge "1"){
 					$Global:Req2SmartCardRemovalResult = "2.3.7.9   - [PASS] - Smart Card Removal Behaviour is set to 'Lock Workstation' or higher. CIS Compliant.`n"
+					$Global:Req2SmartCardRemovalResultHTML = "2.3.7.9   - <span id=`"CISPassStatus`">[PASS]</span> - Smart Card Removal Behaviour is set to 'Lock Workstation' or higher. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2SmartCardRemovalResult = "2.3.7.9   - [FAILED] - Smart Card Removal Behaviour is set lower than 'Lock Workstation'.`n"
+					$Global:Req2SmartCardRemovalResultHTML = "2.3.7.9   - <span id=`"CISFailedStatus`">[FAILED]</span> - Smart Card Removal Behaviour is set lower than 'Lock Workstation'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2SmartCardRemovalResult = "2.3.7.9   - [FAILED] - Smart Card Removal Behaviour is Not Configured.`n"
+				$Global:Req2SmartCardRemovalResultHTML = "2.3.7.9   - <span id=`"CISFailedStatus`">[FAILED]</span> - Smart Card Removal Behaviour is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1774,13 +1885,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DigitallySignAlwaysResult))){
 				if($DigitallySignAlwaysResult -eq "1"){
 					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1   - [PASS] - Digitally Sign Communication (Always) is Enabled. CIS Compliant.`n"
+					$Global:Req2DigitallySignAlwaysResultHTML = "2.3.8.1   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Communication (Always) is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1   - [FAILED] - Digitally Sign Communication (Always) is Disabled.`n"
+					$Global:Req2DigitallySignAlwaysResultHTML = "2.3.8.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Communication (Always) is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DigitallySignAlwaysResult = "2.3.8.1   - [FAILED] - Digitally Sign Commuications (Always) is Not Configured.`n"
+				$Global:Req2DigitallySignAlwaysResultHTML = "2.3.8.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (Always) is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1791,13 +1905,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DigitallySignComsServerResult))){
 				if($DigitallySignComsServerResult -eq "1"){
 					$Global:Req2DigitallySignComsServerResult = "2.3.8.2   - [PASS] - Digitally Sign Commuications (if server agrees) is Enabled. CIS Compliant.`n"
+					$Global:Req2DigitallySignComsServerResultHTML = "2.3.8.2   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Commuications (if server agrees) is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DigitallySignComsServerResult = "2.3.8.2   - [FAILED] - Digitally Sign Commuications (if server agrees) is Disabled.`n"
+					$Global:Req2DigitallySignComsServerResultHTML = "2.3.8.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (if server agrees) is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DigitallySignComsServerResult = "2.3.8.2   - [FAILED] - Digitally Sign Commuications (if server agrees) is Not Configured.`n"
+				$Global:Req2DigitallySignComsServerResultHTML = "2.3.8.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (if server agrees) is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1807,9 +1924,11 @@ $AllScriptList_ListUpdate = {
 			$EnabledPlainTextResult = $EnabledPlainTextResult -as [int]
 			if($EnabledPlainTextResult -eq "0"){
 				$Global:Req2EnablePlainTextResult = "2.3.8.3   - [PASS] - Sending Unencrypted Passwords to SMB server policy is disabled. CIS Compliant.`n"
+				$Global:Req2EnablePlainTextResultHTML = "2.3.8.3   - <span id=`"CISPassStatus`">[PASS]</span> - Sending Unencrypted Passwords to SMB server policy is disabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2EnablePlainTextResult = "2.3.8.3   - [FAILED] - Sending Unencrypted Passwords to SMB server policy is enabled.`n"
+				$Global:Req2EnablePlainTextResultHTML = "2.3.8.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Sending Unencrypted Passwords to SMB server policy is enabled.`n"
 				$CISFailCounter++
 			}
 
@@ -1821,13 +1940,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($SuspendingSessionIdleTimeResult))){
 				if($SuspendingSessionIdleTimeResult -le "15"){
 					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [PASS] - Amount of Idle Time Required before Suspending Session is set to 15 mins or less. Current Value: $SuspendingSessionIdleTimeResult mins. CIS Compliant.`n"
+					$Global:Req2SuspendingSessionIdleTimeResultHTML = "2.3.9.1   - <span id=`"CISPassStatus`">[PASS]</span> - Amount of Idle Time Required before Suspending Session is set to 15 mins or less. Current Value: $SuspendingSessionIdleTimeResult mins. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [FAILED] - Amount of Idle Time Required before Suspending Session is set higher than 15 mins. Current Value: $SuspendingSessionIdleTimeResult mins.`n"
+					$Global:Req2SuspendingSessionIdleTimeResultHTML = "2.3.9.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Amount of Idle Time Required before Suspending Session is set higher than 15 mins. Current Value: $SuspendingSessionIdleTimeResult mins.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [FAILED] - Amount of Idle Time Required before Suspending Session is Not Defined.`n"
+				$Global:Req2SuspendingSessionIdleTimeResultHTML = "2.3.9.1   - <span id=`"CISFailedStatus`">[FAILED]</span> - Amount of Idle Time Required before Suspending Session is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1838,13 +1960,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DigitallySignComsForcedResult))){
 				if($DigitallySignComsForcedResult -eq "1"){
 					$Global:Req2DigitallySignComsForcedResult = "2.3.9.2   - [PASS] - Digitally Sign Commuications (always) is Enabled. CIS Compliant.`n"
+					$Global:Req2DigitallySignComsForcedResultHTML = "2.3.9.2   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Commuications (always) is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DigitallySignComsForcedResult = "2.3.9.2   - [FAILED] - Digitally Sign Commuications (always) is Disabled.`n"
+					$Global:Req2DigitallySignComsForcedResultHTML = "2.3.9.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (always) is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DigitallySignComsForcedResult = "2.3.9.2   - [FAILED] - Digitally Sign Commuications (always) is Not Configured.`n"
+				$Global:Req2DigitallySignComsForcedResultHTML = "2.3.9.2   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (always) is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1855,13 +1980,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($DigitallySignComsClientResult))){
 				if($DigitallySignComsClientResult -eq "1"){
 					$Global:Req2DigitallySignComsClientResult = "2.3.9.3   - [PASS] - Digitally Sign Commuications (if client agrees) is Enabled. CIS Compliant.`n"
+					$Global:Req2DigitallySignComsClientResultHTML = "2.3.9.3   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Commuications (if client agrees) is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2DigitallySignComsClientResult = "2.3.9.3   - [FAILED] - Digitally Sign Commuications (if client agrees) is Disabled.`n"
+					$Global:Req2DigitallySignComsClientResultHTML = "2.3.9.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (if client agrees) is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2DigitallySignComsClientResult = "2.3.9.3   - [FAILED] - Digitally Sign Commuications (if client agrees) is Not Configured.`n"
+				$Global:Req2DigitallySignComsClientResultHTML = "2.3.9.3   - <span id=`"CISFailedStatus`">[FAILED]</span> - Digitally Sign Commuications (if client agrees) is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -1872,13 +2000,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ForcedClientLogoff))){
 				if($ForcedClientLogoffResult -eq "1"){
 					$Global:Req2ForcedClientLogoffResult = "2.3.9.4   - [PASS] - Clients are Disconnected when Logon Hours Expire. CIS Compliant.`n"
+					$Global:Req2ForcedClientLogoffResultHTML = "2.3.9.4   - <span id=`"CISPassStatus`">[PASS]</span> - Clients are Disconnected when Logon Hours Expire. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ForcedClientLogoffResult = "2.3.9.4   - [FAILED] - Clients are Not Disconnected when Logon Hours Expire.`n"
+					$Global:Req2ForcedClientLogoffResultHTML = "2.3.9.4   - <span id=`"CISFailedStatus`">[FAILED]</span> - Clients are Not Disconnected when Logon Hours Expire.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ForcedClientLogoffResult = "2.3.9.4   - [FAILED] - Disconnect Clients when Logon Hours Expire is Not Defined.`n"
+				$Global:Req2ForcedClientLogoffResultHTML = "2.3.9.4   - <span id=`"CISFailedStatus`">[FAILED]</span> - Disconnect Clients when Logon Hours Expire is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -1889,9 +2020,11 @@ $AllScriptList_ListUpdate = {
 			$SIDNameLookupResult = $SIDNameLookupResult -as [int]
 			if($SIDNameLookupResult -eq "0"){
 				$Global:Req2SIDNameLookupResult = "2.3.10.1  - [PASS] - Allowing SID/Name Translation Policy is disbled. CIS Compliant.`n"
+				$Global:Req2SIDNameLookupResultHTML = "2.3.10.1  - <span id=`"CISPassStatus`">[PASS]</span> - Allowing SID/Name Translation Policy is disbled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2SIDNameLookupResult = "2.3.10.1  - [FAILED] - Allowing SID/Name Transaltion Policy is enabled.`n"
+				$Global:Req2SIDNameLookupResultHTML = "2.3.10.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allowing SID/Name Transaltion Policy is enabled.`n"
 				$CISFailCounter++
 			}
 			
@@ -1902,13 +2035,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($RestrictAnonymousSAMResult))){
 				if($RestrictAnonymousSAMResult -eq "1"){
 					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2  - [PASS] - Do not allow Anonymous Enumeration of SAM Accounts is Enabled. (MS Only) CIS Compliant.`n"
+					$Global:Req2RestrictAnonymousSAMResultHTML = "2.3.10.2  - <span id=`"CISPassStatus`">[PASS]</span> - Do not allow Anonymous Enumeration of SAM Accounts is Enabled. (MS Only) CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2  - [FAILED] - Do not allow Anonymous Enumeration of SAM Accounts is Disabled. (MS Only)`n"
+					$Global:Req2RestrictAnonymousSAMResultHTML = "2.3.10.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Do not allow Anonymous Enumeration of SAM Accounts is Disabled. (MS Only)`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2  - [FAILED] - Do not allow Anonymous Enumeration of SAM Accounts is Not Configured. (MS Only)`n"
+				$Global:Req2RestrictAnonymousSAMResultHTML = "2.3.10.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Do not allow Anonymous Enumeration of SAM Accounts is Not Configured. (MS Only)`n"
 				$CISFailCounter++
 			}
 
@@ -1919,13 +2055,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($AnonymousEmuerationAccountsResult))){
 				if($AnonymousEmuerationAccountsResult -eq "1"){
 					$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [PASS] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Enabled. (MS Only) CIS Compliant.`n"
+					$Global:Req2AnonymousEmuerationAccountsResultHTML = "2.3.10.3  - <span id=`"CISPassStatus`">[PASS]</span> - Do not allow Anonymous Enueration of SAM Accounts and Shares is Enabled. (MS Only) CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [FAILED] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Disabled. (MS Only)`n"
+					$Global:Req2AnonymousEmuerationAccountsResultHTML = "2.3.10.3  - <span id=`"CISFailedStatus`">[FAILED]</span> - Do not allow Anonymous Enueration of SAM Accounts and Shares is Disabled. (MS Only)`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [FAILED] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Not Configured. (MS Only)`n"
+				$Global:Req2AnonymousEmuerationAccountsResultHTML = "2.3.10.3  - <span id=`"CISFailedStatus`">[FAILED]</span> - Do not allow Anonymous Enueration of SAM Accounts and Shares is Not Configured. (MS Only)`n"
 				$CISFailCounter++
 			}
 
@@ -1936,13 +2075,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($StorageOfPasswordsResult))){
 				if($StorageOfPasswordsResult -eq "1"){
 					$Global:Req2StorageOfPasswordsResult = "2.3.10.4  - [PASS] - Do not allow storage of passwords and credentials for network authentication is Enabled. CIS Compliant.`n"
+					$Global:Req2StorageOfPasswordsResultHTML = "2.3.10.4  - <span id=`"CISPassStatus`">[PASS]</span> - Do not allow storage of passwords and credentials for network authentication is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2StorageOfPasswordsResult = "2.3.10.4  - [FAILED] - Do not allow storage of passwords and credentials for network authentication is Disabled.`n"
+					$Global:Req2StorageOfPasswordsResultHTML = "2.3.10.4  - <span id=`"CISFailedStatus`">[FAILED]</span> - Do not allow storage of passwords and credentials for network authentication is Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2StorageOfPasswordsResult = "2.3.10.4  - [FAILED] - Do not allow storage of passwords and credentials for network authentication is Not Configured. (MS Only)`n"
+				$Global:Req2StorageOfPasswordsResultHTML = "2.3.10.4  - <span id=`"CISFailedStatus`">[FAILED]</span> - Do not allow storage of passwords and credentials for network authentication is Not Configured. (MS Only)`n"
 				$CISFailCounter++
 			}
 
@@ -1952,9 +2094,11 @@ $AllScriptList_ListUpdate = {
 			$AllIncludesPoliciesResult = $AllIncludesPoliciesResult -as [int]
 			if($AllIncludesPoliciesResult -eq "0"){
 				$Global:Req2AllIncludesPoliciesResult = "2.3.10.5  - [PASS] - Let Everyone Permission Apply to Anonymous Users Policy is disabled. CIS Compliant.`n"
+				$Global:Req2AllIncludesPoliciesResultHTML = "2.3.10.5  - <span id=`"CISPassStatus`">[PASS]</span> - Let Everyone Permission Apply to Anonymous Users Policy is disabled. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2AllIncludesPoliciesResult = "2.3.10.5  - [FAILED] - Let Everyone Permission Apply to Anonymous Users Policy is enabled.`n"
+				$Global:Req2AllIncludesPoliciesResultHTML = "2.3.10.5  - <span id=`"CISFailedStatus`">[FAILED]</span> - Let Everyone Permission Apply to Anonymous Users Policy is enabled.`n"
 				$CISFailCounter++
 			}
 
@@ -1980,15 +2124,18 @@ $AllScriptList_ListUpdate = {
 				}
 				# Check Data
 				if($ResultCounter -eq "3"){
-					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - [PASS] - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
+					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - <span id=`"CISPassStatus`">[PASS]</span> - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
+					$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISPassStatus`">[PASS]</span> - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - [FAILED] - Named Pipes that are Accessed Anonymously are Not Configured Correctly.`n"
+					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Configured Correctly.`n"
+					$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Configured Correctly.`n"
 					$CISFailCounter++
 				}
 			# Edge Case
 			}else{
-				$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - [FAILED] - Named Pipes that are Accessed Anonymously are Not Defined.`n"
+				$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Defined.`n"
+				$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2004,13 +2151,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($AllowedExactPaths))){
 				if(($ProcessedString1 -eq "System\CurrentControlSet\Control\ProductOptions") -and ($ProcessedString2 -eq "System\CurrentControlSet\Control\Server Applications") -and ($ProcessedString3 -eq "Software\Microsoft\Windows NT\CurrentVersion")){
 					$Global:Req2AllowedExactPathsResult = "2.3.10.8  - [PASS] - Remotely accessible Registry Paths are Matched. CIS Compliant.`n"
+					$Global:Req2AllowedExactPathsResultHTML = "2.3.10.8  - <span id=`"CISPassStatus`">[PASS]</span> - Remotely accessible Registry Paths are Matched. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2AllowedExactPathsResult = "2.3.10.8  - [FAILED] - Remotely accessible Registry Paths are not Matched.`n"
+					$Global:Req2AllowedExactPathsResultHTML = "2.3.10.8  - <span id=`"CISFailedStatus`">[FAILED]</span> - Remotely accessible Registry Paths are not Matched.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2AllowedExactPathsResult = "2.3.10.8  - [FAILED] - Remotely accessible Registry Paths are not defined.`n"
+				$Global:Req2AllowedExactPathsResultHTML = "2.3.10.8  - <span id=`"CISFailedStatus`">[FAILED]</span> - Remotely accessible Registry Paths are not defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2021,13 +2171,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($RestrictAnnonymousAccessSessionsResult))){
 				if($RestrictAnnonymousAccessSessionsResult -eq "1"){
 					$Global:Req2RestrictAnnonymousAccessSessionsResult = "2.3.10.10 - [PASS] - Restrict anonymous access to Named Pipes and Shares is Enabled. CIS Compliant.`n"
+					$Global:Req2RestrictAnnonymousAccessSessionsResultHTML = "2.3.10.10 - <span id=`"CISPassStatus`">[PASS]</span> - Restrict anonymous access to Named Pipes and Shares is Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2RestrictAnnonymousAccessSessionsResult = "2.3.10.10 - [FAILED] - Restrict anonymous access to Named Pipes and Shares is Enabled.`n"
+					$Global:Req2RestrictAnnonymousAccessSessionsResultHTML = "2.3.10.10 - <span id=`"CISFailedStatus`">[FAILED]</span> - Restrict anonymous access to Named Pipes and Shares is Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2RestrictAnnonymousAccessSessionsResult = "2.3.10.10 - [FAILED] - Restrict anonymous access to Named Pipes and Shares is Enabled is Not Configured.`n"
+				$Global:Req2RestrictAnnonymousAccessSessionsResultHTML = "2.3.10.10 - <span id=`"CISFailedStatus`">[FAILED]</span> - Restrict anonymous access to Named Pipes and Shares is Enabled is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2036,9 +2189,11 @@ $AllScriptList_ListUpdate = {
 			$NullSessionSharesResult = $NullSessionShares.split(',')[1]
 			if([string]::IsNullOrEmpty($NullSessionSharesResult)){
 				$Global:Req2NullSessionShares = "2.3.10.12 - [PASS] - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
+				$Global:Req2NullSessionSharesHTML = "2.3.10.12 - <span id=`"CISPassStatus`">[PASS]</span> - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2NullSessionShares = "2.3.10.12 - [FAILED] - Shares that can be accessed Anonymously is defined.`n"
+				$Global:Req2NullSessionSharesHTML = "2.3.10.12 - <span id=`"CISFailedStatus`">[FAILED]</span> - Shares that can be accessed Anonymously is defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2049,13 +2204,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($SharingAndSecModelLocalAccountsResult))){
 				if($SharingAndSecModelLocalAccountsResult -eq "0"){
 					$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [PASS] - Sharing and security model for local accounts is set to Classic - local users authenticate as themselves. CIS Compliant.`n"
+					$Global:Req2SharingAndSecModelLocalAccountsResultHTML = "2.3.10.13 - <span id=`"CISPassStatus`">[PASS]</span> - Sharing and security model for local accounts is set to Classic - local users authenticate as themselves. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [FAILED] - Sharing and security model for local accounts is not set to Classic - local users authenticate as themselves.`n"
+					$Global:Req2SharingAndSecModelLocalAccountsResultHTML = "2.3.10.13 - <span id=`"CISFailedStatus`">[FAILED]</span> - Sharing and security model for local accounts is not set to Classic - local users authenticate as themselves.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [FAILED] - Sharing and security model for local accounts is Not Configured.`n"
+				$Global:Req2SharingAndSecModelLocalAccountsResultHTML = "2.3.10.13 - <span id=`"CISFailedStatus`">[FAILED]</span> - Sharing and security model for local accounts is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2067,13 +2225,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LocalSystemNTLMResult))){
 				if($LocalSystemNTLMResult -eq "1"){
 					$Global:Req2LocalSystemNTLMResult = "2.3.11.1  - [PASS] - Allow Local System to use Computer Identity for NTLM is set to Enabled. CIS Compliant.`n"
+					$Global:Req2LocalSystemNTLMResultHTML = "2.3.11.1  - <span id=`"CISPassStatus`">[PASS]</span> - Allow Local System to use Computer Identity for NTLM is set to Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LocalSystemNTLMResult = "2.3.11.1  - [FAILED] - Allow Local System to use Computer Identity for NTLM is Not Enabled.`n"
+					$Global:Req2LocalSystemNTLMResultHTML = "2.3.11.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow Local System to use Computer Identity for NTLM is Not Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LocalSystemNTLMResult = "2.3.11.1  - [FAILED] - Allow Local System to use Computer Identity for NTLM is Not Defined.`n"
+				$Global:Req2LocalSystemNTLMResultHTML = "2.3.11.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow Local System to use Computer Identity for NTLM is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2084,13 +2245,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LocalSystemNULLSessionResult))){
 				if($LocalSystemNULLSessionResult -eq "0"){
 					$Global:Req2LocalSystemNULLSessionResult = "2.3.11.2  - [PASS] - Allow Local System NULL Session is set to Disabled. CIS Compliant.`n"
+					$Global:Req2LocalSystemNULLSessionResultHTML = "2.3.11.2  - <span id=`"CISPassStatus`">[PASS]</span> - Allow Local System NULL Session is set to Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LocalSystemNULLSessionResult = "2.3.11.2  - [FAILED] - Allow Local System NULL Session is Not Disabled.`n"
+					$Global:Req2LocalSystemNULLSessionResultHTML = "2.3.11.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow Local System NULL Session is Not Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LocalSystemNULLSessionResult = "2.3.11.2  - [FAILED] - Allow Local System NULL Session is Not Defined.`n"
+				$Global:Req2LocalSystemNULLSessionResultHTML = "2.3.11.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow Local System NULL Session is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2101,13 +2265,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($PKU2UOnlineIdentitiesResult))){
 				if($PKU2UOnlineIdentitiesResult -eq "0"){
 					$Global:Req2PKU2UOnlineIdentitiesResult = "2.3.11.3  - [PASS] - Allow PKU2U Authentication Requests to this Computer to use Online Identities is set to Disabled. CIS Compliant.`n"
+					$Global:Req2PKU2UOnlineIdentitiesResultHTML = "2.3.11.3  - <span id=`"CISPassStatus`">[PASS]</span> - Allow PKU2U Authentication Requests to this Computer to use Online Identities is set to Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2PKU2UOnlineIdentitiesResult = "2.3.11.3  - [FAILED] - Allow PKU2U Authentication Requests to this Computer to use Online Identities is Not Disabled.`n"
+					$Global:Req2PKU2UOnlineIdentitiesResultHTML = "2.3.11.3  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow PKU2U Authentication Requests to this Computer to use Online Identities is Not Disabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2PKU2UOnlineIdentitiesResult = "2.3.11.3  - [FAILED] - Allow PKU2U Authentication Requests to this Computer to use Online Identities is Not Defined.`n"
+				$Global:Req2PKU2UOnlineIdentitiesResultHTML = "2.3.11.3  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow PKU2U Authentication Requests to this Computer to use Online Identities is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2118,13 +2285,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($KerberosEncryptionTypes))){
 				if($KerberosEncryptionTypesResult -eq "2147483640"){
 					$Global:Req2KerberosEncryptionTypesResult = "2.3.11.4  - [PASS] - Encryption types allowed for Kerberos is set to AES128_HMAC_SHA1, AES256_HMAC_SHA1 and Future encryption types. CIS Compliant.`n"
+					$Global:Req2KerberosEncryptionTypesResultHTML = "2.3.11.4  - <span id=`"CISPassStatus`">[PASS]</span> - Encryption types allowed for Kerberos is set to AES128_HMAC_SHA1, AES256_HMAC_SHA1 and Future encryption types. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2KerberosEncryptionTypesResult = "2.3.11.4  - [FAILED] - Encryption types allowed for Kerberos is Not set to AES128_HMAC_SHA1, AES256_HMAC_SHA1 and Future encryption types.`n"
+					$Global:Req2KerberosEncryptionTypesResultHTML = "2.3.11.4  - <span id=`"CISFailedStatus`">[FAILED]</span> - Encryption types allowed for Kerberos is Not set to AES128_HMAC_SHA1, AES256_HMAC_SHA1 and Future encryption types.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2KerberosEncryptionTypesResult = "2.3.11.4  - [FAILED] - Encryption types allowed for Kerberos is Not Defined.`n"
+				$Global:Req2KerberosEncryptionTypesResultHTML = "2.3.11.4  - <span id=`"CISFailedStatus`">[FAILED]</span> - Encryption types allowed for Kerberos is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2135,13 +2305,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LanManagerHash))){
 				if($LanManagerHashResult -eq "1"){
 					$Global:Req2LanManagerHashResult = "2.3.11.5  - [PASS] - LAN Manager Hash Value is Not Stored on Next Password Change. CIS Compliant.`n"
+					$Global:Req2LanManagerHashResultHTML = "2.3.11.5  - <span id=`"CISPassStatus`">[PASS]</span> - LAN Manager Hash Value is Not Stored on Next Password Change. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2LanManagerHashResult = "2.3.11.5  - [FAILED] - LAN Manager Hash Value is Stored on Next Password Change.`n"
+					$Global:Req2LanManagerHashResult = "2.3.11.5  - <span id=`"CISFailedStatus`">[FAILED]</span> - LAN Manager Hash Value is Stored on Next Password Change.`n"
+					$Global:Req2LanManagerHashResultHTML = "2.3.11.5  - <span id=`"CISFailedStatus`">[FAILED]</span> - LAN Manager Hash Value is Stored on Next Password Change.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LanManagerHashResult = "2.3.11.5  - [FAILED] - LAN Manager Hash Value is Not Defined.`n"
+				$Global:Req2LanManagerHashResultHTML = "2.3.11.5  - <span id=`"CISFailedStatus`">[FAILED]</span> - LAN Manager Hash Value is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2152,13 +2325,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ForceLogoffAfterHoursExpire))){
 				if($ForceLogoffAfterHoursExpireResult -eq "1"){
 					$Global:Req2ForceLogoffAfterHoursExpireResult = "2.3.11.6  - [PASS] - Users are forced to Logoff when Logon Hours Expire. CIS Compliant.`n"
+					$Global:Req2ForceLogoffAfterHoursExpireResultHTML = "2.3.11.6  - <span id=`"CISPassStatus`">[PASS]</span> - Users are forced to Logoff when Logon Hours Expire. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ForceLogoffAfterHoursExpireResult = "2.3.11.6  - [FAILED] - Users are not forced to Logoff when Logon Hours Expire.`n"
+					$Global:Req2ForceLogoffAfterHoursExpireResultHTML = "2.3.11.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Users are not forced to Logoff when Logon Hours Expire.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ForceLogoffAfterHoursExpireResult = "2.3.11.6  - [FAILED] - User Configuration for Forcing Users to Logoff after Logon hours expires is Not Configured.`n"
+				$Global:Req2ForceLogoffAfterHoursExpireResultHTML = "2.3.11.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - User Configuration for Forcing Users to Logoff after Logon hours expires is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2169,13 +2345,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LanManagerAuthLevel))){
 				if($LanManagerAuthLevelResult -eq "5"){
 					$Global:Req2LanManagerAuthLevelResult = "2.3.11.7  - [PASS] - LAN Manager Authentication Level is set to 'Send NTLMv2 response only. Refuse LM & NTLM'. CIS Compliant.`n"
+					$Global:Req2LanManagerAuthLevelResultHTML = "2.3.11.7  - <span id=`"CISPassStatus`">[PASS]</span> - LAN Manager Authentication Level is set to 'Send NTLMv2 response only. Refuse LM & NTLM'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LanManagerAuthLevelResult = "2.3.11.7  - [FAILED] - LAN Manager Authentication Level is Not set to 'Send NTLMv2 response only. Refuse LM & NTLM'.`n"
+					$Global:Req2LanManagerAuthLevelResultHTML = "2.3.11.7  - <span id=`"CISFailedStatus`">[FAILED]</span> - LAN Manager Authentication Level is Not set to 'Send NTLMv2 response only. Refuse LM & NTLM'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LanManagerAuthLevelResult = "2.3.11.7  - [FAILED] - LAN Manager Authentication Level is Not Configured.`n"
+				$Global:Req2LanManagerAuthLevelResultHTML = "2.3.11.7  - <span id=`"CISFailedStatus`">[FAILED]</span> - LAN Manager Authentication Level is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2186,13 +2365,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($LDAPClientSigningReqsResult))){
 				if($LDAPClientSigningReqsResult -ge "1"){
 					$Global:Req2LDAPClientSigningReqsResult = "2.3.11.8  - [PASS] - LDAP Client Signing Requirements is set to 'Negotidate Signing' or Higher. CIS Compliant.`n"
+					$Global:Req2LDAPClientSigningReqsResultHTML = "2.3.11.8  - <span id=`"CISPassStatus`">[PASS]</span> - LDAP Client Signing Requirements is set to 'Negotidate Signing' or Higher. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2LDAPClientSigningReqsResult = "2.3.11.8  - [FAILED] - LDAP Client Signing Requirements is set to 'None'.`n"
+					$Global:Req2LDAPClientSigningReqsResultHTML = "2.3.11.8  - <span id=`"CISFailedStatus`">[FAILED]</span> - LDAP Client Signing Requirements is set to 'None'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2LDAPClientSigningReqsResult = "2.3.11.8  - [FAILED] - LDAP Client Signing Requirements is Not Configured.`n"
+				$Global:Req2LDAPClientSigningReqsResultHTML = "2.3.11.8  - <span id=`"CISFailedStatus`">[FAILED]</span> - LDAP Client Signing Requirements is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2202,9 +2384,11 @@ $AllScriptList_ListUpdate = {
 			$NTLMMinClientResults = $NTLMMinClientResults -as [int]
 			if($NTLMMinClientResults -eq "537395200"){
 				$Global:Req2NTLMMinClientResults = "2.3.11.9  - [PASS] - Minimum Session Security for NTLM SSP based Clients is following the recommended settings. CIS Compliant.`n"
+				$Global:Req2NTLMMinClientResultsHTML = "2.3.11.9  - <span id=`"CISPassStatus`">[PASS]</span> - Minimum Session Security for NTLM SSP based Clients is following the recommended settings. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2NTLMMinClientResults = "2.3.11.9  - [FAILED] - Minimum Session Security of NTLMv2 Sessions Security & 128-bit encryption is Not Enabled for NTLM SSP based Clients.`n"
+				$Global:Req2NTLMMinClientResultsHTML = "2.3.11.9  - <span id=`"CISFailedStatus`">[FAILED]</span> - Minimum Session Security of NTLMv2 Sessions Security & 128-bit encryption is Not Enabled for NTLM SSP based Clients.`n"
 				$CISFailCounter++
 			}
 
@@ -2214,9 +2398,11 @@ $AllScriptList_ListUpdate = {
 			$NTLMMinServerResults = $NTLMMinServerResults -as [int]
 			if($NTLMMinServerResults -eq "537395200"){
 				$Global:Req2NTLMMinServerResults = "2.3.11.10 - [PASS] - Minimum Session Security for NTLM SSP based Servers is following the recommended setting. CIS Compliant.`n"
+				$Global:Req2NTLMMinServerResultsHTML = "2.3.11.10 - <span id=`"CISPassStatus`">[PASS]</span> - Minimum Session Security for NTLM SSP based Servers is following the recommended setting. CIS Compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2NTLMMinServerResults = "2.3.11.10 - [FAILED] - Minimum Sessions Security for NTLM SSP Based Servers does not have both NTLMv2 and 128-bit encryption enabled.`n"
+				$Global:Req2NTLMMinServerResultsHTML = "2.3.11.10 - <span id=`"CISFailedStatus`">[FAILED]</span> - Minimum Sessions Security for NTLM SSP Based Servers does not have both NTLMv2 and 128-bit encryption enabled.`n"
 				$CISFailCounter++
 			}
 
@@ -2228,13 +2414,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($AutoAdminLogon))){
 				if($AutoAdminLogonResult -eq "0"){
 					$Global:Req2AutoAdminLogonResult = "2.3.12    - [PASS] - Automatic Administrative Logon is Not Allowed. CIS Compliant.`n"
+					$Global:Req2AutoAdminLogonResultHTML = "2.3.12    - <span id=`"CISPassStatus`">[PASS]</span> - Automatic Administrative Logon is Not Allowed. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2AutoAdminLogonResult = "2.3.12    - [FAILED] - Automatic Administrative Logon is Allowed.`n"
+					$Global:Req2AutoAdminLogonResultHTML = "2.3.12    - <span id=`"CISFailedStatus`">[FAILED]</span> - Automatic Administrative Logon is Allowed.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2AutoAdminLogonResult = "2.3.12    - [FAILED] - Automatic Administrative Logon is Not Defined.`n"
+				$Global:Req2AutoAdminLogonResultHTML = "2.3.12    - <span id=`"CISFailedStatus`">[FAILED]</span> - Automatic Administrative Logon is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2245,13 +2434,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($AllowFloppyAccess))){
 				if($AllowFloppyAccessResult -eq "0"){
 					$Global:Req2AllowFloppyAccessResult = "2.3.12    - [PASS] - Allow Floppy Copy and Access to all Drives and all Folders is Not Allowed. CIS Compliant.`n"
+					$Global:Req2AllowFloppyAccessResultHTML = "2.3.12    - <span id=`"CISPassStatus`">[PASS]</span> - Allow Floppy Copy and Access to all Drives and all Folders is Not Allowed. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2AllowFloppyAccessResult = "2.3.12    - [FAILED] - Allow Floppy Copy and Access to all Drives and all Folders is Allowed.`n"
+					$Global:Req2AllowFloppyAccessResultHTML = "2.3.12    - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow Floppy Copy and Access to all Drives and all Folders is Allowed.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2AllowFloppyAccessResult = "2.3.12    - [FAILED] - Floppy Copy and Access to all Drives and all Folders is Not Defined.`n"
+				$Global:Req2AllowFloppyAccessResultHTML = "2.3.12    - <span id=`"CISFailedStatus`">[FAILED]</span> - Floppy Copy and Access to all Drives and all Folders is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2263,13 +2455,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($ShutdownWithoutLoggingInResult))){
 				if($ShutdownWithoutLoggingInResult -eq "0"){
 					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [PASS] - Allow system to be shut down without having to log on is set to Disabled. CIS Compliant.`n"
+					$Global:Req2ShutdownWithoutLoggingInResultHTML = "2.3.13.1  - <span id=`"CISPassStatus`">[PASS]</span> - Allow system to be shut down without having to log on is set to Disabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [FAILED] - Allow system to be shut down without having to log on is set to Enabled.`n"
+					$Global:Req2ShutdownWithoutLoggingInResultHTML = "2.3.13.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow system to be shut down without having to log on is set to Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [FAILED] - Allow system to be shut down without having to log on is Not Configured.`n"
+				$Global:Req2ShutdownWithoutLoggingInResultHTML = "2.3.13.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Allow system to be shut down without having to log on is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2280,9 +2475,11 @@ $AllScriptList_ListUpdate = {
 			$FIPSPolicyResults = $FIPSPolicyResults -as [int]
 			if($FIPSPolicyResults -eq "1"){
 				$Global:Req2FipsPolicyResults = "2.3.14    - [PASS] - FIPS Algorithm for encryption, hashing and signing Policy is enabled. CIS compliant.`n"
+				$Global:Req2FipsPolicyResultsHTML = "2.3.14    - <span id=`"CISPassStatus`">[PASS]</span> - FIPS Algorithm for encryption, hashing and signing Policy is enabled. CIS compliant.`n"
 				$CISPassCounter++
 			}else{
 				$Global:Req2FipsPolicyResults = "2.3.14    - [FAILED] - FIPS Algorithm for encryption, hashing and signing Policy is disabled.`n"
+				$Global:Req2FipsPolicyResultsHTML = "2.3.14    - <span id=`"CISFailedStatus`">[FAILED]</span> - FIPS Algorithm for encryption, hashing and signing Policy is disabled.`n"
 				$CISFailCounter++
 			}
 
@@ -2293,16 +2490,19 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($UserKeyProtection))){
 				if($UserKeyProtectionResult -eq "2"){
 					$Global:Req2UserKeyProtectionResult = "2.3.14    - [PASS] - Strong Key Protection is Enforced for User Keys stored on this Computer. CIS Compliant.`n"
+					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISPassStatus`">[PASS]</span> - Strong Key Protection is Enforced for User Keys stored on this Computer. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2UserKeyProtectionResult = "2.3.14    - [FAILED] - Strong Key Protection is Not Enforced for User Keys stored on this Computer.`n"
+					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISFailedStatus`">[FAILED]</span> - Strong Key Protection is Not Enforced for User Keys stored on this Computer.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2UserKeyProtectionResult = "2.3.14    - [FAILED] - Strong Key Protection for User Keys stored on this Computer is Not Defined.`n"
+				$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISFailedStatus`">[FAILED]</span> - Strong Key Protection for User Keys stored on this Computer is Not Defined.`n"
 				$CISFailCounter++
 			}
-			
+
 			# 2.3.15 System objects
 			# 2.3.15.1 (L1) Ensure 'System objects: Require case insensitivity for nonWindows subsystems' is set to 'Enabled' (Scored) !!
 			$CaseInsensitivity = $Global:SecDump | Select-String -SimpleMatch 'ObCaseInsensitive' | Out-String
@@ -2310,14 +2510,17 @@ $AllScriptList_ListUpdate = {
 			$CaseInsensitivityResult = $CaseInsensitivityResult -as [int]
 			if(-not([string]::IsNullOrEmpty($CaseInsensitivityResult))){
 				if($CaseInsensitivityResult -eq "1"){
-					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - [PASS] - Require Case Insensitivity for non-Windows Subsystem is set to Enabled. CIS Compliant.`n"
+					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISPassStatus`">[PASS]</span> - Require Case Insensitivity for non-Windows Subsystem is set to Enabled. CIS Compliant.`n"
+					$Global:Req2CaseInsensitivityResultHTML = "2.3.15.1  - <span id=`"CISPassStatus`">[PASS]</span> - Require Case Insensitivity for non-Windows Subsystem is set to Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - [FAILED] - Require Case Insensitivity for non-Windows Subsystem is Not Enabled.`n"
+					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Enabled.`n"
+					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
-				$Global:Req2CaseInsensitivityResult = "2.3.15.1  - [FAILED] - Require Case Insensitivity for non-Windows Subsystem is Not Defined.`n"
+				$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Defined.`n"
+				$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2328,13 +2531,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($StrengthenPermissionsResult))){
 				if($StrengthenPermissionsResult -eq "1"){
 					$Global:Req2StrengthenPermissionsResult = "2.3.15.2  - [PASS] - Strengthen Default Permissions of Internal System Objects is set to Enabled. CIS Compliant.`n"
+					$Global:Req2StrengthenPermissionsResultHTML = "2.3.15.2  - <span id=`"CISPassStatus`">[PASS]</span> - Strengthen Default Permissions of Internal System Objects is set to Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2StrengthenPermissionsResult = "2.3.15.2  - [FAILED] - Strengthen Default Permissions of Internal System Objects is Not Enabled.`n"
+					$Global:Req2StrengthenPermissionsResultHTML = "2.3.15.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Strengthen Default Permissions of Internal System Objects is Not Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2StrengthenPermissionsResult = "2.3.15.2  - [FAILED] - Strengthen Default Permissions of Internal System Objects is Not Defined.`n"
+				$Global:Req2StrengthenPermissionsResultHTML = "2.3.15.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Strengthen Default Permissions of Internal System Objects is Not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2346,13 +2552,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($AdminApprovalMode))){
 				if($AdminApprovalModeResult -eq "1"){
 					$Global:Req2AdminApprovalModeResult = "2.3.17.1  - [PASS] - Admin Approval Mode for the Built-in Administrator account' is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2AdminApprovalModeResultHTML = "2.3.17.1  - <span id=`"CISPassStatus`">[PASS]</span> - Admin Approval Mode for the Built-in Administrator account' is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2AdminApprovalModeResult = "2.3.17.1  - [FAILED] - Admin Approval Mode for the Built-in Administrator account' is set to 'Disabled'.`n"
+					$Global:Req2AdminApprovalModeResultHTML = "2.3.17.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Admin Approval Mode for the Built-in Administrator account' is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2AdminApprovalModeResult = "2.3.17.1  - [FAILED] - Admin Approval Mode for the Built-in Administrator account' is not defined.`n"
+				$Global:Req2AdminApprovalModeResultHTML = "2.3.17.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Admin Approval Mode for the Built-in Administrator account' is not defined.`n"
 				$CISFailCounter++
 			}
 			
@@ -2363,13 +2572,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($BehaviorforAdmin))){
 				if($BehaviorforAdminResult -eq "2"){
 					$Global:Req2BehaviorforAdminResult = "2.3.17.2  - [PASS] - Elevation Prompt for Admins in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop'. CIS Compliant.`n"
+					$Global:Req2BehaviorforAdminResultHTML = "2.3.17.2  - <span id=`"CISPassStatus`">[PASS]</span> - Elevation Prompt for Admins in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2BehaviorforAdminResult = "2.3.17.2  - [FAILED] - Elevation Prompt for Admins in Admin Approval Mode is not set to 'Prompt for consent on the secure desktop'.`n"
+					$Global:Req2BehaviorforAdminResultHTML = "2.3.17.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Elevation Prompt for Admins in Admin Approval Mode is not set to 'Prompt for consent on the secure desktop'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2BehaviorforAdminResult = "2.3.17.2    - [FAILED] - Elevation Prompt for Admins in Admin Approval Mode is not Defined.`n"
+				$Global:Req2BehaviorforAdminResultHTML = "2.3.17.2    - <span id=`"CISFailedStatus`">[FAILED]</span> - Elevation Prompt for Admins in Admin Approval Mode is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2380,13 +2592,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($BehaviorforStandard))){
 				if($BehaviorforStandardResult -eq "0"){
 					$Global:Req2BehaviorforStandardResult = "2.3.17.3  - [PASS] - Behavior of the Elevation Prompt for Standard Users is set to 'Automatically Deny Elevation Requests'. CIS Compliant.`n"
+					$Global:Req2BehaviorforStandardResultHTML = "2.3.17.3  - <span id=`"CISPassStatus`">[PASS]</span> - Behavior of the Elevation Prompt for Standard Users is set to 'Automatically Deny Elevation Requests'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2BehaviorforStandardResult = "2.3.17.3  - [FAILED] - Behavior of the Elevation prompt for Standard Users is not set to 'Automatically Deny Elevation Requests'.`n"
+					$Global:Req2BehaviorforStandardResultHTML = "2.3.17.3  - <span id=`"CISFailedStatus`">[FAILED]</span> - Behavior of the Elevation prompt for Standard Users is not set to 'Automatically Deny Elevation Requests'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2BehaviorforStandardResult = "2.3.17.3  - [FAILED] - Behavior of the Elevation Prompt for Standard Users is not Defined.`n"
+				$Global:Req2BehaviorforStandardResultHTML = "2.3.17.3  - <span id=`"CISFailedStatus`">[FAILED]</span> - Behavior of the Elevation Prompt for Standard Users is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2397,13 +2612,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($InstallerDetection))){
 				if($InstallerDetectionResult -eq "1"){
 					$Global:Req2InstallerDetectionResult = "2.3.17.4  - [PASS] - Detect Application Installations and Prompt for Elevation is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2InstallerDetectionResultHTML = "2.3.17.4  - <span id=`"CISPassStatus`">[PASS]</span> - Detect Application Installations and Prompt for Elevation is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2InstallerDetectionResult = "2.3.17.4  - [FAILED] - Detect Application Installations and Prompt for Elevation is set to 'Disabled'.`n"
+					$Global:Req2InstallerDetectionResultHTML = "2.3.17.4  - <span id=`"CISFailedStatus`">[FAILED]</span> - Detect Application Installations and Prompt for Elevation is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2InstallerDetectionResult = "2.3.17.4  - [FAILED] - Detect Application Installations and Prompt for Elevation' is not Defined.`n"
+				$Global:Req2InstallerDetectionResultHTML = "2.3.17.4  - <span id=`"CISFailedStatus`">[FAILED]</span> - Detect Application Installations and Prompt for Elevation' is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2414,13 +2632,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($UIAccessSecureLocations))){
 				if($UIAccessSecureLocationsResult -eq "1"){
 					$Global:Req2UIAccessSecureLocationsResult = "2.3.17.5  - [PASS] - Only Elevate UIAccess Applications that are Installed in Secure Locations' is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2UIAccessSecureLocationsResultHTML = "2.3.17.5  - <span id=`"CISPassStatus`">[PASS]</span> - Only Elevate UIAccess Applications that are Installed in Secure Locations' is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2UIAccessSecureLocationsResult = "2.3.17.5  - [FAILED] - Only Elevate UIAccess Applications that are Installed in Secure Locations' is set to 'Disabled'.`n"
+					$Global:Req2UIAccessSecureLocationsResultHTML = "2.3.17.5  - <span id=`"CISFailedStatus`">[FAILED]</span> - Only Elevate UIAccess Applications that are Installed in Secure Locations' is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2UIAccessSecureLocationsResult = "2.3.17.5  - [FAILED] - Only Elevate UIAccess Applications that are Installed in Secure Locations' is not Defined.`n"
+				$Global:Req2UIAccessSecureLocationsResultHTML = "2.3.17.5  - <span id=`"CISFailedStatus`">[FAILED]</span> - Only Elevate UIAccess Applications that are Installed in Secure Locations' is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2431,13 +2652,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($RunAllAdminsMode))){
 				if($RunAllAdminsModeResult -eq "1"){
 					$Global:Req2RunAllAdminsModeResult = "2.3.17.6  - [PASS] - Run All Administrators in Admin Approval Mode is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2RunAllAdminsModeResultHTML = "2.3.17.6  - <span id=`"CISPassStatus`">[PASS]</span> - Run All Administrators in Admin Approval Mode is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2RunAllAdminsModeResult = "2.3.17.6  - [FAILED] - Run All Administrators in Admin Approval Mode is set to 'Disabled'.`n"
+					$Global:Req2RunAllAdminsModeResultHTML = "2.3.17.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Run All Administrators in Admin Approval Mode is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2RunAllAdminsModeResult = "2.3.17.6  - [FAILED] - Run All Administrators in Admin Approval Mode is not Defined.`n"
+				$Global:Req2RunAllAdminsModeResultHTML = "2.3.17.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Run All Administrators in Admin Approval Mode is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2448,13 +2672,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($SwitchSecureDesktop))){
 				if($SwitchSecureDesktopResult -eq "1"){
 					$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [PASS] - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2SwitchSecureDesktopResultHTML = "2.3.17.7  - <span id=`"CISPassStatus`">[PASS]</span> - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [FAILED] - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Disabled'.`n"
+					$Global:Req2SwitchSecureDesktopResultHTML = "2.3.17.7  - <span id=`"CISFailedStatus`">[FAILED]</span> - Switch to the Secure Desktop when Prompting for Elevation' is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2SwitchSecureDesktopResult = "2.3.17.7  - [FAILED] - Switch to the Secure Desktop when Prompting for Elevation' is not Defined.`n"
+				$Global:Req2SwitchSecureDesktopResultHTML = "2.3.17.7  - <span id=`"CISFailedStatus`">[FAILED]</span> - Switch to the Secure Desktop when Prompting for Elevation' is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2465,13 +2692,16 @@ $AllScriptList_ListUpdate = {
 			if(-not([string]::IsNullOrEmpty($VitualFileLocations))){
 				if($VitualFileLocationsResult -eq "1"){
 					$Global:Req2VitualFileLocationsResult = "2.3.17.8  - [PASS] - Virtualize File and Registry Write Failures to Per-user Locations' is set to 'Enabled'. CIS Compliant.`n"
+					$Global:Req2VitualFileLocationsResultHTML = "2.3.17.8  - <span id=`"CISPassStatus`">[PASS]</span> - Virtualize File and Registry Write Failures to Per-user Locations' is set to 'Enabled'. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2VitualFileLocationsResult = "2.3.17.8  - [FAILED] - Virtualize File and Registry Write Failures to Per-user Locations' is set to 'Disabled'.`n"
+					$Global:Req2VitualFileLocationsResultHTML = "2.3.17.8  - <span id=`"CISFailedStatus`">[FAILED]</span> - Virtualize File and Registry Write Failures to Per-user Locations' is set to 'Disabled'.`n"
 					$CISFailCounter++
 				}
 			}else{
 				$Global:Req2VitualFileLocationsResult = "2.3.17.8  - [FAILED] - Virtualize File and Registry Write Failures to Per-user Locations' is not Defined.`n"
+				$Global:Req2VitualFileLocationsResultHTML = "2.3.17.8  - <span id=`"CISFailedStatus`">[FAILED]</span> - Virtualize File and Registry Write Failures to Per-user Locations' is not Defined.`n"
 				$CISFailCounter++
 			}
 
@@ -2480,8 +2710,11 @@ $AllScriptList_ListUpdate = {
 		$Global:CISBenchmarkToalResult = "`nCIS Benchmarks Result:`n" + $CISPassCounter + " PASS Results.`n" + $CISFailCounter + " FAILED Results.`nTotal Benchmarks Tested: " + $CISTotalCounter + "`n"
 		$Global:CISBenchmarkToalResultHTML = "<h3>CIS Benchmarks Result</h3><p>PASS Results:" + $CISPassCounter + "<br>FAILED Results: " + $CISFailCounter + "<br>Total Benchmarks Tested: " + $CISTotalCounter + "</p>"
 		# HTML Report
-		$Global:Req2PCIPSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResult + "<br>" + $Global:Req2FeatureResult + "<br>" + $Global:Req2FeatureResultTotal + "<br>" + $Global:RunningProcessesResult + "<br>" + $Global:RunningServicesResult + "<br>" + $Global:64BitAppsResult + "<br>" + $Global:LocalDrivesResult + "<br>" + $Global:SMBSharesResult + "<br>" + $Global:ADComputersResult + "<br>" + $Global:CISBenchmarkToalResultHTML + "</p>"
-		$Global:Req2ComplianceResultHTML = "<h2>2.4 - CIS Compliance Check</h2><h3>1.1 Password Policy</h3><p>" + $Global:Req2EnforcePasswordHistoryResult + "<br>" + $Global:Req2MaximumPasswordAgeResult + "<br>" + $Global:Req2MinimumPasswordAgeResult + "<br>" + $Global:Req2MinimumPasswordLengthResult + "<br>" + $Global:Req2PasswordComplexityReqsResult + "<br>" + $Global:Req2ClearTextPasswordSettingResult + "</p><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResult + "<br>" + $Global:Req2BlockMSAccountsResult + "<br>" + $Global:Req2DisabledGuestResult + "<br>" + $Global:Req2LimitBlankPassUseResult + "<br>" + $Global:Req2RenameAdminResult + "<br>" + $Global:Req2RenameGuestResult + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResult + "<br>" + $Global:Req2ShutdownAuditSettingsResult + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResult + "<br>" + $Global:Req2RestrictCDRomsResult + "<br>" + $Global:Req2RestrictFloppiesResult + "<br>" + $Global:Req2LimitRemoveableMediaResult + "<br>" + $Global:Req2LimitPrinterDriversResult + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResult + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResult + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResult + "<br>" + $Global:Req2DigitalSecureChannel + "<br>" + $Global:Req2DigitalSecureChannelSigned + "<br>" + $Global:Req2DisableMachinePassChangeResult + "<br>" + $Global:Req2MaxMachinePassAgeResult + "<br>" + $Global:Req2StrongSessionKeyResult + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResult + "<br>" + $Global:Req2DontDisplayLastUser + "<br>" + $Global:Req2MachineAFKLimitResult + "<br>" + $Global:Req2LegalNoticeTextResult + "<br>" + $Global:Req2LegalNoticeCaptionResult + "<br>" + $Global:Req2PreviousCachedLogonsResult + "<br>" + $Global:Req2PassExpiryWarningResult + "<br>" + $Global:Req2DCAuthUnlockResult + "<br>" + $Global:Req2SmartCardRemovalResult + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResult + "<br>" + $Global:Req2DigitallySignComsServerResult + "<br>" + $Global:Req2EnablePlainTextResult + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResult + "<br>" + $Global:Req2DigitallySignComsForcedResult + "<br>" + $Global:Req2DigitallySignComsClientResult + "<br>" + $Global:Req2ForcedClientLogoffResult + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResult + "<br>" + $Global:Req2RestrictAnonymousSAMResult + "<br>" + $Global:Req2AnonymousEmuerationAccountsResult + "<br>" + $Global:Req2StorageOfPasswordsResult + "<br>" + $Global:Req2AllIncludesPoliciesResult + "<br>" + $Global:Req2AnonymousNamedPipesResult + "<br>" + $Global:Req2AllowedExactPathsResult + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResult + "<br>" + $Global:Req2NullSessionShares + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResult + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResult + "<br>" + $Global:Req2LocalSystemNULLSessionResult + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResult + "<br>" + $Global:Req2KerberosEncryptionTypesResult + "<br>" + $Global:Req2LanManagerHashResult + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResult + "<br>" + $Global:Req2LanManagerAuthLevelResult + "<br>" + $Global:Req2LDAPClientSigningReqsResult + "<br>" + $Global:Req2NTLMMinClientResults + "<br>" + $Global:Req2NTLMMinServerResults + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResult + "<br>" + $Global:Req2AllowFloppyAccessResult + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResult + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResults + "<br>" + $Global:Req2UserKeyProtectionResult + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResult + "<br>" + $Global:Req2StrengthenPermissionsResult + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResult + "<br>" + $Global:Req2BehaviorforAdminResult + "<br>" + $Global:Req2BehaviorforStandardResult + "<br>" + $Global:Req2InstallerDetectionResult + "<br>" + $Global:Req2UIAccessSecureLocationsResult + "<br>" + $Global:Req2RunAllAdminsModeResult + "<br>" + $Global:Req2SwitchSecureDesktopResult + "<br>" + $Global:Req2VitualFileLocationsResult + "</p>"
+		$Global:Req2PCIDSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResultHTML + "<br>" + $Global:Req2FeatureResultHTML + "<br>" + $Global:Req2FeatureResultTotalHTML + "<br>" + $Global:RunningProcessesResultHTML + "<br>" + $Global:RunningServicesResultHTML + "<br>" + $Global:64BitAppsResultHTML + "<br>" + $Global:LocalDrivesResultHTML + "<br>" + $Global:SMBSharesResultHTML + "<br>" + $Global:ADComputersResultHTML + "<br>" + $Global:CISBenchmarkToalResultHTML + "</p>"
+		$Global:Req2CISComplianceResultHTMLFinal = "<h2>2.4 - CIS Compliance Check</h2><h3>1.1 Password Policy</h3><p>" + $Global:Req2EnforcePasswordHistoryResultHTML + "<br>" + $Global:Req2MaximumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordLengthResultHTML + "<br>" + $Global:Req2PasswordComplexityReqsResultHTML + "<br>" + $Global:Req2ClearTextPasswordSettingResultHTML + "</p><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResultHTML + "<br>" + $Global:Req2BlockMSAccountsResultHTML + "<br>" + $Global:Req2DisabledGuestResultHTML + "<br>" + $Global:Req2LimitBlankPassUseResultHTML + "<br>" + $Global:Req2RenameAdminResultHTML + "<br>" + $Global:Req2RenameGuestResultHTML + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResultHTML + "<br>" + $Global:Req2ShutdownAuditSettingsResultHTML + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResultHTML + "<br>" + $Global:Req2RestrictCDRomsResultHTML + "<br>" + $Global:Req2RestrictFloppiesResultHTML + "<br>" + $Global:Req2LimitRemoveableMediaResultHTML + "<br>" + $Global:Req2LimitPrinterDriversResultHTML + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResultHTML + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResultHTML + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResultHTML + "<br>" + $Global:Req2DigitalSecureChannelHTML + "<br>" + $Global:Req2DigitalSecureChannelSignedHTML + "<br>" + $Global:Req2DisableMachinePassChangeResultHTML + "<br>" + $Global:Req2MaxMachinePassAgeResultHTML + "<br>" + $Global:Req2StrongSessionKeyResultHTML + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResultHTML + "<br>" + $Global:Req2DontDisplayLastUserHTML + "<br>" + $Global:Req2MachineAFKLimitResultHTML + "<br>" + $Global:Req2LegalNoticeTextResultHTML + "<br>" + $Global:Req2LegalNoticeCaptionResultHTML + "<br>" + $Global:Req2PreviousCachedLogonsResultHTML + "<br>" + $Global:Req2PassExpiryWarningResultHTML + "<br>" + $Global:Req2DCAuthUnlockResultHTML + "<br>" + $Global:Req2SmartCardRemovalResultHTML + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResultHTML + "<br>" + $Global:Req2DigitallySignComsServerResultHTML + "<br>" + $Global:Req2EnablePlainTextResultHTML + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResultHTML + "<br>" + $Global:Req2DigitallySignComsForcedResultHTML + "<br>" + $Global:Req2DigitallySignComsClientResultHTML + "<br>" + $Global:Req2ForcedClientLogoffResultHTML + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResultHTML + "<br>" + $Global:Req2RestrictAnonymousSAMResultHTML + "<br>" + $Global:Req2AnonymousEmuerationAccountsResultHTML + "<br>" + $Global:Req2StorageOfPasswordsResultHTML + "<br>" + $Global:Req2AllIncludesPoliciesResultHTML + "<br>" + $Global:Req2AnonymousNamedPipesResultHTML + "<br>" + $Global:Req2AllowedExactPathsResultHTML + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResultHTML + "<br>" + $Global:Req2NullSessionSharesHTML + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResultHTML + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResultHTML + "<br>" + $Global:Req2LocalSystemNULLSessionResultHTML + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResultHTML + "<br>" + $Global:Req2KerberosEncryptionTypesResultHTML + "<br>" + $Global:Req2LanManagerHashResultHTML + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResultHTML + "<br>" + $Global:Req2LanManagerAuthLevelResultHTML + "<br>" + $Global:Req2LDAPClientSigningReqsResultHTML + "<br>" + $Global:Req2NTLMMinClientResultsHTML + "<br>" + $Global:Req2NTLMMinServerResultsHTML + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResultHTML + "<br>" + $Global:Req2AllowFloppyAccessResultHTML + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResultHTML + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResultsHTML + "<br>" + $Global:Req2UserKeyProtectionResultHTML + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResultHTML + "<br>" + $Global:Req2StrengthenPermissionsResultHTML + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResultHTML + "<br>" + $Global:Req2BehaviorforAdminResultHTML + "<br>" + $Global:Req2BehaviorforStandardResultHTML + "<br>" + $Global:Req2InstallerDetectionResultHTML + "<br>" + $Global:Req2UIAccessSecureLocationsResultHTML + "<br>" + $Global:Req2RunAllAdminsModeResultHTML + "<br>" + $Global:Req2SwitchSecureDesktopResultHTML + "<br>" + $Global:Req2VitualFileLocationsResultHTML + "</p>"
+		#$Global:Req2ComplianceResultHTMLTemp1 = $Global:Req2ComplianceResultHTML -replace "[PASS]","<span id=`"CISPassStatus`">[PASS]</span>"
+		#$Global:Req2ComplianceResultHTMLTemp2 = $Global:Req2ComplianceResultHTMLTemp1 -replace "[FAILED]","<span id=`"CISFailedStatus`">[FAILED]</span>"
+		#$Global:Req2CISComplianceResultHTMLFinal = $Global:Req2ComplianceResultHTMLTemp2 -replace "[INFORMATION]","<span id=`"CISInfoStatus`">[INFOMATION]</span>"
 		# Rich Text Boxes
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("The Following Sub-Sections are directly from the CIS Benchmarks`n")
@@ -2979,7 +3212,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTwoName $ReportComputerName $Global:Req2PCIPSSComplianceResultHTML $Global:Req2ComplianceResultHTML $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTwoName $ReportComputerName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
