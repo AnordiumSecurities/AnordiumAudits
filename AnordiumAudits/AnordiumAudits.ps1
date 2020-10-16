@@ -3707,8 +3707,8 @@ $AllScriptList_ListUpdate = {
 			$ActiveDirectoryGroups = (Get-ADGroup -Filter *).Name
 			# Loop
 			foreach ($Group in $ActiveDirectoryGroups){
-			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName | Sort-Object Name,objectClass
-			$GroupMembershipRTB = $GroupMembership | Format-Table | Out-String
+			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName,SID | Sort-Object Name,objectClass
+			$GroupMembershipRTB = $GroupMembership | Format-Table -Autosize | Out-String -Width 1200
 			$GroupInfomation = Get-ADGroup -Identity $Group
 			$GroupInfomationRTB = $GroupInfomation | Format-List | Out-String
 			# HTML Info Stuff
@@ -3727,7 +3727,7 @@ $AllScriptList_ListUpdate = {
 				}
 			}else{
 				# Add to HTML List
-				$Req7FormatGroupListHTML = $GroupMembership | ConvertTo-Html -As Table -Property Name,SamaccountName,objectClass,distinguishedName -Fragment -PreContent "<h3>Here are the Users in $Group</h3>" -PostContent "<p>$Global:SectionBreak</p>"
+				$Req7FormatGroupListHTML = $GroupMembership | ConvertTo-Html -As Table -Property Name,SamaccountName,objectClass,distinguishedName,SID -Fragment -PreContent "<h3>Here are the Users in $Group</h3>" -PostContent "<p>$Global:SectionBreak</p>"
 				$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + $Req7FormatGroupListHTML
 				# Data Output
 				if($EverythingToggle -eq $false){
