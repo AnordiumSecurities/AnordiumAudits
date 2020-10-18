@@ -273,7 +273,9 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Seven... Total Progress... 50%"
 			$AllScriptOutputLabel.Refresh()
-			Req7UserPriviledges
+			Req7UserPrivileges
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req7UserRightsAssessment
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
 			$AllOutput.AppendText("Everything in Requirement Eight `n")
@@ -370,7 +372,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementTenName = "<h1 id='Req10'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='ReqDiag'>PCI DSS Diagnostics Report</h1>"
 		$Global:ToCHTML = "<div id=`"toc_container`"`><p class=`"toc_title`">Contents</p><li><a href=`"#Req2`">PCI DSS Requirement Two</a></li><li><a href=`"#Req4`">PCI DSS Requirement Four</a></li><li><a href=`"#Req5`">PCI DSS Requirement Five</a></li><li><a href=`"#Req7`">PCI DSS Requirement Seven</a></li><li><a href=`"#Req8`">PCI DSS Requirement Eight</a></li><li><a href=`"#Req10`">PCI DSS Requirement Ten</a></li><li><a href=`"#ReqDiag`">PCI DSS Diagnostics Report</a></li></ul></div>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -440,7 +442,9 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req7DenyAll
 			$AllOutput.AppendText($Global:SectionHeader)
-			Req7UserPriviledges
+			Req7UserPrivileges
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req7UserRightsAssessment
 			$AllOutput.AppendText($Global:SectionBreak)
 		# Call Requirement Eight Functions
 			$AllOutput.AppendText("Everything in Requirement Eight `n")
@@ -3690,7 +3694,7 @@ $AllScriptList_ListUpdate = {
 	}
 
 	# 7.1.2 - Grab User Privileges
-	Function Req7UserPriviledges {
+	Function Req7UserPrivileges {
 		# Write Header
 		if($EverythingToggle -eq $false){
 			$Req7Output.AppendText("7.1.2 - Grab User Privileges`nThis may take a while`n`n")
@@ -3752,6 +3756,96 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
+	# 7.1.2 - Grab User Rights Assessment
+	Function Req7UserRightsAssessment {
+		# Write Header
+		if($EverythingToggle -eq $false){
+			$Req8Output.AppendText("7.1.2 - Grab User Rights Assessment:")
+		}else{
+			$AllOutput.AppendText("7.1.2 - Grab User Rights Assessment:")
+		}
+		# Data Gathering Function
+		Function PrivilegeRights ($TempVarPassThru){
+			$NamedStringMatched = $Global:SecDump | Select-String -SimpleMatch $TempVarPassThru
+			$NamedStringMatched = $NamedStringMatched -replace '`n|`r|,|"| ',""
+			$CharCountSID = ($NamedStringMatched.ToCharArray() | Where-Object {$_ -eq '*'} | Measure-Object).Count
+			$SIDArray = @()
+			for ($loop_index = 1; $loop_index -le $CharCountSID; $loop_index++){ 
+				$SpiltNamedString = $NamedStringMatched.split('*')[$loop_index]
+				$SIDObjectName = Get-ADObject -Filter "objectsid -eq '$SpiltNamedString'"
+				if(-not([string]::IsNullOrEmpty($SIDObjectName))){
+					$SIDArray += @{'Object Type'=$SIDObjectName.ObjectClass;'Name'=$SIDObjectName.Name}
+				}else{
+					$SIDArray += @{'Object Type'='';'Name'=$SpiltNamedString}
+				}
+			}
+			$CovertedSIDTable = $SIDArray | ForEach {[PSCustomObject]$_}
+			#$CovertedSIDTable | Sort-Object 'Object Type','Name'
+			#$CovertedSIDTableRTB = $CovertedSIDTable | Sort-Object 'Object Type','Name' | Format-Table -AutoSize | Out-String
+			Return $CovertedSIDTable
+		}
+
+		# Data Class
+		class PrivilegeMessage {
+			[string]$Key
+			[string]$Name
+		}
+
+		# Data Array to Process
+		$PrivilegeArray = @([PrivilegeMessage]@{Key='SeNetworkLogonRight';Name="Access this computer from the network Privilege"}
+		[PrivilegeMessage]@{Key='SeMachineAccountPrivilege';Name="Add workstations to domain Privilege"}
+		[PrivilegeMessage]@{Key='SeBackupPrivilege';Name="Back up files and directories Privilege"}
+		[PrivilegeMessage]@{Key='SeChangeNotifyPrivilege';Name="Bypass traverse checking Privilege"}
+		[PrivilegeMessage]@{Key='SeSystemtimePrivilege';Name="Change the system time Privilege"}
+		[PrivilegeMessage]@{Key='SeCreatePagefilePrivilege';Name="Create a pagefile Privilege"}
+		[PrivilegeMessage]@{Key='SeDebugPrivilege';Name="Debug programs Privilege"}
+		[PrivilegeMessage]@{Key='SeRemoteShutdownPrivilege';Name="Force shutdown from a remote system Privilege"}
+		[PrivilegeMessage]@{Key='SeAuditPrivilege';Name="Generate security audits Privilege"}
+		[PrivilegeMessage]@{Key='SeIncreaseQuotaPrivilege';Name="Adjust memory quotas for a process Privilege"}
+		[PrivilegeMessage]@{Key='SeIncreaseBasePriorityPrivilege';Name="Increase scheduling priority Privilege"}
+		[PrivilegeMessage]@{Key='SeLoadDriverPrivilege';Name="Load and unload device drivers Privilege"}
+		[PrivilegeMessage]@{Key='SeBatchLogonRight';Name="Log on as a batch job Privilege"}
+		[PrivilegeMessage]@{Key='SeServiceLogonRight';Name="Log on as a service Privilege"}
+		[PrivilegeMessage]@{Key='SeInteractiveLogonRight';Name="Allow log on locally Privilege"}
+		[PrivilegeMessage]@{Key='SeSecurityPrivilege';Name="Manage auditing and security log Privilege"}
+		[PrivilegeMessage]@{Key='SeSystemEnvironmentPrivilege';Name="Modify firmware environment values Privilege"}
+		[PrivilegeMessage]@{Key='SeProfileSingleProcessPrivilege';Name="Profile single process Privilege"}
+		[PrivilegeMessage]@{Key='SeSystemProfilePrivilege';Name="Profile system performance Privilege"}
+		[PrivilegeMessage]@{Key='SeAssignPrimaryTokenPrivilege';Name="Replace a process level token Privilege"}
+		[PrivilegeMessage]@{Key='SeRestorePrivilege';Name="Restore files and directories Privilege"}
+		[PrivilegeMessage]@{Key='SeShutdownPrivilege';Name="Shut down the system Privilege"}
+		[PrivilegeMessage]@{Key='SeTakeOwnershipPrivilege';Name="Take ownership of files or other objects Privilege"}
+		[PrivilegeMessage]@{Key='SeUndockPrivilege';Name="Remove computer from docking station Privilege"}
+		[PrivilegeMessage]@{Key='SeEnableDelegationPrivilege';Name="Enable computer and user accounts to be trusted for delegation Privilege"}
+		[PrivilegeMessage]@{Key='SeManageVolumePrivilege';Name="Perform volume maintenance tasks Privilege"}
+		[PrivilegeMessage]@{Key='SeRemoteInteractiveLogonRight';Name="Allow log on through Remote Desktop Services Privilege"}
+		[PrivilegeMessage]@{Key='SeImpersonatePrivilege';Name="Impersonate a client after authentication Privilege"}
+		[PrivilegeMessage]@{Key='SeCreateGlobalPrivilege';Name="Create global objects Privilege"}
+		[PrivilegeMessage]@{Key='SeIncreaseWorkingSetPrivilege';Name="Increase a process working set Privilege"}
+		[PrivilegeMessage]@{Key='SeTimeZonePrivilege';Name="Change the time zone Privilege"}
+		[PrivilegeMessage]@{Key='SeCreateSymbolicLinkPrivilege';Name="Create symbolic links Privilege"}
+		[PrivilegeMessage]@{Key='SeDelegateSessionUserImpersonatePrivilege';Name="Obtain an impersonation token for another user in the same session Privilege"})
+
+		# Define HTML Report Header
+		$Global:Req7UserRightsHTML = "<h2>7.1.2 - Grab User Rights Assessment</h2>"
+		# Loop And Gather Data and Output Data
+		foreach($Row in $PrivilegeArray){
+			$DataRow = PrivilegeRights -TempVarPassThru $Row.Key
+			$CovertedSIDTableRTB = $DataRow | Sort-Object 'Object Type','Name' | Format-Table -AutoSize | Out-String
+			# HTML Report
+			$H3RowHeader = $Row.Name
+			$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
+			$Global:Req7UserRightsHTML += $CovertedSIDTableHTML
+			# Data Output
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n------------------------------------------------------`n")
+			}else{
+				$AllOutput.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n-----------------------------------------------------`n")
+			}
+		}
+	}
+
+
 	# onClick event handler
 	$Req7ScriptList_ListUpdate = {
 		if($Req7ScriptList.SelectedItem -eq "7.1 - Grab and analyse folder permissions that hold sensitive data"){
@@ -3764,7 +3858,10 @@ $AllScriptList_ListUpdate = {
 			Req7DenyAll
 		}elseif($Req7ScriptList.SelectedItem -eq "7.1.2 - Grab User Privileges"){
 			$Req7Output.Clear()
-			Req7UserPriviledges
+			Req7UserPrivileges
+		}elseif($Req7ScriptList.SelectedItem -eq "7.1.2 - Grab User Rights Assessment"){
+			$Req7Output.Clear()
+			Req7UserRightsAssessment
 		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
@@ -3773,7 +3870,9 @@ $AllScriptList_ListUpdate = {
 				$Req7Output.AppendText($Global:SectionHeader)
 				Req7DenyAll
 				$Req7Output.AppendText($Global:SectionHeader)
-				Req7UserPriviledges
+				Req7UserPrivileges
+				$Req7Output.AppendText($Global:SectionHeader)
+				Req7UserRightsAssessment
 				$Req7Output.AppendText($Global:SectionHeader)
 		}else{
 			$Req7Output.Clear()
@@ -3786,7 +3885,7 @@ $AllScriptList_ListUpdate = {
 	Function Req7ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementSevenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Seven</h1>"
-		$Requirement7Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementSevenName $ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement7Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementSevenName $ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement7ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html"
 		$Requirement7Report | Out-File $Requirement7ReportPath
 		$Req7Output.AppendText("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html")
@@ -3801,7 +3900,9 @@ $AllScriptList_ListUpdate = {
 			$Req7Output.AppendText($Global:SectionHeader)
 			Req7DenyAll
 			$Req7Output.AppendText($Global:SectionHeader)
-			Req7UserPriviledges
+			Req7UserPrivileges
+			$Req7Output.AppendText($Global:SectionHeader)
+			Req7UserRightsAssessment
 			Req7ExportReportFunction
 	}
 
