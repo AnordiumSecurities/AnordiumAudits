@@ -3760,23 +3760,51 @@ $AllScriptList_ListUpdate = {
 	Function Req7UserRightsAssessment {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req8Output.AppendText("7.1.2 - Grab User Rights Assessment:")
+			$Req7Output.AppendText("7.1.2 - Grab User Rights Assessment:")
 		}else{
 			$AllOutput.AppendText("7.1.2 - Grab User Rights Assessment:")
 		}
 		# Data Gathering Function
 		Function PrivilegeRights ($TempVarPassThru){
 			$NamedStringMatched = $Global:SecDump | Select-String -SimpleMatch $TempVarPassThru
-			$NamedStringMatched = $NamedStringMatched -replace '`n|`r|,|"| ',""
-			$CharCountSID = ($NamedStringMatched.ToCharArray() | Where-Object {$_ -eq '*'} | Measure-Object).Count
+			#Write-Host Match: $NamedStringMatched
+			$NamedStringMatched = $NamedStringMatched -replace '`n|`r| ',""
+			$NameStringSplit = $NamedStringMatched.split('=')[1]
+			#Write-Host Split: $NameStringSplit
+			$CharCountSIDComma = ($NameStringSplit.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
 			$SIDArray = @()
-			for ($loop_index = 1; $loop_index -le $CharCountSID; $loop_index++){ 
-				$SpiltNamedString = $NamedStringMatched.split('*')[$loop_index]
-				$SIDObjectName = Get-ADObject -Filter "objectsid -eq '$SpiltNamedString'"
+			if($CharCountSIDComma -eq 0){
+				$NameStringSplitStar = $NamedStringMatched.split('*')[1]
+				#Write-Host Split2: $NameStringSplitStar
+				$SIDObjectName = Get-ADObject -Filter "objectsid -eq '$NameStringSplitStar'"
 				if(-not([string]::IsNullOrEmpty($SIDObjectName))){
-					$SIDArray += @{'Object Type'=$SIDObjectName.ObjectClass;'Name'=$SIDObjectName.Name}
+					$SIDArray += @{'Object Type'=$SIDObjectName.ObjectClass;'Name'=$SIDObjectName.Name;'SID'=$NameStringSplitStar}
 				}else{
-					$SIDArray += @{'Object Type'='';'Name'=$SpiltNamedString}
+					$SIDArray += @{'Object Type'='Undefined';'Name'='Unknown';'SID'=$NameStringSplitStar}
+				}
+			}else{
+				#Write-Host $NameStringSplit
+				$NameStringSplit = $NameStringSplit.replace("*","")
+				#Write-Host StarR: $NameStringSplit
+				$CharCountSID = ($NameStringSplit.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
+				for ($loop_index = 0; $loop_index -le $CharCountSID; $loop_index++){ 
+					$SplitNamedString = $NameStringSplit.split(',')[$loop_index]
+					#Write-Host 34:$SplitNamedString
+					$SIDObjectName = Get-ADObject -Filter "objectsid -eq '$SplitNamedString'"
+					if(-not([string]::IsNullOrEmpty($SIDObjectName))){
+						$SIDArray += @{'Object Type'=$SIDObjectName.ObjectClass;'Name'=$SIDObjectName.Name;'SID'=$SplitNamedString}
+					}else{
+						$SIDObjectName2 = Get-ADObject -Filter "SamAccountName -eq '$SplitNamedString'" -properties *
+						if(-not([string]::IsNullOrEmpty($SIDObjectName2))){
+							$SIDArray += @{'Object Type'=$SIDObjectName2.ObjectClass;'Name'=$SIDObjectName2.Name;'SID'=$SIDObjectName2.objectSid}
+						}else{
+							if($SplitNamedString -eq "S-1-1-0"){
+								$SIDArray += @{'Object Type'='Undefined';'Name'='Everyone';'SID'=$SplitNamedString}
+							}else{
+								$SIDArray += @{'Object Type'='Undefined';'Name'='Unknown';'SID'=$SplitNamedString}
+							}
+						}
+					}
 				}
 			}
 			$CovertedSIDTable = $SIDArray | ForEach {[PSCustomObject]$_}
@@ -3831,10 +3859,10 @@ $AllScriptList_ListUpdate = {
 		# Loop And Gather Data and Output Data
 		foreach($Row in $PrivilegeArray){
 			$DataRow = PrivilegeRights -TempVarPassThru $Row.Key
-			$CovertedSIDTableRTB = $DataRow | Sort-Object 'Object Type','Name' | Format-Table -AutoSize | Out-String
+			$CovertedSIDTableRTB = $DataRow | Select-Object 'Object Type','Name','SID' | Sort-Object 'Object Type','Name','SID' | Format-Table -AutoSize | Out-String
 			# HTML Report
 			$H3RowHeader = $Row.Name
-			$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
+			$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name','SID' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
 			$Global:Req7UserRightsHTML += $CovertedSIDTableHTML
 			# Data Output
 			if($EverythingToggle -eq $false){
