@@ -631,6 +631,11 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:Req2MinimumPasswordLengthResult)
 			$Req2Output.AppendText($Global:Req2PasswordComplexityReqsResult)
 			$Req2Output.AppendText($Global:Req2ClearTextPasswordSettingResult)
+			# 1.2 Account Lockout Policy
+			$Req2Output.AppendText("`n1.2 Account Lockout Policy`n")
+			$Req2Output.AppendText($Global:Req2AccountLockoutDurationResult)
+			$Req2Output.AppendText($Global:Req2AccountLockoutThresholdResult)
+			$Req2Output.AppendText($Global:Req2ResetAccountLockoutCounterResult)
 			# 2.3.1 - Accounts
 			$Req2Output.AppendText("`n2.3.1 Accounts`n")
 			$Req2Output.AppendText($Global:Req2DisabledAdminResult)
@@ -763,6 +768,11 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:Req2MinimumPasswordLengthResult)
 			$AllOutput.AppendText($Global:Req2PasswordComplexityReqsResult)
 			$AllOutput.AppendText($Global:Req2ClearTextPasswordSettingResult)
+			# 1.2 Account Lockout Policy
+			$AllOutput.AppendText("`n1.2 Account Lockout Policy`n")
+			$AllOutput.AppendText($Global:Req2AccountLockoutDurationResult)
+			$AllOutput.AppendText($Global:Req2AccountLockoutThresholdResult)
+			$AllOutput.AppendText($Global:Req2ResetAccountLockoutCounterResult)
 			# 2.3.1 - Accounts
 			$AllOutput.AppendText("`n2.3.1 Accounts`n")
 			$AllOutput.AppendText($Global:Req2DisabledAdminResult)
@@ -1338,6 +1348,67 @@ $AllScriptList_ListUpdate = {
 			}else{
 				$Global:Req2ClearTextPasswordSettingResult = "1.1.6     - [FAILED] - 'Store passwords using reversible encryption' is Not Configured.`n"
 				$Global:Req2ClearTextPasswordSettingResultHTML = "1.1.6     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Store passwords using reversible encryption' is Not Configured.`n"
+				$CISFailCounter++
+			}
+
+			# 1.2 Account Lockout Policy
+			# 1.2.1 (L1) Ensure 'Account lockout duration' is set to '15 or more minute(s)' (Scored)
+			$AccountLockoutDuration = $Global:SecDump | Select-String -SimpleMatch 'LockoutDuration' | Out-String
+			$AccountLockoutDurationResult = $AccountLockoutDuration.split(' ')[2]
+			$AccountLockoutDurationResult = $AccountLockoutDurationResult -as [int]
+			if(-not([string]::IsNullOrEmpty($AccountLockoutDurationResult))){
+				if($AccountLockoutDurationResult -ge "15"){
+					$Global:Req2AccountLockoutDurationResult = "1.2.1     - [PASS] - 'Account lockout duration' is set to '15 or more minute(s)'. Current Value: $AccountLockoutDurationResult. CIS Compliant.`n"
+					$Global:Req2AccountLockoutDurationResultHTML = "1.2.1     - <span id=`"CISPassStatus`">[PASS]</span> - 'Account lockout duration' is set to '15 or more minute(s)'. Current Value: $AccountLockoutDurationResult. CIS Compliant.`n"
+					$CISPassCounter++
+				}else{
+					$Global:Req2AccountLockoutDurationResult = "1.2.1     - [FAILED] - 'Account lockout duration' is set to 'less than 14 minute(s)'. Current Value: $AccountLockoutDurationResult.`n"
+					$Global:Req2AccountLockoutDurationResultHTML = "1.2.1     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Account lockout duration' is set to 'less than 15 minute(s)'. Current Value: $AccountLockoutDurationResult.`n"
+					$CISFailCounter++
+				}
+			}else{
+				$Global:Req2AccountLockoutDurationResult = "1.2.1     - [FAILED] - 'Account lockout duration' is Not Configured.`n"
+				$Global:Req2AccountLockoutDurationResultHTML = "1.2.1     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Account lockout duration' is Not Configured.`n"
+				$CISFailCounter++
+			}
+
+			# 1.2.2 (L1) Ensure 'Account lockout threshold' is set to '10 or fewer invalid logon attempt(s), but not 0' (Scored)
+			$AccountLockoutThreshold = $Global:SecDump | Select-String -SimpleMatch 'LockoutBadCount' | Out-String
+			$AccountLockoutThresholdResult = $AccountLockoutThreshold.split(' ')[2]
+			$AccountLockoutThresholdResult = $AccountLockoutThresholdResult -as [int]
+			if(-not([string]::IsNullOrEmpty($AccountLockoutThresholdResult))){
+				if(($AccountLockoutThresholdResult -le "10") -and ($AccountLockoutThresholdResult -ne "0")){
+					$Global:Req2AccountLockoutThresholdResult = "1.2.2     - [PASS] - 'Account lockout threshold' is Set to '10 or fewer invalid logon attempt(s), but not 0'. Current Value: $AccountLockoutThresholdResult. CIS Compliant.`n"
+					$Global:Req2AccountLockoutThresholdResultHTML = "1.2.2     - <span id=`"CISPassStatus`">[PASS]</span> - 'Account lockout threshold' is Set to '10 or fewer invalid logon attempt(s), but not 0'. Current Value: $AccountLockoutThresholdResult. CIS Compliant.`n"
+					$CISPassCounter++
+				}else{
+					$Global:Req2AccountLockoutThresholdResult = "1.2.2     - [FAILED] - 'Account lockout threshold' is Not set to '10 or fewer invalid logon attempt(s), or is Set to 0. Current Value: $AccountLockoutThresholdResult.`n"
+					$Global:Req2AccountLockoutThresholdResultHTML = "1.2.2     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Account lockout threshold' is Not set to '10 or fewer invalid logon attempt(s), or is Set to 0. Current Value: $AccountLockoutThresholdResult.`n"
+					$CISFailCounter++
+				}
+			}else{
+				$Global:Req2AccountLockoutThresholdResult = "1.2.2     - [FAILED] - 'Account lockout threshold' is Not Configured.`n"
+				$Global:Req2AccountLockoutThresholdResultHTML = "1.2.2     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Account lockout threshold' is Not Configured.`n"
+				$CISFailCounter++
+			}
+
+			# 1.2.3 (L1) Ensure 'Reset account lockout counter after' is set to '15 or more minute(s)' (Scored)
+			$ResetAccountLockoutCounter = $Global:SecDump | Select-String -SimpleMatch 'ResetLockoutCount' | Out-String
+			$ResetAccountLockoutCounterResult = $ResetAccountLockoutCounter.split(' ')[2]
+			$ResetAccountLockoutCounterResult = $ResetAccountLockoutCounterResult -as [int]
+			if(-not([string]::IsNullOrEmpty($ResetAccountLockoutCounterResult))){
+				if($ResetAccountLockoutCounterResult -ge "15"){
+					$Global:Req2ResetAccountLockoutCounterResult = "1.2.3     - [PASS] - 'Reset account lockout counter after' is set to 15 or more minute(s). Current Value: $ResetAccountLockoutCounterResult. CIS Compliant.`n"
+					$Global:Req2ResetAccountLockoutCounterResultHTML = "1.2.3     - <span id=`"CISPassStatus`">[PASS]</span> - 'Reset account lockout counter after' is set to '15 or more minute(s). Current Value: $ResetAccountLockoutCounterResult. CIS Compliant.`n"
+					$CISPassCounter++
+				}else{
+					$Global:Req2ResetAccountLockoutCounterResult = "1.2.3     - [FAILED] - 'Reset account lockout counter after' is set to 14 or less minute(s). Current Value: $ResetAccountLockoutCounterResult.`n"
+					$Global:Req2ResetAccountLockoutCounterResultHTML = "1.2.3     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Reset account lockout counter after' is set to 14 or less minute(s). Current Value: $ResetAccountLockoutCounterResult.`n"
+					$CISFailCounter++
+				}
+			}else{
+				$Global:Req2ResetAccountLockoutCounterResult = "1.2.3     - [FAILED] - 'Reset account lockout counter after' is Not Configured.`n"
+				$Global:Req2ResetAccountLockoutCounterResultHTML = "1.2.3     - <span id=`"CISFailedStatus`">[FAILED]</span> - 'Reset account lockout counter after' is Not Configured.`n"
 				$CISFailCounter++
 			}
 
@@ -2719,7 +2790,7 @@ $AllScriptList_ListUpdate = {
 		$Global:CISBenchmarkToalResultHTML = "<h3>CIS Benchmarks Result</h3><p>PASS Results:" + $CISPassCounter + "<br>FAILED Results: " + $CISFailCounter + "<br>Total Benchmarks Tested: " + $CISTotalCounter + "</p>"
 		# HTML Report
 		$Global:Req2PCIDSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResultHTML + "<br>" + $Global:Req2FeatureResultHTML + "<br>" + $Global:Req2FeatureResultTotalHTML + "<br>" + $Global:RunningProcessesResultHTML + "<br>" + $Global:RunningServicesResultHTML + "<br>" + $Global:64BitAppsResultHTML + "<br>" + $Global:LocalDrivesResultHTML + "<br>" + $Global:SMBSharesResultHTML + "<br>" + $Global:ADComputersResultHTML + "<br>" + $Global:CISBenchmarkToalResultHTML + "</p>"
-		$Global:Req2CISComplianceResultHTMLFinal = "<h2>2.4 - CIS Compliance Check</h2><h3>1.1 Password Policy</h3><p>" + $Global:Req2EnforcePasswordHistoryResultHTML + "<br>" + $Global:Req2MaximumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordLengthResultHTML + "<br>" + $Global:Req2PasswordComplexityReqsResultHTML + "<br>" + $Global:Req2ClearTextPasswordSettingResultHTML + "</p><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResultHTML + "<br>" + $Global:Req2BlockMSAccountsResultHTML + "<br>" + $Global:Req2DisabledGuestResultHTML + "<br>" + $Global:Req2LimitBlankPassUseResultHTML + "<br>" + $Global:Req2RenameAdminResultHTML + "<br>" + $Global:Req2RenameGuestResultHTML + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResultHTML + "<br>" + $Global:Req2ShutdownAuditSettingsResultHTML + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResultHTML + "<br>" + $Global:Req2RestrictCDRomsResultHTML + "<br>" + $Global:Req2RestrictFloppiesResultHTML + "<br>" + $Global:Req2LimitRemoveableMediaResultHTML + "<br>" + $Global:Req2LimitPrinterDriversResultHTML + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResultHTML + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResultHTML + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResultHTML + "<br>" + $Global:Req2DigitalSecureChannelHTML + "<br>" + $Global:Req2DigitalSecureChannelSignedHTML + "<br>" + $Global:Req2DisableMachinePassChangeResultHTML + "<br>" + $Global:Req2MaxMachinePassAgeResultHTML + "<br>" + $Global:Req2StrongSessionKeyResultHTML + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResultHTML + "<br>" + $Global:Req2DontDisplayLastUserHTML + "<br>" + $Global:Req2MachineAFKLimitResultHTML + "<br>" + $Global:Req2LegalNoticeTextResultHTML + "<br>" + $Global:Req2LegalNoticeCaptionResultHTML + "<br>" + $Global:Req2PreviousCachedLogonsResultHTML + "<br>" + $Global:Req2PassExpiryWarningResultHTML + "<br>" + $Global:Req2DCAuthUnlockResultHTML + "<br>" + $Global:Req2SmartCardRemovalResultHTML + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResultHTML + "<br>" + $Global:Req2DigitallySignComsServerResultHTML + "<br>" + $Global:Req2EnablePlainTextResultHTML + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResultHTML + "<br>" + $Global:Req2DigitallySignComsForcedResultHTML + "<br>" + $Global:Req2DigitallySignComsClientResultHTML + "<br>" + $Global:Req2ForcedClientLogoffResultHTML + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResultHTML + "<br>" + $Global:Req2RestrictAnonymousSAMResultHTML + "<br>" + $Global:Req2AnonymousEmuerationAccountsResultHTML + "<br>" + $Global:Req2StorageOfPasswordsResultHTML + "<br>" + $Global:Req2AllIncludesPoliciesResultHTML + "<br>" + $Global:Req2AnonymousNamedPipesResultHTML + "<br>" + $Global:Req2AllowedExactPathsResultHTML + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResultHTML + "<br>" + $Global:Req2NullSessionSharesHTML + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResultHTML + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResultHTML + "<br>" + $Global:Req2LocalSystemNULLSessionResultHTML + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResultHTML + "<br>" + $Global:Req2KerberosEncryptionTypesResultHTML + "<br>" + $Global:Req2LanManagerHashResultHTML + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResultHTML + "<br>" + $Global:Req2LanManagerAuthLevelResultHTML + "<br>" + $Global:Req2LDAPClientSigningReqsResultHTML + "<br>" + $Global:Req2NTLMMinClientResultsHTML + "<br>" + $Global:Req2NTLMMinServerResultsHTML + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResultHTML + "<br>" + $Global:Req2AllowFloppyAccessResultHTML + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResultHTML + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResultsHTML + "<br>" + $Global:Req2UserKeyProtectionResultHTML + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResultHTML + "<br>" + $Global:Req2StrengthenPermissionsResultHTML + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResultHTML + "<br>" + $Global:Req2BehaviorforAdminResultHTML + "<br>" + $Global:Req2BehaviorforStandardResultHTML + "<br>" + $Global:Req2InstallerDetectionResultHTML + "<br>" + $Global:Req2UIAccessSecureLocationsResultHTML + "<br>" + $Global:Req2RunAllAdminsModeResultHTML + "<br>" + $Global:Req2SwitchSecureDesktopResultHTML + "<br>" + $Global:Req2VitualFileLocationsResultHTML + "</p>"
+		$Global:Req2CISComplianceResultHTMLFinal = "<h2>2.4 - CIS Compliance Check</h2><h3>1.1 Password Policy</h3><p>" + $Global:Req2EnforcePasswordHistoryResultHTML + "<br>" + $Global:Req2MaximumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordLengthResultHTML + "<br>" + $Global:Req2PasswordComplexityReqsResultHTML + "<br>" + $Global:Req2ClearTextPasswordSettingResultHTML + "</p><h3>1.2 Account Lockout Policy</h3><p>" + $Global:Req2AccountLockoutDurationResultHTML + "<br>" + $Global:Req2AccountLockoutThresholdResultHTML + "<br>" + $Global:Req2ResetAccountLockoutCounterResultHTML + "</p><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResultHTML + "<br>" + $Global:Req2BlockMSAccountsResultHTML + "<br>" + $Global:Req2DisabledGuestResultHTML + "<br>" + $Global:Req2LimitBlankPassUseResultHTML + "<br>" + $Global:Req2RenameAdminResultHTML + "<br>" + $Global:Req2RenameGuestResultHTML + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResultHTML + "<br>" + $Global:Req2ShutdownAuditSettingsResultHTML + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResultHTML + "<br>" + $Global:Req2RestrictCDRomsResultHTML + "<br>" + $Global:Req2RestrictFloppiesResultHTML + "<br>" + $Global:Req2LimitRemoveableMediaResultHTML + "<br>" + $Global:Req2LimitPrinterDriversResultHTML + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResultHTML + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResultHTML + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResultHTML + "<br>" + $Global:Req2DigitalSecureChannelHTML + "<br>" + $Global:Req2DigitalSecureChannelSignedHTML + "<br>" + $Global:Req2DisableMachinePassChangeResultHTML + "<br>" + $Global:Req2MaxMachinePassAgeResultHTML + "<br>" + $Global:Req2StrongSessionKeyResultHTML + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResultHTML + "<br>" + $Global:Req2DontDisplayLastUserHTML + "<br>" + $Global:Req2MachineAFKLimitResultHTML + "<br>" + $Global:Req2LegalNoticeTextResultHTML + "<br>" + $Global:Req2LegalNoticeCaptionResultHTML + "<br>" + $Global:Req2PreviousCachedLogonsResultHTML + "<br>" + $Global:Req2PassExpiryWarningResultHTML + "<br>" + $Global:Req2DCAuthUnlockResultHTML + "<br>" + $Global:Req2SmartCardRemovalResultHTML + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResultHTML + "<br>" + $Global:Req2DigitallySignComsServerResultHTML + "<br>" + $Global:Req2EnablePlainTextResultHTML + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResultHTML + "<br>" + $Global:Req2DigitallySignComsForcedResultHTML + "<br>" + $Global:Req2DigitallySignComsClientResultHTML + "<br>" + $Global:Req2ForcedClientLogoffResultHTML + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResultHTML + "<br>" + $Global:Req2RestrictAnonymousSAMResultHTML + "<br>" + $Global:Req2AnonymousEmuerationAccountsResultHTML + "<br>" + $Global:Req2StorageOfPasswordsResultHTML + "<br>" + $Global:Req2AllIncludesPoliciesResultHTML + "<br>" + $Global:Req2AnonymousNamedPipesResultHTML + "<br>" + $Global:Req2AllowedExactPathsResultHTML + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResultHTML + "<br>" + $Global:Req2NullSessionSharesHTML + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResultHTML + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResultHTML + "<br>" + $Global:Req2LocalSystemNULLSessionResultHTML + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResultHTML + "<br>" + $Global:Req2KerberosEncryptionTypesResultHTML + "<br>" + $Global:Req2LanManagerHashResultHTML + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResultHTML + "<br>" + $Global:Req2LanManagerAuthLevelResultHTML + "<br>" + $Global:Req2LDAPClientSigningReqsResultHTML + "<br>" + $Global:Req2NTLMMinClientResultsHTML + "<br>" + $Global:Req2NTLMMinServerResultsHTML + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResultHTML + "<br>" + $Global:Req2AllowFloppyAccessResultHTML + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResultHTML + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResultsHTML + "<br>" + $Global:Req2UserKeyProtectionResultHTML + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResultHTML + "<br>" + $Global:Req2StrengthenPermissionsResultHTML + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResultHTML + "<br>" + $Global:Req2BehaviorforAdminResultHTML + "<br>" + $Global:Req2BehaviorforStandardResultHTML + "<br>" + $Global:Req2InstallerDetectionResultHTML + "<br>" + $Global:Req2UIAccessSecureLocationsResultHTML + "<br>" + $Global:Req2RunAllAdminsModeResultHTML + "<br>" + $Global:Req2SwitchSecureDesktopResultHTML + "<br>" + $Global:Req2VitualFileLocationsResultHTML + "</p>"
 		#$Global:Req2ComplianceResultHTMLTemp1 = $Global:Req2ComplianceResultHTML -replace "[PASS]","<span id=`"CISPassStatus`">[PASS]</span>"
 		#$Global:Req2ComplianceResultHTMLTemp2 = $Global:Req2ComplianceResultHTMLTemp1 -replace "[FAILED]","<span id=`"CISFailedStatus`">[FAILED]</span>"
 		#$Global:Req2CISComplianceResultHTMLFinal = $Global:Req2ComplianceResultHTMLTemp2 -replace "[INFORMATION]","<span id=`"CISInfoStatus`">[INFOMATION]</span>"
@@ -2734,6 +2805,11 @@ $AllScriptList_ListUpdate = {
 			$Req2Output.AppendText($Global:Req2MinimumPasswordLengthResult)
 			$Req2Output.AppendText($Global:Req2PasswordComplexityReqsResult)
 			$Req2Output.AppendText($Global:Req2ClearTextPasswordSettingResult)
+			# 1.2 Account Lockout Policy
+			$Req2Output.AppendText("`n1.2 Account Lockout Policy`n")
+			$Req2Output.AppendText($Global:Req2AccountLockoutDurationResult)
+			$Req2Output.AppendText($Global:Req2AccountLockoutThresholdResult)
+			$Req2Output.AppendText($Global:Req2ResetAccountLockoutCounterResult)
 			# 2.3.1 - Accounts
 			$Req2Output.AppendText("`n2.3.1 Accounts`n")
 			$Req2Output.AppendText($Global:Req2DisabledAdminResult)
@@ -2846,6 +2922,11 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:Req2MinimumPasswordLengthResult)
 			$AllOutput.AppendText($Global:Req2PasswordComplexityReqsResult)
 			$AllOutput.AppendText($Global:Req2ClearTextPasswordSettingResult)
+			# 1.2 Account Lockout Policy
+			$AllOutput.AppendText("`n1.2 Account Lockout Policy`n")
+			$AllOutput.AppendText($Global:Req2AccountLockoutDurationResult)
+			$AllOutput.AppendText($Global:Req2AccountLockoutThresholdResult)
+			$AllOutput.AppendText($Global:Req2ResetAccountLockoutCounterResult)
 			# 2.3.1 - Accounts
 			$AllOutput.AppendText("`n2.3.1 Accounts`n")
 			$AllOutput.AppendText($Global:Req2DisabledAdminResult)
