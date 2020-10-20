@@ -174,11 +174,11 @@ $CreditsButton = {
 	$MainFormOutput.AppendText("This was made by Team Anordium Securities and is composed of;`n`n")
 	$MainFormOutput.AppendText("`nMatthew Westlake - west356@manukaumail.com`nMicheal Chen - Email: anordium@chencorp.co.nz`nRahnuma Khan`nRyan Alpay - Email: ryanmatthew.alpay@mail.com`nTim Sun - Email: timsun90@gmail.com`n")
 	$MainFormOutput.AppendText("`nAnordium Securities Version " + $Global:ProgramVersionCode + " - " + $Global:ProgramVersionDate +"`n")
-	$MainFormOutput.AppendText("`n`nSpecial Thanks to Dan from Adam the Automator for the CSS table design, W3Schools for the Scroll to Top Feature and Tips and Tricks HQ for the Table of Contents Design.")
-	$MainFormOutput.AppendText("`n`nhttps://adamtheautomator.com/powershell-convertto-html/`nhttps://www.w3schools.com/howto/howto_js_scroll_to_top.asp`nhttps://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217")
+	$MainFormOutput.AppendText("`n`nSpecial Thanks to Dan from Adam the Automator for the CSS table design, W3Schools for the Scroll to Top Feature, Tips and Tricks HQ for the Table of Contents Design and Brian Clanton & Max Kozlov from PowerShell.org for the Deny All Example Code.")
+	$MainFormOutput.AppendText("`n`nhttps://adamtheautomator.com/powershell-convertto-html/`nhttps://www.w3schools.com/howto/howto_js_scroll_to_top.asp`nhttps://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217`nhttps://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/")
 }
 # HTML Credits
-$CreditsForHTML = "Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design, <a href='https://www.w3schools.com/howto/howto_js_scroll_to_top.asp'>W3Schools</a> for the Scroll to Top Feature and <a href='https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217'>Tips and Tricks HQ</a> for the Table of Contents Design."
+$CreditsForHTML = "Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design, <a href='https://www.w3schools.com/howto/howto_js_scroll_to_top.asp'>W3Schools</a> for the Scroll to Top Feature, <a href='https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217'>Tips and Tricks HQ</a> for the Table of Contents Design and <a href='https://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/'>Brian Clanton & Max Kozlov</a> for the Deny All Example Code."
 # Browse Button on Main Form
 $UserInputBrowse = {
 	$MainForm.MainUserInput.Clear()
@@ -206,8 +206,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.4.0"
-$Global:ProgramVersionDate = "13th October 2020"
+$Global:ProgramVersionCode = "1.5.0"
+$Global:ProgramVersionDate = "20th October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -3722,39 +3722,75 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 	
-	# 7.2 - Check for deny all permissions
+	# 7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions
+	# Some Code is taken from Brian Clanton & Max Kozlov from PowerShell.org - https://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/
 	Function Req7DenyAll {
 		if(-not([string]::IsNullOrEmpty($Global:FilePathFilePopupTmp))){
 			# Write Header
 			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText("7.2 - Check for deny all permissions`n")
+				$Req7Output.AppendText("7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions`nParent Folder Selected: " + $Global:FilePathFilePopupTmp + "`n`n")
 			}else{
-				$AllOutput.AppendText("7.2 - Check for deny all permissions`n")
+				$AllOutput.AppendText("7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions`nParent Folder Selected: " + $Global:FilePathFilePopupTmp + "`n`n")
 			}
 			# Find premissions for user selected path
 			try{
 				$Req7FolderPerms = Get-ChildItem -Path $Global:FilePathFilePopupTmp | Get-Acl
-				$Req7FolderPermsRTB = $Req7FolderPerms | Format-List | Out-String
+				#$Req7FolderPermsRTB = $Req7FolderPerms | Format-List | Out-String
 				# Edge Case for child objects
 				if([string]::IsNullOrEmpty($Req7FolderPerms)){
-					$Global:Req7FolderPermsHTML = "<h2>7.2 - Check for deny all permissions</h2><p>No Child Objects Found, Select Root Object that contains a Child Object.<br>Path Selected: $Global:FilePathFilePopupTmp</p>"
+					$Global:Req7FolderPermsHTML = "<h2>7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions</h2><p>No Child Objects Found, Select Root Object that contains a Child Object.<br>Path Selected: $Global:FilePathFilePopupTmp</p>"
 					if($EverythingToggle -eq $false){
 						$Req7Output.AppendText("No Child Objects Found, Select Root Object that contains a Child Object. Path Selected: " + $Global:FilePathFilePopupTmp)
 					}else{
 						$AllOutput.AppendText("No Child Objects Found, Select Root Object that contains a Child Object. Path Selected: " + $Global:FilePathFilePopupTmp)
 					}
+				# Data Processing Phase
 				}else{
-					$Global:Req7FolderPermsHTML = $Req7FolderPerms | ConvertTo-Html -As List -Fragment -PreContent "<h2>Check for deny all permissions</h2>"
-					# Output Data
-					if($EverythingToggle -eq $false){
-						$Req7Output.AppendText($Req7FolderPermsRTB)
-					}else{
-						$AllOutput.AppendText($Req7FolderPermsRTB)
+					# Iterate through Each ACL
+					foreach ($acl in $Req7FolderPerms){
+						# Define Deny Flag
+						$NoDeny = $true
+						# Define Path 
+						$ConvertedPath = Convert-Path $acl.Path
+						# Iterate through each ACS's access control and test for any 'Deny' Right.
+						foreach ($access in $acl.Access){
+							if ($access.AccessControlType -eq "Deny"){
+								# If a Deny is found, Write Output of Result
+								# Define Outputs
+								$TempVarOutstring1 = $access.FileSystemRights | Out-String
+								$TempVarOutstring2 = $access.IdentityReference.value | Out-String
+								$TempOutput = $TempVarOutstring1 + " is set to Deny for " + $TempVarOutstring2 + " at " + $ConvertedPath
+								$TempOutput = $TempOutput  -replace "`n|`r",""
+								$TempOutput2 = $TempOutput + "`n"
+								# Write Outputs
+								if($EverythingToggle -eq $false){
+									$Req7Output.AppendText($TempOutput2)
+								}else{
+									$AllOutput.AppendText($TempOutput2)
+								}
+								# Append to HTML Temp Var
+								$Req7DenyAll += $TempOutput2 + "<br>"
+								# Set flag
+								$NoDeny = $false
+							}
+						}
+						# Print Output & Check Flag
+						if ($NoDeny) {  # check flag
+							if($EverythingToggle -eq $false){
+								$Req7Output.AppendText("No deny at all for: " + $ConvertedPath + "`n")
+							}else{
+								$AllOutput.AppendText("No deny at all for: " + $ConvertedPath + "`n")
+							}
+							# Append to HTML Temp Var
+							$Req7DenyAll += "No deny at all for: " + $ConvertedPath + "<br>"
+						}
 					}
+					# Define HTML Header
+					$Global:Req7FolderPermsHTML = "<h2>7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions</h2>" + "<p>" + $Req7DenyAll + "</p>"
 				}
 			# Edge Case
 			}catch{
-				$Global:Req7FolderPermsHTML = "<h2>7.2 - Check for deny all permissions</h2><p>An Error Has Occurred...</p>"
+				$Global:Req7FolderPermsHTML = "<h2>7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions</h2><p>An Error Has Occurred...</p>"
 				if($EverythingToggle -eq $false){
 					$Req7Output.AppendText("`An Error Has Occurred...`n")
 				}else{
@@ -3763,7 +3799,7 @@ $AllScriptList_ListUpdate = {
 			}
 		# Find Edge-Case if user input is empty
 		}else{
-			$Global:Req7FolderPermsHTML = "<h2>7.2 - Check for deny all permissions</h2><p>Invalid Folder Selected</p>"
+			$Global:Req7FolderPermsHTML = "<h2>7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions</h2><p>Invalid Folder Selected</p>"
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("Check for deny all permissions`n")
 				$Req7Output.AppendText("`nInvalid Folder Selected`n")
@@ -3792,35 +3828,35 @@ $AllScriptList_ListUpdate = {
 			$ActiveDirectoryGroups = (Get-ADGroup -Filter *).Name
 			# Loop
 			foreach ($Group in $ActiveDirectoryGroups){
-			$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName,SID | Sort-Object Name,objectClass
-			$GroupMembershipRTB = $GroupMembership | Format-Table -Autosize | Out-String -Width 1200
-			$GroupInfomation = Get-ADGroup -Identity $Group
-			$GroupInfomationRTB = $GroupInfomation | Format-List | Out-String
-			# HTML Info Stuff
-			$Req7FormatGroupInfoHTML = $GroupInfomation | ConvertTo-Html -As Table -Property DistinguishedName,GroupCategory,GroupScope,Name,ObjectClass,ObjectGUID,SamAccountName,SID -Fragment -PreContent "<h3>$Group Group Details</h3>"
-			# Data Output/Append
-			if([string]::IsNullOrEmpty($GroupMembership)){
-				# Add to HTML List 
-				$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + "<h3>No Users in $Group</h3><p>$Global:SectionBreak</p>"
-				# Data Output
-				if($EverythingToggle -eq $false){
-					$Req7Output.AppendText("`nNo Users in " + $Group + "`n")
-					$Req7Output.AppendText($Global:SectionBreak)
+				$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName,SID | Sort-Object Name,objectClass
+				$GroupMembershipRTB = $GroupMembership | Format-Table -Autosize | Out-String -Width 1200
+				$GroupInfomation = Get-ADGroup -Identity $Group
+				$GroupInfomationRTB = $GroupInfomation | Format-List | Out-String
+				# HTML Info Stuff
+				$Req7FormatGroupInfoHTML = $GroupInfomation | ConvertTo-Html -As Table -Property DistinguishedName,GroupCategory,GroupScope,Name,ObjectClass,ObjectGUID,SamAccountName,SID -Fragment -PreContent "<h3>$Group Group Details</h3>"
+				# Data Output/Append
+				if([string]::IsNullOrEmpty($GroupMembership)){
+					# Add to HTML List 
+					$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + "<h3>No Users in $Group</h3><p>$Global:SectionBreak</p>"
+					# Data Output
+					if($EverythingToggle -eq $false){
+						$Req7Output.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nNo Users in " + $Group + "`n")
+						$Req7Output.AppendText($Global:SectionBreak)
+					}else{
+						$AllOutput.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nNo Users in " + $Group + "`n")
+						$AllOutput.AppendText($Global:SectionBreak)
+					}
 				}else{
-					$AllOutput.AppendText("`nNo Users in " + $Group + "`n")
-					$AllOutput.AppendText($Global:SectionBreak)
-				}
-			}else{
-				# Add to HTML List
-				$Req7FormatGroupListHTML = $GroupMembership | ConvertTo-Html -As Table -Property Name,SamaccountName,objectClass,distinguishedName,SID -Fragment -PreContent "<h3>Here are the Users in $Group</h3>" -PostContent "<p>$Global:SectionBreak</p>"
-				$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + $Req7FormatGroupListHTML
-				# Data Output
-				if($EverythingToggle -eq $false){
-					$Req7Output.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
-					$Req7Output.AppendText($Global:SectionBreak)
-				}else{
-					$AllOutput.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
-					$AllOutput.AppendText($Global:SectionBreak)
+					# Add to HTML List
+					$Req7FormatGroupListHTML = $GroupMembership | ConvertTo-Html -As Table -Property Name,SamaccountName,objectClass,distinguishedName,SID -Fragment -PreContent "<h3>Here are the Users in $Group</h3>" -PostContent "<p>$Global:SectionBreak</p>"
+					$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + $Req7FormatGroupListHTML
+					# Data Output
+					if($EverythingToggle -eq $false){
+						$Req7Output.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
+						$Req7Output.AppendText($Global:SectionBreak)
+					}else{
+						$AllOutput.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
+						$AllOutput.AppendText($Global:SectionBreak)
 					}
 				}
 			}
@@ -3966,14 +4002,13 @@ $AllScriptList_ListUpdate = {
 		}
 	}
 
-
 	# onClick event handler
 	$Req7ScriptList_ListUpdate = {
 		if($Req7ScriptList.SelectedItem -eq "7.1 - Grab and analyse folder permissions that hold sensitive data"){
 			$Req7Output.Clear()
 			Req7FolderInput
 			Req7FolderPerms
-		}elseif($Req7ScriptList.SelectedItem -eq "7.2 - Check for deny all permissions"){
+		}elseif($Req7ScriptList.SelectedItem -eq "7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions"){
 			$Req7Output.Clear()
 			Req7FolderInput
 			Req7DenyAll
@@ -3986,15 +4021,27 @@ $AllScriptList_ListUpdate = {
 		}elseif($Req7ScriptList.SelectedItem -eq "Everything in Requirement Seven"){
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Everything in Requirement Seven`n")
+				$Req7OutputLabel.Text = "Output: Progressing... Waiting for User Input. 0%"
+				$Req7OutputLabel.Refresh()
 				Req7FolderInput
+				$Req7OutputLabel.Text = "Output: Progressing... 10%"
+				$Req7OutputLabel.Refresh()
 				Req7FolderPerms
 				$Req7Output.AppendText($Global:SectionHeader)
+				$Req7OutputLabel.Text = "Output: Progressing... 40%"
+				$Req7OutputLabel.Refresh()
 				Req7DenyAll
 				$Req7Output.AppendText($Global:SectionHeader)
+				$Req7OutputLabel.Text = "Output: Progressing... 60%"
+				$Req7OutputLabel.Refresh()
 				Req7UserPrivileges
 				$Req7Output.AppendText($Global:SectionHeader)
+				$Req7OutputLabel.Text = "Output: Progressing... 80%"
+				$Req7OutputLabel.Refresh()
 				Req7UserRightsAssessment
 				$Req7Output.AppendText($Global:SectionHeader)
+				$Req7OutputLabel.Text = "Output:"
+				$Req7OutputLabel.Refresh()
 		}else{
 			$Req7Output.Clear()
 			$Req7Output.AppendText("You must select an object from the script list.")
@@ -4016,15 +4063,29 @@ $AllScriptList_ListUpdate = {
 	$Req7ExportReport = {
 			$Req7Output.Clear()
 			$Req7Output.AppendText("Writing Report for the Following`n`n")
+			$Req7OutputLabel.Text = "Output: Data Exporting in Progress. Waiting for User Input... 0%"
+			$Req7OutputLabel.Refresh()
 			Req7FolderInput
+			$Req7OutputLabel.Text = "Output: Data Exporting in Progress... 10%"
+			$Req7OutputLabel.Refresh()
 			Req7FolderPerms
 			$Req7Output.AppendText($Global:SectionHeader)
+			$Req7OutputLabel.Text = "Output: Data Exporting in Progress... 40%"
+			$Req7OutputLabel.Refresh()
 			Req7DenyAll
 			$Req7Output.AppendText($Global:SectionHeader)
+			$Req7OutputLabel.Text = "Output: Data Exporting in Progress... 60%"
+			$Req7OutputLabel.Refresh()
 			Req7UserPrivileges
 			$Req7Output.AppendText($Global:SectionHeader)
+			$Req7OutputLabel.Text = "Output: Data Exporting in Progress... 80%"
+			$Req7OutputLabel.Refresh()
 			Req7UserRightsAssessment
+			$Req7OutputLabel.Text = "Output: Data Exporting in Progress... 99%"
+			$Req7OutputLabel.Refresh()
 			Req7ExportReportFunction
+			$Req7OutputLabel.Text = "Output:"
+			$Req7OutputLabel.Refresh()
 	}
 
 # Requirement Eight Tab #

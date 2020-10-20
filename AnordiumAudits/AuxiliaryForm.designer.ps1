@@ -578,7 +578,7 @@ $Req7Refresh.add_Click($Req7ScriptList_ListUpdate)
 #Req7ScriptList
 #
 $Req7ScriptList.FormattingEnabled = $true
-$Req7ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Seven',[System.String]'7.1 - Grab and analyse folder permissions that hold sensitive data',[System.String]'7.2 - Check for deny all permissions',[System.String]'7.1.2 - Grab User Privileges',[System.String]'7.1.2 - Grab User Rights Assessment'))
+$Req7ScriptList.Items.AddRange([System.Object[]]@([System.String]'Everything in Requirement Seven',[System.String]'7.1 - Grab and analyse folder permissions that hold sensitive data',[System.String]'7.2 - Check Sub-Folders and Sub-Files for Deny All Permissions',[System.String]'7.1.2 - Grab User Privileges',[System.String]'7.1.2 - Grab User Rights Assessment'))
 $Req7ScriptList.Location = (New-Object -TypeName System.Drawing.Point -ArgumentList @([System.Int32]21,[System.Int32]40))
 $Req7ScriptList.Name = [System.String]'Req7ScriptList'
 $Req7ScriptList.Size = (New-Object -TypeName System.Drawing.Size -ArgumentList @([System.Int32]320,[System.Int32]784))
