@@ -3767,36 +3767,40 @@ $AllScriptList_ListUpdate = {
 		# Data Gathering Function
 		Function PrivilegeRights ($TempVarPassThru){
 			$NamedStringMatched = $Global:SecDump | Select-String -SimpleMatch $TempVarPassThru
-			#Write-Host Match: $NamedStringMatched
 			$NamedStringMatched = $NamedStringMatched -replace '`n|`r| ',""
 			$NameStringSplit = $NamedStringMatched.split('=')[1]
-			#Write-Host Split: $NameStringSplit
 			$CharCountSIDComma = ($NameStringSplit.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
+			# Define Empty Array
 			$SIDArray = @()
+			# Edge Case Incase Only One SID/Account
 			if($CharCountSIDComma -eq 0){
 				$NameStringSplitStar = $NamedStringMatched.split('*')[1]
-				#Write-Host Split2: $NameStringSplitStar
 				$SIDObjectName = Get-ADObject -Filter "objectsid -eq '$NameStringSplitStar'"
+				# SID Lookup, Edge Case Incase can't find SID in AD
 				if(-not([string]::IsNullOrEmpty($SIDObjectName))){
 					$SIDArray += @{'Object Type'=$SIDObjectName.ObjectClass;'Name'=$SIDObjectName.Name;'SID'=$NameStringSplitStar}
 				}else{
 					$SIDArray += @{'Object Type'='Undefined';'Name'='Unknown';'SID'=$NameStringSplitStar}
 				}
+			# Else Statement for More SIDS/Accounts
 			}else{
-				#Write-Host $NameStringSplit
+				# Remove Stars from SID to Lookup
 				$NameStringSplit = $NameStringSplit.replace("*","")
-				#Write-Host StarR: $NameStringSplit
 				$CharCountSID = ($NameStringSplit.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
+				# For Loop, Loop based on commas counted, start from 0 until all commas accounted for.
 				for ($loop_index = 0; $loop_index -le $CharCountSID; $loop_index++){ 
 					$SplitNamedString = $NameStringSplit.split(',')[$loop_index]
-					#Write-Host 34:$SplitNamedString
 					$SIDObjectName = Get-ADObject -Filter "objectsid -eq '$SplitNamedString'"
+					# Add Object If Found
 					if(-not([string]::IsNullOrEmpty($SIDObjectName))){
 						$SIDArray += @{'Object Type'=$SIDObjectName.ObjectClass;'Name'=$SIDObjectName.Name;'SID'=$SplitNamedString}
+					# Edge Case If Not Found
 					}else{
+						# Check SAM Account Name, Edgecase for manual entry.
 						$SIDObjectName2 = Get-ADObject -Filter "SamAccountName -eq '$SplitNamedString'" -properties *
 						if(-not([string]::IsNullOrEmpty($SIDObjectName2))){
 							$SIDArray += @{'Object Type'=$SIDObjectName2.ObjectClass;'Name'=$SIDObjectName2.Name;'SID'=$SIDObjectName2.objectSid}
+						# Edge case for Everyone and Unknown SIDs
 						}else{
 							if($SplitNamedString -eq "S-1-1-0"){
 								$SIDArray += @{'Object Type'='Undefined';'Name'='Everyone';'SID'=$SplitNamedString}
@@ -3807,19 +3811,18 @@ $AllScriptList_ListUpdate = {
 					}
 				}
 			}
+			# Data Processing, Return Formatted Table
 			$CovertedSIDTable = $SIDArray | ForEach {[PSCustomObject]$_}
-			#$CovertedSIDTable | Sort-Object 'Object Type','Name'
-			#$CovertedSIDTableRTB = $CovertedSIDTable | Sort-Object 'Object Type','Name' | Format-Table -AutoSize | Out-String
 			Return $CovertedSIDTable
 		}
 
-		# Data Class
+		# Define Data Class
 		class PrivilegeMessage {
 			[string]$Key
 			[string]$Name
 		}
 
-		# Data Array to Process
+		# Data Array to Process in Loop
 		$PrivilegeArray = @([PrivilegeMessage]@{Key='SeNetworkLogonRight';Name="Access this computer from the network Privilege"}
 		[PrivilegeMessage]@{Key='SeMachineAccountPrivilege';Name="Add workstations to domain Privilege"}
 		[PrivilegeMessage]@{Key='SeBackupPrivilege';Name="Back up files and directories Privilege"}
