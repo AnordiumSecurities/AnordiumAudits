@@ -3760,9 +3760,9 @@ $AllScriptList_ListUpdate = {
 	Function Req7UserRightsAssessment {
 		# Write Header
 		if($EverythingToggle -eq $false){
-			$Req7Output.AppendText("7.1.2 - Grab User Rights Assessment:")
+			$Req7Output.AppendText("7.1.2 - Grab User Rights Assessment:`n")
 		}else{
-			$AllOutput.AppendText("7.1.2 - Grab User Rights Assessment:")
+			$AllOutput.AppendText("7.1.2 - Grab User Rights Assessment:`n")
 		}
 		# Data Gathering Function
 		Function PrivilegeRights ($TempVarPassThru){
@@ -3859,19 +3859,28 @@ $AllScriptList_ListUpdate = {
 
 		# Define HTML Report Header
 		$Global:Req7UserRightsHTML = "<h2>7.1.2 - Grab User Rights Assessment</h2>"
+
+		# Define OS Build and Catch Edge Case in 2012, (Missing Key "SeDelegateSessionUserImpersonatePrivilege")
+		$OSVersion = [string][environment]::OSVersion.Version.major + '.' + [environment]::OSVersion.Version.minor
+
 		# Loop And Gather Data and Output Data
 		foreach($Row in $PrivilegeArray){
-			$DataRow = PrivilegeRights -TempVarPassThru $Row.Key
-			$CovertedSIDTableRTB = $DataRow | Select-Object 'Object Type','Name','SID' | Sort-Object 'Object Type','Name','SID' | Format-Table -AutoSize | Out-String
-			# HTML Report
-			$H3RowHeader = $Row.Name
-			$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name','SID' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
-			$Global:Req7UserRightsHTML += $CovertedSIDTableHTML
-			# Data Output
-			if($EverythingToggle -eq $false){
-				$Req7Output.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n------------------------------------------------------`n")
+			# Break on Edge Case for Server 2012 and Below
+			if(("6.3" -le $OSVersion) -and ($Row.Key -eq "SeDelegateSessionUserImpersonatePrivilege")){
+				break
 			}else{
-				$AllOutput.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n-----------------------------------------------------`n")
+				$DataRow = PrivilegeRights -TempVarPassThru $Row.Key
+				$CovertedSIDTableRTB = $DataRow | Select-Object 'Object Type','Name','SID' | Sort-Object 'Object Type','Name','SID' | Format-Table -AutoSize | Out-String
+				# HTML Report
+				$H3RowHeader = $Row.Name
+				$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name','SID' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
+				$Global:Req7UserRightsHTML += $CovertedSIDTableHTML
+				# Data Output
+				if($EverythingToggle -eq $false){
+					$Req7Output.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n------------------------------------------------------`n")
+				}else{
+					$AllOutput.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n-----------------------------------------------------`n")
+				}
 			}
 		}
 	}
