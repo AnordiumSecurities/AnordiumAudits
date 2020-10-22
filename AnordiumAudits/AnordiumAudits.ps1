@@ -171,11 +171,12 @@ $AuxiliaryBack_Click = {
 $CreditsButton = {
 	$MainFormOutput.Clear()
 	$MainFormOutput.AppendText("BDT Industry Project Q3-Q4 2020`n")
-	$MainFormOutput.AppendText("This was made by Team Anordium Securities and is composed of;`n`n")
+	$MainFormOutput.AppendText("This was made by Team Anordium Securities and is composed of;`n")
 	$MainFormOutput.AppendText("`nMatthew Westlake - west356@manukaumail.com`nMicheal Chen - Email: anordium@chencorp.co.nz`nRahnuma Khan`nRyan Alpay - Email: ryanmatthew.alpay@mail.com`nTim Sun - Email: timsun90@gmail.com`n")
 	$MainFormOutput.AppendText("`nAnordium Securities Version " + $Global:ProgramVersionCode + " - " + $Global:ProgramVersionDate +"`n")
-	$MainFormOutput.AppendText("`n`nSpecial Thanks to Dan from Adam the Automator for the CSS table design, W3Schools for the Scroll to Top Feature, Tips and Tricks HQ for the Table of Contents Design and Brian Clanton & Max Kozlov from PowerShell.org for the Deny All Example Code.")
+	$MainFormOutput.AppendText("`nSpecial Thanks to Dan from Adam the Automator for the CSS table design, W3Schools for the Scroll to Top Feature, Tips and Tricks HQ for the Table of Contents Design and Brian Clanton & Max Kozlov from PowerShell.org for the Deny All Example Code.")
 	$MainFormOutput.AppendText("`n`nhttps://adamtheautomator.com/powershell-convertto-html/`nhttps://www.w3schools.com/howto/howto_js_scroll_to_top.asp`nhttps://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217`nhttps://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/")
+	$MainFormOutput.AppendText("`n`n-------------------------------------------------------------------------------------------------------------------------------------------------`n`nMIT License`n`nCopyright (c) 2020 Anordium Securities`n`nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the `"Software`"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:`n`nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.`n`nTHE SOFTWARE IS PROVIDED `"AS IS`", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
 }
 # HTML Credits
 $CreditsForHTML = "Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design, <a href='https://www.w3schools.com/howto/howto_js_scroll_to_top.asp'>W3Schools</a> for the Scroll to Top Feature, <a href='https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217'>Tips and Tricks HQ</a> for the Table of Contents Design and <a href='https://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/'>Brian Clanton & Max Kozlov</a> for the Deny All Example Code."
@@ -206,8 +207,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.5.0"
-$Global:ProgramVersionDate = "20th October 2020"
+$Global:ProgramVersionCode = "1.6.0"
+$Global:ProgramVersionDate = "22th October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -5173,7 +5174,7 @@ $AllScriptList_ListUpdate = {
 		# HTML Report
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
-		$Requirement10Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:GPODumpHTML $Global:Req10AllAuditLogs" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement10Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement10ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
 		# Write Output
