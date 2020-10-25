@@ -207,8 +207,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.6.0"
-$Global:ProgramVersionDate = "22th October 2020"
+$Global:ProgramVersionCode = "1.6.1"
+$Global:ProgramVersionDate = "26th October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -1236,7 +1236,7 @@ $AllScriptList_ListUpdate = {
 			$EnforcePasswordHistory = $Global:SecDump | Select-String -SimpleMatch 'PasswordHistorySize' | Out-String
 			$EnforcePasswordHistoryResult = $EnforcePasswordHistory.split(' ')[2]
 			$EnforcePasswordHistoryResult = $EnforcePasswordHistoryResult -as [int]
-			if(-not([string]::IsNullOrEmpty($EnforcePasswordHistoryResult))){
+			if(-not([string]::IsNullOrEmpty($EnforcePasswordHistory))){
 				if($EnforcePasswordHistoryResult -ge "24"){
 					$Global:Req2EnforcePasswordHistoryResult = "1.1.1     - [PASS] - 'Enforce Password History' is set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult. CIS Compliant.`n"
 					$Global:Req2EnforcePasswordHistoryResultHTML = "1.1.1     - <span id=`"CISPassStatus`">[PASS]</span> - 'Enforce Password History' is set to '24 or more password(s)'. Current Value: $EnforcePasswordHistoryResult. CIS Compliant.`n"
@@ -1256,7 +1256,7 @@ $AllScriptList_ListUpdate = {
 			$MaximumPasswordAge = $Global:SecDump | Select-String -SimpleMatch 'MaximumPasswordAge =' | Out-String
 			$MaximumPasswordAgeResult = $MaximumPasswordAge.split(' ')[2]
 			$MaximumPasswordAgeResult = $MaximumPasswordAgeResult -as [int]
-			if(-not([string]::IsNullOrEmpty($MaximumPasswordAgeResult))){
+			if(-not([string]::IsNullOrEmpty($MaximumPasswordAge))){
 				if(($MaximumPasswordAgeResult -le "60") -and ($MaximumPasswordAgeResult -ne "0")){
 					$Global:Req2MaximumPasswordAgeResult = "1.1.2     - [PASS] - 'Maximum Password Age' is set to '60 or fewer days, and not 0'. Current Value: $MaximumPasswordAgeResult. CIS Compliant.`n"
 					$Global:Req2MaximumPasswordAgeResultHTML = "1.1.2     - <span id=`"CISPassStatus`">[PASS]</span> - 'Maximum Password Age' is set to '60 or fewer days, and not 0'. Current Value: $MaximumPasswordAgeResult. CIS Compliant.`n"
@@ -1276,7 +1276,7 @@ $AllScriptList_ListUpdate = {
 			$MinimumPasswordAge = $Global:SecDump | Select-String -SimpleMatch 'MinimumPasswordAge' | Out-String
 			$MinimumPasswordAgeResult = $MinimumPasswordAge.split(' ')[2]
 			$MinimumPasswordAgeResult = $MinimumPasswordAgeResult -as [int]
-			if(-not([string]::IsNullOrEmpty($MinimumPasswordAgeResult))){
+			if(-not([string]::IsNullOrEmpty($MinimumPasswordAge))){
 				if($MinimumPasswordAgeResult -ge "1"){
 					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [PASS] - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
 					$Global:Req2MinimumPasswordAgeResultHTML = "1.1.3     - <span id=`"CISPassStatus`">[PASS]</span> - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
@@ -1296,7 +1296,7 @@ $AllScriptList_ListUpdate = {
 			$MinimumPasswordLength = $Global:SecDump | Select-String -SimpleMatch 'MinimumPasswordLength' | Out-String
 			$MinimumPasswordLengthResult = $MinimumPasswordLength.split(' ')[2]
 			$MinimumPasswordLengthResult = $MinimumPasswordLengthResult -as [int]
-			if(-not([string]::IsNullOrEmpty($MinimumPasswordLengthResult))){
+			if(-not([string]::IsNullOrEmpty($MinimumPasswordLength))){
 				if($MinimumPasswordLengthResult -ge "14"){
 					$Global:Req2MinimumPasswordLengthResult = "1.1.4     - [PASS] - 'Minimum Password Length' is set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult. CIS Compliant.`n"
 					$Global:Req2MinimumPasswordLengthResultHTML = "1.1.4     - <span id=`"CISPassStatus`">[PASS]</span> - 'Minimum Password Length' is set to '14 or more character(s)'. Current Value: $MinimumPasswordLengthResult. CIS Compliant.`n"
@@ -1316,7 +1316,7 @@ $AllScriptList_ListUpdate = {
 			$PasswordComplexityReqs = $Global:SecDump | Select-String -SimpleMatch 'ClearTextPassword' | Out-String
 			$PasswordComplexityReqsResult = $PasswordComplexityReqs.split(' ')[2]
 			$PasswordComplexityReqsResult = $PasswordComplexityReqsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($PasswordComplexityReqsResult))){
+			if(-not([string]::IsNullOrEmpty($PasswordComplexityReqs))){
 				if($PasswordComplexityReqsResult -eq "0"){
 					$Global:Req2PasswordComplexityReqsResult = "1.1.5     - [PASS] - 'Password must meet complexity requirements' is set to 'Enabled'. CIS Compliant.`n"
 					$Global:Req2PasswordComplexityReqsResultHTML = "1.1.5     - <span id=`"CISPassStatus`">[PASS]</span> - 'Password must meet complexity requirements' is set to 'Enabled'. CIS Compliant.`n"
@@ -1336,7 +1336,7 @@ $AllScriptList_ListUpdate = {
 			$ClearTextPasswordSetting = $Global:SecDump | Select-String -SimpleMatch 'PasswordComplexity' | Out-String
 			$ClearTextPasswordSettingResult = $ClearTextPasswordSetting.split(' ')[2]
 			$ClearTextPasswordSettingResult = $ClearTextPasswordSettingResult -as [int]
-			if(-not([string]::IsNullOrEmpty($ClearTextPasswordSettingResult))){
+			if(-not([string]::IsNullOrEmpty($ClearTextPasswordSetting))){
 				if($ClearTextPasswordSettingResult -eq "1"){
 					$Global:Req2ClearTextPasswordSettingResult = "1.1.6     - [PASS] - 'Store passwords using reversible encryption' is set to 'Disabled'. CIS Compliant.`n"
 					$Global:Req2ClearTextPasswordSettingResultHTML = "1.1.6     - <span id=`"CISPassStatus`">[PASS]</span> - 'Store passwords using reversible encryption' is set to 'Disabled'. CIS Compliant.`n"
@@ -1357,7 +1357,7 @@ $AllScriptList_ListUpdate = {
 			$AccountLockoutDuration = $Global:SecDump | Select-String -SimpleMatch 'LockoutDuration' | Out-String
 			$AccountLockoutDurationResult = $AccountLockoutDuration.split(' ')[2]
 			$AccountLockoutDurationResult = $AccountLockoutDurationResult -as [int]
-			if(-not([string]::IsNullOrEmpty($AccountLockoutDurationResult))){
+			if(-not([string]::IsNullOrEmpty($AccountLockoutDuration))){
 				if($AccountLockoutDurationResult -ge "15"){
 					$Global:Req2AccountLockoutDurationResult = "1.2.1     - [PASS] - 'Account lockout duration' is set to '15 or more minute(s)'. Current Value: $AccountLockoutDurationResult. CIS Compliant.`n"
 					$Global:Req2AccountLockoutDurationResultHTML = "1.2.1     - <span id=`"CISPassStatus`">[PASS]</span> - 'Account lockout duration' is set to '15 or more minute(s)'. Current Value: $AccountLockoutDurationResult. CIS Compliant.`n"
@@ -1377,7 +1377,7 @@ $AllScriptList_ListUpdate = {
 			$AccountLockoutThreshold = $Global:SecDump | Select-String -SimpleMatch 'LockoutBadCount' | Out-String
 			$AccountLockoutThresholdResult = $AccountLockoutThreshold.split(' ')[2]
 			$AccountLockoutThresholdResult = $AccountLockoutThresholdResult -as [int]
-			if(-not([string]::IsNullOrEmpty($AccountLockoutThresholdResult))){
+			if(-not([string]::IsNullOrEmpty($AccountLockoutThreshold))){
 				if(($AccountLockoutThresholdResult -le "10") -and ($AccountLockoutThresholdResult -ne "0")){
 					$Global:Req2AccountLockoutThresholdResult = "1.2.2     - [PASS] - 'Account lockout threshold' is Set to '10 or fewer invalid logon attempt(s), but not 0'. Current Value: $AccountLockoutThresholdResult. CIS Compliant.`n"
 					$Global:Req2AccountLockoutThresholdResultHTML = "1.2.2     - <span id=`"CISPassStatus`">[PASS]</span> - 'Account lockout threshold' is Set to '10 or fewer invalid logon attempt(s), but not 0'. Current Value: $AccountLockoutThresholdResult. CIS Compliant.`n"
@@ -1397,7 +1397,7 @@ $AllScriptList_ListUpdate = {
 			$ResetAccountLockoutCounter = $Global:SecDump | Select-String -SimpleMatch 'ResetLockoutCount' | Out-String
 			$ResetAccountLockoutCounterResult = $ResetAccountLockoutCounter.split(' ')[2]
 			$ResetAccountLockoutCounterResult = $ResetAccountLockoutCounterResult -as [int]
-			if(-not([string]::IsNullOrEmpty($ResetAccountLockoutCounterResult))){
+			if(-not([string]::IsNullOrEmpty($ResetAccountLockoutCounter))){
 				if($ResetAccountLockoutCounterResult -ge "15"){
 					$Global:Req2ResetAccountLockoutCounterResult = "1.2.3     - [PASS] - 'Reset account lockout counter after' is set to 15 or more minute(s). Current Value: $ResetAccountLockoutCounterResult. CIS Compliant.`n"
 					$Global:Req2ResetAccountLockoutCounterResultHTML = "1.2.3     - <span id=`"CISPassStatus`">[PASS]</span> - 'Reset account lockout counter after' is set to '15 or more minute(s). Current Value: $ResetAccountLockoutCounterResult. CIS Compliant.`n"
@@ -1432,7 +1432,7 @@ $AllScriptList_ListUpdate = {
 			$BlockMSAccounts = $Global:SecDump | Select-String -SimpleMatch 'NoConnectedUser' | Out-String
 			$BlockMSAccountsResult = $BlockMSAccounts.split(',')[1]
 			$BlockMSAccountsResult = $BlockMSAccountsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($BlockMSAccountsResult))){
+			if(-not([string]::IsNullOrEmpty($BlockMSAccounts))){
 				if($BlockMSAccountsResult -eq "3"){
 					$Global:Req2BlockMSAccountsResult = "2.3.1.2   - [PASS] - Microsoft accounts is blocked correctly. Users can't add or log-in with Microsoft accounts. CIS Compliant.`n"
 					$Global:Req2BlockMSAccountsResultHTML = "2.3.1.2   - <span id=`"CISPassStatus`">[PASS]</span> - Microsoft accounts is blocked correctly. Users can't add or log-in with Microsoft accounts. CIS Compliant.`n"
@@ -1507,7 +1507,7 @@ $AllScriptList_ListUpdate = {
 			$ForceAuditPolicyOverride = $Global:SecDump | Select-String -SimpleMatch 'SCENoApplyLegacyAuditPolicy' | Out-String
 			$ForceAuditPolicyOverrideResult = $ForceAuditPolicyOverride.split(',')[1]
 			$ForceAuditPolicyOverrideResult = $ForceAuditPolicyOverrideResult -as [int]
-			if(-not([string]::IsNullOrEmpty($ForceAuditPolicyOverrideResult))){
+			if(-not([string]::IsNullOrEmpty($ForceAuditPolicyOverride))){
 				if($ForceAuditPolicyOverrideResult -eq "1"){
 					$Global:Req2ForceAuditPolicyOverrideResult = "2.3.2.1   - [PASS] - Force audit policy subcategory settings to override audit policy category settings is Enabled. CIS Compliant.`n"
 					$Global:Req2ForceAuditPolicyOverrideResultHTML = "2.3.2.1   - <span id=`"CISPassStatus`">[PASS]</span> - Force audit policy subcategory settings to override audit policy category settings is Enabled. CIS Compliant.`n"
@@ -1527,7 +1527,7 @@ $AllScriptList_ListUpdate = {
 			$ShutdownAuditSettings = $Global:SecDump | Select-String -SimpleMatch 'CrashOnAuditFail' | Out-String
 			$ShutdownAuditSettingsResult = $ShutdownAuditSettings.split(',')[1]
 			$ShutdownAuditSettingsResult = $ShutdownAuditSettingsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($ShutdownAuditSettingsResult))){
+			if(-not([string]::IsNullOrEmpty($ShutdownAuditSettings))){
 				if($ShutdownAuditSettingsResult -eq "0"){
 					$Global:Req2ShutdownAuditSettingsResult = "2.3.2.2   - [PASS] - Shut down system immediately if unable to log security audits is Disabled. CIS Compliant.`n"
 					$Global:Req2ShutdownAuditSettingsResultHTML = "2.3.2.2   - <span id=`"CISPassStatus`">[PASS]</span> - Shut down system immediately if unable to log security audits is Disabled. CIS Compliant.`n"
@@ -1628,7 +1628,7 @@ $AllScriptList_ListUpdate = {
 			$LimitPrinterDrivers = $Global:SecDump | Select-String -SimpleMatch 'AddPrinterDrivers' | Out-String
 			$LimitPrinterDriversResult = $LimitPrinterDrivers.split(',')[1]
 			$LimitPrinterDriversResult = $LimitPrinterDriversResult -as [int]
-			if(-not([string]::IsNullOrEmpty($LimitPrinterDriversResult))){
+			if(-not([string]::IsNullOrEmpty($LimitPrinterDrivers))){
 				if($LimitRemoveableMediaResult -eq "0"){
 					$Global:Req2LimitPrinterDriversResult = "2.3.4.2   - [PASS] - Prevent users from installing printer drivers is Enabled. CIS Compliant.`n"
 					$Global:Req2LimitPrinterDriversResultHTML = "2.3.4.2   - <span id=`"CISPassStatus`">[PASS]</span> - Prevent users from installing printer drivers is Enabled. CIS Compliant.`n"
@@ -1690,7 +1690,7 @@ $AllScriptList_ListUpdate = {
 			$DigitalEncryptSign = $Global:SecDump | Select-String -SimpleMatch "RequireSignOrSeal" | Out-String
 			$DigitalEncryptSignResult = $DigitalEncryptSign.split(",")[1]
 			$DigitalEncryptSignResult = $DigitalEncryptSignResult -as [int]
-			if(-not([string]::IsNullOrEmpty($DigitalEncryptSignResult))){
+			if(-not([string]::IsNullOrEmpty($DigitalEncryptSign))){
 				if($DigitalEncryptSignResult -eq "1"){
 					$Global:Req2DigitalEncryptSignResult = "2.3.6.1   - [PASS] - Digitally encrypt or sign secure channel data (always)' is Enabled. CIS Compliant.`n"
 					$Global:Req2DigitalEncryptSignResultHTML = "2.3.6.1   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally encrypt or sign secure channel data (always)' is Enabled. CIS Compliant.`n"
@@ -1758,7 +1758,7 @@ $AllScriptList_ListUpdate = {
 			$MaxMachinePassAge = $Global:SecDump | Select-String -SimpleMatch 'Parameters\MaximumPasswordAge' | Out-String
 			$MaxMachinePassAgeResult = $MaxMachinePassAge.split(',')[1]
 			$MaxMachinePassAgeResult = $MaxMachinePassAgeResult -as [int]
-			if(-not([string]::IsNullOrEmpty($MaxMachinePassAgeResult))){
+			if(-not([string]::IsNullOrEmpty($MaxMachinePassAge))){
 				if(($MaxMachinePassAgeResult -le "30") -and ($MaxMachinePassAgeResult -ne "0")){
 					$Global:Req2MaxMachinePassAgeResult = "2.3.6.5   - [PASS] - Maximum Machine Account Password Age is set to between 1 and 30 Days. The current setting is $MaxMachinePassAgeResult Days. CIS Compliant.`n"
 					$Global:Req2MaxMachinePassAgeResultHTML = "2.3.6.5   - <span id=`"CISPassStatus`">[PASS]</span> - Maximum Machine Account Password Age is set to between 1 and 30 Days. The current setting is $MaxMachinePassAgeResult Days. CIS Compliant.`n"
@@ -1778,7 +1778,7 @@ $AllScriptList_ListUpdate = {
 			$StrongSessionKey = $Global:SecDump | Select-String -SimpleMatch 'RequireStrongKey' | Out-String
 			$StrongSessionKeyResult = $StrongSessionKey.split(',')[1]
 			$StrongSessionKeyResult = $StrongSessionKeyResult -as [int]
-			if(-not([string]::IsNullOrEmpty($StrongSessionKeyResult))){
+			if(-not([string]::IsNullOrEmpty($StrongSessionKey))){
 				if($LimitRemoveableMediaResult -eq "0"){
 					$Global:Req2StrongSessionKeyResult = "2.3.6.6   - [PASS] - Require Strong Session Key for Windows Server 2000 is Enabled. CIS Compliant.`n"
 					$Global:Req2StrongSessionKeyResultHTML = "2.3.6.6   - <span id=`"CISPassStatus`">[PASS]</span> - Require Strong Session Key for Windows Server 2000 is Enabled. CIS Compliant.`n"
@@ -1799,7 +1799,7 @@ $AllScriptList_ListUpdate = {
 			$LoginCntlAltDelStatus = $Global:SecDump | Select-String -SimpleMatch 'DisableCAD' | Out-String
 			$LoginCntlAltDelStatusResult = $LoginCntlAltDelStatus.split(',')[1]
 			$LoginCntlAltDelStatusResult = $LoginCntlAltDelStatusResult -as [int]
-			if(-not([string]::IsNullOrEmpty($LoginCntlAltDelStatusResult))){
+			if(-not([string]::IsNullOrEmpty($LoginCntlAltDelStatus))){
 				if($LoginCntlAltDelStatusResult -eq "0"){
 					$Global:Req2LoginCntlAltDelStatusResult = "2.3.7.1   - [PASS] - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Disabled. CIS Compliant.`n"
 					$Global:Req2LoginCntlAltDelStatusResultHTML = "2.3.7.1   - <span id=`"CISPassStatus`">[PASS]</span> - Policy for Do not require CTRL+ALT+DEL on the Login page is set to Disabled. CIS Compliant.`n"
@@ -1834,7 +1834,7 @@ $AllScriptList_ListUpdate = {
 			$MachineAFKLimit = $Global:SecDump | Select-String -SimpleMatch 'InactivityTimeoutSecs' | Out-String
 			$MachineAFKLimitResult = $MachineAFKLimit.split(',')[1]
 			$MachineAFKLimitResult = $MachineAFKLimitResult -as [int]
-			if(-not([string]::IsNullOrEmpty($MachineAFKLimitResult))){
+			if(-not([string]::IsNullOrEmpty($MachineAFKLimit))){
 				if(($MachineAFKLimitResult -le "900") -and ($MachineAFKLimitResult -ne "0")){
 					$Global:Req2MachineAFKLimitResult = "2.3.7.3   - [PASS] - Machine inactivity limit is set between 1 and 900 seconds. The current setting is $MachineAFKLimitResult seconds. CIS Compliant.`n"
 					$Global:Req2MachineAFKLimitResultHTML = "2.3.7.3   - <span id=`"CISPassStatus`">[PASS]</span> - Machine inactivity limit is set between 1 and 900 seconds. The current setting is $MachineAFKLimitResult seconds. CIS Compliant.`n"
@@ -1901,7 +1901,7 @@ $AllScriptList_ListUpdate = {
 			$PassExpiryWarning = $Global:SecDump | Select-String -SimpleMatch 'PasswordExpiryWarning' | Out-String
 			$PassExpiryWarningResult = $PassExpiryWarning.split(',')[1]
 			$PassExpiryWarningResult = $PassExpiryWarningResult -as [int]
-			if(-not([string]::IsNullOrEmpty($PassExpiryWarningResult))){
+			if(-not([string]::IsNullOrEmpty($PassExpiryWarning))){
 				if(($PassExpiryWarningResult -le 14) -and ($PassExpiryWarningResult -ge 5)){
 					$Global:Req2PassExpiryWarningResult = "2.3.7.7   - [PASS] - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassExpiryWarningResult Days. CIS Compliant.`n"
 					$Global:Req2PassExpiryWarningResultHTML = "2.3.7.7   - <span id=`"CISPassStatus`">[PASS]</span> - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassExpiryWarningResult Days. CIS Compliant.`n"
@@ -1921,7 +1921,7 @@ $AllScriptList_ListUpdate = {
 			$DCAuthUnlock = $Global:SecDump | Select-String -SimpleMatch 'ForceUnlockLogon' | Out-String
 			$DCAuthUnlockResult = $DCAuthUnlock.split(',')[1]
 			$DCAuthUnlockResult = $DCAuthUnlockResult -as [int]
-			if(-not([string]::IsNullOrEmpty($DCAuthUnlockResult))){
+			if(-not([string]::IsNullOrEmpty($DCAuthUnlock))){
 				if($DCAuthUnlockResult -eq "1"){
 					$Global:Req2DCAuthUnlockResult = "2.3.7.8   - [PASS] - Require Domain Controller Authentication to Unlock Workstation is Enabled. CIS Compliant.`n"
 					$Global:Req2DCAuthUnlockResultHTML = "2.3.7.8   - <span id=`"CISPassStatus`">[PASS]</span> - Require Domain Controller Authentication to Unlock Workstation is Enabled. CIS Compliant.`n"
@@ -1941,7 +1941,7 @@ $AllScriptList_ListUpdate = {
 			$SmartCardRemoval = $Global:SecDump | Select-String -SimpleMatch 'ScRemoveOption' | Out-String
 			$SmartCardRemovalResult = $SmartCardRemoval.split('"')[1]
 			$SmartCardRemovalResult = $SmartCardRemovalResult -as [int]
-			if(-not([string]::IsNullOrEmpty($SmartCardRemovalResult))){
+			if(-not([string]::IsNullOrEmpty($SmartCardRemoval))){
 				if($SmartCardRemovalResult -ge "1"){
 					$Global:Req2SmartCardRemovalResult = "2.3.7.9   - [PASS] - Smart Card Removal Behaviour is set to 'Lock Workstation' or higher. CIS Compliant.`n"
 					$Global:Req2SmartCardRemovalResultHTML = "2.3.7.9   - <span id=`"CISPassStatus`">[PASS]</span> - Smart Card Removal Behaviour is set to 'Lock Workstation' or higher. CIS Compliant.`n"
@@ -1962,7 +1962,7 @@ $AllScriptList_ListUpdate = {
 			$DigitallySignAlways = $Global:SecDump | Select-String -SimpleMatch 'LanmanWorkstation\Parameters\RequireSecuritySignature' | Out-String
 			$DigitallySignAlwaysResult = $DigitallySignAlways.split(',')[1]
 			$DigitallySignAlwaysResult = $DigitallySignAlwaysResult -as [int]
-			if(-not([string]::IsNullOrEmpty($DigitallySignAlwaysResult))){
+			if(-not([string]::IsNullOrEmpty($DigitallySignAlways))){
 				if($DigitallySignAlwaysResult -eq "1"){
 					$Global:Req2DigitallySignAlwaysResult = "2.3.8.1   - [PASS] - Digitally Sign Communication (Always) is Enabled. CIS Compliant.`n"
 					$Global:Req2DigitallySignAlwaysResultHTML = "2.3.8.1   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Communication (Always) is Enabled. CIS Compliant.`n"
@@ -1982,7 +1982,7 @@ $AllScriptList_ListUpdate = {
 			$DigitallySignComsServer = $Global:SecDump | Select-String -SimpleMatch 'LanmanWorkstation\Parameters\EnableSecuritySignature' | Out-String
 			$DigitallySignComsServerResult = $DigitallySignComsServer.split(',')[1]
 			$DigitallySignComsServerResult = $DigitallySignComsServerResult -as [int]
-			if(-not([string]::IsNullOrEmpty($DigitallySignComsServerResult))){
+			if(-not([string]::IsNullOrEmpty($DigitallySignComsServer))){
 				if($DigitallySignComsServerResult -eq "1"){
 					$Global:Req2DigitallySignComsServerResult = "2.3.8.2   - [PASS] - Digitally Sign Commuications (if server agrees) is Enabled. CIS Compliant.`n"
 					$Global:Req2DigitallySignComsServerResultHTML = "2.3.8.2   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Commuications (if server agrees) is Enabled. CIS Compliant.`n"
@@ -2017,7 +2017,7 @@ $AllScriptList_ListUpdate = {
 			$SuspendingSessionIdleTime = $Global:SecDump | Select-String -SimpleMatch 'AutoDisconnect' | Out-String
 			$SuspendingSessionIdleTimeResult = $SuspendingSessionIdleTime.split(',')[1]
 			$SuspendingSessionIdleTimeResult = $SuspendingSessionIdleTimeResult -as [int]
-			if(-not([string]::IsNullOrEmpty($SuspendingSessionIdleTimeResult))){
+			if(-not([string]::IsNullOrEmpty($SuspendingSessionIdleTime))){
 				if($SuspendingSessionIdleTimeResult -le "15"){
 					$Global:Req2SuspendingSessionIdleTimeResult = "2.3.9.1   - [PASS] - Amount of Idle Time Required before Suspending Session is set to 15 mins or less. Current Value: $SuspendingSessionIdleTimeResult mins. CIS Compliant.`n"
 					$Global:Req2SuspendingSessionIdleTimeResultHTML = "2.3.9.1   - <span id=`"CISPassStatus`">[PASS]</span> - Amount of Idle Time Required before Suspending Session is set to 15 mins or less. Current Value: $SuspendingSessionIdleTimeResult mins. CIS Compliant.`n"
@@ -2037,7 +2037,7 @@ $AllScriptList_ListUpdate = {
 			$DigitallySignComsForced = $Global:SecDump | Select-String -SimpleMatch 'LanManServer\Parameters\RequireSecuritySignature' | Out-String
 			$DigitallySignComsForcedResult = $DigitallySignComsForced.split(',')[1]
 			$DigitallySignComsForcedResult = $DigitallySignComsForcedResult -as [int]
-			if(-not([string]::IsNullOrEmpty($DigitallySignComsForcedResult))){
+			if(-not([string]::IsNullOrEmpty($DigitallySignComsForced))){
 				if($DigitallySignComsForcedResult -eq "1"){
 					$Global:Req2DigitallySignComsForcedResult = "2.3.9.2   - [PASS] - Digitally Sign Commuications (always) is Enabled. CIS Compliant.`n"
 					$Global:Req2DigitallySignComsForcedResultHTML = "2.3.9.2   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Commuications (always) is Enabled. CIS Compliant.`n"
@@ -2057,7 +2057,7 @@ $AllScriptList_ListUpdate = {
 			$DigitallySignComsClient = $Global:SecDump | Select-String -SimpleMatch 'LanManServer\Parameters\EnableSecuritySignature' | Out-String
 			$DigitallySignComsClientResult = $DigitallySignComsClient.split(',')[1]
 			$DigitallySignComsClientResult = $DigitallySignComsClientResult -as [int]
-			if(-not([string]::IsNullOrEmpty($DigitallySignComsClientResult))){
+			if(-not([string]::IsNullOrEmpty($DigitallySignComsClient))){
 				if($DigitallySignComsClientResult -eq "1"){
 					$Global:Req2DigitallySignComsClientResult = "2.3.9.3   - [PASS] - Digitally Sign Commuications (if client agrees) is Enabled. CIS Compliant.`n"
 					$Global:Req2DigitallySignComsClientResultHTML = "2.3.9.3   - <span id=`"CISPassStatus`">[PASS]</span> - Digitally Sign Commuications (if client agrees) is Enabled. CIS Compliant.`n"
@@ -2112,7 +2112,7 @@ $AllScriptList_ListUpdate = {
 			$RestrictAnonymousSAM = $Global:SecDump | Select-String -SimpleMatch 'RestrictAnonymousSAM' | Out-String
 			$RestrictAnonymousSAMResult = $RestrictAnonymousSAM.split(',')[1]
 			$RestrictAnonymousSAMResult = $RestrictAnonymousSAMResult -as [int]
-			if(-not([string]::IsNullOrEmpty($RestrictAnonymousSAMResult))){
+			if(-not([string]::IsNullOrEmpty($RestrictAnonymousSAM))){
 				if($RestrictAnonymousSAMResult -eq "1"){
 					$Global:Req2RestrictAnonymousSAMResult = "2.3.10.2  - [PASS] - Do not allow Anonymous Enumeration of SAM Accounts is Enabled. (MS Only) CIS Compliant.`n"
 					$Global:Req2RestrictAnonymousSAMResultHTML = "2.3.10.2  - <span id=`"CISPassStatus`">[PASS]</span> - Do not allow Anonymous Enumeration of SAM Accounts is Enabled. (MS Only) CIS Compliant.`n"
@@ -2132,7 +2132,7 @@ $AllScriptList_ListUpdate = {
 			$AnonymousEmuerationAccounts = $Global:SecDump | Select-String -SimpleMatch 'RestrictAnonymous=' | Out-String
 			$AnonymousEmuerationAccountsResult = $AnonymousEmuerationAccounts.split(',')[1]
 			$AnonymousEmuerationAccountsResult = $AnonymousEmuerationAccountsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($AnonymousEmuerationAccountsResult))){
+			if(-not([string]::IsNullOrEmpty($AnonymousEmuerationAccounts))){
 				if($AnonymousEmuerationAccountsResult -eq "1"){
 					$Global:Req2AnonymousEmuerationAccountsResult = "2.3.10.3  - [PASS] - Do not allow Anonymous Enueration of SAM Accounts and Shares is Enabled. (MS Only) CIS Compliant.`n"
 					$Global:Req2AnonymousEmuerationAccountsResultHTML = "2.3.10.3  - <span id=`"CISPassStatus`">[PASS]</span> - Do not allow Anonymous Enueration of SAM Accounts and Shares is Enabled. (MS Only) CIS Compliant.`n"
@@ -2152,7 +2152,7 @@ $AllScriptList_ListUpdate = {
 			$StorageOfPasswords = $Global:SecDump | Select-String -SimpleMatch 'DisableDomainCreds' | Out-String
 			$StorageOfPasswordsResult = $StorageOfPasswords.split(',')[1]
 			$StorageOfPasswordsResult = $StorageOfPasswordsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($StorageOfPasswordsResult))){
+			if(-not([string]::IsNullOrEmpty($StorageOfPasswords))){
 				if($StorageOfPasswordsResult -eq "1"){
 					$Global:Req2StorageOfPasswordsResult = "2.3.10.4  - [PASS] - Do not allow storage of passwords and credentials for network authentication is Enabled. CIS Compliant.`n"
 					$Global:Req2StorageOfPasswordsResultHTML = "2.3.10.4  - <span id=`"CISPassStatus`">[PASS]</span> - Do not allow storage of passwords and credentials for network authentication is Enabled. CIS Compliant.`n"
@@ -2204,17 +2204,17 @@ $AllScriptList_ListUpdate = {
 				}
 				# Check Data
 				if($ResultCounter -eq "3"){
-					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - <span id=`"CISPassStatus`">[PASS]</span> - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
+					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - PASS] - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
 					$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISPassStatus`">[PASS]</span> - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Configured Correctly.`n"
+					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - [FAILED] - Named Pipes that are Accessed Anonymously are Not Configured Correctly.`n"
 					$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Configured Correctly.`n"
 					$CISFailCounter++
 				}
 			# Edge Case
 			}else{
-				$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Defined.`n"
+				$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - [FAILED] - Named Pipes that are Accessed Anonymously are Not Defined.`n"
 				$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISFailedStatus`">[FAILED]</span> - Named Pipes that are Accessed Anonymously are Not Defined.`n"
 				$CISFailCounter++
 			}
@@ -2248,7 +2248,7 @@ $AllScriptList_ListUpdate = {
 			$RestrictAnnonymousAccessSessions = $Global:SecDump | Select-String -SimpleMatch 'RestrictNullSessAccess' | Out-String
 			$RestrictAnnonymousAccessSessionsResult = $RestrictAnnonymousAccessSessions.split(',')[1]
 			$RestrictAnnonymousAccessSessionsResult = $RestrictAnnonymousAccessSessionsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($RestrictAnnonymousAccessSessionsResult))){
+			if(-not([string]::IsNullOrEmpty($RestrictAnnonymousAccessSessions))){
 				if($RestrictAnnonymousAccessSessionsResult -eq "1"){
 					$Global:Req2RestrictAnnonymousAccessSessionsResult = "2.3.10.10 - [PASS] - Restrict anonymous access to Named Pipes and Shares is Enabled. CIS Compliant.`n"
 					$Global:Req2RestrictAnnonymousAccessSessionsResultHTML = "2.3.10.10 - <span id=`"CISPassStatus`">[PASS]</span> - Restrict anonymous access to Named Pipes and Shares is Enabled. CIS Compliant.`n"
@@ -2267,7 +2267,7 @@ $AllScriptList_ListUpdate = {
 			# 2.3.10.12 (L1) Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None' (Scored)
 			$NullSessionShares = $Global:SecDump | Select-String -SimpleMatch 'NullSessionShares' | Out-String
 			$NullSessionSharesResult = $NullSessionShares.split(',')[1]
-			if([string]::IsNullOrEmpty($NullSessionSharesResult)){
+			if([string]::IsNullOrEmpty($NullSessionShares)){
 				$Global:Req2NullSessionShares = "2.3.10.12 - [PASS] - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
 				$Global:Req2NullSessionSharesHTML = "2.3.10.12 - <span id=`"CISPassStatus`">[PASS]</span> - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
 				$CISPassCounter++
@@ -2281,7 +2281,7 @@ $AllScriptList_ListUpdate = {
 			$SharingAndSecModelLocalAccounts = $Global:SecDump | Select-String -SimpleMatch 'ForceGuest' | Out-String
 			$SharingAndSecModelLocalAccountsResult = $SharingAndSecModelLocalAccounts.split(',')[1]
 			$SharingAndSecModelLocalAccountsResult = $SharingAndSecModelLocalAccountsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($SharingAndSecModelLocalAccountsResult))){
+			if(-not([string]::IsNullOrEmpty($SharingAndSecModelLocalAccounts))){
 				if($SharingAndSecModelLocalAccountsResult -eq "0"){
 					$Global:Req2SharingAndSecModelLocalAccountsResult = "2.3.10.13 - [PASS] - Sharing and security model for local accounts is set to Classic - local users authenticate as themselves. CIS Compliant.`n"
 					$Global:Req2SharingAndSecModelLocalAccountsResultHTML = "2.3.10.13 - <span id=`"CISPassStatus`">[PASS]</span> - Sharing and security model for local accounts is set to Classic - local users authenticate as themselves. CIS Compliant.`n"
@@ -2302,7 +2302,7 @@ $AllScriptList_ListUpdate = {
 			$LocalSystemNTLM = $Global:SecDump | Select-String -SimpleMatch 'UseMachineId' | Out-String
 			$LocalSystemNTLMResult = $LocalSystemNTLM.split(',')[1]
 			$LocalSystemNTLMResult = $LocalSystemNTLMResult -as [int]
-			if(-not([string]::IsNullOrEmpty($LocalSystemNTLMResult))){
+			if(-not([string]::IsNullOrEmpty($LocalSystemNTLM))){
 				if($LocalSystemNTLMResult -eq "1"){
 					$Global:Req2LocalSystemNTLMResult = "2.3.11.1  - [PASS] - Allow Local System to use Computer Identity for NTLM is set to Enabled. CIS Compliant.`n"
 					$Global:Req2LocalSystemNTLMResultHTML = "2.3.11.1  - <span id=`"CISPassStatus`">[PASS]</span> - Allow Local System to use Computer Identity for NTLM is set to Enabled. CIS Compliant.`n"
@@ -2322,7 +2322,7 @@ $AllScriptList_ListUpdate = {
 			$LocalSystemNULLSession = $Global:SecDump | Select-String -SimpleMatch 'AllowNullSessionFallback' | Out-String
 			$LocalSystemNULLSessionResult = $LocalSystemNULLSession.split(',')[1]
 			$LocalSystemNULLSessionResult = $LocalSystemNULLSessionResult -as [int]
-			if(-not([string]::IsNullOrEmpty($LocalSystemNULLSessionResult))){
+			if(-not([string]::IsNullOrEmpty($LocalSystemNULLSession))){
 				if($LocalSystemNULLSessionResult -eq "0"){
 					$Global:Req2LocalSystemNULLSessionResult = "2.3.11.2  - [PASS] - Allow Local System NULL Session is set to Disabled. CIS Compliant.`n"
 					$Global:Req2LocalSystemNULLSessionResultHTML = "2.3.11.2  - <span id=`"CISPassStatus`">[PASS]</span> - Allow Local System NULL Session is set to Disabled. CIS Compliant.`n"
@@ -2342,7 +2342,7 @@ $AllScriptList_ListUpdate = {
 			$PKU2UOnlineIdentities = $Global:SecDump | Select-String -SimpleMatch 'AllowOnlineID' | Out-String
 			$PKU2UOnlineIdentitiesResult = $PKU2UOnlineIdentities.split(',')[1]
 			$PKU2UOnlineIdentitiesResult = $PKU2UOnlineIdentitiesResult -as [int]
-			if(-not([string]::IsNullOrEmpty($PKU2UOnlineIdentitiesResult))){
+			if(-not([string]::IsNullOrEmpty($PKU2UOnlineIdentities))){
 				if($PKU2UOnlineIdentitiesResult -eq "0"){
 					$Global:Req2PKU2UOnlineIdentitiesResult = "2.3.11.3  - [PASS] - Allow PKU2U Authentication Requests to this Computer to use Online Identities is set to Disabled. CIS Compliant.`n"
 					$Global:Req2PKU2UOnlineIdentitiesResultHTML = "2.3.11.3  - <span id=`"CISPassStatus`">[PASS]</span> - Allow PKU2U Authentication Requests to this Computer to use Online Identities is set to Disabled. CIS Compliant.`n"
@@ -2398,7 +2398,7 @@ $AllScriptList_ListUpdate = {
 				$CISFailCounter++
 			}
 
-			# 2.3.11.6 (L1) Ensure 'Network security: Force logoff when logon hoursexpire' is set to 'Enabled' (Not Scored) !!
+			# 2.3.11.6 (L1) Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled' (Not Scored) - Needs more testing
 			$ForceLogoffAfterHoursExpire = $Global:SecDump | Select-String -SimpleMatch 'EnableForcedLogOff' | Out-String
 			$ForceLogoffAfterHoursExpireResult = $ForceLogoffAfterHoursExpire.split(',')[1]
 			$ForceLogoffAfterHoursExpireResult = $ForceLogoffAfterHoursExpireResult -as [int]
@@ -2442,7 +2442,7 @@ $AllScriptList_ListUpdate = {
 			$LDAPClientSigningReqs = $Global:SecDump | Select-String -SimpleMatch 'LDAPClientIntegrity' | Out-String
 			$LDAPClientSigningReqsResult = $LDAPClientSigningReqs.split(',')[1]
 			$LDAPClientSigningReqsResult = $LDAPClientSigningReqsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($LDAPClientSigningReqsResult))){
+			if(-not([string]::IsNullOrEmpty($LDAPClientSigningReqs))){
 				if($LDAPClientSigningReqsResult -ge "1"){
 					$Global:Req2LDAPClientSigningReqsResult = "2.3.11.8  - [PASS] - LDAP Client Signing Requirements is set to 'Negotidate Signing' or Higher. CIS Compliant.`n"
 					$Global:Req2LDAPClientSigningReqsResultHTML = "2.3.11.8  - <span id=`"CISPassStatus`">[PASS]</span> - LDAP Client Signing Requirements is set to 'Negotidate Signing' or Higher. CIS Compliant.`n"
@@ -2532,7 +2532,7 @@ $AllScriptList_ListUpdate = {
 			$ShutdownWithoutLoggingIn = $Global:SecDump | Select-String -SimpleMatch 'ShutDownWithoutLogon' | Out-String
 			$ShutdownWithoutLoggingInResult = $ShutdownWithoutLoggingIn.split(',')[1]
 			$ShutdownWithoutLoggingInResult = $ShutdownWithoutLoggingInResult -as [int]
-			if(-not([string]::IsNullOrEmpty($ShutdownWithoutLoggingInResult))){
+			if(-not([string]::IsNullOrEmpty($ShutdownWithoutLoggingIn))){
 				if($ShutdownWithoutLoggingInResult -eq "0"){
 					$Global:Req2ShutdownWithoutLoggingInResult = "2.3.13.1  - [PASS] - Allow system to be shut down without having to log on is set to Disabled. CIS Compliant.`n"
 					$Global:Req2ShutdownWithoutLoggingInResultHTML = "2.3.13.1  - <span id=`"CISPassStatus`">[PASS]</span> - Allow system to be shut down without having to log on is set to Disabled. CIS Compliant.`n"
@@ -2588,18 +2588,18 @@ $AllScriptList_ListUpdate = {
 			$CaseInsensitivity = $Global:SecDump | Select-String -SimpleMatch 'ObCaseInsensitive' | Out-String
 			$CaseInsensitivityResult = $CaseInsensitivity.split(',')[1]
 			$CaseInsensitivityResult = $CaseInsensitivityResult -as [int]
-			if(-not([string]::IsNullOrEmpty($CaseInsensitivityResult))){
+			if(-not([string]::IsNullOrEmpty($CaseInsensitivity))){
 				if($CaseInsensitivityResult -eq "1"){
-					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISPassStatus`">[PASS]</span> - Require Case Insensitivity for non-Windows Subsystem is set to Enabled. CIS Compliant.`n"
+					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - [PASS] - Require Case Insensitivity for non-Windows Subsystem is set to Enabled. CIS Compliant.`n"
 					$Global:Req2CaseInsensitivityResultHTML = "2.3.15.1  - <span id=`"CISPassStatus`">[PASS]</span> - Require Case Insensitivity for non-Windows Subsystem is set to Enabled. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
-					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Enabled.`n"
+					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - [FAILED] - Require Case Insensitivity for non-Windows Subsystem is Not Enabled.`n"
 					$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Enabled.`n"
 					$CISFailCounter++
 				}
 			}else{
-				$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Defined.`n"
+				$Global:Req2CaseInsensitivityResult = "2.3.15.1  - [FAILED] - Require Case Insensitivity for non-Windows Subsystem is Not Defined.`n"
 				$Global:Req2CaseInsensitivityResult = "2.3.15.1  - <span id=`"CISFailedStatus`">[FAILED]</span> - Require Case Insensitivity for non-Windows Subsystem is Not Defined.`n"
 				$CISFailCounter++
 			}
@@ -2608,7 +2608,7 @@ $AllScriptList_ListUpdate = {
 			$StrengthenPermissions = $Global:SecDump | Select-String -SimpleMatch 'ProtectionMode' | Out-String
 			$StrengthenPermissionsResult = $StrengthenPermissions.split(',')[1]
 			$StrengthenPermissionsResult = $StrengthenPermissionsResult -as [int]
-			if(-not([string]::IsNullOrEmpty($StrengthenPermissionsResult))){
+			if(-not([string]::IsNullOrEmpty($StrengthenPermissions))){
 				if($StrengthenPermissionsResult -eq "1"){
 					$Global:Req2StrengthenPermissionsResult = "2.3.15.2  - [PASS] - Strengthen Default Permissions of Internal System Objects is set to Enabled. CIS Compliant.`n"
 					$Global:Req2StrengthenPermissionsResultHTML = "2.3.15.2  - <span id=`"CISPassStatus`">[PASS]</span> - Strengthen Default Permissions of Internal System Objects is set to Enabled. CIS Compliant.`n"
@@ -3982,24 +3982,36 @@ $AllScriptList_ListUpdate = {
 		$OSVersion = [string][environment]::OSVersion.Version.major + '.' + [environment]::OSVersion.Version.minor
 
 		# Loop And Gather Data and Output Data
-		foreach($Row in $PrivilegeArray){
-			# Break on Edge Case for Server 2012 and Below
-			if(("6.3" -le $OSVersion) -and ($Row.Key -eq "SeDelegateSessionUserImpersonatePrivilege")){
-				break
-			}else{
-				$DataRow = PrivilegeRights -TempVarPassThru $Row.Key
-				$CovertedSIDTableRTB = $DataRow | Select-Object 'Object Type','Name','SID' | Sort-Object 'Object Type','Name','SID' | Format-Table -AutoSize | Out-String
-				# HTML Report
-				$H3RowHeader = $Row.Name
-				$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name','SID' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
-				$Global:Req7UserRightsHTML += $CovertedSIDTableHTML
-				# Data Output
-				if($EverythingToggle -eq $false){
-					$Req7Output.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n------------------------------------------------------`n")
+		if($Global:TestDCConnection -eq $true){
+			foreach($Row in $PrivilegeArray){
+				# Break on Edge Case for Server 2012 and Below
+				if(("6.3" -le $OSVersion) -and ($Row.Key -eq "SeDelegateSessionUserImpersonatePrivilege")){
+					break
 				}else{
-					$AllOutput.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n-----------------------------------------------------`n")
+					$DataRow = PrivilegeRights -TempVarPassThru $Row.Key
+					$CovertedSIDTableRTB = $DataRow | Select-Object 'Object Type','Name','SID' | Sort-Object 'Object Type','Name','SID' | Format-Table -AutoSize | Out-String
+					# HTML Report
+					$H3RowHeader = $Row.Name
+					$CovertedSIDTableHTML = $DataRow | ConvertTo-Html -As Table -Property 'Object Type','Name','SID' -Fragment -PreContent "<h3>$H3RowHeader</h3>"
+					$Global:Req7UserRightsHTML += $CovertedSIDTableHTML
+					# Data Output
+					if($EverythingToggle -eq $false){
+						$Req7Output.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n------------------------------------------------------`n")
+					}else{
+						$AllOutput.AppendText($Row.Name + "`n" + $CovertedSIDTableRTB + "`n-----------------------------------------------------`n")
+					}
 				}
 			}
+		}else{
+			# Edge Case - Non DC
+			$Global:Req7UserRightsHTML += "<p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
+			# Write Header
+			if($EverythingToggle -eq $false){
+				$Req7Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n`n")
+			}else{
+				$AllOutput.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n`n")
+			}
+
 		}
 	}
 
