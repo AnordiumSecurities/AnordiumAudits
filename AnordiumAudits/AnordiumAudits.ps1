@@ -548,13 +548,14 @@ $AllScriptList_ListUpdate = {
 					$Req2OutputLabel.Text = "Output: Progressing... 7%"
 					$Req2OutputLabel.Refresh()
 					Req2GrabInstalledSoftware
-					Req2GrabSysConfig
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2GrabDrivesAndShares
 					$Req2OutputLabel.Text = "Output: Progressing... 9%"
 					$Req2OutputLabel.Refresh()
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2GrabADComputers
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabSysConfig
 					$Req2OutputLabel.Text = "Output:"
 					$Req2OutputLabel.Refresh()
 					$Req2Output.Clear()
@@ -565,15 +566,17 @@ $AllScriptList_ListUpdate = {
 					Req2GrabInstalledFeatures
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2RunningProcesses
-					$Req2OutputLabel.Refresh()
+					$Req2Output.AppendText($Global:SectionHeader)
 					Req2RunningServices
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2GrabInstalledSoftware
-					Req2GrabSysConfig
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2GrabDrivesAndShares
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2GrabADComputers
+					$Req2Output.AppendText($Global:SectionHeader)
+					Req2GrabSysConfig
+					
 					$Req2Output.Clear()
 				}
 			}else{
@@ -595,13 +598,14 @@ $AllScriptList_ListUpdate = {
 				$AllScriptOutputLabel.Text = "Output: Progressing... 7%"
 				$AllScriptOutputLabel.Refresh()
 				Req2GrabInstalledSoftware
-				Req2GrabSysConfig
 				$AllOutput.AppendText($Global:SectionHeader)
 				Req2GrabDrivesAndShares
 				$AllScriptOutputLabel.Text = "Output: Progressing... 9%"
 				$AllScriptOutputLabel.Refresh()
 				$AllOutput.AppendText($Global:SectionHeader)
 				Req2GrabADComputers
+				$AllOutput.AppendText($Global:SectionHeader)
+				Req2GrabSysConfig
 				$AuxiliaryForm.AllOutput.Clear()
 			}
 		# Write Header and Results
@@ -2795,9 +2799,7 @@ $AllScriptList_ListUpdate = {
 		# HTML Report
 		$Global:Req2PCIDSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResultHTML + "<br>" + $Global:Req2FeatureResultHTML + "<br>" + $Global:Req2FeatureResultTotalHTML + "<br>" + $Global:RunningProcessesResultHTML + "<br>" + $Global:RunningServicesResultHTML + "<br>" + $Global:32BitAppsResultHTML + "<br>" + $Global:64BitAppsResultHTML + "<br>" + $Global:LocalDrivesResultHTML + "<br>" + $Global:SMBSharesResultHTML + "<br>" + $Global:ADComputersResultHTML + "<br>" + $Global:CISBenchmarkToalResultHTML + "</p>"
 		$Global:Req2CISComplianceResultHTMLFinal = "<h2>2.4 - CIS Compliance Check</h2><h3>1.1 Password Policy</h3><p>" + $Global:Req2EnforcePasswordHistoryResultHTML + "<br>" + $Global:Req2MaximumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordLengthResultHTML + "<br>" + $Global:Req2PasswordComplexityReqsResultHTML + "<br>" + $Global:Req2ClearTextPasswordSettingResultHTML + "</p><h3>1.2 Account Lockout Policy</h3><p>" + $Global:Req2AccountLockoutDurationResultHTML + "<br>" + $Global:Req2AccountLockoutThresholdResultHTML + "<br>" + $Global:Req2ResetAccountLockoutCounterResultHTML + "</p><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResultHTML + "<br>" + $Global:Req2BlockMSAccountsResultHTML + "<br>" + $Global:Req2DisabledGuestResultHTML + "<br>" + $Global:Req2LimitBlankPassUseResultHTML + "<br>" + $Global:Req2RenameAdminResultHTML + "<br>" + $Global:Req2RenameGuestResultHTML + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResultHTML + "<br>" + $Global:Req2ShutdownAuditSettingsResultHTML + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResultHTML + "<br>" + $Global:Req2RestrictCDRomsResultHTML + "<br>" + $Global:Req2RestrictFloppiesResultHTML + "<br>" + $Global:Req2LimitRemoveableMediaResultHTML + "<br>" + $Global:Req2LimitPrinterDriversResultHTML + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResultHTML + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResultHTML + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResultHTML + "<br>" + $Global:Req2DigitalSecureChannelHTML + "<br>" + $Global:Req2DigitalSecureChannelSignedHTML + "<br>" + $Global:Req2DisableMachinePassChangeResultHTML + "<br>" + $Global:Req2MaxMachinePassAgeResultHTML + "<br>" + $Global:Req2StrongSessionKeyResultHTML + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResultHTML + "<br>" + $Global:Req2DontDisplayLastUserHTML + "<br>" + $Global:Req2MachineAFKLimitResultHTML + "<br>" + $Global:Req2LegalNoticeTextResultHTML + "<br>" + $Global:Req2LegalNoticeCaptionResultHTML + "<br>" + $Global:Req2PreviousCachedLogonsResultHTML + "<br>" + $Global:Req2PassExpiryWarningResultHTML + "<br>" + $Global:Req2DCAuthUnlockResultHTML + "<br>" + $Global:Req2SmartCardRemovalResultHTML + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResultHTML + "<br>" + $Global:Req2DigitallySignComsServerResultHTML + "<br>" + $Global:Req2EnablePlainTextResultHTML + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResultHTML + "<br>" + $Global:Req2DigitallySignComsForcedResultHTML + "<br>" + $Global:Req2DigitallySignComsClientResultHTML + "<br>" + $Global:Req2ForcedClientLogoffResultHTML + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResultHTML + "<br>" + $Global:Req2RestrictAnonymousSAMResultHTML + "<br>" + $Global:Req2AnonymousEmuerationAccountsResultHTML + "<br>" + $Global:Req2StorageOfPasswordsResultHTML + "<br>" + $Global:Req2AllIncludesPoliciesResultHTML + "<br>" + $Global:Req2AnonymousNamedPipesResultHTML + "<br>" + $Global:Req2AllowedExactPathsResultHTML + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResultHTML + "<br>" + $Global:Req2NullSessionSharesHTML + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResultHTML + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResultHTML + "<br>" + $Global:Req2LocalSystemNULLSessionResultHTML + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResultHTML + "<br>" + $Global:Req2KerberosEncryptionTypesResultHTML + "<br>" + $Global:Req2LanManagerHashResultHTML + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResultHTML + "<br>" + $Global:Req2LanManagerAuthLevelResultHTML + "<br>" + $Global:Req2LDAPClientSigningReqsResultHTML + "<br>" + $Global:Req2NTLMMinClientResultsHTML + "<br>" + $Global:Req2NTLMMinServerResultsHTML + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResultHTML + "<br>" + $Global:Req2AllowFloppyAccessResultHTML + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResultHTML + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResultsHTML + "<br>" + $Global:Req2UserKeyProtectionResultHTML + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResultHTML + "<br>" + $Global:Req2StrengthenPermissionsResultHTML + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResultHTML + "<br>" + $Global:Req2BehaviorforAdminResultHTML + "<br>" + $Global:Req2BehaviorforStandardResultHTML + "<br>" + $Global:Req2InstallerDetectionResultHTML + "<br>" + $Global:Req2UIAccessSecureLocationsResultHTML + "<br>" + $Global:Req2RunAllAdminsModeResultHTML + "<br>" + $Global:Req2SwitchSecureDesktopResultHTML + "<br>" + $Global:Req2VitualFileLocationsResultHTML + "</p>"
-		#$Global:Req2ComplianceResultHTMLTemp1 = $Global:Req2ComplianceResultHTML -replace "[PASS]","<span id=`"CISPassStatus`">[PASS]</span>"
-		#$Global:Req2ComplianceResultHTMLTemp2 = $Global:Req2ComplianceResultHTMLTemp1 -replace "[FAILED]","<span id=`"CISFailedStatus`">[FAILED]</span>"
-		#$Global:Req2CISComplianceResultHTMLFinal = $Global:Req2ComplianceResultHTMLTemp2 -replace "[INFORMATION]","<span id=`"CISInfoStatus`">[INFORMATION]</span>"
+
 		# Rich Text Boxes
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("The Following Sub-Sections are directly from the CIS Benchmarks`n")
