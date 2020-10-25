@@ -235,7 +235,7 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			$AllScriptOutputLabel.Text = "Output: Gathering Data for Requirement Two... Total Progress... 10%"
 			$AllScriptOutputLabel.Refresh()
-			Req2GrabInstalledSoftware		
+			Req2GrabInstalledSoftware
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req2GrabDrivesAndShares
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -529,7 +529,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ComplianceChecker {
 		# Run All Functions To Gather Data
 			if($EverythingToggle -eq $false){
-				if(($Req2EverythingSwitch -eq $false) -and ($Req2ExportingSwitch = $false)){
+				if(($Req2EverythingSwitch -eq $false) -and ($Req2ExportingSwitch -eq $false)){
 					$Req2Output.AppendText("Gathering Compliance in Requirement Two `n")
 					$Req2OutputLabel.Text = "Output: Progressing... 1%"
 					$Req2OutputLabel.Refresh()
@@ -993,7 +993,7 @@ $AllScriptList_ListUpdate = {
 				$Global:Req2FeatureResult = "2.2.1     - [FAILED] - Detected More Than One Role or Feature Installed.`n"
 				$Global:Req2FeatureResultHTML = "2.2.1     - <span id=`"CISFailedStatus`">[FAILED]</span> - Detected More Than One Role or Feature Installed.`n"
 				$Global:Req2FeatureResultTotal = "2.2.1     - [INFORMATION] - Detected $FeatureCounter Role(s) or Feature(s).`n"
-				$Global:Req2FeatureResultTotalHTML = "2.2.1     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $FeatureCounter Role(s) or Feature(s).`n"
+				$Global:Req2FeatureResultTotalHTML = "2.2.1     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $FeatureCounter Role(s) or Feature(s).`n"
 				if($EverythingToggle -eq $false){
 					$Req2Output.AppendText("2.2.1     - [FAILED] - Detected More Than One Role or Feature or Role Installed.`nDetected $FeatureCounter Role(s) or Feature(s).`nCheck List Below and Analyze The Roles and Features.`nList Below Contains No Default Roles or Features.`n")
 					$Req2Output.AppendText($Req2ListOfAllFeaturesRTB)
@@ -1059,7 +1059,7 @@ $AllScriptList_ListUpdate = {
 			}
 			# Total Processes
 			$Global:RunningProcessesResult = "2.2.2     - [INFORMATION] - Detected $ProcessesCounter Running Processes.`n"
-			$Global:RunningProcessesResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $ProcessesCounter Running Processes.`n"
+			$Global:RunningProcessesResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $ProcessesCounter Running Processes.`n"
 		# Edge Case
 		}catch{
 			$Global:Req2ProcessListHTML = "<h2>2.2.2 - List of Running Processes</h2><p>Unable to List Running Processes.<p>"
@@ -1094,7 +1094,7 @@ $AllScriptList_ListUpdate = {
 			}
 			# Total Processes
 			$Global:RunningServicesResult = "2.2.2     - [INFORMATION] - Detected $ServicesCounter Running Services.`n"
-			$Global:RunningServicesResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $ServicesCounter Running Services.`n"
+			$Global:RunningServicesResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $ServicesCounter Running Services.`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($Req2SvcListRunningRTB)
@@ -1165,6 +1165,8 @@ $AllScriptList_ListUpdate = {
 			}
 			# Total Processes
 			$Global:32BitAppsResult = "2.2.2     - [INFORMATION] - Detected $32BitAppsCounter 32-Bit Apps Installed.`n"
+			$Global:32BitAppsResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $32BitAppsCounter 32-Bit Apps Installed.`n"
+
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($Req2SoftwareList32BitRTB)
@@ -1195,7 +1197,7 @@ $AllScriptList_ListUpdate = {
 			}
 			# Total Processes
 			$Global:64BitAppsResult = "2.2.2     - [INFORMATION] - Detected $64BitAppsCounter 64-Bit Apps Installed.`n"
-			$Global:64BitAppsResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $64BitAppsCounter 64-Bit Apps Installed.`n"
+			$Global:64BitAppsResultHTML = "2.2.2     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $64BitAppsCounter 64-Bit Apps Installed.`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText("`n64-Bit Apps:")
@@ -2189,22 +2191,19 @@ $AllScriptList_ListUpdate = {
 				$CharCount = ($ProcessedNamedPipes.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
 				$CharArray = $ProcessedNamedPipes.Split(",")
 				#Counters
-				$PipeCounter = 0
 				$ResultCounter = 0
 				# Check Array
 				foreach($Pipe in $CharArray){
-					if($PipeCounter -gt $CharCount){
-						break
-					}else{
-						if(($CharArray[$PipeCounter] -eq "netlogon") -or ($CharArray[$PipeCounter] -eq "samr") -or ($CharArray[$PipeCounter] -eq "lsarpc")){
-							$ResultCounter++
-						}
-						$PipeCounter++
+					$Pipe = $Pipe.ToLower()
+					$Pipe = $Pipe.Replace("`n","")
+					$Pipe = $Pipe.Replace("`r","")
+					if(($Pipe -eq "netlogon") -or ($Pipe -eq "samr") -or ($Pipe -eq "lsarpc")){
+						$ResultCounter++
 					}
 				}
 				# Check Data
 				if($ResultCounter -eq "3"){
-					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - PASS] - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
+					$Global:Req2AnonymousNamedPipesResult = "2.3.10.6  - [PASS] - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
 					$Global:Req2AnonymousNamedPipesResultHTML = "2.3.10.6  - <span id=`"CISPassStatus`">[PASS]</span> - Named Pipes that are Accessed Anonymously are Configured Correctly. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
@@ -2267,7 +2266,7 @@ $AllScriptList_ListUpdate = {
 			# 2.3.10.12 (L1) Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None' (Scored)
 			$NullSessionShares = $Global:SecDump | Select-String -SimpleMatch 'NullSessionShares' | Out-String
 			$NullSessionSharesResult = $NullSessionShares.split(',')[1]
-			if([string]::IsNullOrEmpty($NullSessionShares)){
+			if([string]::IsNullOrWhiteSpace($NullSessionSharesResult)){
 				$Global:Req2NullSessionShares = "2.3.10.12 - [PASS] - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
 				$Global:Req2NullSessionSharesHTML = "2.3.10.12 - <span id=`"CISPassStatus`">[PASS]</span> - Shares that can be accessed Anonymously is empty. CIS Compliant.`n"
 				$CISPassCounter++
@@ -2399,8 +2398,8 @@ $AllScriptList_ListUpdate = {
 			}
 
 			# 2.3.11.6 (L1) Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled' (Not Scored) - Needs more testing
-			$ForceLogoffAfterHoursExpire = $Global:SecDump | Select-String -SimpleMatch 'EnableForcedLogOff' | Out-String
-			$ForceLogoffAfterHoursExpireResult = $ForceLogoffAfterHoursExpire.split(',')[1]
+			$ForceLogoffAfterHoursExpire = $Global:SecDump | Select-String -SimpleMatch 'ForceLogoffWhenHourExpire' | Out-String
+			$ForceLogoffAfterHoursExpireResult = $ForceLogoffAfterHoursExpire.split(' ')[2]
 			$ForceLogoffAfterHoursExpireResult = $ForceLogoffAfterHoursExpireResult -as [int]
 			if(-not([string]::IsNullOrEmpty($ForceLogoffAfterHoursExpire))){
 				if($ForceLogoffAfterHoursExpireResult -eq "1"){
@@ -2568,13 +2567,17 @@ $AllScriptList_ListUpdate = {
 			$UserKeyProtectionResult = $UserKeyProtection.split(',')[1]
 			$UserKeyProtectionResult = $UserKeyProtectionResult -as [int]
 			if(-not([string]::IsNullOrEmpty($UserKeyProtection))){
-				if($UserKeyProtectionResult -eq "2"){
-					$Global:Req2UserKeyProtectionResult = "2.3.14    - [PASS] - Strong Key Protection is Enforced for User Keys stored on this Computer. CIS Compliant.`n"
-					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISPassStatus`">[PASS]</span> - Strong Key Protection is Enforced for User Keys stored on this Computer. CIS Compliant.`n"
+				if($UserKeyProtectionResult -eq "1"){
+					$Global:Req2UserKeyProtectionResult = "2.3.14    - [PASS] - Strong Key Protection is Enforced for User Keys stored on this Computer. Current Value: `"User is prompted when the key is first used`". CIS Compliant.`n"
+					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISPassStatus`">[PASS]</span> - Strong Key Protection is Enforced for User Keys stored on this Computer. Current Value: `"User is prompted when the key is first used`". CIS Compliant.`n"
 					$CISPassCounter++
-				}else{
-					$Global:Req2UserKeyProtectionResult = "2.3.14    - [FAILED] - Strong Key Protection is Not Enforced for User Keys stored on this Computer.`n"
-					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISFailedStatus`">[FAILED]</span> - Strong Key Protection is Not Enforced for User Keys stored on this Computer.`n"
+				}elseif($UserKeyProtectionResult -eq "2"){
+					$Global:Req2UserKeyProtectionResult = "2.3.14    - [PASS] - Strong Key Protection is Enforced for User Keys stored on this Computer. Current Value: `"User must enter a password each time they use a key`". CIS Compliant.`n"
+					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISPassStatus`">[PASS]</span> - Strong Key Protection is Enforced for User Keys stored on this Computer. Current Value: `"User must enter a password each time they use a key`". CIS Compliant.`n"
+					$CISPassCounter++
+				}elseif($UserKeyProtectionResult -eq "0"){
+					$Global:Req2UserKeyProtectionResult = "2.3.14    - [FAILED] - Strong Key Protection is Not Enforced for User Keys stored on this Computer. Current Value: `"User input is not required when new keys are stored and used`".`n"
+					$Global:Req2UserKeyProtectionResultHTML = "2.3.14    - <span id=`"CISFailedStatus`">[FAILED]</span> - Strong Key Protection is Not Enforced for User Keys stored on this Computer. Current Value: `"User input is not required when new keys are stored and used`".`n"
 					$CISFailCounter++
 				}
 			}else{
@@ -2790,11 +2793,11 @@ $AllScriptList_ListUpdate = {
 		$Global:CISBenchmarkToalResult = "`nCIS Benchmarks Result:`n" + $CISPassCounter + " PASS Results.`n" + $CISFailCounter + " FAILED Results.`nTotal Benchmarks Tested: " + $CISTotalCounter + "`n"
 		$Global:CISBenchmarkToalResultHTML = "<h3>CIS Benchmarks Result</h3><p>PASS Results:" + $CISPassCounter + "<br>FAILED Results: " + $CISFailCounter + "<br>Total Benchmarks Tested: " + $CISTotalCounter + "</p>"
 		# HTML Report
-		$Global:Req2PCIDSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResultHTML + "<br>" + $Global:Req2FeatureResultHTML + "<br>" + $Global:Req2FeatureResultTotalHTML + "<br>" + $Global:RunningProcessesResultHTML + "<br>" + $Global:RunningServicesResultHTML + "<br>" + $Global:64BitAppsResultHTML + "<br>" + $Global:LocalDrivesResultHTML + "<br>" + $Global:SMBSharesResultHTML + "<br>" + $Global:ADComputersResultHTML + "<br>" + $Global:CISBenchmarkToalResultHTML + "</p>"
+		$Global:Req2PCIDSSComplianceResultHTML = "<h2>Requirement Two Compliance Check (PCI-DSS)</h2><p>" + $Global:Req2VendorPassResultHTML + "<br>" + $Global:Req2FeatureResultHTML + "<br>" + $Global:Req2FeatureResultTotalHTML + "<br>" + $Global:RunningProcessesResultHTML + "<br>" + $Global:RunningServicesResultHTML + "<br>" + $Global:32BitAppsResultHTML + "<br>" + $Global:64BitAppsResultHTML + "<br>" + $Global:LocalDrivesResultHTML + "<br>" + $Global:SMBSharesResultHTML + "<br>" + $Global:ADComputersResultHTML + "<br>" + $Global:CISBenchmarkToalResultHTML + "</p>"
 		$Global:Req2CISComplianceResultHTMLFinal = "<h2>2.4 - CIS Compliance Check</h2><h3>1.1 Password Policy</h3><p>" + $Global:Req2EnforcePasswordHistoryResultHTML + "<br>" + $Global:Req2MaximumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordAgeResultHTML + "<br>" + $Global:Req2MinimumPasswordLengthResultHTML + "<br>" + $Global:Req2PasswordComplexityReqsResultHTML + "<br>" + $Global:Req2ClearTextPasswordSettingResultHTML + "</p><h3>1.2 Account Lockout Policy</h3><p>" + $Global:Req2AccountLockoutDurationResultHTML + "<br>" + $Global:Req2AccountLockoutThresholdResultHTML + "<br>" + $Global:Req2ResetAccountLockoutCounterResultHTML + "</p><h3>2.3.1 Accounts</h3><p>" + $Global:Req2DisabledAdminResultHTML + "<br>" + $Global:Req2BlockMSAccountsResultHTML + "<br>" + $Global:Req2DisabledGuestResultHTML + "<br>" + $Global:Req2LimitBlankPassUseResultHTML + "<br>" + $Global:Req2RenameAdminResultHTML + "<br>" + $Global:Req2RenameGuestResultHTML + "</p><h3>2.3.2 Audits</h3><p>" + $Global:Req2ForceAuditPolicyOverrideResultHTML + "<br>" + $Global:Req2ShutdownAuditSettingsResultHTML + "</p><h3>2.3.4 Devices</h3><p>" + $Global:Req2RestrictUserUndockingResultHTML + "<br>" + $Global:Req2RestrictCDRomsResultHTML + "<br>" + $Global:Req2RestrictFloppiesResultHTML + "<br>" + $Global:Req2LimitRemoveableMediaResultHTML + "<br>" + $Global:Req2LimitPrinterDriversResultHTML + "</p><h3>2.3.5 Domain controller</h3><p>" + $Global:Req2ServerOpsScheduleTasksResultHTML + "<br>" + $Global:Req2DCRefuseMachineAccountChangesResultHTML + "</p><h3>2.3.6 Domain Member</h3><p>" + $Global:Req2DigitalEncryptSignResultHTML + "<br>" + $Global:Req2DigitalSecureChannelHTML + "<br>" + $Global:Req2DigitalSecureChannelSignedHTML + "<br>" + $Global:Req2DisableMachinePassChangeResultHTML + "<br>" + $Global:Req2MaxMachinePassAgeResultHTML + "<br>" + $Global:Req2StrongSessionKeyResultHTML + "</p><h3>2.3.7 Interactive Login</h3><p>" + $Global:Req2LoginCntlAltDelStatusResultHTML + "<br>" + $Global:Req2DontDisplayLastUserHTML + "<br>" + $Global:Req2MachineAFKLimitResultHTML + "<br>" + $Global:Req2LegalNoticeTextResultHTML + "<br>" + $Global:Req2LegalNoticeCaptionResultHTML + "<br>" + $Global:Req2PreviousCachedLogonsResultHTML + "<br>" + $Global:Req2PassExpiryWarningResultHTML + "<br>" + $Global:Req2DCAuthUnlockResultHTML + "<br>" + $Global:Req2SmartCardRemovalResultHTML + "</p><h3>2.3.8 Microsoft Network Client</h3><p>" + $Global:Req2DigitallySignAlwaysResultHTML + "<br>" + $Global:Req2DigitallySignComsServerResultHTML + "<br>" + $Global:Req2EnablePlainTextResultHTML + "</p><h3>2.3.9 Microsoft network server</h3><p>" + $Global:Req2SuspendingSessionIdleTimeResultHTML + "<br>" + $Global:Req2DigitallySignComsForcedResultHTML + "<br>" + $Global:Req2DigitallySignComsClientResultHTML + "<br>" + $Global:Req2ForcedClientLogoffResultHTML + "</p><h3>2.3.10 Network access</h3><p>" + $Global:Req2SIDNameLookupResultHTML + "<br>" + $Global:Req2RestrictAnonymousSAMResultHTML + "<br>" + $Global:Req2AnonymousEmuerationAccountsResultHTML + "<br>" + $Global:Req2StorageOfPasswordsResultHTML + "<br>" + $Global:Req2AllIncludesPoliciesResultHTML + "<br>" + $Global:Req2AnonymousNamedPipesResultHTML + "<br>" + $Global:Req2AllowedExactPathsResultHTML + "<br>" + $Global:Req2RestrictAnnonymousAccessSessionsResultHTML + "<br>" + $Global:Req2NullSessionSharesHTML + "<br>" + $Global:Req2SharingAndSecModelLocalAccountsResultHTML + "</p><h3>2.3.11 Network Security</h3><p>" + $Global:Req2LocalSystemNTLMResultHTML + "<br>" + $Global:Req2LocalSystemNULLSessionResultHTML + "<br>" + $Global:Req2PKU2UOnlineIdentitiesResultHTML + "<br>" + $Global:Req2KerberosEncryptionTypesResultHTML + "<br>" + $Global:Req2LanManagerHashResultHTML + "<br>" + $Global:Req2ForceLogoffAfterHoursExpireResultHTML + "<br>" + $Global:Req2LanManagerAuthLevelResultHTML + "<br>" + $Global:Req2LDAPClientSigningReqsResultHTML + "<br>" + $Global:Req2NTLMMinClientResultsHTML + "<br>" + $Global:Req2NTLMMinServerResultsHTML + "</p><h3>2.3.12 Recovery Console</h3><p>" + $Global:Req2AutoAdminLogonResultHTML + "<br>" + $Global:Req2AllowFloppyAccessResultHTML + "</p><h3>2.3.13 Shutdown</h3><p>" + $Global:Req2ShutdownWithoutLoggingInResultHTML + "</p><h3>2.3.14 System Cryptography</h3><p>" + $Global:Req2FipsPolicyResultsHTML + "<br>" + $Global:Req2UserKeyProtectionResultHTML + "</p><h3>2.3.15 System objects</h3><p>" + $Global:Req2CaseInsensitivityResultHTML + "<br>" + $Global:Req2StrengthenPermissionsResultHTML + "</p><h3>2.3.17 User Account Control</h3><p>" + $Global:Req2AdminApprovalModeResultHTML + "<br>" + $Global:Req2BehaviorforAdminResultHTML + "<br>" + $Global:Req2BehaviorforStandardResultHTML + "<br>" + $Global:Req2InstallerDetectionResultHTML + "<br>" + $Global:Req2UIAccessSecureLocationsResultHTML + "<br>" + $Global:Req2RunAllAdminsModeResultHTML + "<br>" + $Global:Req2SwitchSecureDesktopResultHTML + "<br>" + $Global:Req2VitualFileLocationsResultHTML + "</p>"
 		#$Global:Req2ComplianceResultHTMLTemp1 = $Global:Req2ComplianceResultHTML -replace "[PASS]","<span id=`"CISPassStatus`">[PASS]</span>"
 		#$Global:Req2ComplianceResultHTMLTemp2 = $Global:Req2ComplianceResultHTMLTemp1 -replace "[FAILED]","<span id=`"CISFailedStatus`">[FAILED]</span>"
-		#$Global:Req2CISComplianceResultHTMLFinal = $Global:Req2ComplianceResultHTMLTemp2 -replace "[INFORMATION]","<span id=`"CISInfoStatus`">[INFOMATION]</span>"
+		#$Global:Req2CISComplianceResultHTMLFinal = $Global:Req2ComplianceResultHTMLTemp2 -replace "[INFORMATION]","<span id=`"CISInfoStatus`">[INFORMATION]</span>"
 		# Rich Text Boxes
 		if($EverythingToggle -eq $false){
 			$Req2Output.AppendText("The Following Sub-Sections are directly from the CIS Benchmarks`n")
@@ -3066,9 +3069,9 @@ $AllScriptList_ListUpdate = {
 			}
 			# Totals
 			$Global:LocalDrivesResult = "2.2.5     - [INFORMATION] - Detected $LocalDriveCounter Local Drives.`n"
-			$Global:LocalDrivesResultHTML = "2.2.5     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $LocalDriveCounter Local Drives.`n"
+			$Global:LocalDrivesResultHTML = "2.2.5     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $LocalDriveCounter Local Drives.`n"
 			$Global:SMBSharesResult = "2.2.5     - [INFORMATION] - Detected $NetworkDriveCounter Network Shares.`n"
-			$Global:SMBSharesResultHTML = "2.2.5     - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $NetworkDriveCounter Network Shares.`n"
+			$Global:SMBSharesResultHTML = "2.2.5     - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $NetworkDriveCounter Network Shares.`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($LocalDrivesRTB + "`nExtra Drive Information`n" + $LocalDrivesExtraRTB + "`nNetwork Shares`n" + $LocalNetworkSharesRTB)
@@ -3116,7 +3119,7 @@ $AllScriptList_ListUpdate = {
 			}
 			#Totals
 			$Global:ADComputersResult = "2.4       - [INFORMATION] - Detected $ADComputerCounter Active Directory Computer Objects.`n"
-			$Global:ADComputersResultHTML = "2.4       - <span id=`"CISInfoStatus`">[INFOMATION]</span> - Detected $ADComputerCounter Active Directory Computer Objects.`n"
+			$Global:ADComputersResultHTML = "2.4       - <span id=`"CISInfoStatus`">[INFORMATION]</span> - Detected $ADComputerCounter Active Directory Computer Objects.`n"
 			# Data Output
 			if($EverythingToggle -eq $false){
 				$Req2Output.AppendText($ADComputerListAllRTB)
@@ -3831,20 +3834,20 @@ $AllScriptList_ListUpdate = {
 			foreach ($Group in $ActiveDirectoryGroups){
 				$GroupMembership = Get-ADGroupMember -Identity $Group | Select-Object Name,SamaccountName,objectClass,distinguishedName,SID | Sort-Object Name,objectClass
 				$GroupMembershipRTB = $GroupMembership | Format-Table -Autosize | Out-String -Width 1200
-				$GroupInfomation = Get-ADGroup -Identity $Group
-				$GroupInfomationRTB = $GroupInfomation | Format-List | Out-String
+				$GroupINFORMATION = Get-ADGroup -Identity $Group
+				$GroupINFORMATIONRTB = $GroupINFORMATION | Format-List | Out-String
 				# HTML Info Stuff
-				$Req7FormatGroupInfoHTML = $GroupInfomation | ConvertTo-Html -As Table -Property DistinguishedName,GroupCategory,GroupScope,Name,ObjectClass,ObjectGUID,SamAccountName,SID -Fragment -PreContent "<h3>$Group Group Details</h3>"
+				$Req7FormatGroupInfoHTML = $GroupINFORMATION | ConvertTo-Html -As Table -Property DistinguishedName,GroupCategory,GroupScope,Name,ObjectClass,ObjectGUID,SamAccountName,SID -Fragment -PreContent "<h3>$Group Group Details</h3>"
 				# Data Output/Append
 				if([string]::IsNullOrEmpty($GroupMembership)){
 					# Add to HTML List 
 					$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + "<h3>No Users in $Group</h3><p>$Global:SectionBreak</p>"
 					# Data Output
 					if($EverythingToggle -eq $false){
-						$Req7Output.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nNo Users in " + $Group + "`n")
+						$Req7Output.AppendText($Group + " Group Details:`n" + $GroupINFORMATIONRTB + "`nNo Users in " + $Group + "`n")
 						$Req7Output.AppendText($Global:SectionBreak)
 					}else{
-						$AllOutput.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nNo Users in " + $Group + "`n")
+						$AllOutput.AppendText($Group + " Group Details:`n" + $GroupINFORMATIONRTB + "`nNo Users in " + $Group + "`n")
 						$AllOutput.AppendText($Global:SectionBreak)
 					}
 				}else{
@@ -3853,10 +3856,10 @@ $AllScriptList_ListUpdate = {
 					$Req7GroupMembershipList += $Req7FormatGroupInfoHTML + $Req7FormatGroupListHTML
 					# Data Output
 					if($EverythingToggle -eq $false){
-						$Req7Output.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
+						$Req7Output.AppendText($Group + " Group Details:`n" + $GroupINFORMATIONRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
 						$Req7Output.AppendText($Global:SectionBreak)
 					}else{
-						$AllOutput.AppendText($Group + " Group Details:`n" + $GroupInfomationRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
+						$AllOutput.AppendText($Group + " Group Details:`n" + $GroupINFORMATIONRTB + "`nHere are the Users in " + $Group + "`n" + $GroupMembershipRTB)
 						$AllOutput.AppendText($Global:SectionBreak)
 					}
 				}
@@ -4002,10 +4005,11 @@ $AllScriptList_ListUpdate = {
 					}
 				}
 			}
+		# Edge Case - Non DC
 		}else{
-			# Edge Case - Non DC
+			# HTML Report
 			$Global:Req7UserRightsHTML += "<p>Unable to contact Active Directory, Ensure Script is run on a Domain Controller.</p>"
-			# Write Header
+			# Write Output
 			if($EverythingToggle -eq $false){
 				$Req7Output.AppendText("`nUnable to contact Active Directory, Ensure Script is run on a Domain Controller.`n`n")
 			}else{
