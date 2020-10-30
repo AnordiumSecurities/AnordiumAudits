@@ -24,12 +24,17 @@ If (-NOT ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
 # Test Connection
 try{
 	$CurrentDomain = Get-ADDomainController -ErrorAction Stop
+	$PSHostInfo = Get-Host
 	Write-Host "Current DC:"$CurrentDomain.Name
 	Write-Host "Domain:"$CurrentDomain.Domain
 	Write-Host "Forest:"$CurrentDomain.Forest
+	Write-Host "Installed PowerShell Version:" $PSHostInfo.Version
 	Write-Host ""
 	$Global:TestDCConnection = $true
 }catch{
+	$PSHostInfo = Get-Host
+	Write-Host "Warning: No Active Directory Domain Detected, Unsupported Configuration!!!"
+	Write-Host "Installed PowerShell Version:" $PSHostInfo.Version
 	$Global:TestDCConnection = $false
 }
 
@@ -207,8 +212,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.6.1"
-$Global:ProgramVersionDate = "26th October 2020"
+$Global:ProgramVersionCode = "1.6.2"
+$Global:ProgramVersionDate = "30th October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -576,7 +581,6 @@ $AllScriptList_ListUpdate = {
 					Req2GrabADComputers
 					$Req2Output.AppendText($Global:SectionHeader)
 					Req2GrabSysConfig
-					
 					$Req2Output.Clear()
 				}
 			}else{
@@ -2223,16 +2227,24 @@ $AllScriptList_ListUpdate = {
 			}
 
 			# 2.3.10.8 (L1) Configure 'Network access: Remotely accessible registry paths' (Scored)
-			$AllowedExactPaths = $Global:SecDump | Select-String -SimpleMatch 'AllowedExactPaths' | Out-String
-			$AllowedExactPathsResultSplit1 = $AllowedExactPaths.split(',')[1] | Out-String
-			$AllowedExactPathsResultSplit2 = $AllowedExactPaths.split(',')[2] | Out-String
-			$AllowedExactPathsResultSplit3 = $AllowedExactPaths.split(',')[3] | Out-String
-			$ProcessedString1 = $AllowedExactPathsResultSplit1 -replace "`n|`r",""
-			$ProcessedString2 = $AllowedExactPathsResultSplit2 -replace "`n|`r",""
-			$ProcessedString3 = $AllowedExactPathsResultSplit3 -replace "`n|`r",""
-
+			$AllowedExactPaths = $Global:SecDump | Select-String -SimpleMatch 'AllowedExactPaths\Machine' | Out-String
 			if(-not([string]::IsNullOrEmpty($AllowedExactPaths))){
-				if(($ProcessedString1 -eq "System\CurrentControlSet\Control\ProductOptions") -and ($ProcessedString2 -eq "System\CurrentControlSet\Control\Server Applications") -and ($ProcessedString3 -eq "Software\Microsoft\Windows NT\CurrentVersion")){
+				$ProcessedExactPaths = $AllowedExactPaths -replace '`n|`r|"| ',""
+				$CharCountPaths = ($ProcessedExactPaths.ToCharArray() | Where-Object {$_ -eq ','} | Measure-Object).Count
+				$CharArrayPaths = $ProcessedExactPaths.Split(",")
+				#Counters
+				$ResultCounterPaths = 0
+				# Check Array
+				foreach($PathPipe in $CharArrayPaths){
+					$PathPipe = $PathPipe.ToLower()
+					$PathPipe = $PathPipe.Replace("`n","")
+					$PathPipe = $PathPipe.Replace("`r","")
+					if(($PathPipe -eq "system\currentcontrolset\control\productoptions") -or ($PathPipe -eq "system\currentcontrolset\control\serverapplications") -or ($PathPipe -eq "software\microsoft\windowsnt\currentversion")){
+						$ResultCounterPaths++
+					}
+				}
+				# Check Data
+				if($ResultCounterPaths -eq "3"){
 					$Global:Req2AllowedExactPathsResult = "2.3.10.8  - [PASS] - Remotely accessible Registry Paths are Matched. CIS Compliant.`n"
 					$Global:Req2AllowedExactPathsResultHTML = "2.3.10.8  - <span id=`"CISPassStatus`">[PASS]</span> - Remotely accessible Registry Paths are Matched. CIS Compliant.`n"
 					$CISPassCounter++
@@ -2553,7 +2565,7 @@ $AllScriptList_ListUpdate = {
 
 			# 2.3.14 System Cryptography
 			# 2.3.14 System cryptography: Use FIPS compliant algorithms for encryption, hashing, and signing
-			$FIPSPolicy = $Global:SecDump | Select-String -SimpleMatch "FIPSAlgorithmPolicy" | Out-String
+			$FIPSPolicy = $Global:SecDump | Select-String -SimpleMatch "FIPSAlgorithmPolicy\Enabled" | Out-String
 			$FIPSPolicyResults = $FIPSPolicy.split(',')[1]
 			$FIPSPolicyResults = $FIPSPolicyResults -as [int]
 			if($FIPSPolicyResults -eq "1"){
@@ -3151,13 +3163,33 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText("2.4 - List of Neighboring Devices.`n")
 		}
 		# Data Gathering for IPV4
+		# IPV4 Adapters Function
 		try{
-			# IPV4 Adapters
+			# Data Gathering
 			$IPV4Adapters = Get-NetIPAddress | Select-Object InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState | Where-Object AddressFamily -eq IPv4 | Sort-Object InterfaceIndex,InterfaceAlias
 			$IPV4AdaptersRTB = $IPV4Adapters | Format-Table | Out-String
-			$Global:Req2IPV4AdaptersHTML = $IPV4Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h2>2.4 - Map Neighboring Devices</h2><h3>IPV4 Adapters</h3>"
-			# IPV4 Neighbors
-			$IPV4Neighbors = Get-NetNeighbor -AddressFamily IPv4 | Where-Object State -ne Unreachable | Sort-Object ifIndex,IPAddress
+			$Global:Req2IPV4AdaptersHTML = $IPV4Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h3>IPV4 Adapters</h3>"
+			# Data Output for IPV4 Adapters
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("IPV4 Adapters`n")
+				$Req2Output.AppendText($IPV4AdaptersRTB)
+			}else{
+				$AllOutput.AppendText("IPV4 Adapters`n")
+				$AllOutput.AppendText($IPV4AdaptersRTB)
+			}
+		# Edge Case for IPV4 Adapters
+		}catch{
+			$Global:Req2IPV4AdaptersHTML = "<h3>IPV4 Adapters</h3><p>Unable to List IPV4 Adapters.</p>"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`nUnable to List IPV4 Adapters.`n")
+			}else{
+				$AllOutput.AppendText("`nUnable to List IPV4 Adapters.`n")
+			}
+		}
+		# IPV4 Neighbors Function
+		try{
+			# Data Gathering
+			$IPV4Neighbors = Get-NetNeighbor -AddressFamily IPv4 -ErrorAction Stop | Where-Object State -ne Unreachable | Sort-Object ifIndex,IPAddress
 			$IPV4NeighborsRTB = $IPV4Neighbors | Format-Table | Out-String
 			$Global:Req2IPV4NeighborsHTML = $IPV4Neighbors | ConvertTo-Html -As Table -Property ifIndex,InterfaceAlias,IPAddress,LinkLayerAddress,State,PolicyStore -Fragment -PreContent "<h3>IPV4 Neighbors</h3>"
 			$Global:Req2IPV4NeighborsHTML = $Global:Req2IPV4NeighborsHTML -replace '<td>Stale</td>','<td class="AvailableStatus">Stale</td>' 
@@ -3165,34 +3197,50 @@ $AllScriptList_ListUpdate = {
 			$Global:Req2IPV4NeighborsHTML = $Global:Req2IPV4NeighborsHTML -replace '<td>Permanent</td>','<td class="RemovedStatus">Permanent</td>'
 			# Data Output for IPV4
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("IPV4 Adapters`n")
-				$Req2Output.AppendText($IPV4AdaptersRTB)
 				$Req2Output.AppendText("IPV4 Neighbors`n")
 				$Req2Output.AppendText($IPV4NeighborsRTB)
 			}else{
-				$AllOutput.AppendText("IPV4 Adapters`n")
-				$AllOutput.AppendText($IPV4AdaptersRTB)
 				$AllOutput.AppendText("IPV4 Neighbors`n")
 				$AllOutput.AppendText($IPV4NeighborsRTB)
 			}
-		# Edge Case IPV4
+		# Edge Case IPV4 Neighbors
 		}catch{
-			$Global:Req2IPV4AdaptersHTML = "<h2>2.4 - Map Neighboring Devices</h2><h3>IPV4 Adapters</h3><p>Unable to List IPV6 Adapters.</p>"
-			$Global:Req2IPV4NeighborsHTML = "<h3>IPV4 Neighbors</h3><p>Unable to List Neighboring Devices.</p>"
+			$Global:Req2IPV4NeighborsHTML = "<h3>IPV4 Neighbors</h3><p>Unable to List IPV4 Neighboring Devices.</p>"
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("`nUnable to List Neighboring Devices.`n")
+				$Req2Output.AppendText("`nUnable to List IPV4 Neighboring Devices.`n")
 			}else{
-				$AllOutput.AppendText("`nUnable to List Neighboring Devices.`n")
+				$AllOutput.AppendText("`nUnable to List IPV4 Neighboring Devices.`n")
 			}
 		}
+
 		# Data Gathering for IPV6
+		# IPV6 Adapters Function
 		try{
-			# IPV6 Adapters
+			# Data Gathering
 			$IPV6Adapters = Get-NetIPAddress | Select-Object InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState | Where-Object AddressFamily -eq IPv6 | Sort-Object InterfaceIndex,InterfaceAlias
 			$IPV6AdaptersRTB = $IPV6Adapters | Format-Table | Out-String
 			$Global:Req2IPV6AdaptersHTML = $IPV6Adapters | ConvertTo-Html -As Table -Property InterfaceIndex,InterfaceAlias,IPAddress,PrefixLength,AddressFamily,PrefixOrigin,SuffixOrigin,AddressState -Fragment -PreContent "<h3>IPV6 Adapters</h3>"
-			# IPV6 Neighbors
-			$IPV6Neighbors = Get-NetNeighbor -AddressFamily IPv6 | Where-Object State -ne Unreachable | Sort-Object ifIndex,IPAddress
+			# Data Output for IPV6 Adapters
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("IPV6 Adapters`n")
+				$Req2Output.AppendText($IPV6AdaptersRTB)
+			}else{
+				$AllOutput.AppendText("IPV6 Adapters`n")
+				$AllOutput.AppendText($IPV6AdaptersRTB)
+			}
+		# Edge Case for IPV6 Adapters
+		}catch{
+			$Global:Req2IPV6AdaptersHTML = "<h3>IPV6 Adapters</h3><p>Unable to List IPV6 Adapters.</p>"
+			if($EverythingToggle -eq $false){
+				$Req2Output.AppendText("`nUnable to List IPV6 Adapters.`n")
+			}else{
+				$AllOutput.AppendText("`nUnable to List IPV6 Adapters.`n")
+			}
+		}
+		# IPV6 Neighbors Function
+		try{
+			# Data Gathering
+			$IPV6Neighbors = Get-NetNeighbor -AddressFamily IPv6 -ErrorAction Stop | Where-Object State -ne Unreachable | Sort-Object ifIndex,IPAddress
 			$IPV6NeighborsRTB = $IPV6Neighbors | Format-Table | Out-String
 			$Global:Req2IPV6NeighborsHTML = $IPV6Neighbors | ConvertTo-Html -As Table -Property ifIndex,InterfaceAlias,IPAddress,LinkLayerAddress,State,PolicyStore -Fragment -PreContent "<h3>IPV6 Neighbors</h3>"
 			$Global:Req2IPV6NeighborsHTML = $Global:Req2IPV6NeighborsHTML -replace '<td>Stale</td>','<td class="AvailableStatus">Stale</td>' 
@@ -3200,24 +3248,19 @@ $AllScriptList_ListUpdate = {
 			$Global:Req2IPV6NeighborsHTML = $Global:Req2IPV6NeighborsHTML -replace '<td>Permanent</td>','<td class="RemovedStatus">Permanent</td>'
 			# Data Output for IPV6
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("IPV6 Adapters`n")
-				$Req2Output.AppendText($IPV6AdaptersRTB)
 				$Req2Output.AppendText("IPV6 Neighbors`n")
 				$Req2Output.AppendText($IPV6NeighborsRTB)
 			}else{
-				$AllOutput.AppendText("IPV6 Adapters`n")
-				$AllOutput.AppendText($IPV6AdaptersRTB)
 				$AllOutput.AppendText("IPV6 Neighbors`n")
 				$AllOutput.AppendText($IPV6NeighborsRTB)
 			}
-		# Edge Case IPV6
+		# Edge Case IPV6 Neighbors
 		}catch{
-			$Global:Req2IPV6AdaptersHTML = "<h3>IPV6 Adapters</h3><p>Unable to List IPV6 Adapters.</p>"
-			$Global:Req2IPV6NeighborsHTML = "<h3>IPV6 Neighbors</h3><p>Unable to List Neighboring Devices.</p>"
+			$Global:Req2IPV6NeighborsHTML = "<h3>IPV6 Neighbors</h3><p>Unable to List IPV6 Neighboring Devices.</p>"
 			if($EverythingToggle -eq $false){
-				$Req2Output.AppendText("`nUnable to List Neighboring Devices.`n")
+				$Req2Output.AppendText("`nIPV6 Neighbors`nUnable to List IPV6 Neighboring Devices.`n`n")
 			}else{
-				$AllOutput.AppendText("`nUnable to List Neighboring Devices.`n")
+				$AllOutput.AppendText("`nIPV6 Neighbors`nUnable to List IPV6 Neighboring Devices.`n`n")
 			}
 		}
 	}
