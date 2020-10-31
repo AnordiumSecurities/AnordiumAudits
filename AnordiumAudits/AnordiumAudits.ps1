@@ -212,7 +212,7 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.6.3"
+$Global:ProgramVersionCode = "1.7.0"
 $Global:ProgramVersionDate = "31st October 2020"
 
 $AllScriptList_ListUpdate = {
@@ -1163,9 +1163,9 @@ $AllScriptList_ListUpdate = {
 		}
 		# Data Gathering 32 Bit Apps
 		try{
-			$Req2SoftwareList32Bit = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
-			$Req2SoftwareList32BitRTB = $Req2SoftwareList32Bit | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req2SoftwareList32BitHTML = $Req2SoftwareList32Bit | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h2>2.2.2 - Grab Installed Software</h2><h3>32-Bit Apps</h3>"
+			$Req2SoftwareList32Bit = Get-ItemProperty HKLM:\Software\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, PSChildName, Publisher, InstallDate, DisplayVersion | Sort-Object DisplayName
+			$Req2SoftwareList32BitRTB = $Req2SoftwareList32Bit | Select-Object DisplayName, Publisher, InstallDate, DisplayVersion | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SoftwareList32BitHTML = $Req2SoftwareList32Bit | ConvertTo-Html -As Table -Property DisplayName, PSChildName, Publisher, InstallDate, DisplayVersion -Fragment -PreContent "<h2>2.2.2 - Grab Installed Software</h2><h3>32-Bit Apps</h3>"
 			# 32 Bit Apps Counter
 			$32BitAppsCounter = 0
 			foreach($App in $Req2SoftwareList32Bit){
@@ -1195,9 +1195,9 @@ $AllScriptList_ListUpdate = {
 		}
 		# Data Gathering 64 Bit Apps
 		try{
-			$Req2SoftwareList64Bit = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, DisplayVersion, Publisher, InstallDate | Sort-Object DisplayName 
-			$Req2SoftwareList64BitRTB = $Req2SoftwareList64Bit | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req2SoftwareList64BitHTML = $Req2SoftwareList64Bit | ConvertTo-Html -As Table -Property DisplayName, DisplayVersion, Publisher, InstallDate -Fragment -PreContent "<h3>64-Bit Apps</h3>"
+			$Req2SoftwareList64Bit = Get-ItemProperty HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall\* | Select-Object DisplayName, PSChildName, Publisher, InstallDate, DisplayVersion | Sort-Object DisplayName
+			$Req2SoftwareList64BitRTB = $Req2SoftwareList64Bit | Select-Object DisplayName, Publisher, InstallDate, DisplayVersion | Format-Table -Autosize | Out-String -Width 1200
+			$Global:Req2SoftwareList64BitHTML = $Req2SoftwareList64Bit | ConvertTo-Html -As Table -Property DisplayName, PSChildName, Publisher, InstallDate, DisplayVersion -Fragment -PreContent "<h3>64-Bit Apps</h3>"
 			# 64 Bit Apps Counter
 			$64BitAppsCounter = 0
 			foreach($App in $Req2SoftwareList64Bit){
@@ -3533,33 +3533,60 @@ $AllScriptList_ListUpdate = {
 		$Req5OutputLabel.Refresh()
 		# Data Gathering
 		try{
-			$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version | Where-Object {($_.Vendor -like "*Avira*") -or ($_.Vendor -like "*Avast*") -or ($_.Vendor -like "*AVG*") -or ($_.Vendor -like "*Bitdefender*") -or ($_.Vendor -like "*ESET*") -or ($_.Vendor -like "*Kaspersky*") -or ($_.Vendor -like "*Malwarebytes*") -or ($_.Vendor -like "*McAfee*") -or ($_.Vendor -like "*NortonLifeLock*") -or ($_.Vendor -like "*Sophos*") -or ($_.Vendor -like "*Symantec*") -or ($_.Vendor -like "*Trend Micro*")} | Sort-Object Vendor,Name
-			$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
-			$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>5.1 - Antivirus Program and GPO Analysis</h2><h3>List of Anti-Virus Programs Detected</h3>"
+			# Reg Paths to Check, 32 Bit and then 64 Bit
+			$paths=@('HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\','HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\')
+			# Initialize Empty Arrays & Counter
+			$AppArray = @()
+			$AppPubArray = @()
+			$AppCorrectCounter = 0
+			$TotalCombinedAppCounter = 0
+			# Grab All (32bit,64bit) Apps and Add to New Array
+			foreach($path in $paths){
+				$AppArray += Get-ChildItem -Path $path | Get-ItemProperty | Select-Object DisplayName, PSChildName, Publisher, InstallDate, DisplayVersion
+			}
+			# Loop New Array and Check Total Array for Anti-Virus Apps
+			foreach($App in $AppArray){
+				# Check Publisher for Match
+				if(($App.Publisher -like "*Avira*") -or ($App.Publisher -like "*Avast*") -or ($App.Publisher -like "*AVG*") -or ($App.Publisher -like "*Bitdefender*") -or ($App.Publisher -like "*ESET*") -or ($App.Publisher -like "*Kaspersky*") -or ($App.Publisher -like "*Malwarebytes*") -or ($App.Publisher -like "*McAfee*") -or ($App.Publisher -like "*NortonLifeLock*") -or ($App.Publisher -like "*Sophos*") -or ($App.Publisher -like "*Symantec*") -or ($App.Publisher -like "*Trend Micro*")){
+					$AppPubArray += $App
+					$AppCorrectCounter++
+				}
+				# Increase Total App Count
+				$TotalCombinedAppCounter++
+			}
 			# Progress Bar
 			$Req5OutputLabel.Text = "Output: Progressing... 50%"
 			$Req5OutputLabel.Refresh()
-			# Edge Case incase No Anti-Virus Programs are Found
-			if([string]::IsNullOrEmpty($AVProgramQuery)){
-				$AVProgramQuery = Get-WmiObject -Class Win32_Product | Select-Object Name,Vendor,Version,InstallDate | Sort-Object Vendor,Name
-				$AVProgramQueryRTB = $AVProgramQuery | Format-Table -Autosize | Out-String -Width 1200
-				$Global:Req5AVProgramQueryHTML = $AVProgramQuery | ConvertTo-Html -As Table -Fragment -PreContent "<h2>5.1 - Antivirus Program and GPO Analysis</h2><h3>No Anti-Virus detected, Here is the list of all programs detected</h3>"
-				# Data Output for when there is No Anti-Virus Programs
+
+			# Checker Counter, Display Results
+			if($AppCorrectCounter -gt 0){
+				# Convert to HTML
+				$SortAppPubArray = $AppPubArray | Sort-Object DisplayName,PSChildName
+				$Global:Req5AVProgramQueryHTML = $SortAppPubArray | ConvertTo-Html -Fragment -As Table -PreContent "<h2>5.1 - Antivirus Program and GPO Analysis</h2><h3>List of Anti-Virus Programs Detected</h3>" -PostContent "<p>Total Apps: $AppCorrectCounter</p>"
+				# Data Output
+				$AVProgramQueryRTB = $AppPubArray | Select-Object DisplayName, Publisher, InstallDate, DisplayVersion | Sort-Object DisplayName | Format-Table | Out-String
+				# Write Output
+				if($EverythingToggle -eq $false){
+					$Req5Output.AppendText($AVProgramQueryRTB + "Total Apps: " + $AppCorrectCounter)
+				}else{
+					$AllOutput.AppendText($AVProgramQueryRTB + "Total Apps: " + $AppCorrectCounter)
+				}
+			# Edge Case No Anti-Virus Found
+			}else{
+				# Convert to HTML
+				$SortAppArray = $AppArray | Sort-Object DisplayName,PSChildName
+				$Global:Req5AVProgramQueryHTML = $SortAppArray | ConvertTo-Html -Fragment -As Table -PreContent "<h2>5.1 - Antivirus Program and GPO Analysis</h2><h3>No Anti-Virus detected, Here is the list of all programs detected</h3>"  -PostContent "<p>Total Apps: $TotalCombinedAppCounter</p>"
+				# Data Output
+				$AVProgramQueryRTB = $AppArray | Select-Object DisplayName, Publisher, InstallDate, DisplayVersion | Sort-Object DisplayName | Format-Table | Out-String
+				# Write Output
 				if($EverythingToggle -eq $false){
 					$Req5Output.AppendText("No Anti-Virus detected, Here is the list of all programs detected and a GPO Dump for futher analysis:`n")
-					$Req5Output.AppendText($AVProgramQueryRTB)
+					$Req5Output.AppendText($AVProgramQueryRTB + "Total Apps: " + $TotalCombinedAppCounter)
 					$Req5Output.AppendText("`nCheck GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
 				}else{
 					$AllOutput.AppendText("No AntiVirus detected, Here is the list of all programs detected and check the GPO Dump section for futher analysis.`n")
-					$AllOutput.AppendText($AVProgramQueryRTB)
+					$AllOutput.AppendText($AVProgramQueryRTB + "Total Apps: " + $TotalCombinedAppCounter)
 					$AllOutput.AppendText("`nCheck GPO Dump for Windows Defender Settings, if the anti-virus policy is not there, requirement has failed.`n")
-				}
-			# Data Output for when there is an anti-virus program detected
-			}else{
-				if($EverythingToggle -eq $false){
-					$Req5Output.AppendText($AVProgramQueryRTB)
-				}else{
-					$AllOutput.AppendText($AVProgramQueryRTB)
 				}
 			}
 		# Edge Case for when something goes wrong. Should never happen but you never know.
