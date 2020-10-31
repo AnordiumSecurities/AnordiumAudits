@@ -212,8 +212,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.6.2"
-$Global:ProgramVersionDate = "30th October 2020"
+$Global:ProgramVersionCode = "1.6.3"
+$Global:ProgramVersionDate = "31st October 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -4834,8 +4834,8 @@ $AllScriptList_ListUpdate = {
 		$AuditAccountManageResult = $AuditAccountManage.split(' ')[2]
 		$AuditAccountManageResult = $AuditAccountManageResult -as [int]
 		if($AuditAccountManageResult -eq "3"){
-			$Global:Req10AuditAccountManageResult = "10.2  - <span id=`"CISPassStatus`">[PASS]</span> - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
-			$Global:Req10AuditAccountManageResult = "10.2  - <span id=`"CISPassStatus`">[PASS]</span> - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditAccountManageResult = "10.2  - [PASS] - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
+			$Global:Req10AuditAccountManageResultHTML = "10.2  - <span id=`"CISPassStatus`">[PASS]</span> - Audit Account Management is set to Success and Failure. PCI DSS Compliant.`n"
 		}elseif($AuditAccountManageResult -eq "2"){
 			$Global:Req10AuditAccountManageResult = "10.2  - [FAILED] - Audit Account Management is set to Failure.`n"
 			$Global:Req10AuditAccountManageResultHTML = "10.2  - <span id=`"CISFailedStatus`">[FAILED]</span> - Audit Account Management is set to Failure.`n"
@@ -4915,7 +4915,7 @@ $AllScriptList_ListUpdate = {
 
 		# Data Output
 		# HTML Report
-		$Global:Req10PCIPSSComplianceResultHTML = "<h2>10.2 - Grab Audit Log Retention Policy</h2><p>" + $Global:Req10AuditSysEventsResultHTML + "<br>" + $Global:Req10AuditLogonEventsResultHTML + "<br>" + $Global:Req10AuditObjectAccessResultHTML + "<br>" + $Global:Req10AuditPolicyChangeResultHTML + "<br>" + $Global:Req10AuditAccountManageResultHTML + "<br>" + $Global:Req10AuditProcessTrackingResultHTML + "<br>" + $Global:Req10AuditDSAccessResultHTML + "<br>" + $Global:Req10AuditAccountLogonResultHTML + "</p>"
+		$Global:Req10PCIPSSComplianceResultHTML = "<h2>10.2 - Grab Audit Log Retention Policy</h2><p>" + $Global:Req10AuditSysEventsResultHTML + "<br>" + $Global:Req10AuditLogonEventsResultHTML + "<br>" + $Global:Req10AuditObjectAccessResultHTML + "<br>" + $Global:Req10AuditPrivilegeUseResultHTML + "<br>" + $Global:Req10AuditPolicyChangeResultHTML + "<br>" + $Global:Req10AuditAccountManageResultHTML + "<br>" + $Global:Req10AuditProcessTrackingResultHTML + "<br>" + $Global:Req10AuditDSAccessResultHTML + "<br>" + $Global:Req10AuditAccountLogonResultHTML + "</p>"
 
 		if($EverythingToggle -eq $false){
 			$Req10Output.AppendText("10.2 - Grab Audit Log Retention Policy:`n`n")
