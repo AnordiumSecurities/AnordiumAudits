@@ -212,8 +212,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.7.0"
-$Global:ProgramVersionDate = "31st October 2020"
+$Global:ProgramVersionCode = "1.8.0"
+$Global:ProgramVersionDate = "2nd November 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -378,7 +378,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementTenName = "<h1 id='Req10'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='ReqDiag'>PCI DSS Diagnostics Report</h1>"
 		$Global:ToCHTML = "<div id=`"toc_container`"`><p class=`"toc_title`">Contents</p><li><a href=`"#Req2`">PCI DSS Requirement Two</a></li><li><a href=`"#Req4`">PCI DSS Requirement Four</a></li><li><a href=`"#Req5`">PCI DSS Requirement Five</a></li><li><a href=`"#Req7`">PCI DSS Requirement Seven</a></li><li><a href=`"#Req8`">PCI DSS Requirement Eight</a></li><li><a href=`"#Req10`">PCI DSS Requirement Ten</a></li><li><a href=`"#ReqDiag`">PCI DSS Diagnostics Report</a></li></ul></div>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8RDPComplianceHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -4511,7 +4511,7 @@ $AllScriptList_ListUpdate = {
 		}
 		# Data Gathering - RDP Settings
 		try{
-			$RDPSettings = Get-WmiObject -Class 'Win32_TSGeneralSetting' -Namespace 'root/CIMV2/TerminalServices' | Select-Object PSComputerName,TerminalName,TerminalProtocol,Certifcates,CertificateName,MinEncryptionLevel,PolicySourceMinEncryptionLevel,PolicySourceSecurityLayer,SecurityLayer | Format-List | Out-String
+			$RDPSettings = Get-WmiObject -Class 'Win32_TSGeneralSetting' -Namespace 'root/CIMV2/TerminalServices' | Format-List | Out-String
 			$Global:Req8RDPSettingsHTML = "<h2>8.4 - Grab RDP Encryption and Idle Settings</h2><h3>RDP Encryption</h3><pre>" + $RDPSettings + "</pre>"
 			# Data Output
 			if($EverythingToggle -eq $false){
@@ -4524,6 +4524,110 @@ $AllScriptList_ListUpdate = {
 			$Global:Req8RDPSettingsHTML = "<h2>8.4 - Grab RDP Encryption and Idle Settings</h2><p>Error - No RDP Settings Found</p>"
 			$Req8Output.AppendText("Error - No RDP Settings Found")
 		}
+
+		## RDP Compliance Check Starts ##
+		# Write Header
+		if($EverythingToggle -eq $false){
+		 $Req8Output.AppendText("RDP Compliance Check:`n")
+		}else{
+			$AllOutput.AppendText("RDP Compliance Check:`n")
+		}
+
+		# Define Data Class (Array)
+		class RDPInfo {
+			[string]$Key
+			[string]$ResultMatch
+			[string]$PassRTB
+			[string]$PassHTML
+			[string]$FailRTB
+			[string]$FailHTML
+			[string]$UndefinedRTB
+			[string]$UndefinedHTML
+		}
+
+		# Data Array to Process in Loop
+		$RDPSettingsArray = @([RDPInfo]@{Key='DisablePasswordSaving';ResultMatch="1";PassRTB="18.9.59.2.2 - [PASS] - Ensure 'Do not allow passwords to be saved' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.2.2 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not allow passwords to be saved' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.2.2 - [FAILED] - Ensure 'Do not allow passwords to be saved' is set to 'Disabled'.`n";FailHTML="18.9.59.2.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow passwords to be saved' is set to 'Disabled'.<br>";UndefinedRTB="18.9.59.2.2 - [FAILED] - Ensure 'Do not allow passwords to be saved' is Not Configured.`n";UndefinedHTML="18.9.59.2.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow passwords to be saved' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fSingleSessionPerUser';ResultMatch="1";PassRTB="18.9.59.3.2.1 - [PASS] - Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.2.1 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is set to 'Enabled'. CIS Compliant<br>";FailRTB="18.9.59.3.2.1 - [FAILED] - Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is set to 'Disabled'.`n";FailHTML="18.9.59.3.2.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is set to 'Disabled'.<br>";UndefinedRTB="18.9.59.3.2.1 - [FAILED] - Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is Not Configured.`n";UndefinedHTML="18.9.59.3.2.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fDisableCcm';ResultMatch="1";PassRTB="18.9.59.3.3.1 - [PASS] - Ensure 'Do not allow COM port redirection' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.3.1 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not allow COM port redirection' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.3.1 - [FAILED] - Ensure 'Do not allow COM port redirection' is set to 'Disabled'.`n";FailHTML="18.9.59.3.3.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow COM port redirection' is set to 'Disabled'.<br>";UndefinedRTB="18.9.59.3.3.1 - [FAILED] - Ensure 'Do not allow COM port redirection' is Not Configured.`n";UndefinedHTML="18.9.59.3.3.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow COM port redirection' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fDisableCdm';ResultMatch="1";PassRTB="18.9.59.3.3.2 - [PASS] - Ensure 'Do not allow drive redirection' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.3.2 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not allow drive redirection' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.3.2 - [FAILED] - Ensure 'Do not allow drive redirection' is set to 'Disabled'.`n";FailHTML="18.9.59.3.3.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow drive redirection' is set to 'Disabled'.<br>";UndefinedRTB="18.9.59.3.3.2 - [FAILED] - Ensure 'Do not allow drive redirection' is Not Configured.`n";UndefinedHTML="18.9.59.3.3.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow drive redirection' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fDisableLPT';ResultMatch="1";PassRTB="18.9.59.3.3.3 - [PASS] - Ensure 'Do not allow LPT port redirection' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.3.3 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not allow LPT port redirection' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.3.3 - [FAILED] - Ensure 'Do not allow LPT port redirection' is set to 'Disabled'.`n";FailHTML="18.9.59.3.3.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow LPT port redirection' is set to 'Disabled'.<br>";UndefinedRTB="18.9.59.3.3.3 - [FAILED] - Ensure 'Do not allow LPT port redirection' is Not Configured.`n";UndefinedHTML="18.9.59.3.3.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow LPT port redirection' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fDisablePNPRedir';ResultMatch="1";PassRTB="18.9.59.3.3.4 - [PASS] - Ensure 'Do not allow supported Plug and Play device redirection' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.3.4 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not allow supported Plug and Play device redirection' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.3.4 - [FAILED] - Ensure 'Do not allow supported Plug and Play device redirection' is set to Disabled.`n";FailHTML="18.9.59.3.3.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow supported Plug and Play device redirection' is set to Disabled.<br>";UndefinedRTB="18.9.59.3.3.4 - [FAILED] - Ensure 'Do not allow supported Plug and Play device redirection' is Not Configured.`n";UndefinedHTML="18.9.59.3.3.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not allow supported Plug and Play device redirection' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fPromptForPassword';ResultMatch="1";PassRTB="18.9.59.3.9.1 - [PASS] - Ensure 'Always prompt for password upon connection' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.9.1 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Always prompt for password upon connection' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.9.1 - [FAILED] - Ensure 'Always prompt for password upon connection' is set to Disabled.`n";FailHTML="18.9.59.3.9.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Always prompt for password upon connection' is set to Disabled.<br>";UndefinedRTB="18.9.59.3.9.1 - [FAILED] - Ensure 'Always prompt for password upon connection' is Not Configured.`n";UndefinedHTML="18.9.59.3.9.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Always prompt for password upon connection' is Not Configured.<br>"}
+		[RDPInfo]@{Key='fEncryptRPCTraffic';ResultMatch="1";PassRTB="18.9.59.3.9.2 - [PASS] - Ensure 'Require secure RPC communication' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.9.2 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Require secure RPC communication' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.9.2 - [FAILED] - Ensure 'Require secure RPC communication' is set to Disabled.`n";FailHTML="18.9.59.3.9.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Require secure RPC communication' is set to Disabled.<br>";UndefinedRTB="18.9.59.3.9.2 - [FAILED] - Ensure 'Require secure RPC communication' is Not Configured.`n";UndefinedHTML="18.9.59.3.9.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Require secure RPC communication' is Not Configured.<br>"}
+		[RDPInfo]@{Key='SecurityLayer';ResultMatch="2";PassRTB="18.9.59.3.9.3 - [PASS] - Ensure 'Require use of specific security layer for remote (RDP) connections' is set to 'Enabled: SSL'. CIS Compliant.`n";PassHTML="18.9.59.3.9.3 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Require use of specific security layer for remote (RDP) connections' is set to 'Enabled: SSL'. CIS Compliant.<br>";FailRTB="18.9.59.3.9.3 - [FAILED] - Ensure 'Require use of specific security layer for remote (RDP) connections' is Not set to SSL or is Disabled.`n";FailHTML="18.9.59.3.9.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Require use of specific security layer for remote (RDP) connections' is Not set to SSL or is Disabled.<br>";UndefinedRTB="18.9.59.3.9.3 - [FAILED] - Ensure 'Require use of specific security layer for remote (RDP) connections' is Not Configured`n";UndefinedHTML="18.9.59.3.9.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Require use of specific security layer for remote (RDP) connection'is Not Configured.<br>"}
+		[RDPInfo]@{Key='UserAuthentication';ResultMatch="1";PassRTB="18.9.59.3.9.4 - [PASS] - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to 'Enabled'. CIS Compliant.`n";PassHTML="18.9.59.3.9.4 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to 'Enabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.9.4 - [FAILED] - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to Disabled`n";FailHTML="18.9.59.3.9.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to Disabled.<br>";UndefinedRTB="18.9.59.3.9.4 - [FAILED] - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is Not Configured`n";UndefinedHTML="18.9.59.3.9.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Require user authentication for remote connections by using Network Level Authentication' is Not Configured.<br>"}
+		[RDPInfo]@{Key='MinEncryptionLevel';ResultMatch="3";PassRTB="18.9.59.3.9.5 - [PASS] - Ensure 'Set client connection encryption level' is set to 'Enabled: High Level'. CIS Compliant.`n";PassHTML="18.9.59.3.9.5 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Set client connection encryption level' is set to 'Enabled: High Level'. CIS Compliant.<br>";FailRTB="18.9.59.3.9.5 - [FAILED] - Ensure 'Set client connection encryption level' is set to disable.`n";FailHTML="18.9.59.3.9.5 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Set client connection encryption level' is set to disable.<br>";UndefinedRTB="18.9.59.3.9.5 - [FAILED] - Ensure 'Set client connection encryption level' is Not Configured.`n";UndefinedHTML="18.9.59.3.9.5 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Set client connection encryption level' is Not Configured.<br>"}
+		[RDPInfo]@{Key='MaxIdleTime';ResultMatch="900000";PassRTB="18.9.59.3.10.1 - [PASS] - Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less'. CIS Compliant.`n";PassHTML="18.9.59.3.10.1 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less'. CIS Compliant.<br>";FailRTB="18.9.59.3.10.1 - [FAILED] - Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to Disabled.`n";FailHTML="18.9.59.3.10.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to Disabled.<br>";UndefinedRTB="18.9.59.3.10.1 - [FAILED] - Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is Not Configured.`n";UndefinedHTML="18.9.59.3.10.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is Not Configured.<br>"}
+		[RDPInfo]@{Key='MaxDisconnectionTime';ResultMatch="60000";PassRTB="18.9.59.3.10.2 - [PASS] - Ensure 'Set time limit for disconnected sessions' is set to 'Enabled: 1 minute'. CIS Compliant.`n";PassHTML="18.9.59.3.10.2 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Set time limit for disconnected sessions' is set to 'Enabled: 1 minute'. CIS Compliant.<br>";FailRTB="18.9.59.3.10.2 - [FAILED] - Ensure 'Set time limit for disconnected sessions' is Disabled.`n";FailHTML="18.9.59.3.10.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Set time limit for disconnected sessions' is Disabled.<br>";UndefinedRTB="18.9.59.3.10.2 - [FAILED] - Ensure 'Set time limit for disconnected sessions' is Not Configured.`n";UndefinedHTML="18.9.59.3.10.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Set time limit for disconnected sessions' is Not Configured.<br>"}
+		[RDPInfo]@{Key='DeleteTempDirsOnExit';ResultMatch="1";PassRTB="18.9.59.3.11.1 - [PASS] - Ensure 'Do not delete temp folders upon exit' is set to 'Disabled'. CIS Compliant.`n";PassHTML="18.9.59.3.11.1 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not delete temp folders upon exit' is set to 'Disabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.11.1 - [FAILED] - Ensure 'Do not delete temp folders upon exit' is set to 'Enabled'.`n";FailHTML="18.9.59.3.11.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not delete temp folders upon exit' is set to 'Enabled'.<br>";UndefinedRTB="18.9.59.3.11.1 - [FAILED] - Ensure 'Do not delete temp folders upon exit' is Not Configured.`n";UndefinedHTML="18.9.59.3.11.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not delete temp folders upon exit' is Not Configured.<br>"}
+		[RDPInfo]@{Key='PerSessionTempDir';ResultMatch="1";PassRTB="18.9.59.3.11.2 - [PASS] - Ensure 'Do not use temporary folders per session' is set to 'Disabled'. CIS Compliant.`n`n";PassHTML="18.9.59.3.11.2 - <span id=`"CISPassStatus`">[PASS]</span> - Ensure 'Do not use temporary folders per session' is set to 'Disabled'. CIS Compliant.<br>";FailRTB="18.9.59.3.11.2 - [FAILED] - Ensure 'Do not use temporary folders per session' is set to 'Enabled'.`n`n";FailHTML="18.9.59.3.11.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not use temporary folders per session' is set to 'Enabled'.<br>";UndefinedRTB="18.9.59.3.11.2 - [FAILED] - Ensure 'Do not use temporary folders per session' is Not Configured.`n`n";UndefinedHTML="18.9.59.3.11.2 - <span id=`"CISFailedStatus`">[FAILED]</span> - Ensure 'Do not use temporary folders per session' is Not Configured.<br>"})
+
+		# Data Gathering - RDP Compliance Check
+		# Function to Loop
+		Function RDPSettings ($KeyPassThru) {
+			# Define RDP String and RDP Key to Match
+			$HKLM_Software_RDP_Key = Get-ItemProperty -Path 'HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services'
+			$RDPResultOutput = ($HKLM_Software_RDP_Key).$KeyPassThru
+			Return $RDPResultOutput
+		}
+
+		# Define Total Variables
+		$Global:Req8RDPComplianceHTML = "<h3>RDP Compliance Check</h3><p>"
+		$Global:Req8RDPComplianceRTB = ""
+		# Loop And Gather Data and Output Data
+		try{
+			foreach($Row in $RDPSettingsArray){
+				$RowKeyData = $Row.Key
+				$RDPResultFinalOutput = RDPSettings -KeyPassThru $RowKeyData
+
+				# Edge Case for Max Idle Time, Requires Less Than Equal instead of Equals Too
+				if($Row.Key -ne "MaxIdleTime"){
+					if(-not([string]::IsNullOrEmpty($RDPResultFinalOutput))){
+						if($RDPResultFinalOutput -eq $Row.ResultMatch){
+							$RDPSettingsResultRTB = $Row.PassRTB
+							$RDPSettingsResultHTML = $Row.PassHTML
+						}else{
+							$RDPSettingsResultRTB = $Row.FailRTB
+							$RDPSettingsResultHTML = $Row.FailHTML
+						}
+					}else{
+						$RDPSettingsResultRTB = $Row.UndefinedRTB
+						$RDPSettingsResultHTML = $Row.UndefinedHTML
+					}
+				# Edge Case
+				}else{
+					if(-not([string]::IsNullOrEmpty($RDPResultFinalOutput))){
+						if(($RDPResultFinalOutput -le $Row.ResultMatch) -and ($RDPResultFinalOutput -ne "0")){
+							$RDPSettingsResultRTB = $Row.PassRTB
+							$RDPSettingsResultHTML = $Row.PassHTML
+						}else{
+							$RDPSettingsResultRTB = $Row.FailRTB
+							$RDPSettingsResultHTML = $Row.FailHTML
+						}
+					}else{
+						$RDPSettingsResultRTB = $Row.UndefinedRTB
+						$RDPSettingsResultHTML = $Row.UndefinedHTML
+					}
+				}
+				# Append Results to Totals
+				$Global:Req8RDPComplianceRTB += $RDPSettingsResultRTB
+				$Global:Req8RDPComplianceHTML += $RDPSettingsResultHTML
+			}
+		# Edge Case
+		}catch{
+			# Append Results to Totals
+			$Global:Req8RDPComplianceRTB += "An Unexpected Error Has Occurred"
+			$Global:Req8RDPComplianceHTML += "An Unexpected Error Has Occurred."
+		# Data Output into Console
+		}finally{
+			$Global:Req8RDPComplianceHTML += "</p>"
+			if($EverythingToggle -eq $false){
+				$Req8Output.AppendText($Global:Req8RDPComplianceRTB)
+			}else{
+				$AllOutput.AppendText($Global:Req8RDPComplianceRTB)
+			}
+		}
+
 		# Data Gathering - PowerPlans
 		try{
 			# Write Header
@@ -4654,7 +4758,7 @@ $AllScriptList_ListUpdate = {
 	Function Req8ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
-		$Requirement8Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementEightName $ReportComputerName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement8Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementEightName $ReportComputerName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8RDPComplianceHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement8ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
 		$Req8Output.AppendText("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html")
