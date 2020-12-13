@@ -176,15 +176,15 @@ $AuxiliaryBack_Click = {
 $CreditsButton = {
 	$MainFormOutput.Clear()
 	$MainFormOutput.AppendText("BDT Industry Project Q3-Q4 2020`n")
-	$MainFormOutput.AppendText("This was made by Team Anordium Securities and is composed of;`n")
+	$MainFormOutput.AppendText("Created by Team Anordium Securities - Cianaa Technologies Research Internees and is composed of;`n")
 	$MainFormOutput.AppendText("`nMatthew Westlake - west356@manukaumail.com`nMicheal Chen - Email: anordium@chencorp.co.nz`nRahnuma Khan`nRyan Alpay - Email: ryanmatthew.alpay@mail.com`nTim Sun - Email: timsun90@gmail.com`n")
-	$MainFormOutput.AppendText("`nAnordium Securities Version " + $Global:ProgramVersionCode + " - " + $Global:ProgramVersionDate +"`n")
+	$MainFormOutput.AppendText("`nAnordium Audits Version " + $Global:ProgramVersionCode + " - " + $Global:ProgramVersionDate +"`n")
 	$MainFormOutput.AppendText("`nSpecial Thanks to Dan from Adam the Automator for the CSS table design, W3Schools for the Scroll to Top Feature, Tips and Tricks HQ for the Table of Contents Design and Brian Clanton & Max Kozlov from PowerShell.org for the Deny All Example Code.")
 	$MainFormOutput.AppendText("`n`nhttps://adamtheautomator.com/powershell-convertto-html/`nhttps://www.w3schools.com/howto/howto_js_scroll_to_top.asp`nhttps://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217`nhttps://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/")
 	$MainFormOutput.AppendText("`n`n-------------------------------------------------------------------------------------------------------------------------------------------------`n`nMIT License`n`nCopyright (c) 2020 Anordium Securities`n`nPermission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the `"Software`"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:`n`nThe above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.`n`nTHE SOFTWARE IS PROVIDED `"AS IS`", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.")
 }
 # HTML Credits
-$CreditsForHTML = "Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design, <a href='https://www.w3schools.com/howto/howto_js_scroll_to_top.asp'>W3Schools</a> for the Scroll to Top Feature, <a href='https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217'>Tips and Tricks HQ</a> for the Table of Contents Design and <a href='https://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/'>Brian Clanton & Max Kozlov</a> for the Deny All Example Code."
+$CreditsForHTML = "Team Anordium Securities - Cianaa Technologies Research Internees<br>Special Thanks to <a href='https://adamtheautomator.com/powershell-convertto-html/'>Dan</a> from Adam the Automator for the CSS table design, <a href='https://www.w3schools.com/howto/howto_js_scroll_to_top.asp'>W3Schools</a> for the Scroll to Top Feature, <a href='https://www.tipsandtricks-hq.com/simple-table-of-contents-toc-using-pure-html-and-css-code-9217'>Tips and Tricks HQ</a> for the Table of Contents Design and <a href='https://powershell.org/forums/topic/find-deny-rights-on-a-list-of-folders/'>Brian Clanton & Max Kozlov</a> for the Deny All Example Code."
 # Browse Button on Main Form
 $UserInputBrowse = {
 	$MainForm.MainUserInput.Clear()
@@ -212,8 +212,8 @@ $Global:SectionHeader = "`n`n-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-
 $Global:SectionBreak = "`n`n---------------------------------------------------------------------------------------------------------`n`n"
 
 # Version Number and Release Date
-$Global:ProgramVersionCode = "1.8.1"
-$Global:ProgramVersionDate = "3rd November 2020"
+$Global:ProgramVersionCode = "1.9.0"
+$Global:ProgramVersionDate = "13th December 2020"
 
 $AllScriptList_ListUpdate = {
 	if($AllScriptList.SelectedItem -eq "Everything"){
@@ -307,6 +307,8 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8LocalPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
+			Req8PasswordChecker
+			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUsersPasswordExpiry
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUserLastPassChange
@@ -378,7 +380,7 @@ $AllScriptList_ListUpdate = {
 		$Global:ReportRequirementTenName = "<h1 id='Req10'>PCI DSS Requirement Ten</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='ReqDiag'>PCI DSS Diagnostics Report</h1>"
 		$Global:ToCHTML = "<div id=`"toc_container`"`><p class=`"toc_title`">Contents</p><li><a href=`"#Req2`">PCI DSS Requirement Two</a></li><li><a href=`"#Req4`">PCI DSS Requirement Four</a></li><li><a href=`"#Req5`">PCI DSS Requirement Five</a></li><li><a href=`"#Req7`">PCI DSS Requirement Seven</a></li><li><a href=`"#Req8`">PCI DSS Requirement Eight</a></li><li><a href=`"#Req10`">PCI DSS Requirement Ten</a></li><li><a href=`"#ReqDiag`">PCI DSS Diagnostics Report</a></li></ul></div>"
-		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8RDPComplianceHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$RequirementAllReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $ReportAllName $ReportComputerName $Global:ToCHTML $Global:ReportRequirementTwoName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML $Global:ReportRequirementFourName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML $Global:ReportRequirementFiveName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:ReportRequirementSevenName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML $Global:ReportRequirementEightName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8PCIDSSPassCheckResultHTML $Global:PCIDSSPassCheckToalResultHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8RDPComplianceHTML $Global:Req8PowerPlanSettingsHTML $Global:ReportRequirementTenName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:ReportDiagRequirementName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS All Requirements Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$RequirementAllReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html"
 		$RequirementAllReport | Out-File $RequirementAllReportPath
 		$AllOutput.AppendText("`nAll PCI-DSS Requirements Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-All-Report.html")
@@ -475,6 +477,8 @@ $AllScriptList_ListUpdate = {
 			Req8DomainPasswordPolicy
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8LocalPasswordPolicy
+			$AllOutput.AppendText($Global:SectionHeader)
+			Req8PasswordChecker
 			$AllOutput.AppendText($Global:SectionHeader)
 			Req8DumpADUsersPasswordExpiry
 			$AllOutput.AppendText($Global:SectionHeader)
@@ -1288,8 +1292,8 @@ $AllScriptList_ListUpdate = {
 			$MinimumPasswordAgeResult = $MinimumPasswordAgeResult -as [int]
 			if(-not([string]::IsNullOrEmpty($MinimumPasswordAge))){
 				if($MinimumPasswordAgeResult -ge "1"){
-					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [PASS] - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
-					$Global:Req2MinimumPasswordAgeResultHTML = "1.1.3     - <span id=`"CISPassStatus`">[PASS]</span> - 'Minimum Password Age' is set to '1 or more day(s)'. CIS Compliant. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
+					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [PASS] - 'Minimum Password Age' is set to '1 or more day(s)'. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
+					$Global:Req2MinimumPasswordAgeResultHTML = "1.1.3     - <span id=`"CISPassStatus`">[PASS]</span> - 'Minimum Password Age' is set to '1 or more day(s)'. Current Value: $MinimumPasswordAgeResult. CIS Compliant.`n"
 					$CISPassCounter++
 				}else{
 					$Global:Req2MinimumPasswordAgeResult = "1.1.3     - [FAILED] - 'Minimum Password Age' is Not set to '1 or more day(s)'. Current Value: $MinimumPasswordAgeResult.`n"
@@ -3353,7 +3357,7 @@ $AllScriptList_ListUpdate = {
 	Function Req2ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTwoName = "<h1 id='RequirementHeader'>PCI DSS Requirement Two Report</h1>"
-		$Requirement2Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTwoName $ReportComputerName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement2Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTwoName $ReportComputerName $Global:Req2PCIDSSComplianceResultHTML $Global:Req2CISComplianceResultHTMLFinal $Global:Req2UserCredentialResult $Global:Req2FeatureListHTML $Global:Req2ProcessListHTML $Global:Req2SvcListRunningHTML $Global:Req2SvcListListeningHTML $Global:Req2UDPListHTML $Global:Req2SoftwareList32BitHTML $Global:Req2SoftwareList64BitHTML $Global:Req2LocalDrivesHTML $Global:Req2LocalDrivesExtraHTML $Global:Req2LocalNetworkSharesHTML $Global:Req2ADComputerListAll $Global:Req2IPV4AdaptersHTML $Global:Req2IPV4NeighborsHTML $Global:Req2IPV6AdaptersHTML $Global:Req2IPV6NeighborsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Two Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement2ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html"
 		$Requirement2Report | Out-File $Requirement2ReportPath
 		$Req2Output.AppendText("Requirement Two Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Two-Report.html")
@@ -3493,7 +3497,7 @@ $AllScriptList_ListUpdate = {
 	Function Req4ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementFourName = "<h1 id='RequirementHeader'>PCI DSS Requirement Four</h1>"
-		$Requirement4Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementFourName $ReportRequirementName $ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Four Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement4Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementFourName $ReportRequirementName $ReportComputerName $Global:Req4WifiListHTML $Global:Req4LocalMachineCertsHTML $Global:Req4CurrentUserCertsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Four Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement4ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html"
 		$Requirement4Report | Out-File $Requirement4ReportPath
 		$Req4Output.AppendText("Requirement Four Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Four-Report.html")
@@ -3686,7 +3690,7 @@ $AllScriptList_ListUpdate = {
 	Function Req5ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementFiveName = "<h1 id='RequirementHeader'>PCI DSS Requirement Five</h1>"
-		$Requirement5Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementFiveName $ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Five Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement5Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementFiveName $ReportComputerName $Global:Req5AVProgramQueryHTML $Global:Req5SoftwareDeploymentHTML $Global:Req5AVPermsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Five Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement5ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html"
 		$Requirement5Report | Out-File $Requirement5ReportPath
 		$Req5Output.AppendText("Requirement Five Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Five-Report.html")
@@ -4142,7 +4146,7 @@ $AllScriptList_ListUpdate = {
 	Function Req7ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementSevenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Seven</h1>"
-		$Requirement7Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementSevenName $ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement7Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementSevenName $ReportComputerName $Global:Req7LocalFolderPermsHTML $Global:Req7SambaShareStatusHTML $Global:Req7FolderPermsHTML $Global:Req7GroupMembershipListHTML $Global:Req7UserRightsHTML" -Head $CSSHeader -Title "PCI DSS Requirement Seven Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement7ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html"
 		$Requirement7Report | Out-File $Requirement7ReportPath
 		$Req7Output.AppendText("Requirement Seven Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Seven-Report.html")
@@ -4219,6 +4223,276 @@ $AllScriptList_ListUpdate = {
 			$AllOutput.AppendText("8.2 - Grab Local Password Policy Settings:`nCheck GPO Dump for Local GPO Policies.`n")
 			# Don't Dump GPO in all output but instead have a dedicated function for that later on.
 			# $AllOutput.AppendText($global:GPODump)
+		}
+	}
+
+	# 8.2 - Password Policy Checker for PCI-DSS
+	Function Req8PasswordChecker{
+	# Write Header
+		if($EverythingToggle -eq $false){
+			$Req8Output.AppendText("8.2 - Password Policy Checker for PCI-DSS:`n`n")
+		}else{
+			$AllOutput.AppendText("8.2 - Password Policy Checker for PCI-DSS:`n`n")
+		}
+		# Set Counters
+		$PCIDSSPassCounter = 0
+		$PCIDSSFailCounter = 0
+		# Data Gathering
+			# Limit repeated access attempts by locking out the user ID after not more than six attempts.
+			$PassCheckAcctLockoutThreshold = $Global:SecDump | Select-String -SimpleMatch 'LockoutBadCount' | Out-String
+			$PassCheckAcctLockoutThresholdResult = $PassCheckAcctLockoutThreshold.split(' ')[2]
+			$PassCheckAcctLockoutThresholdResult = $PassCheckAcctLockoutThresholdResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckAcctLockoutThreshold))){
+				if(($PassCheckAcctLockoutThresholdResult -le "6") -and ($PassCheckAcctLockoutThresholdResult -ne "0")){
+					$Global:Req8PassCheckAcctLockoutThresholdResult = "8.1.6 - [PASS] - Account lockout threshold is Set to 6 or fewer invalid logon attempts, and not 0. Current Value: $PassCheckAcctLockoutThresholdResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckAcctLockoutThresholdResultHTML = "8.1.6 - <span id=`"CISPassStatus`">[PASS]</span> - Account lockout threshold is Set to 6 or fewer invalid logon attempts, and not 0. Current Value: $PassCheckAcctLockoutThresholdResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckAcctLockoutThresholdResult = "8.1.6 - [FAILED] - Account lockout threshold is Not set to 6 or fewer invalid logon attempts, or is Set to 0. Current Value: $PassCheckAcctLockoutThresholdResult.`n"
+					$Global:Req8PassCheckAcctLockoutThresholdResultHTML = "8.1.6 - <span id=`"CISFailedStatus`">[FAILED]</span> - Account lockout threshold is Not set to 6 or fewer invalid logon attempts, or is Set to 0. Current Value: $PassCheckAcctLockoutThresholdResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckAcctLockoutThresholdResult = "8.1.6 - [FAILED] - Account lockout threshold is Not Configured.`n"
+				$Global:Req8PassCheckAcctLockoutThresholdResultHTML = "8.1.6 - <span id=`"CISFailedStatus`">[FAILED]</span> - Account lockout threshold is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Set the lockout duration to a minimum of 30 minutes or until an administrator enables the user ID.
+			$PassCheckAcctLockoutDuration = $Global:SecDump | Select-String -SimpleMatch 'LockoutDuration' | Out-String
+			$PassCheckAcctLockoutDurationResult = $PassCheckAcctLockoutDuration.split(' ')[2]
+			$PassCheckAcctLockoutDurationResult = $PassCheckAcctLockoutDurationResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckAcctLockoutDuration))){
+				if($PassCheckAcctLockoutDurationResult -ge "30"){
+					$Global:Req8PassCheckAcctLockoutDurationResult = "8.1.7 - [PASS] - Account lockout duration is set to 30 or more minutes. Current Value: $PassCheckAcctLockoutDurationResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckAcctLockoutDurationResultHTML = "8.1.7 - <span id=`"CISPassStatus`">[PASS]</span> - Account lockout duration is set to 30 or more minutes. Current Value: $PassCheckAcctLockoutDurationResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckAcctLockoutDurationResult = "8.1.7 - [FAILED] - Account lockout duration is set to less than 30 minutes. Current Value: $PassCheckAcctLockoutDurationResult.`n"
+					$Global:Req8PassCheckAcctLockoutDurationResultHTML = "8.1.7 - <span id=`"CISFailedStatus`">[FAILED]</span> - Account lockout duration is set to less than 30 minutes. Current Value: $PassCheckAcctLockoutDurationResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckAcctLockoutDurationResult = "8.1.7 - [FAILED] - Account lockout duration is Not Configured.`n"
+				$Global:Req8PassCheckAcctLockoutDurationResultHTML = "8.1.7 - <span id=`"CISFailedStatus`">[FAILED]</span> - Account lockout duration is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Set the lockout duration to a minimum of 30 minutes or until an administrator enables the user ID.
+			$PassCheckResetAcctLockoutCounter = $Global:SecDump | Select-String -SimpleMatch 'ResetLockoutCount' | Out-String
+			$PassCheckResetAcctLockoutCounterResult = $PassCheckResetAcctLockoutCounter.split(' ')[2]
+			$PassCheckResetAcctLockoutCounterResult = $PassCheckResetAcctLockoutCounterResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckResetAcctLockoutCounter))){
+				if($PassCheckResetAcctLockoutCounterResult -ge "30"){
+					$Global:Req8PassCheckResetAcctLockoutCounterResult = "8.1.7 - [PASS] - Reset account lockout counter is set to 30 or more minutes. Current Value: $PassCheckResetAcctLockoutCounterResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckResetAcctLockoutCounterResultHTML = "8.1.7 - <span id=`"CISPassStatus`">[PASS]</span> - Reset account lockout counter is set to 30 or more minutes. Current Value: $PassCheckResetAcctLockoutCounterResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckResetAcctLockoutCounterResult = "8.1.7 - [FAILED] - Reset account lockout counter is set to 29 or less minutes. Current Value: $PassCheckResetAcctLockoutCounterResult.`n"
+					$Global:Req8PassCheckResetAcctLockoutCounterResultHTML = "8.1.7 - <span id=`"CISFailedStatus`">[FAILED]</span> - Reset account lockout counter is set to 29 or less minutes. Current Value: $PassCheckResetAcctLockoutCounterResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckResetAcctLockoutCounterResult = "8.1.7 - [FAILED] - Reset account lockout counter is Not Configured.`n"
+				$Global:Req8PassCheckResetAcctLockoutCounterResultHTML = "8.1.7 - <span id=`"CISFailedStatus`">[FAILED]</span> - Reset account lockout counter is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# If a session has been idle for more than 15 minutes, require the user to re-authenticate to re-activate the terminal or session.
+			$PassCheckMachineAFKLimit = $Global:SecDump | Select-String -SimpleMatch 'InactivityTimeoutSecs' | Out-String
+			$PassCheckMachineAFKLimitResult = $PassCheckMachineAFKLimit.split(',')[1]
+			$PassCheckMachineAFKLimitResult = $PassCheckMachineAFKLimitResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckMachineAFKLimit))){
+				if(($PassCheckMachineAFKLimitResult -le "900") -and ($PassCheckMachineAFKLimitResult -ne "0")){
+					$Global:Req8PassCheckMachineAFKLimitResult = "8.1.8 - [PASS] - Machine inactivity limit is set between 1 and 900 seconds. The current setting is $PassCheckMachineAFKLimitResult seconds. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckMachineAFKLimitResultHTML = "8.1.8 - <span id=`"CISPassStatus`">[PASS]</span> - Machine inactivity limit is set between 1 and 900 seconds. The current setting is $PassCheckMachineAFKLimitResult seconds. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckMachineAFKLimitResult = "8.1.8 - [FAILED] - Machine inactivity limit is set at 0 or greater than 900 seconds. The current setting is $PassCheckMachineAFKLimitResult seconds.`n"
+					$Global:Req8PassCheckMachineAFKLimitResultHTML = "8.1.8 - <span id=`"CISFailedStatus`">[FAILED]</span> - Machine inactivity limit is set at 0 or greater than 900 seconds. The current setting is $PassCheckMachineAFKLimitResult seconds.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckMachineAFKLimitResult = "8.1.8 - [FAILED] - Machine inactivity limit is Not Configured.`n"
+				$Global:Req8PassCheckMachineAFKLimitResultHTML = "8.1.8 - <span id=`"CISFailedStatus`">[FAILED]</span> - Machine inactivity limit is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Using strong cryptography, render all authentication credentials (such as passwords/phrases) unreadable during transmission and storage on all system components.
+			$PassCheckClearTxtPasswordSet = $Global:SecDump | Select-String -SimpleMatch 'PasswordComplexity' | Out-String
+			$PassCheckClearTxtPasswordSetResult = $PassCheckClearTxtPasswordSet.split(' ')[2]
+			$PassCheckClearTxtPasswordSetResult = $PassCheckClearTxtPasswordSetResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckClearTxtPasswordSet))){
+				if($PassCheckClearTxtPasswordSetResult -eq "1"){
+					$Global:Req8PassCheckClearTxtPasswordSetResult = "8.2.1 - [PASS] - Storing passwords using reversible encryption is set to Disabled. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckClearTxtPasswordSetResultHTML = "8.2.1 - <span id=`"CISPassStatus`">[PASS]</span> - Storing passwords using reversible encryption is set to Disabled. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckClearTxtPasswordSetResult = "8.2.1 - [FAILED] - Storing passwords using reversible encryption is set to Enabled.`n"
+					$Global:Req8PassCheckClearTxtPasswordSetResultHTML = "8.2.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Storing passwords using reversible encryption is set to Enabled.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckClearTxtPasswordSetResult = "8.2.1 - [FAILED] - Storing passwords using reversible encryption is Not Configured.`n"
+				$Global:Req8PassCheckClearTxtPasswordSetResultHTML = "8.2.1 - <span id=`"CISFailedStatus`">[FAILED]</span> - Storing passwords using reversible encryption is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Passwords/passphrases must meet the following: Require a minimum length of at least seven characters.
+			$PassCheckMinPasswordLength = $Global:SecDump | Select-String -SimpleMatch 'MinimumPasswordLength' | Out-String
+			$PassCheckMinPasswordLengthResult = $PassCheckMinPasswordLength.split(' ')[2]
+			$PassCheckMinPasswordLengthResult = $PassCheckMinPasswordLengthResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckMinPasswordLength))){
+				if($PassCheckMinPasswordLengthResult -ge "7"){
+					$Global:Req8PassCheckMinPasswordLengthResult = "8.2.3 - [PASS] - Minimum Password Length is set to 7 or more character(s). Current Value: $PassCheckMinPasswordLengthResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckMinPasswordLengthResultHTML = "8.2.3 - <span id=`"CISPassStatus`">[PASS]</span> - Minimum Password Length is set to 7 or more character(s). Current Value: $PassCheckMinPasswordLengthResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckMinPasswordLengthResult = "8.2.3 - [FAILED] - Minimum Password Length is Not set to 7 or more character(s). Current Value: $PassCheckMinPasswordLengthResult.`n"
+					$Global:Req8PassCheckMinPasswordLengthResultHTML = "8.2.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Minimum Password Length is Not set to 7 or more character(s). Current Value: $PassCheckMinPasswordLengthResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckMinPasswordLengthResult = "8.2.3 - [FAILED] - Minimum Password Length is Not Configured.`n"
+				$Global:Req8PassCheckMinPasswordLengthResultHTML = "8.2.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Minimum Password Length is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Passwords/passphrases must meet the following: Require a minimum length of at least seven characters. Contain both numeric and alphabetic characters. Alternatively, the passwords/ passphrases must have complexity and strength at least equivalent to the parameters specified above.
+			$PassCheckPasswordComplexReqs = $Global:SecDump | Select-String -SimpleMatch 'ClearTextPassword' | Out-String
+			$PassCheckPasswordComplexReqsResult = $PassCheckPasswordComplexReqs.split(' ')[2]
+			$PassCheckPasswordComplexReqsResult = $PassCheckPasswordComplexReqsResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckPasswordComplexReqs))){
+				if($PassCheckPasswordComplexReqsResult -eq "0"){
+					$Global:Req8PassCheckPasswordComplexReqsResult = "8.2.3 - [PASS] - Password complexity requirements is set to Enabled. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckPasswordComplexReqsResultHTML = "8.2.3 - <span id=`"CISPassStatus`">[PASS]</span> - Password complexity requirements is set to Enabled. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckPasswordComplexReqsResult = "8.2.3 - [FAILED] - Password complexity requirements is set to Disabled.`n"
+					$Global:Req8PassCheckPasswordComplexReqsResultHTML = "8.2.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Password complexity requirements is set to Disabled.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckPasswordComplexReqsResult = "8.2.3 - [FAILED] - Password complexity requirements is Not Configured.`n"
+				$Global:Req8PassCheckPasswordComplexReqsResultHTML = "8.2.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Password complexity requirements is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Set passwords/passphrases for a minimum of 1 day or more.
+			$PassCheckMinPasswordAge = $Global:SecDump | Select-String -SimpleMatch 'MinimumPasswordAge' | Out-String
+			$PassCheckMinPasswordAgeResult = $PassCheckMinPasswordAge.split(' ')[2]
+			$PassCheckMinPasswordAgeResult = $PassCheckMinPasswordAgeResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckMinPasswordAge))){
+				if($PassCheckMinPasswordAgeResult -ge "1"){
+					$Global:Req8PassCheckMinPasswordAgeResult = "8.2.3 - [PASS] - Minimum Password Age is set to 1 or more days. Current Value: $PassCheckMinPasswordAgeResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckMinPasswordAgeResultHTML = "8.2.3 - <span id=`"CISPassStatus`">[PASS]</span> - Minimum Password Age is set to 1 or more days. Current Value: $PassCheckMinPasswordAgeResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckMinPasswordAgeResult = "8.2.3 - [FAILED] - Minimum Password Age is Not set to 1 or more days. Current Value: $PassCheckMinPasswordAgeResult.`n"
+					$Global:Req8PassCheckMinPasswordAgeResultHTML = "8.2.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Minimum Password Age is Not set to 1 or more days. Current Value: $PassCheckMinPasswordAgeResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckMinPasswordAgeResult = "8.2.3 - [FAILED] - Minimum Password Age is Not Configured.`n"
+				$Global:Req8PassCheckMinPasswordAgeResultHTML = "8.2.3 - <span id=`"CISFailedStatus`">[FAILED]</span> - Minimum Password Age is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Change user passwords/passphrases at least once every 90 days.
+			$PassCheckMaxPasswordAge = $Global:SecDump | Select-String -SimpleMatch 'MaximumPasswordAge =' | Out-String
+			$PassCheckMaxPasswordAgeResult = $PassCheckMaxPasswordAge.split(' ')[2]
+			$PassCheckMaxPasswordAgeResult = $PassCheckMaxPasswordAgeResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckMaxPasswordAge))){
+				if(($PassCheckMaxPasswordAgeResult -le "90") -and ($PassCheckMaxPasswordAgeResult -ne "0")){
+					$Global:Req8PassCheckMaxPasswordAgeResult = "8.2.4 - [PASS] - Maximum Password Age is Set 90 or fewer days, and not 0. Current Value: $PassCheckMaxPasswordAgeResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckMaxPasswordAgeResultHTML = "8.2.4 - <span id=`"CISPassStatus`">[PASS]</span> - Maximum Password Age is Set 90 or fewer days, and not 0. Current Value: $PassCheckMaxPasswordAgeResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckMaxPasswordAgeResult = "8.2.4 - [FAILED] - Maximum Password Age is Not set to 90 or fewer days, or is set to 0. Current Value: $PassCheckMaxPasswordAgeResult.`n"
+					$Global:Req8PassCheckMaxPasswordAgeResultHTML = "8.2.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Maximum Password Age is Not set to 90 or fewer days, or is set to 0. Current Value: $PassCheckMaxPasswordAgeResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckMaxPasswordAgeResult = "8.2.4 - [FAILED] - Maximum Password Age is Not Configured.`n"
+				$Global:Req8PassCheckMaxPasswordAgeResultHTML = "8.2.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Maximum Password Age is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Change user passwords/passphrases at least once every 90 days.
+			$PassCheckPassExpiryWarning = $Global:SecDump | Select-String -SimpleMatch 'PasswordExpiryWarning' | Out-String
+			$PassCheckPassExpiryWarningResult = $PassCheckPassExpiryWarning.split(',')[1]
+			$PassCheckPassExpiryWarningResult = $PassCheckPassExpiryWarningResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckPassExpiryWarning))){
+				if(($PassCheckPassExpiryWarningResult -le 14) -and ($PassCheckPassExpiryWarningResult -ge 5)){
+					$Global:Req8PassCheckPassExpiryWarningResult = "8.2.4 - [PASS] - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassCheckPassExpiryWarningResult Days. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckPassExpiryWarningResultHTML = "8.2.4 - <span id=`"CISPassStatus`">[PASS]</span> - Prompt User to Change Password Before Expiration is set between 5 and 14 Days. It's set to $PassCheckPassExpiryWarningResult Days. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckPassExpiryWarningResult = "8.2.4 - [FAILED] - Prompt User to Change Password Before Expiration is Not set between 5 and 14 Days. It's set to $PassCheckPassExpiryWarningResult Days.`n"
+					$Global:Req8PassCheckPassExpiryWarningResultHTML = "8.2.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Prompt User to Change Password Before Expiration is Not set between 5 and 14 Days. It's set to $PassCheckPassExpiryWarningResult Days.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckPassExpiryWarningResult = "8.2.4 - [FAILED] - Prompt User to Change Password Before Expiration is Not Configured.`n"
+				$Global:Req8PassCheckPassExpiryWarningResultHTML = "8.2.4 - <span id=`"CISFailedStatus`">[FAILED]</span> - Prompt User to Change Password Before Expiration is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+			# Do not allow an individual to submit a new password/passphrase that is the same as any of the last four passwords/passphrases he or she has used.
+			$PassCheckPasswordHistory = $Global:SecDump | Select-String -SimpleMatch 'PasswordHistorySize' | Out-String
+			$PassCheckPasswordHistoryResult = $PassCheckPasswordHistory.split(' ')[2]
+			$PassCheckPasswordHistoryResult = $PassCheckPasswordHistoryResult -as [int]
+			if(-not([string]::IsNullOrEmpty($PassCheckPasswordHistory))){
+				if($PassCheckPasswordHistoryResult -ge "4"){
+					$Global:Req8PassCheckPasswordHistoryResult = "8.2.5 - [PASS] - Password History is Set to 4 Passwords or Higher. Current Value: $PassCheckPasswordHistoryResult. PCI DSS Compliant.`n"
+					$Global:Req8PassCheckPasswordHistoryResultHTML = "8.2.5 - <span id=`"CISPassStatus`">[PASS]</span> - Password History is Set to 4 Passwords or Higher. Current Value: $PassCheckPasswordHistoryResult. PCI DSS Compliant.`n"
+					$PCIDSSPassCounter++
+				}else{
+					$Global:Req8PassCheckPasswordHistoryResult = "8.2.5 - [FAILED] - Password History is Not set to 4 Passwords. Current Value: $PassCheckPasswordHistoryResult.`n"
+					$Global:Req8PassCheckPasswordHistoryResultHTML = "8.2.5 - <span id=`"CISFailedStatus`">[FAILED]</span> - Password History is Not set to 4 Passwords. Current Value: $PassCheckPasswordHistoryResult.`n"
+					$PCIDSSFailCounter++
+				}
+			}else{
+				$Global:Req8PassCheckPasswordHistoryResult = "8.2.5 - [FAILED] - Password History is Not Configured.`n"
+				$Global:Req8PassCheckPasswordHistoryResultHTML = "8.2.5 - <span id=`"CISFailedStatus`">[FAILED]</span> - Password History is Not Configured.`n"
+				$PCIDSSFailCounter++
+			}
+
+		# Data Output
+		$PCIDSSTotalCounter = $PCIDSSPassCounter + $PCIDSSFailCounter
+		$Global:PCIDSSPassCheckToalResult = "`nPCI DSS Password Policy Check Result:`n" + $PCIDSSPassCounter + " PASS Results.`n" + $PCIDSSFailCounter + " FAILED Results.`nTotal Benchmarks Tested: " + $PCIDSSTotalCounter + "`n"
+		$Global:PCIDSSPassCheckToalResultHTML = "<h3>PCI DSS Password Policy Check Result</h3><p>PASS Results:" + $PCIDSSPassCounter + "<br>FAILED Results: " + $PCIDSSFailCounter + "<br>Total Benchmarks Tested: " + $PCIDSSTotalCounter + "</p>"
+
+		# HTML Report
+		$Global:Req8PCIDSSPassCheckResultHTML = "<h2>8.2 - Password Policy Check for PCI-DSS</h2><p>" + $Global:Req8PassCheckAcctLockoutThresholdResultHTML + "<br>" + $Global:Req8PassCheckAcctLockoutDurationResultHTML + "<br>" + $Global:Req8PassCheckResetAcctLockoutCounterResultHTML + "<br>" + $Global:Req8PassCheckMachineAFKLimitResultHTML + "<br>" + $Global:Req8PassCheckClearTxtPasswordSetResultHTML + "<br>" + $Global:Req8PassCheckMinPasswordLengthResultHTML + "<br>" + $Global:Req8PassCheckPasswordComplexReqsResultHTML + "<br>" + $Global:Req8PassCheckMinPasswordAgeResultHTML + "<br>" + $Global:Req8PassCheckMaxPasswordAgeResultHTML + "<br>" + $Global:Req8PassCheckPassExpiryWarningResultHTML + "<br>" + $Global:Req8PassCheckPasswordHistoryResultHTML + "</p>"
+
+		# Rich Text Boxes
+		if($EverythingToggle -eq $false){
+			$Req8Output.AppendText($Global:Req8PassCheckAcctLockoutThresholdResult)
+			$Req8Output.AppendText($Global:Req8PassCheckAcctLockoutDurationResult)
+			$Req8Output.AppendText($Global:Req8PassCheckResetAcctLockoutCounterResult)
+			$Req8Output.AppendText($Global:Req8PassCheckMachineAFKLimitResult)
+			$Req8Output.AppendText($Global:Req8PassCheckClearTxtPasswordSetResult)
+			$Req8Output.AppendText($Global:Req8PassCheckMinPasswordLengthResult)
+			$Req8Output.AppendText($Global:Req8PassCheckPasswordComplexReqsResult)
+			$Req8Output.AppendText($Global:Req8PassCheckMinPasswordAgeResult)
+			$Req8Output.AppendText($Global:Req8PassCheckMaxPasswordAgeResult)
+			$Req8Output.AppendText($Global:Req8PassCheckPassExpiryWarningResult)
+			$Req8Output.AppendText($Global:Req8PassCheckPasswordHistoryResult)
+			$Req8Output.AppendText($Global:PCIDSSPassCheckToalResult)
+		}else{
+			$AllOutput.AppendText($Global:Req8PassCheckAcctLockoutThresholdResult)
+			$AllOutput.AppendText($Global:Req8PassCheckAcctLockoutDurationResult)
+			$AllOutput.AppendText($Global:Req8PassCheckResetAcctLockoutCounterResult)
+			$AllOutput.AppendText($Global:Req8PassCheckMachineAFKLimitResult)
+			$AllOutput.AppendText($Global:Req8PassCheckClearTxtPasswordSetResult)
+			$AllOutput.AppendText($Global:Req8PassCheckMinPasswordLengthResult)
+			$AllOutput.AppendText($Global:Req8PassCheckPasswordComplexReqsResult)
+			$AllOutput.AppendText($Global:Req8PassCheckMinPasswordAgeResult)
+			$AllOutput.AppendText($Global:Req8PassCheckMaxPasswordAgeResult)
+			$AllOutput.AppendText($Global:Req8PassCheckPassExpiryWarningResult)
+			$AllOutput.AppendText($Global:Req8PassCheckPasswordHistoryResult)
+			$AllOutput.AppendText($Global:PCIDSSPassCheckToalResult)
 		}
 	}
 
@@ -4664,6 +4938,9 @@ $AllScriptList_ListUpdate = {
 			}elseif($Req8ScriptList.SelectedItem -eq "8.2 - Grab Local Password Policy Settings"){
 				$Req8Output.Clear()
 				Req8LocalPasswordPolicy
+			}elseif($Req8ScriptList.SelectedItem -eq "8.2 - Password Policy Checker for PCI-DSS"){
+				$Req8Output.Clear()
+				Req8PasswordChecker
 			}elseif($Req8ScriptList.SelectedItem -eq "8.1.1 - Dump of Enabled Active Directory Users"){
 				$Req8Output.Clear()
 				Req8DumpActiveADUsers
@@ -4733,6 +5010,8 @@ $AllScriptList_ListUpdate = {
 				$Req8OutputLabel.Refresh()
 				Req8LocalPasswordPolicy
 				$Req8Output.AppendText($Global:SectionHeader)
+				Req8PasswordChecker
+				$Req8Output.AppendText($Global:SectionHeader)
 				$Req8OutputLabel.Text = "Output: Progressing... 70%"
 				$Req8OutputLabel.Refresh()
 				Req8DumpADUsersPasswordExpiry
@@ -4758,7 +5037,7 @@ $AllScriptList_ListUpdate = {
 	Function Req8ExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementEightName = "<h1 id='RequirementHeader'>PCI DSS Requirement Eight</h1>"
-		$Requirement8Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementEightName $ReportComputerName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8RDPComplianceHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement8Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementEightName $ReportComputerName $Global:Req8CurrentUserHTML $Global:Req8LocalAdminListHTML $Global:Req8ADDomainAdminListHTML $Global:Req8ADEnterpriseAdminListHTML $Global:Req8ADUserListAllHTML $Global:Req8ADUserListDisabledHTML $Global:Req8ADUserListInactiveADUsersHTML $Global:Req8ScreensaverSettingsHTML $Global:Req8CurrentDomainPoliciesHTML $Global:Req8LocalPolicyHTML $Global:Req8PCIDSSPassCheckResultHTML $Global:PCIDSSPassCheckToalResultHTML $Global:Req8ADUserPasswordExpiryListHTML $Global:Req8RDPSettingsHTML $Global:Req8RDPComplianceHTML $Global:Req8PowerPlanSettingsHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Eight Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement8ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html"
 		$Requirement8Report | Out-File $Requirement8ReportPath
 		$Req8Output.AppendText("Requirement Eight Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Requirement-Eight-Report.html")
@@ -4803,6 +5082,8 @@ $AllScriptList_ListUpdate = {
 			$Req8OutputLabel.Text = "Output: Data Exporting in Progress... 60%"
 			$Req8OutputLabel.Refresh()
 			Req8LocalPasswordPolicy
+			$Req8Output.AppendText($Global:SectionHeader)
+			Req8PasswordChecker
 			$Req8Output.AppendText($Global:SectionHeader)
 			$Req8OutputLabel.Text = "Output: Data Exporting in Progress... 70%"
 			$Req8OutputLabel.Refresh()
@@ -5366,7 +5647,7 @@ $AllScriptList_ListUpdate = {
 		# HTML Report
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportRequirementTenName = "<h1 id='RequirementHeader'>PCI DSS Requirement Ten</h1>"
-		$Requirement10Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$Requirement10Report = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportRequirementTenName $ReportComputerName $Global:Req10AuditListHTML $Global:Req10PCIPSSComplianceResultHTML $Global:Req10UserLoginFailureResult $Global:Req10NTPSettings $Global:Req10NTPSettingsAllDevices $Global:Req10ADDomainAdminListHTML $Global:Req10ADEnterpriseAdminListHTML $Global:Req10AllAuditLogs $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$Requirement10ReportPath = $Global:ExportPathLocation + "\PCI-DSS-Requirement-Ten-Report.html"
 		$Requirement10Report | Out-File $Requirement10ReportPath
 		# Write Output
@@ -5590,7 +5871,7 @@ $AllScriptList_ListUpdate = {
 	Function DiagExportReportFunction {
 		$ReportComputerName = "<h1>Computer name: $env:computername</h1>"
 		$Global:ReportDiagRequirementName = "<h1 id='RequirementHeader'>PCI DSS Diagnostics Report</h1>"
-		$DiagReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportDiagRequirementName $ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Securities Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
+		$DiagReport = ConvertTo-HTML -Body "$GlobalBackToTop $ScrollTopScript $Global:ReportDiagRequirementName $ReportComputerName $Global:DiagSystemInfoDataHTML $Global:DiagInstalledUpdatesDataHTML $Global:DiagIPConfigHTML $Global:DiagPingTestHTML $Global:DiagTraceRouteHTML $Global:GPODumpHTML" -Head $CSSHeader -Title "PCI DSS Requirement Ten Report" -PostContent "<p id='CreationDate'>Creation Date: $(Get-Date)</p><p>Report Generated Using Anordium Audits Version $Global:ProgramVersionCode.<br>$CreditsForHTML</p>"
 		$DiagReportPath = $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html"
 		$DiagReport | Out-File $DiagReportPath
 		$DiagOutput.AppendText("`nDiagnostics Report Exported to: " + $Global:ExportPathLocation + "\PCI-DSS-Diagnostics-Report.html")
